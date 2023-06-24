@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30720A06BFBA96D2A2BA6B2B /* Pods_OpenMeteo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D9983A7EC377E34541D0904 /* Pods_OpenMeteo.framework */; };
 		C04E2C0A2A473EAA00A5B1E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C092A473EAA00A5B1E8 /* AppDelegate.swift */; };
 		C04E2C0C2A473EAA00A5B1E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C0B2A473EAA00A5B1E8 /* SceneDelegate.swift */; };
 		C04E2C142A473EAA00A5B1E8 /* OpenMeteo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C122A473EAA00A5B1E8 /* OpenMeteo.xcdatamodeld */; };
@@ -50,6 +51,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D9983A7EC377E34541D0904 /* Pods_OpenMeteo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenMeteo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DFDD54B38659B70F701CCFB /* Pods-OpenMeteo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenMeteo.release.xcconfig"; path = "Target Support Files/Pods-OpenMeteo/Pods-OpenMeteo.release.xcconfig"; sourceTree = "<group>"; };
+		9B82575E5454D329C2ED10A8 /* Pods-OpenMeteo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenMeteo.debug.xcconfig"; path = "Target Support Files/Pods-OpenMeteo/Pods-OpenMeteo.debug.xcconfig"; sourceTree = "<group>"; };
 		C04E2C062A473EAA00A5B1E8 /* OpenMeteo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenMeteo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C04E2C092A473EAA00A5B1E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C04E2C0B2A473EAA00A5B1E8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,7 +80,7 @@
 		C04E2C692A476FB800A5B1E8 /* GeoWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeather.swift; sourceTree = "<group>"; };
 		C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingJSON.swift; sourceTree = "<group>"; };
 		C04E2C6D2A477B0B00A5B1E8 /* GeocodingJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingJSONTests.swift; sourceTree = "<group>"; };
-		C04E2C6F2A478C1000A5B1E8 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		C04E2C6F2A478C1000A5B1E8 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30720A06BFBA96D2A2BA6B2B /* Pods_OpenMeteo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,16 +109,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E7DF11332C3B575EEF22C05 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1D9983A7EC377E34541D0904 /* Pods_OpenMeteo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C04E2BFD2A473EAA00A5B1E8 = {
 			isa = PBXGroup;
 			children = (
+				C04E2C5C2A47413F00A5B1E8 /* LICENSE */,
+				C04E2C5A2A47411400A5B1E8 /* README.md */,
+				C04E2C6F2A478C1000A5B1E8 /* Podfile */,
 				C04E2C082A473EAA00A5B1E8 /* OpenMeteo */,
 				C04E2C222A473EAB00A5B1E8 /* OpenMeteoTests */,
 				C04E2C2C2A473EAB00A5B1E8 /* OpenMeteoUITests */,
-				C04E2C6F2A478C1000A5B1E8 /* Podfile */,
-				C04E2C5A2A47411400A5B1E8 /* README.md */,
-				C04E2C5C2A47413F00A5B1E8 /* LICENSE */,
 				C04E2C072A473EAA00A5B1E8 /* Products */,
+				DE709730352D66B5F51FACE3 /* Pods */,
+				5E7DF11332C3B575EEF22C05 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -193,6 +208,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		DE709730352D66B5F51FACE3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9B82575E5454D329C2ED10A8 /* Pods-OpenMeteo.debug.xcconfig */,
+				5DFDD54B38659B70F701CCFB /* Pods-OpenMeteo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -200,9 +224,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C04E2C332A473EAB00A5B1E8 /* Build configuration list for PBXNativeTarget "OpenMeteo" */;
 			buildPhases = (
+				F0B081EA76565CCE8D07CFE6 /* [CP] Check Pods Manifest.lock */,
 				C04E2C022A473EAA00A5B1E8 /* Sources */,
 				C04E2C032A473EAA00A5B1E8 /* Frameworks */,
 				C04E2C042A473EAA00A5B1E8 /* Resources */,
+				D156DD395F6CA711E0C93D77 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -320,6 +346,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D156DD395F6CA711E0C93D77 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OpenMeteo/Pods-OpenMeteo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OpenMeteo/Pods-OpenMeteo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OpenMeteo/Pods-OpenMeteo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F0B081EA76565CCE8D07CFE6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OpenMeteo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C04E2C022A473EAA00A5B1E8 /* Sources */ = {
@@ -504,6 +572,7 @@
 		};
 		C04E2C342A473EAB00A5B1E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9B82575E5454D329C2ED10A8 /* Pods-OpenMeteo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -534,6 +603,7 @@
 		};
 		C04E2C352A473EAB00A5B1E8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5DFDD54B38659B70F701CCFB /* Pods-OpenMeteo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
