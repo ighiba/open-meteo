@@ -20,8 +20,6 @@
 		C04E2C572A473FD600A5B1E8 /* WeatherListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C532A473FD600A5B1E8 /* WeatherListController.swift */; };
 		C04E2C582A473FD600A5B1E8 /* WeatherListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C542A473FD600A5B1E8 /* WeatherListView.swift */; };
 		C04E2C592A473FD600A5B1E8 /* WeatherListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C552A473FD600A5B1E8 /* WeatherListViewModel.swift */; };
-		C04E2C5B2A47411400A5B1E8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C04E2C5A2A47411400A5B1E8 /* README.md */; };
-		C04E2C5D2A47413F00A5B1E8 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C04E2C5C2A47413F00A5B1E8 /* LICENSE */; };
 		C04E2C602A47425600A5B1E8 /* WeatherJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */; };
 		C04E2C622A474EDD00A5B1E8 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C612A474EDD00A5B1E8 /* TestData.swift */; };
 		C04E2C642A475E0F00A5B1E8 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C632A475E0F00A5B1E8 /* Weather.swift */; };
@@ -30,7 +28,6 @@
 		C04E2C6A2A476FB800A5B1E8 /* GeoWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C692A476FB800A5B1E8 /* GeoWeather.swift */; };
 		C04E2C6C2A47773B00A5B1E8 /* GeocodingJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */; };
 		C04E2C6E2A477B0B00A5B1E8 /* GeocodingJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C6D2A477B0B00A5B1E8 /* GeocodingJSONTests.swift */; };
-		C04E2C702A478C1000A5B1E8 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = C04E2C6F2A478C1000A5B1E8 /* Podfile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,8 +67,6 @@
 		C04E2C532A473FD600A5B1E8 /* WeatherListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListController.swift; sourceTree = "<group>"; };
 		C04E2C542A473FD600A5B1E8 /* WeatherListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListView.swift; sourceTree = "<group>"; };
 		C04E2C552A473FD600A5B1E8 /* WeatherListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewModel.swift; sourceTree = "<group>"; };
-		C04E2C5A2A47411400A5B1E8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		C04E2C5C2A47413F00A5B1E8 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherJSON.swift; sourceTree = "<group>"; };
 		C04E2C612A474EDD00A5B1E8 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		C04E2C632A475E0F00A5B1E8 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
@@ -80,7 +75,6 @@
 		C04E2C692A476FB800A5B1E8 /* GeoWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeather.swift; sourceTree = "<group>"; };
 		C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingJSON.swift; sourceTree = "<group>"; };
 		C04E2C6D2A477B0B00A5B1E8 /* GeocodingJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingJSONTests.swift; sourceTree = "<group>"; };
-		C04E2C6F2A478C1000A5B1E8 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,9 +114,6 @@
 		C04E2BFD2A473EAA00A5B1E8 = {
 			isa = PBXGroup;
 			children = (
-				C04E2C5C2A47413F00A5B1E8 /* LICENSE */,
-				C04E2C5A2A47411400A5B1E8 /* README.md */,
-				C04E2C6F2A478C1000A5B1E8 /* Podfile */,
 				C04E2C082A473EAA00A5B1E8 /* OpenMeteo */,
 				C04E2C222A473EAB00A5B1E8 /* OpenMeteoTests */,
 				C04E2C2C2A473EAB00A5B1E8 /* OpenMeteoUITests */,
@@ -323,9 +314,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C04E2C5B2A47411400A5B1E8 /* README.md in Resources */,
 				C04E2C192A473EAA00A5B1E8 /* LaunchScreen.storyboard in Resources */,
-				C04E2C5D2A47413F00A5B1E8 /* LICENSE in Resources */,
 				C04E2C162A473EAA00A5B1E8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,7 +323,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C04E2C702A478C1000A5B1E8 /* Podfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
