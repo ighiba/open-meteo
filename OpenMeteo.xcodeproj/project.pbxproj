@@ -12,7 +12,7 @@
 		C04E2C142A473EAA00A5B1E8 /* OpenMeteo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C122A473EAA00A5B1E8 /* OpenMeteo.xcdatamodeld */; };
 		C04E2C162A473EAA00A5B1E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C04E2C152A473EAA00A5B1E8 /* Assets.xcassets */; };
 		C04E2C192A473EAA00A5B1E8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C04E2C172A473EAA00A5B1E8 /* LaunchScreen.storyboard */; };
-		C04E2C242A473EAB00A5B1E8 /* OpenMeteoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C232A473EAB00A5B1E8 /* OpenMeteoTests.swift */; };
+		C04E2C242A473EAB00A5B1E8 /* WeatherJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C232A473EAB00A5B1E8 /* WeatherJSONTests.swift */; };
 		C04E2C2E2A473EAB00A5B1E8 /* OpenMeteoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C2D2A473EAB00A5B1E8 /* OpenMeteoUITests.swift */; };
 		C04E2C302A473EAB00A5B1E8 /* OpenMeteoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C2F2A473EAB00A5B1E8 /* OpenMeteoUITestsLaunchTests.swift */; };
 		C04E2C562A473FD600A5B1E8 /* WeatherListModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C522A473FD600A5B1E8 /* WeatherListModuleAssembly.swift */; };
@@ -21,6 +21,15 @@
 		C04E2C592A473FD600A5B1E8 /* WeatherListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C552A473FD600A5B1E8 /* WeatherListViewModel.swift */; };
 		C04E2C5B2A47411400A5B1E8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C04E2C5A2A47411400A5B1E8 /* README.md */; };
 		C04E2C5D2A47413F00A5B1E8 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C04E2C5C2A47413F00A5B1E8 /* LICENSE */; };
+		C04E2C602A47425600A5B1E8 /* WeatherJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */; };
+		C04E2C622A474EDD00A5B1E8 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C612A474EDD00A5B1E8 /* TestData.swift */; };
+		C04E2C642A475E0F00A5B1E8 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C632A475E0F00A5B1E8 /* Weather.swift */; };
+		C04E2C662A475E1A00A5B1E8 /* TimedTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C652A475E1A00A5B1E8 /* TimedTemperature.swift */; };
+		C04E2C682A476D0200A5B1E8 /* Geocoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C672A476D0200A5B1E8 /* Geocoding.swift */; };
+		C04E2C6A2A476FB800A5B1E8 /* GeoWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C692A476FB800A5B1E8 /* GeoWeather.swift */; };
+		C04E2C6C2A47773B00A5B1E8 /* GeocodingJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */; };
+		C04E2C6E2A477B0B00A5B1E8 /* GeocodingJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C6D2A477B0B00A5B1E8 /* GeocodingJSONTests.swift */; };
+		C04E2C702A478C1000A5B1E8 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = C04E2C6F2A478C1000A5B1E8 /* Podfile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +58,7 @@
 		C04E2C182A473EAA00A5B1E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C04E2C1A2A473EAA00A5B1E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C04E2C1F2A473EAB00A5B1E8 /* OpenMeteoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenMeteoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C04E2C232A473EAB00A5B1E8 /* OpenMeteoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMeteoTests.swift; sourceTree = "<group>"; };
+		C04E2C232A473EAB00A5B1E8 /* WeatherJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherJSONTests.swift; sourceTree = "<group>"; };
 		C04E2C292A473EAB00A5B1E8 /* OpenMeteoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenMeteoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C04E2C2D2A473EAB00A5B1E8 /* OpenMeteoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMeteoUITests.swift; sourceTree = "<group>"; };
 		C04E2C2F2A473EAB00A5B1E8 /* OpenMeteoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMeteoUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -59,6 +68,15 @@
 		C04E2C552A473FD600A5B1E8 /* WeatherListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewModel.swift; sourceTree = "<group>"; };
 		C04E2C5A2A47411400A5B1E8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C04E2C5C2A47413F00A5B1E8 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherJSON.swift; sourceTree = "<group>"; };
+		C04E2C612A474EDD00A5B1E8 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		C04E2C632A475E0F00A5B1E8 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		C04E2C652A475E1A00A5B1E8 /* TimedTemperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedTemperature.swift; sourceTree = "<group>"; };
+		C04E2C672A476D0200A5B1E8 /* Geocoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geocoding.swift; sourceTree = "<group>"; };
+		C04E2C692A476FB800A5B1E8 /* GeoWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeather.swift; sourceTree = "<group>"; };
+		C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingJSON.swift; sourceTree = "<group>"; };
+		C04E2C6D2A477B0B00A5B1E8 /* GeocodingJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingJSONTests.swift; sourceTree = "<group>"; };
+		C04E2C6F2A478C1000A5B1E8 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +110,7 @@
 				C04E2C082A473EAA00A5B1E8 /* OpenMeteo */,
 				C04E2C222A473EAB00A5B1E8 /* OpenMeteoTests */,
 				C04E2C2C2A473EAB00A5B1E8 /* OpenMeteoUITests */,
+				C04E2C6F2A478C1000A5B1E8 /* Podfile */,
 				C04E2C5A2A47411400A5B1E8 /* README.md */,
 				C04E2C5C2A47413F00A5B1E8 /* LICENSE */,
 				C04E2C072A473EAA00A5B1E8 /* Products */,
@@ -113,6 +132,7 @@
 			children = (
 				C04E2C092A473EAA00A5B1E8 /* AppDelegate.swift */,
 				C04E2C0B2A473EAA00A5B1E8 /* SceneDelegate.swift */,
+				C04E2C5E2A47424600A5B1E8 /* Models */,
 				C04E2C502A473FB100A5B1E8 /* Modules */,
 				C04E2C152A473EAA00A5B1E8 /* Assets.xcassets */,
 				C04E2C172A473EAA00A5B1E8 /* LaunchScreen.storyboard */,
@@ -125,7 +145,9 @@
 		C04E2C222A473EAB00A5B1E8 /* OpenMeteoTests */ = {
 			isa = PBXGroup;
 			children = (
-				C04E2C232A473EAB00A5B1E8 /* OpenMeteoTests.swift */,
+				C04E2C612A474EDD00A5B1E8 /* TestData.swift */,
+				C04E2C232A473EAB00A5B1E8 /* WeatherJSONTests.swift */,
+				C04E2C6D2A477B0B00A5B1E8 /* GeocodingJSONTests.swift */,
 			);
 			path = OpenMeteoTests;
 			sourceTree = "<group>";
@@ -156,6 +178,19 @@
 				C04E2C522A473FD600A5B1E8 /* WeatherListModuleAssembly.swift */,
 			);
 			path = WeatherList;
+			sourceTree = "<group>";
+		};
+		C04E2C5E2A47424600A5B1E8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C04E2C652A475E1A00A5B1E8 /* TimedTemperature.swift */,
+				C04E2C632A475E0F00A5B1E8 /* Weather.swift */,
+				C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */,
+				C04E2C672A476D0200A5B1E8 /* Geocoding.swift */,
+				C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */,
+				C04E2C692A476FB800A5B1E8 /* GeoWeather.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,6 +308,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C04E2C702A478C1000A5B1E8 /* Podfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,12 +326,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C04E2C6C2A47773B00A5B1E8 /* GeocodingJSON.swift in Sources */,
 				C04E2C572A473FD600A5B1E8 /* WeatherListController.swift in Sources */,
 				C04E2C562A473FD600A5B1E8 /* WeatherListModuleAssembly.swift in Sources */,
 				C04E2C0A2A473EAA00A5B1E8 /* AppDelegate.swift in Sources */,
 				C04E2C582A473FD600A5B1E8 /* WeatherListView.swift in Sources */,
+				C04E2C642A475E0F00A5B1E8 /* Weather.swift in Sources */,
+				C04E2C682A476D0200A5B1E8 /* Geocoding.swift in Sources */,
 				C04E2C592A473FD600A5B1E8 /* WeatherListViewModel.swift in Sources */,
+				C04E2C662A475E1A00A5B1E8 /* TimedTemperature.swift in Sources */,
 				C04E2C142A473EAA00A5B1E8 /* OpenMeteo.xcdatamodeld in Sources */,
+				C04E2C602A47425600A5B1E8 /* WeatherJSON.swift in Sources */,
+				C04E2C6A2A476FB800A5B1E8 /* GeoWeather.swift in Sources */,
 				C04E2C0C2A473EAA00A5B1E8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,7 +346,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C04E2C242A473EAB00A5B1E8 /* OpenMeteoTests.swift in Sources */,
+				C04E2C6E2A477B0B00A5B1E8 /* GeocodingJSONTests.swift in Sources */,
+				C04E2C242A473EAB00A5B1E8 /* WeatherJSONTests.swift in Sources */,
+				C04E2C622A474EDD00A5B1E8 /* TestData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
