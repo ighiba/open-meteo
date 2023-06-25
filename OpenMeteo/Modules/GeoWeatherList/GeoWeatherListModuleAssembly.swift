@@ -1,5 +1,5 @@
 //
-//  WeatherListModuleAssembly.swift
+//  GeoWeatherListModuleAssembly.swift
 //  OpenMeteo
 //
 //  Created by Ivan Ghiba on 24.06.2023.
@@ -7,10 +7,10 @@
 
 import UIKit
 
-class WeatherListModuleAssembly {
+class GeoWeatherListModuleAssembly {
     class func configureModule() -> UIViewController {
-        let view = WeatherListViewController()
-        let viewModel = WeatherListViewModel()
+        let view = GeoWeatherListViewController()
+        let viewModel = GeoWeatherListViewModel()
 
         view.viewModel = viewModel
 

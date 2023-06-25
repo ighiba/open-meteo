@@ -1,5 +1,5 @@
 //
-//  OpenMeteoTests.swift
+//  WeatherJSONTests.swift
 //  OpenMeteoTests
 //
 //  Created by Ivan Ghiba on 24.06.2023.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import OpenMeteo
 
-final class TitlesJSONTests: XCTestCase {
+final class WeatherJSONTests: XCTestCase {
     
     let decoder = JSONDecoder()
     
