@@ -8,5 +8,6 @@
 import Foundation
 
 struct Weather {
-    var timedTemperatureList: [TimedTemperature]
+    var current: TimedTemperature
+    var forecast: [TimedTemperature]
 }

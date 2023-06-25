@@ -16,19 +16,25 @@ struct GeoWeather: Identifiable {
 #if DEBUG
 
 let geoMoscow = Geocoding(id: 524901, name: "Moscow", latitude: 55.75222, longitude: 37.61556, country: "Russia")
-let weatherMoscow = Weather(timedTemperatureList: [
-    TimedTemperature(time: Date(timeIntervalSinceNow: 0), temperature: 23.7),
-    TimedTemperature(time: Date(timeIntervalSinceNow: 3600), temperature: 25.2),
-    TimedTemperature(time: Date(timeIntervalSinceNow: 7200), temperature: 26.1),
-    TimedTemperature(time: Date(timeIntervalSinceNow: 10800), temperature: 25.8),
+let weatherMoscow = Weather(
+    current: TimedTemperature(time: Date(timeIntervalSinceNow: 0), temperature: 24.3),
+    forecast: [
+        TimedTemperature(time: Date(timeIntervalSinceNow: -3600), temperature: 23.7),
+        TimedTemperature(time: Date(timeIntervalSinceNow: 0), temperature: 24.3),
+        TimedTemperature(time: Date(timeIntervalSinceNow: 3600), temperature: 25.2),
+        TimedTemperature(time: Date(timeIntervalSinceNow: 7200), temperature: 26.1),
+        TimedTemperature(time: Date(timeIntervalSinceNow: 10800), temperature: 25.8),
 ])
 
 let geoPskov = Geocoding(id: 504341, name: "Pskov", latitude: 57.8136, longitude: 28.3496, country: "Russia")
-let weatherPskov = Weather(timedTemperatureList: [
-    TimedTemperature(time: Date(timeIntervalSinceNow: 0), temperature: 21.1),
-    TimedTemperature(time: Date(timeIntervalSinceNow: 3600), temperature: 23.6),
-    TimedTemperature(time: Date(timeIntervalSinceNow: 7200), temperature: 24.2),
-    TimedTemperature(time: Date(timeIntervalSinceNow: 10800), temperature: 23.7),
+let weatherPskov = Weather(
+    current: TimedTemperature(time: Date(timeIntervalSinceNow: 0), temperature: 22.5),
+    forecast: [
+        TimedTemperature(time: Date(timeIntervalSinceNow: -3600), temperature: 21.1),
+        TimedTemperature(time: Date(timeIntervalSinceNow: 0), temperature: 22.5),
+        TimedTemperature(time: Date(timeIntervalSinceNow: 3600), temperature: 23.6),
+        TimedTemperature(time: Date(timeIntervalSinceNow: 7200), temperature: 24.2),
+        TimedTemperature(time: Date(timeIntervalSinceNow: 10800), temperature: 23.7),
 ])
 
 extension GeoWeather {
