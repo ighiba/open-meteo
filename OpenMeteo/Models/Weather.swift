@@ -17,4 +17,17 @@ struct Weather {
         self.forecastByHour = forecastByHour
         self.forecastByDay = DayForecast.transform(from: forecastByHour)
     }
+    
+    func obtainHourlyForecastForCurrentDay() -> [HourForecast] {
+        if let startIndex = forecastByHour.firstIndex(where: { forecast in
+            Calendar.current.isDate(forecast.time, equalTo: Date(), toGranularity: .hour)
+        }) {
+            var endIndex = startIndex + 24
+            endIndex = forecastByHour.count < endIndex ? forecastByHour.count : endIndex
+            let slice = forecastByHour[startIndex...endIndex]
+            return [HourForecast](slice)
+        }
+
+        return []
+    }
 }

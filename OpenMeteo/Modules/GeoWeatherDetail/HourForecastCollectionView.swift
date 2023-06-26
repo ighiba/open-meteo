@@ -91,7 +91,7 @@ extension HourForecastCollectionView: UICollectionViewDataSource {
         let cell = dequeueReusableCell(withReuseIdentifier: HourForecastCell.reuseIdentifier, for: indexPath)
         if let hourForecastCell = cell  as? HourForecastCell {
             let hourForecast = hourForecastList[indexPath.row]
-            hourForecastCell.configure(with: hourForecast)
+            hourForecastCell.configure(with: hourForecast, for: indexPath)
         }
         
         return cell
