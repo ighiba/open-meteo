@@ -31,11 +31,16 @@ class GeoWeatherDetailView: UIScrollView {
 
     private func setViews() {
         self.addSubview(contentContainer)
-        
+
         contentContainer.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(spacing)
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.9)
+        }
+
+        hourForecastCollectionView.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalTo(HourForecastCell.height)
         }
 
         self.contentLayoutGuide.snp.makeConstraints { make in
@@ -49,13 +54,18 @@ class GeoWeatherDetailView: UIScrollView {
     func configure(with geoWeather: GeoWeather) {
         geoNameLabel.text = geoWeather.geocoding.name
         currentTemperatureLabel.setTemperature(geoWeather.weather.current.temperature)
+        hourForecastCollectionView.configure(with: geoWeather.weather.forecastByDay.first!.forecastByHour)
         dayForecastContainer.configure(with: geoWeather.weather.forecastByDay)
     }
     
     // MARK: - Views
     
     lazy var contentContainer: UIStackView = {
-        let container = UIStackView(arrangedSubviews: [mainInfoContainer, dayForecastContainer])
+        let container = UIStackView(arrangedSubviews:[
+            mainInfoContainer,
+            hourForecastCollectionView,
+            dayForecastContainer
+        ])
         
         container.axis = .vertical
         container.distribution = .equalSpacing
@@ -92,11 +102,7 @@ class GeoWeatherDetailView: UIScrollView {
         return label
     }()
     
-    lazy var forecastContainer: UIStackView = {
-        let container = UIStackView(arrangedSubviews: [])
- 
-        return container
-    }()
+    private let hourForecastCollectionView = HourForecastCollectionView()
     
     private let dayForecastContainer = DayForecastContainer()
 }
