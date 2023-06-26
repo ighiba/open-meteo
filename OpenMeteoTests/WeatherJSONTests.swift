@@ -36,14 +36,14 @@ final class WeatherJSONTests: XCTestCase {
         let correctTime = dateFormatter.date(from: "2023-07-01T23:00:00+00:00")
         
         let weather = try decoder.decode(WeatherJSON.self, from: weatherJSONData).weather
-        let time = weather.forecast.last?.time
+        let time = weather.forecastByHour.last?.time
 
         XCTAssertEqual(time, correctTime, "Wrong value decode result")
     }
     
     func testDecodeForecastTemperatureLast() throws {
         let weather = try decoder.decode(WeatherJSON.self, from: weatherJSONData).weather
-        let temperature = weather.forecast.last?.temperature
+        let temperature = weather.forecastByHour.last?.temperature
 
         XCTAssertEqual(temperature, 15.2, "Wrong value decode result")
     }
