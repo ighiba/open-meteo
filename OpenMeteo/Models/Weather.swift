@@ -23,7 +23,7 @@ struct Weather {
             Calendar.current.isDate(forecast.time, equalTo: Date(), toGranularity: .hour)
         }) {
             var endIndex = startIndex + 24
-            endIndex = forecastByHour.count < endIndex ? forecastByHour.count : endIndex
+            endIndex = forecastByHour.count < endIndex ? forecastByHour.count - 1 : endIndex
             let slice = forecastByHour[startIndex...endIndex]
             return [HourForecast](slice)
         }

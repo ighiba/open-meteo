@@ -45,8 +45,7 @@ class DayForecastRow: UIView {
         dateLabel.sizeToFit()
         temperatureRangeLabel.sizeToFit()
     }
-    
-    
+
     private let dateLabel: UILabel = {
         let label = UILabel()
         
