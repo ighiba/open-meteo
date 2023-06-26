@@ -45,14 +45,14 @@ class DayForecastContainer: UIStackView {
             self.addArrangedSubview(row)
             row.snp.makeConstraints { make in
                 make.width.equalToSuperview()
-                make.height.equalTo(ForecastRow.height)
+                make.height.equalTo(DayForecastRow.height)
             }
         }
     }
     
-    func obtainForecastContainerRows(_ dayForecastList: [DayForecast]) -> [ForecastRow] {
+    func obtainForecastContainerRows(_ dayForecastList: [DayForecast]) -> [DayForecastRow] {
         let containerRows = dayForecastList.map { forecast in
-            let forecastRow = ForecastRow()
+            let forecastRow = DayForecastRow()
             forecastRow.configure(with: forecast)
         
             return forecastRow

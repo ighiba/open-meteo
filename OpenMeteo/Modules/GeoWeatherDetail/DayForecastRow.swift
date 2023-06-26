@@ -1,5 +1,5 @@
 //
-//  ForecastContainerRow.swift
+//  DayForecastRow.swift
 //  OpenMeteo
 //
 //  Created by Ivan Ghiba on 26.06.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ForecastRow: UIView {
+class DayForecastRow: UIView {
     
     static let height: CGFloat = 44
     
