@@ -39,7 +39,8 @@ class ForecastRow: UIView {
     
     func configure(with forecast: DayForecast) {
         dateLabel.text = forecast.date.string(withFormat: "dd MMMM")
-        temperatureRangeLabel.text = "\(forecast.minTemperature)°...\(forecast.maxTemperature)°"
+        let text = String(format: "%.0f...%.0f°", forecast.minTemperature, forecast.maxTemperature)
+        temperatureRangeLabel.text = text
         
         dateLabel.sizeToFit()
         temperatureRangeLabel.sizeToFit()
@@ -59,7 +60,7 @@ class ForecastRow: UIView {
     private let temperatureRangeLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "12°...23°"
+        label.text = "12...23°"
         label.font = UIFont.systemFont(ofSize: 20)
         label.sizeToFit()
         
