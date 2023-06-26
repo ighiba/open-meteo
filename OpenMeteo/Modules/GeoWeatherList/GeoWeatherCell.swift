@@ -40,22 +40,22 @@ class GeoWeatherCell: UICollectionViewCell {
         self.layer.cornerRadius = Self.height / 5
         
         self.addSubview(geoNameLabel)
-        temperatureContainer.addSubview(temperatureLabel)
-        self.addSubview(temperatureContainer)
+        currentTemperatureContainer.addSubview(currentTemperatureLabel)
+        self.addSubview(currentTemperatureContainer)
 
         geoNameLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(horizontalOffset)
             make.centerY.equalToSuperview()
         }
         
-        temperatureContainer.snp.makeConstraints { make in
+        currentTemperatureContainer.snp.makeConstraints { make in
             make.width.equalTo(temperatureContainerSize.width)
             make.height.equalTo(temperatureContainerSize.height)
             make.trailing.equalToSuperview().inset(horizontalOffset)
             make.centerY.equalToSuperview()
         }
         
-        temperatureLabel.snp.makeConstraints { make in
+        currentTemperatureLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
         }
@@ -65,7 +65,7 @@ class GeoWeatherCell: UICollectionViewCell {
     
     func configure(with geoWeather: GeoWeather) {
         geoNameLabel.text = geoWeather.geocoding.name
-        temperatureLabel.text = "\(geoWeather.weather.current.temperature)°C"
+        currentTemperatureLabel.setTemperature(geoWeather.weather.current.temperature)
     }
     
     // MARK: - Views
@@ -80,21 +80,19 @@ class GeoWeatherCell: UICollectionViewCell {
         return label
     }()
     
-    let temperatureContainer: UIView = {
+    lazy var currentTemperatureContainer: UIView = {
         let container = UIView()
         
         container.backgroundColor = .systemGray4
-        container.layer.cornerRadius = 10
+        container.layer.cornerRadius = temperatureContainerSize.height / 5
         
         return container
     }()
     
-    let temperatureLabel: UILabel = {
-        let label = UILabel()
+    let currentTemperatureLabel: TemperatureLabel = {
+        let label = TemperatureLabel()
         
-        label.text = "21.0" + "°C"
         label.font = UIFont.systemFont(ofSize: 20)
-        label.sizeToFit()
 
         return label
     }()

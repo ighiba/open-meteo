@@ -29,7 +29,7 @@ final class WeatherJSON: Decodable {
     
     enum HourlyCodingKeys: String, CodingKey {
         case time
-        case temperature_2m
+        case temperature2m = "temperature_2m"
     }
     
     init(from decoder: Decoder) throws {
@@ -56,7 +56,7 @@ final class WeatherJSON: Decodable {
             timeList = timeStrings.map { dateFormatter.date(from: $0 + ":00+00:00") }
         }
 
-        let temperatureList = try? hourlyContainer?.decode([Float].self, forKey: .temperature_2m)
+        let temperatureList = try? hourlyContainer?.decode([Float].self, forKey: .temperature2m)
         
         var forecast: [TimedTemperature] = []
         for i in 0 ..< timeList.count {

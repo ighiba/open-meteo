@@ -14,8 +14,9 @@ class GeoWeatherListModuleAssembly {
 
         view.viewModel = viewModel
 
-        // Setup additional injections
+        let navigationController = UINavigationController()
+        navigationController.viewControllers = [view]
 
-        return view
+        return navigationController
     }
 }

@@ -45,19 +45,19 @@ class GeoWeatherListViewController: UICollectionViewController {
         }
         
         updateSnapshot()
+        openDetail(for: IndexPath(row: 1, section: 0))
     }
     
     func createLayout() -> UICollectionViewLayout {
         let spacing: CGFloat = 20
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                             heightDimension: .fractionalHeight(1.0))
+                                            heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
       
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .absolute(GeoWeatherCell.height))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                         subitems: [item])
+                                             heightDimension: .absolute(GeoWeatherCell.height))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
       
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: spacing, bottom: 0, trailing: spacing)
@@ -70,5 +70,26 @@ class GeoWeatherListViewController: UICollectionViewController {
     
     // MARK: - Methods
 
+    private func openDetail(for indexPath: IndexPath) {
+        guard let geoWeather = geoWeather(withIndexPath: indexPath),
+              let detailView = GeoWeatherDetailModuleAssembly.configureModule(with: geoWeather) as? GeoWeatherDetailViewController else {
+            return
+        }
+        self.navigationController?.pushViewController(detailView, animated: true)
+    }
+    
+    func geoWeather(withIndexPath indexPath: IndexPath) -> GeoWeather? {
+        guard indexPath.row <= viewModel.geoWeatherList.count else { return nil }
+        return viewModel.geoWeatherList[indexPath.row]
+    }
+
+}
+
+// MARK: - Delegate
+
+extension GeoWeatherListViewController {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        openDetail(for: indexPath)
+    }
 }
 
