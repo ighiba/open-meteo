@@ -29,7 +29,7 @@ class HourForecastCell: UICollectionViewCell {
     
     // MARK: - Layout
     
-    func setViews() {        
+    func setViews() {
         self.addSubview(hourLabel)
         self.addSubview(temperatureLabel)
         

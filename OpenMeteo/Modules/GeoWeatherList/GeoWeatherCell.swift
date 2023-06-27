@@ -65,7 +65,7 @@ class GeoWeatherCell: UICollectionViewCell {
     
     func configure(with geoWeather: GeoWeather) {
         geoNameLabel.text = geoWeather.geocoding.name
-        currentTemperatureLabel.setTemperature(geoWeather.weather.current.temperature)
+        currentTemperatureLabel.setTemperature(geoWeather.weather.obtainForecastForCurrentHour().temperature)
     }
     
     // MARK: - Views

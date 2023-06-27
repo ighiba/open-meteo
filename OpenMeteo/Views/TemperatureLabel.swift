@@ -23,7 +23,7 @@ class TemperatureLabel: UILabel {
     }
     
     func setTemperature(_ temperature: Float) {
-        self.text = "\(Int(temperature))°C"
+        self.text = String(format: "%.0f", temperature) + "°C"
         self.sizeToFit()
     }
 }
