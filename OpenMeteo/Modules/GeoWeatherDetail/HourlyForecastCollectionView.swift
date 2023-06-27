@@ -25,9 +25,10 @@ class HourlyForecastCollectionView: UICollectionView {
         layout.itemSize = CGSize(width: HourForecastCell.width, height: HourForecastCell.height)
         layout.sectionInset = UIEdgeInsets(top: 0, left: verticalSectionInset, bottom: 0, right: verticalSectionInset)
         super.init(frame: .zero, collectionViewLayout: layout)
-        self.register(HourForecastCell.self, forCellWithReuseIdentifier: HourForecastCell.reuseIdentifier)
         
+        self.register(HourForecastCell.self, forCellWithReuseIdentifier: HourForecastCell.reuseIdentifier)
         self.dataSource = self
+        setViews()
     }
 
     required init?(coder: NSCoder) {
@@ -46,9 +47,8 @@ class HourlyForecastCollectionView: UICollectionView {
     }
 
     func setViews() {
-        self.backgroundColor = .systemGray6
-        self.isPagingEnabled = true
-        self.layer.masksToBounds = true
+        self.backgroundColor = .systemGray6.withAlphaComponent(0.7)
+        self.backgroundView = UIVisualEffectView.obtainBlur(style: .light)
     }
     
     func configure(with hourForecastList: [HourForecast]) {
