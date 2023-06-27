@@ -21,6 +21,7 @@ class DailyForecastContainer: UIStackView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.layer.cornerRadius = self.bounds.width / 20
+        self.subviews.first(where: { $0 is UIVisualEffectView })?.layer.cornerRadius = self.layer.cornerRadius
     }
     
     func setViews() {
@@ -28,7 +29,20 @@ class DailyForecastContainer: UIStackView {
         self.distribution = .fillProportionally
         self.alignment = .center
         
-        self.backgroundColor = .systemGray6
+        self.backgroundColor = .systemGray6.withAlphaComponent(0.7)
+
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.layer.masksToBounds = true
+        
+        self.insertSubview(blurEffectView, at: 0)
+        
+        blurEffectView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
     }
     
     func configure(with dayForecastList: [DayForecast]) {
@@ -36,7 +50,6 @@ class DailyForecastContainer: UIStackView {
             self.removeArrangedSubview(subview)
         }
         addArrangedSubviews(with: dayForecastList)
-        
     }
     
     func addArrangedSubviews(with dayForecastList: [DayForecast]) {
@@ -46,6 +59,9 @@ class DailyForecastContainer: UIStackView {
             row.snp.makeConstraints { make in
                 make.width.equalToSuperview()
                 make.height.equalTo(DayForecastRow.height)
+            }
+            if row != forecastRows.last {
+                self.addSeparator()
             }
         }
     }
@@ -58,5 +74,15 @@ class DailyForecastContainer: UIStackView {
             return forecastRow
         }
         return containerRows
+    }
+    
+    private func addSeparator() {
+        let separator = UIView()
+        separator.backgroundColor = .separator
+        self.addArrangedSubview(separator)
+        separator.snp.makeConstraints { make in
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.height.equalTo(1)
+        }
     }
 }
