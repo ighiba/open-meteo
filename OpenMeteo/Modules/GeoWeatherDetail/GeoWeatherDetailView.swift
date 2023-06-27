@@ -38,7 +38,7 @@ class GeoWeatherDetailView: UIScrollView {
             make.width.equalToSuperview().multipliedBy(0.9)
         }
 
-        hourForecastCollectionView.snp.makeConstraints { make in
+        hourlyForecastCollectionView.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalTo(HourForecastCell.height)
         }
@@ -54,8 +54,8 @@ class GeoWeatherDetailView: UIScrollView {
     func configure(with geoWeather: GeoWeather) {
         geoNameLabel.text = geoWeather.geocoding.name
         currentTemperatureLabel.setTemperature(geoWeather.weather.obtainForecastForCurrentHour().temperature)
-        hourForecastCollectionView.configure(with: geoWeather.weather.obtainHourlyForecastForCurrentDay())
-        dayForecastContainer.configure(with: geoWeather.weather.obtainDailyForecastFor(nextDays: 7))
+        hourlyForecastCollectionView.configure(with: geoWeather.weather.obtainHourlyForecastForCurrentDay())
+        dailyForecastContainer.configure(with: geoWeather.weather.obtainDailyForecastFor(nextDays: 7))
     }
     
     // MARK: - Views
@@ -63,8 +63,8 @@ class GeoWeatherDetailView: UIScrollView {
     lazy var contentContainer: UIStackView = {
         let container = UIStackView(arrangedSubviews:[
             mainInfoContainer,
-            hourForecastCollectionView,
-            dayForecastContainer
+            hourlyForecastCollectionView,
+            dailyForecastContainer
         ])
         
         container.axis = .vertical
@@ -102,7 +102,7 @@ class GeoWeatherDetailView: UIScrollView {
         return label
     }()
     
-    private let hourForecastCollectionView = HourForecastCollectionView()
+    private let hourlyForecastCollectionView = HourlyForecastCollectionView()
     
-    private let dayForecastContainer = DayForecastContainer()
+    private let dailyForecastContainer = DailyForecastContainer()
 }

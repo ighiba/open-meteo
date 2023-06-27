@@ -37,9 +37,9 @@
 		C0E54D172A49A5DE003D00C8 /* DayForecastRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D162A49A5DE003D00C8 /* DayForecastRow.swift */; };
 		C0E54D192A49D993003D00C8 /* DayForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D182A49D993003D00C8 /* DayForecast.swift */; };
 		C0E54D1C2A49EB47003D00C8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D1B2A49EB47003D00C8 /* Date.swift */; };
-		C0E54D1E2A49EB84003D00C8 /* DayForecastContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D1D2A49EB84003D00C8 /* DayForecastContainer.swift */; };
+		C0E54D1E2A49EB84003D00C8 /* DailyForecastContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D1D2A49EB84003D00C8 /* DailyForecastContainer.swift */; };
 		C0E54D202A4A292C003D00C8 /* HourForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D1F2A4A292C003D00C8 /* HourForecastCell.swift */; };
-		C0E54D222A4A2954003D00C8 /* HourForecastCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D212A4A2954003D00C8 /* HourForecastCollectionView.swift */; };
+		C0E54D222A4A2954003D00C8 /* HourlyForecastCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D212A4A2954003D00C8 /* HourlyForecastCollectionView.swift */; };
 		C0E54D242A4B0F06003D00C8 /* DatedForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D232A4B0F06003D00C8 /* DatedForecast.swift */; };
 /* End PBXBuildFile section */
 
@@ -97,9 +97,9 @@
 		C0E54D162A49A5DE003D00C8 /* DayForecastRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayForecastRow.swift; sourceTree = "<group>"; };
 		C0E54D182A49D993003D00C8 /* DayForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayForecast.swift; sourceTree = "<group>"; };
 		C0E54D1B2A49EB47003D00C8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
-		C0E54D1D2A49EB84003D00C8 /* DayForecastContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayForecastContainer.swift; sourceTree = "<group>"; };
+		C0E54D1D2A49EB84003D00C8 /* DailyForecastContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyForecastContainer.swift; sourceTree = "<group>"; };
 		C0E54D1F2A4A292C003D00C8 /* HourForecastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourForecastCell.swift; sourceTree = "<group>"; };
-		C0E54D212A4A2954003D00C8 /* HourForecastCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourForecastCollectionView.swift; sourceTree = "<group>"; };
+		C0E54D212A4A2954003D00C8 /* HourlyForecastCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyForecastCollectionView.swift; sourceTree = "<group>"; };
 		C0E54D232A4B0F06003D00C8 /* DatedForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatedForecast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -235,9 +235,9 @@
 			isa = PBXGroup;
 			children = (
 				C0E54D162A49A5DE003D00C8 /* DayForecastRow.swift */,
-				C0E54D1D2A49EB84003D00C8 /* DayForecastContainer.swift */,
+				C0E54D1D2A49EB84003D00C8 /* DailyForecastContainer.swift */,
 				C0E54D1F2A4A292C003D00C8 /* HourForecastCell.swift */,
-				C0E54D212A4A2954003D00C8 /* HourForecastCollectionView.swift */,
+				C0E54D212A4A2954003D00C8 /* HourlyForecastCollectionView.swift */,
 				C08D19692A48BAF300834A21 /* GeoWeatherDetailView.swift */,
 				C08D19682A48BAF300834A21 /* GeoWeatherDetailController.swift */,
 				C08D196A2A48BAF300834A21 /* GeoWeatherDetailViewModel.swift */,
@@ -446,7 +446,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C04E2C6C2A47773B00A5B1E8 /* GeocodingJSON.swift in Sources */,
-				C0E54D1E2A49EB84003D00C8 /* DayForecastContainer.swift in Sources */,
+				C0E54D1E2A49EB84003D00C8 /* DailyForecastContainer.swift in Sources */,
 				C04E2C572A473FD600A5B1E8 /* GeoWeatherListView.swift in Sources */,
 				C08D19652A48AC8300834A21 /* GeoWeatherListView+DataSource.swift in Sources */,
 				C04E2C562A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift in Sources */,
@@ -458,7 +458,7 @@
 				C08D196E2A48BAF300834A21 /* GeoWeatherDetailViewModel.swift in Sources */,
 				C0E54D242A4B0F06003D00C8 /* DatedForecast.swift in Sources */,
 				C04E2C642A475E0F00A5B1E8 /* Weather.swift in Sources */,
-				C0E54D222A4A2954003D00C8 /* HourForecastCollectionView.swift in Sources */,
+				C0E54D222A4A2954003D00C8 /* HourlyForecastCollectionView.swift in Sources */,
 				C04E2C682A476D0200A5B1E8 /* Geocoding.swift in Sources */,
 				C04E2C592A473FD600A5B1E8 /* GeoWeatherListViewModel.swift in Sources */,
 				C04E2C662A475E1A00A5B1E8 /* HourForecast.swift in Sources */,

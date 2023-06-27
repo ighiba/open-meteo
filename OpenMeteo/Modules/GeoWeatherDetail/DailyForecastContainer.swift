@@ -1,5 +1,5 @@
 //
-//  DayForecastContainer.swift
+//  DailyForecastContainer.swift
 //  OpenMeteo
 //
 //  Created by Ivan Ghiba on 26.06.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DayForecastContainer: UIStackView {
+class DailyForecastContainer: UIStackView {
     
     init() {
         super.init(frame: .zero)
