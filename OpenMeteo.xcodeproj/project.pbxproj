@@ -40,6 +40,7 @@
 		C0E54D1E2A49EB84003D00C8 /* DayForecastContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D1D2A49EB84003D00C8 /* DayForecastContainer.swift */; };
 		C0E54D202A4A292C003D00C8 /* HourForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D1F2A4A292C003D00C8 /* HourForecastCell.swift */; };
 		C0E54D222A4A2954003D00C8 /* HourForecastCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D212A4A2954003D00C8 /* HourForecastCollectionView.swift */; };
+		C0E54D242A4B0F06003D00C8 /* DatedForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D232A4B0F06003D00C8 /* DatedForecast.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		C0E54D1D2A49EB84003D00C8 /* DayForecastContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayForecastContainer.swift; sourceTree = "<group>"; };
 		C0E54D1F2A4A292C003D00C8 /* HourForecastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourForecastCell.swift; sourceTree = "<group>"; };
 		C0E54D212A4A2954003D00C8 /* HourForecastCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourForecastCollectionView.swift; sourceTree = "<group>"; };
+		C0E54D232A4B0F06003D00C8 /* DatedForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatedForecast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,8 +219,9 @@
 		C04E2C5E2A47424600A5B1E8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C04E2C652A475E1A00A5B1E8 /* HourForecast.swift */,
+				C0E54D232A4B0F06003D00C8 /* DatedForecast.swift */,
 				C0E54D182A49D993003D00C8 /* DayForecast.swift */,
+				C04E2C652A475E1A00A5B1E8 /* HourForecast.swift */,
 				C04E2C632A475E0F00A5B1E8 /* Weather.swift */,
 				C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */,
 				C04E2C672A476D0200A5B1E8 /* Geocoding.swift */,
@@ -453,6 +456,7 @@
 				C08D19732A48F05B00834A21 /* TemperatureLabel.swift in Sources */,
 				C0E54D172A49A5DE003D00C8 /* DayForecastRow.swift in Sources */,
 				C08D196E2A48BAF300834A21 /* GeoWeatherDetailViewModel.swift in Sources */,
+				C0E54D242A4B0F06003D00C8 /* DatedForecast.swift in Sources */,
 				C04E2C642A475E0F00A5B1E8 /* Weather.swift in Sources */,
 				C0E54D222A4A2954003D00C8 /* HourForecastCollectionView.swift in Sources */,
 				C04E2C682A476D0200A5B1E8 /* Geocoding.swift in Sources */,

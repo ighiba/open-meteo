@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DayForecast {
+struct DayForecast: DatedForecast {
     
     var date: Date
     var forecastByHour: [HourForecast]
@@ -26,12 +26,12 @@ struct DayForecast {
 
         var processedDates: [String] = []
         for hourForecast in hourForecasts {
-            let processingDate = dateFormatter.string(from: hourForecast.time)
+            let processingDate = dateFormatter.string(from: hourForecast.date)
             guard !processedDates.contains(processingDate) else { continue }
-            let hourForecastsForDate = hourForecasts.filter({ dateFormatter.string(from: $0.time) == processingDate })
+            let hourForecastsForDate = hourForecasts.filter({ dateFormatter.string(from: $0.date) == processingDate })
                                            
 
-            let date = hourForecasts.first { dateFormatter.string(from: $0.time) == processingDate }?.time ?? Date()
+            let date = hourForecasts.first { dateFormatter.string(from: $0.date) == processingDate }?.date ?? Date()
             
             dayForecasts.append(DayForecast(date: date, forecastByHour: hourForecastsForDate))
             processedDates.append(processingDate)

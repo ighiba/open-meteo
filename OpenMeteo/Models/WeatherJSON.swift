@@ -45,7 +45,7 @@ final class WeatherJSON: Decodable {
             return dateFormatter.date(from: timeString + ":00+00:00") ?? Date()
         }()
         let temperature = try? currentWeatherContainer?.decode(Float.self, forKey: .temperature)
-        let currentWeather = HourForecast(time: time, temperature: temperature ?? 0)
+        let currentWeather = HourForecast(date: time, temperature: temperature ?? 0)
         
         let hourlyContainer = try? rootContainer.nestedContainer(keyedBy: HourlyCodingKeys.self, forKey: .hourly)
         
@@ -61,7 +61,7 @@ final class WeatherJSON: Decodable {
         var forecast: [HourForecast] = []
         for i in 0 ..< timeList.count {
             guard let time = timeList[i], let temperature = temperatureList?[i] else { continue }
-            forecast.append(HourForecast(time: time, temperature: temperature))
+            forecast.append(HourForecast(date: time, temperature: temperature))
         }
 
         self.weather = Weather(current: currentWeather, forecastByHour: forecast)

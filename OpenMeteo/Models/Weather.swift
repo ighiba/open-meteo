@@ -19,7 +19,7 @@ struct Weather {
     }
     
     func obtainForecastForCurrentHour() -> HourForecast {
-        if Calendar.current.isDate(current.time, equalTo: Date(), toGranularity: .hour) {
+        if Calendar.current.isDate(current.date, equalTo: Date(), toGranularity: .hour) {
             return current
         } else {
             // if outdated or offline
@@ -28,15 +28,28 @@ struct Weather {
     }
     
     func obtainHourlyForecastForCurrentDay() -> [HourForecast] {
-        if let startIndex = forecastByHour.firstIndex(where: { forecast in
-            Calendar.current.isDate(forecast.time, equalTo: Date(), toGranularity: .hour)
+        return obtainForecastFromCurrentDate(forecastByHour, forNextItems: 24, toGranularity: .hour)
+    }
+    
+    func obtainDailyForecastFor(nextDays days: UInt) -> [DayForecast] {
+        return obtainForecastFromCurrentDate(forecastByDay, forNextItems: days, toGranularity: .day)
+    }
+    
+    private func obtainForecastFromCurrentDate<T: DatedForecast>(
+        _ forecastList: [T],
+        forNextItems items: UInt,
+        toGranularity: Calendar.Component
+    ) -> [T] {
+        if let startIndex = forecastList.firstIndex(where: { forecast in
+            Calendar.current.isDate(forecast.date, equalTo: Date(), toGranularity: toGranularity)
         }) {
-            var endIndex = startIndex + 24
-            endIndex = forecastByHour.count < endIndex ? forecastByHour.count - 1 : endIndex
-            let slice = forecastByHour[startIndex...endIndex]
-            return [HourForecast](slice)
+            var endIndex = startIndex + Int(items)
+            endIndex = forecastList.count <= endIndex ? forecastList.count - 1 : endIndex
+            let slice = forecastList[startIndex...endIndex]
+            return [T](slice)
         }
-
         return []
     }
 }
+
+

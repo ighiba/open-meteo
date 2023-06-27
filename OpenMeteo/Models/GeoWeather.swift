@@ -17,24 +17,24 @@ struct GeoWeather: Identifiable {
 
 let geoMoscow = Geocoding(id: 524901, name: "Moscow", latitude: 55.75222, longitude: 37.61556, country: "Russia")
 let weatherMoscow = Weather(
-    current: HourForecast(time: Date(timeIntervalSinceNow: 0), temperature: 24.3),
+    current: HourForecast(date: Date(timeIntervalSinceNow: 0), temperature: 24.3),
     forecastByHour: [
-        HourForecast(time: Date(timeIntervalSinceNow: -3600), temperature: 23.7),
-        HourForecast(time: Date(timeIntervalSinceNow: 0), temperature: 24.3),
-        HourForecast(time: Date(timeIntervalSinceNow: 3600), temperature: 25.2),
-        HourForecast(time: Date(timeIntervalSinceNow: 7200), temperature: 26.1),
-        HourForecast(time: Date(timeIntervalSinceNow: 10800), temperature: 25.8),
+        HourForecast(date: Date(timeIntervalSinceNow: -3600), temperature: 23.7),
+        HourForecast(date: Date(timeIntervalSinceNow: 0), temperature: 24.3),
+        HourForecast(date: Date(timeIntervalSinceNow: 3600), temperature: 25.2),
+        HourForecast(date: Date(timeIntervalSinceNow: 7200), temperature: 26.1),
+        HourForecast(date: Date(timeIntervalSinceNow: 10800), temperature: 25.8),
     ])
 
 let geoPskov = Geocoding(id: 504341, name: "Pskov", latitude: 57.8136, longitude: 28.3496, country: "Russia")
 let weatherPskov = Weather(
-    current: HourForecast(time: Date(timeIntervalSinceNow: 0), temperature: 22.5),
+    current: HourForecast(date: Date(timeIntervalSinceNow: 0), temperature: 22.5),
     forecastByHour: [
-        HourForecast(time: Date(timeIntervalSinceNow: -3600), temperature: 21.1),
-        HourForecast(time: Date(timeIntervalSinceNow: 0), temperature: 22.5),
-        HourForecast(time: Date(timeIntervalSinceNow: 3600), temperature: 23.6),
-        HourForecast(time: Date(timeIntervalSinceNow: 7200), temperature: 24.2),
-        HourForecast(time: Date(timeIntervalSinceNow: 10800), temperature: 23.7),
+        HourForecast(date: Date(timeIntervalSinceNow: -3600), temperature: 21.1),
+        HourForecast(date: Date(timeIntervalSinceNow: 0), temperature: 22.5),
+        HourForecast(date: Date(timeIntervalSinceNow: 3600), temperature: 23.6),
+        HourForecast(date: Date(timeIntervalSinceNow: 7200), temperature: 24.2),
+        HourForecast(date: Date(timeIntervalSinceNow: 10800), temperature: 23.7),
 ])
 
 extension GeoWeather {

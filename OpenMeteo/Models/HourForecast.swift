@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HourForecast {
-    var time: Date
+struct HourForecast: DatedForecast {
+    var date: Date
     var temperature: Float
 }

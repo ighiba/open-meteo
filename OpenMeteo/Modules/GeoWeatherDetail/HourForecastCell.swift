@@ -45,7 +45,7 @@ class HourForecastCell: UICollectionViewCell {
     }
     
     func configure(with hourForecast: HourForecast, for indexPath: IndexPath) {
-        let hourLabelText = indexPath.row == 0 ? "Now" : hourForecast.time.string(withFormat: "HH")
+        let hourLabelText = indexPath.row == 0 ? "Now" : hourForecast.date.string(withFormat: "HH")
         hourLabel.text = hourLabelText
         temperatureLabel.text = String(format: "%.0f", hourForecast.temperature) + "°"
         
