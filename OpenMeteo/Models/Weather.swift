@@ -18,6 +18,15 @@ struct Weather {
         self.forecastByDay = DayForecast.transform(from: forecastByHour)
     }
     
+    func obtainForecastForCurrentHour() -> HourForecast {
+        if Calendar.current.isDate(current.time, equalTo: Date(), toGranularity: .hour) {
+            return current
+        } else {
+            // if outdated or offline
+            return obtainHourlyForecastForCurrentDay().first ?? current
+        }
+    }
+    
     func obtainHourlyForecastForCurrentDay() -> [HourForecast] {
         if let startIndex = forecastByHour.firstIndex(where: { forecast in
             Calendar.current.isDate(forecast.time, equalTo: Date(), toGranularity: .hour)
