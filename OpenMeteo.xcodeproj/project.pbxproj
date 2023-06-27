@@ -42,6 +42,7 @@
 		C0E54D222A4A2954003D00C8 /* HourlyForecastCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D212A4A2954003D00C8 /* HourlyForecastCollectionView.swift */; };
 		C0E54D242A4B0F06003D00C8 /* DatedForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D232A4B0F06003D00C8 /* DatedForecast.swift */; };
 		C0E54D262A4B39B8003D00C8 /* UIVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D252A4B39B8003D00C8 /* UIVisualEffectView.swift */; };
+		C0E54D282A4B4B3F003D00C8 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0E54D272A4B4B3F003D00C8 /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		C0E54D212A4A2954003D00C8 /* HourlyForecastCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyForecastCollectionView.swift; sourceTree = "<group>"; };
 		C0E54D232A4B0F06003D00C8 /* DatedForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatedForecast.swift; sourceTree = "<group>"; };
 		C0E54D252A4B39B8003D00C8 /* UIVisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVisualEffectView.swift; sourceTree = "<group>"; };
+		C0E54D272A4B4B3F003D00C8 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 				C08D19712A48F04500834A21 /* Views */,
 				C04E2C502A473FB100A5B1E8 /* Modules */,
 				C04E2C152A473EAA00A5B1E8 /* Assets.xcassets */,
+				C0E54D272A4B4B3F003D00C8 /* Colors.xcassets */,
 				C04E2C172A473EAA00A5B1E8 /* LaunchScreen.storyboard */,
 				C04E2C1A2A473EAA00A5B1E8 /* Info.plist */,
 				C04E2C122A473EAA00A5B1E8 /* OpenMeteo.xcdatamodeld */,
@@ -380,6 +383,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0E54D282A4B4B3F003D00C8 /* Colors.xcassets in Resources */,
 				C04E2C192A473EAA00A5B1E8 /* LaunchScreen.storyboard in Resources */,
 				C04E2C162A473EAA00A5B1E8 /* Assets.xcassets in Resources */,
 			);
