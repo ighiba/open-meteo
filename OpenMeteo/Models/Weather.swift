@@ -124,26 +124,27 @@ struct Weather {
     }
     
     private func isSunriseNow() -> Bool {
-        guard let today = obtainCurrentDayForecast() else { return false }
-        let sunriseOffset = today.sunriseTime.timeIntervalSinceNow
-        
+        guard let sunriseOffset = obtainSunriseOffset() else { return false }
         return (sunriseOffset <= oneHour) && (sunriseOffset >= -oneHour)
     }
     
     private func isSunsetNow() -> Bool {
-        guard let today = obtainCurrentDayForecast() else { return false }
-        let sunsetOffset = today.sunsetTime.timeIntervalSinceNow
-        
+        guard let sunsetOffset = obtainSunsetOffset() else { return false }
         return (sunsetOffset <= oneHour) && (sunsetOffset >= -oneHour)
     }
     
     private func isNightNow() -> Bool {
-        guard let today = obtainCurrentDayForecast() else { return false }
-        let sunriseOffset = today.sunriseTime.timeIntervalSinceNow
-        let sunsetOffset = today.sunsetTime.timeIntervalSinceNow
-
+        guard let sunriseOffset = obtainSunriseOffset(), let sunsetOffset = obtainSunsetOffset() else { return false }
         return (sunriseOffset > 0 && sunsetOffset < 0) || (sunriseOffset < 0 && sunsetOffset < 0)
-    } 
+    }
+    
+    private func obtainSunriseOffset() -> TimeInterval? {
+        return obtainCurrentDayForecast()?.sunriseTime.timeIntervalSinceNow
+    }
+    
+    private func obtainSunsetOffset() -> TimeInterval? {
+        return obtainCurrentDayForecast()?.sunsetTime.timeIntervalSinceNow
+    }
 }
 
 
