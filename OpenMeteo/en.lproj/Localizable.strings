@@ -1,0 +1,36 @@
+/* 
+  Localizable.strings
+  OpenMeteo
+
+  Created by Ivan Ghiba on 28.06.2023.
+  
+*/
+
+"Clear sky" = "Clear sky";
+"Mainly clear" = "Mainly clear";
+"Partly cloudy" = "Partly cloudy";
+"Overcast" = "Overcast";
+"Fog" = "Fog";
+"Depositing rime fog" = "Depositing rime fog";
+"Light drizzle" = "Light drizzle";
+"Moderate drizzle" = "Moderate drizzle";
+"Dense drizzle" = "Dense drizzle";
+"Light freezing drizzle" = "Light freezing drizzle";
+"Dense freezing drizzle" = "Dense freezing drizzle";
+"Slight rain" = "Slight rain";
+"Moderate rain" = "Moderate rain";
+"Heavy rain" = "Heavy rain";
+"Light freezing rain" = "Light freezing rain";
+"Heavy freezing rain" = "Heavy freezing rain";
+"Slight snow fall" = "Slight snow fall";
+"Moderate snow fall" = "Moderate snow fall";
+"Heavy snow fall" = "Heavy snow fall";
+"Snow grains" = "Snow grains";
+"Slight rain showers" = "Slight rain showers";
+"Moderate rain showers" = "Moderate rain showers";
+"Violent rain showers" = "Violent rain showers";
+"Slight snow showers" = "Slight snow showers";
+"Hevy snow showers" = "Hevy snow showers";
+"Moderate thunderstorm" = "Moderate thunderstorm";
+"Slight hail thunderstorm" = "Slight hail thunderstorm";
+"Heavy hail thunderstorm" = "Heavy hail thunderstorm";

@@ -13,9 +13,7 @@ class GeoWeatherDetailView: UIScrollView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         setViews()
-
         setNeedsUpdateConstraints()
     }
 
@@ -54,6 +52,7 @@ class GeoWeatherDetailView: UIScrollView {
     func configure(with geoWeather: GeoWeather) {
         geoNameLabel.text = geoWeather.geocoding.name
         currentTemperatureLabel.setTemperature(geoWeather.weather.obtainForecastForCurrentHour().temperature)
+        weatherCodeDescriptionLabel.text = geoWeather.weather.currentWeatherCode.localizedDescription
         hourlyForecastCollectionView.configure(with: geoWeather.weather.obtainHourlyForecastFor(nextHours: 24))
         dailyForecastContainer.configure(with: geoWeather.weather.obtainDailyForecastFor(nextDays: 7))
     }
@@ -75,7 +74,7 @@ class GeoWeatherDetailView: UIScrollView {
     }()
     
     lazy var mainInfoContainer: UIStackView = {
-        let container = UIStackView(arrangedSubviews: [geoNameLabel, currentTemperatureLabel])
+        let container = UIStackView(arrangedSubviews: [geoNameLabel, currentTemperatureLabel, weatherCodeDescriptionLabel])
         
         container.axis = .vertical
         container.alignment = .center
@@ -99,6 +98,16 @@ class GeoWeatherDetailView: UIScrollView {
 
         label.font = UIFont.systemFont(ofSize: 40)
 
+        return label
+    }()
+    
+    private let weatherCodeDescriptionLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = "-"
+        label.font = UIFont.systemFont(ofSize: 18, weight: .light)
+        label.sizeToFit()
+        
         return label
     }()
     

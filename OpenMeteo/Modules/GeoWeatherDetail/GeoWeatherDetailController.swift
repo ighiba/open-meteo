@@ -45,30 +45,9 @@ class GeoWeatherDetailViewController: UIViewController {
     }
     
     func updateBackgroundView(with geoWeather: GeoWeather) {
-        let skyType = obtainSkyType(with: geoWeather)
+        let skyType = geoWeather.weather.obtainSkyType()
         let colorSet = WeatherColorSet.obtainColorSet(fromSkyType: skyType)
         backgroundView.setColors(weatherColorSet: colorSet)
-    }
-    
-    func obtainSkyType(with geoWeather: GeoWeather) -> SkyType {
-        let weatherType = geoWeather.weather.obtainWeatherTypeForCurrentHour()
-
-        switch weatherType {
-        case .clearSky:
-            if geoWeather.weather.isSunriseNow() {
-                return .sunrise
-            } else if geoWeather.weather.isSunsetNow() {
-                return .sunset
-            } else if geoWeather.weather.isNightNow() {
-                return .night
-            } else {
-                return .day
-            }
-        case .fog, .cloudly:
-            return .cloudy
-        case .rain, .snow, .thunderstorm:
-            return .rain
-        }
     }
 }
 

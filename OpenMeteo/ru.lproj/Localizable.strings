@@ -1,0 +1,36 @@
+/* 
+  Localizable.strings
+  OpenMeteo
+
+  Created by Ivan Ghiba on 28.06.2023.
+  
+*/
+
+"Clear sky" = "Ясное небо";
+"Mainly clear" = "В основном ясно";
+"Partly cloudy" = "Переменная облачность";
+"Overcast" = "Пасмурно";
+"Fog" = "Туман";
+"Depositing rime fog" = "Туман с осадками иней";
+"Light drizzle" = "Морось";
+"Moderate drizzle" = "Умеренная морось";
+"Dense drizzle" = "Плотная морось";
+"Light freezing drizzle" = "Легкая ледяная морось";
+"Dense freezing drizzle" = "Плотная ледяная морось";
+"Slight rain" = "Небольшой дождь";
+"Moderate rain" = "Умеренный дождь";
+"Heavy rain" = "Сильный дождь";
+"Light freezing rain" = "Легкий ледяной дождь";
+"Heavy freezing rain" = "Сильный ледяной дождь";
+"Slight snow fall" = "Небольшой снегопад";
+"Moderate snow fall" = "Умеренный снегопад";
+"Heavy snow fall" = "Сильный снегопад";
+"Snow grains" = "Снежные зерна";
+"Slight rain showers" = "Небольшие дождевые ливни";
+"Moderate rain showers" = "Умеренные дождевые ливни";
+"Violent rain showers" = "Сильные дождевые ливни";
+"Slight snow showers" = "Небольшие снежные ливни";
+"Heavy snow showers" = "Сильные снежные ливни";
+"Moderate thunderstorm" = "Умеренная гроза";
+"Slight hail thunderstorm" = "Небольшая гроза с градом";
+"Heavy hail thunderstorm" = "Сильная гроза с градом";

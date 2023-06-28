@@ -39,7 +39,64 @@ enum WeatherCode: Int16 {
     case thunderstormHeavyHail = 99
 
     var localizedDescription: String {
-        return ""
+        switch self {
+        case .clearSky:
+            return NSLocalizedString("Clear sky", comment: "")
+        case .mainlyClear:
+            return NSLocalizedString("Mainly clear", comment: "")
+        case .partlyCloudy:
+            return NSLocalizedString("Partly cloudy", comment: "")
+        case .overcast:
+            return NSLocalizedString("Overcast", comment: "")
+        case .fog:
+            return NSLocalizedString("Fog", comment: "")
+        case .depositingRimeFog:
+            return NSLocalizedString("Depositing rime fog", comment: "")
+        case .drizzleLight:
+            return NSLocalizedString("Light drizzle", comment: "")
+        case .drizzleModerate:
+            return NSLocalizedString("Moderate drizzle", comment: "")
+        case .drizzleDense:
+            return NSLocalizedString("Dense drizzle", comment: "")
+        case .freezingDrizzleLight:
+            return NSLocalizedString("Light freezing drizzle", comment: "")
+        case .freezingDrizzleDense:
+            return NSLocalizedString("Dense freezing drizzle", comment: "")
+        case .rainSlight:
+            return NSLocalizedString("Slight rain", comment: "")
+        case .rainModerate:
+            return NSLocalizedString("Moderate rain", comment: "")
+        case .rainHeavy:
+            return NSLocalizedString("Heavy rain", comment: "")
+        case .freezingRainLight:
+            return NSLocalizedString("Light freezing rain", comment: "")
+        case .freezingRainHeavy:
+            return NSLocalizedString("Heavy freezing rain", comment: "")
+        case .snowFallSlight:
+            return NSLocalizedString("Slight snow fall", comment: "")
+        case .snowFallModerate:
+            return NSLocalizedString("Moderate snow fall", comment: "")
+        case .snowFallHeavy:
+            return NSLocalizedString("Heavy snow fall", comment: "")
+        case .snowGrains:
+            return NSLocalizedString("Snow grains", comment: "")
+        case .rainShowersSlight:
+            return NSLocalizedString("Slight rain showers", comment: "")
+        case .rainShowersModerate:
+            return NSLocalizedString("Moderate rain showers", comment: "")
+        case .rainShowersViolent:
+            return NSLocalizedString("Violent rain showers", comment: "")
+        case .snowShowersSlight:
+            return NSLocalizedString("Slight snow showers", comment: "")
+        case .snowShowersHeavy:
+            return NSLocalizedString("Hevy snow showers", comment: "")
+        case .thunderstormSlightModerate:
+            return NSLocalizedString("Moderate thunderstorm", comment: "")
+        case .thunderstormSlightHail:
+            return NSLocalizedString("Slight hail thunderstorm", comment: "")
+        case .thunderstormHeavyHail:
+            return NSLocalizedString("Heavy hail thunderstorm", comment: "")
+        }
     }
 }
 
