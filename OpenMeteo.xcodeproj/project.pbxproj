@@ -43,6 +43,14 @@
 		C0E54D242A4B0F06003D00C8 /* DatedForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D232A4B0F06003D00C8 /* DatedForecast.swift */; };
 		C0E54D262A4B39B8003D00C8 /* UIVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D252A4B39B8003D00C8 /* UIVisualEffectView.swift */; };
 		C0E54D282A4B4B3F003D00C8 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0E54D272A4B4B3F003D00C8 /* Colors.xcassets */; };
+		C0E54D2A2A4B868B003D00C8 /* WeatherCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D292A4B868B003D00C8 /* WeatherCode.swift */; };
+		C0E54D2C2A4B86E5003D00C8 /* WeatherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D2B2A4B86E5003D00C8 /* WeatherType.swift */; };
+		C0E54D2F2A4B8724003D00C8 /* WeatherColorSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D2E2A4B8724003D00C8 /* WeatherColorSet.swift */; };
+		C0E54D312A4B8742003D00C8 /* WeatherColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D302A4B8742003D00C8 /* WeatherColor.swift */; };
+		C0E54D332A4B8768003D00C8 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D322A4B8768003D00C8 /* GradientView.swift */; };
+		C0E54D352A4B8792003D00C8 /* GradientView+WeatherColorSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D342A4B8792003D00C8 /* GradientView+WeatherColorSet.swift */; };
+		C0E54D372A4B8D52003D00C8 /* WeatherColorSet+SkyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D362A4B8D52003D00C8 /* WeatherColorSet+SkyType.swift */; };
+		C0E54D392A4C5445003D00C8 /* SkyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D382A4C5445003D00C8 /* SkyType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +113,14 @@
 		C0E54D232A4B0F06003D00C8 /* DatedForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatedForecast.swift; sourceTree = "<group>"; };
 		C0E54D252A4B39B8003D00C8 /* UIVisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVisualEffectView.swift; sourceTree = "<group>"; };
 		C0E54D272A4B4B3F003D00C8 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		C0E54D292A4B868B003D00C8 /* WeatherCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCode.swift; sourceTree = "<group>"; };
+		C0E54D2B2A4B86E5003D00C8 /* WeatherType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherType.swift; sourceTree = "<group>"; };
+		C0E54D2E2A4B8724003D00C8 /* WeatherColorSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherColorSet.swift; sourceTree = "<group>"; };
+		C0E54D302A4B8742003D00C8 /* WeatherColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherColor.swift; sourceTree = "<group>"; };
+		C0E54D322A4B8768003D00C8 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		C0E54D342A4B8792003D00C8 /* GradientView+WeatherColorSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GradientView+WeatherColorSet.swift"; sourceTree = "<group>"; };
+		C0E54D362A4B8D52003D00C8 /* WeatherColorSet+SkyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeatherColorSet+SkyType.swift"; sourceTree = "<group>"; };
+		C0E54D382A4C5445003D00C8 /* SkyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +184,7 @@
 			children = (
 				C04E2C092A473EAA00A5B1E8 /* AppDelegate.swift */,
 				C04E2C0B2A473EAA00A5B1E8 /* SceneDelegate.swift */,
+				C0E54D2D2A4B8711003D00C8 /* Style */,
 				C0E54D1A2A49EB3D003D00C8 /* Extensions */,
 				C04E2C5E2A47424600A5B1E8 /* Models */,
 				C08D19712A48F04500834A21 /* Views */,
@@ -229,6 +246,8 @@
 				C04E2C652A475E1A00A5B1E8 /* HourForecast.swift */,
 				C04E2C632A475E0F00A5B1E8 /* Weather.swift */,
 				C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */,
+				C0E54D292A4B868B003D00C8 /* WeatherCode.swift */,
+				C0E54D2B2A4B86E5003D00C8 /* WeatherType.swift */,
 				C04E2C672A476D0200A5B1E8 /* Geocoding.swift */,
 				C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */,
 				C04E2C692A476FB800A5B1E8 /* GeoWeather.swift */,
@@ -255,6 +274,8 @@
 			isa = PBXGroup;
 			children = (
 				C08D19722A48F05B00834A21 /* TemperatureLabel.swift */,
+				C0E54D322A4B8768003D00C8 /* GradientView.swift */,
+				C0E54D342A4B8792003D00C8 /* GradientView+WeatherColorSet.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -266,6 +287,17 @@
 				C0E54D252A4B39B8003D00C8 /* UIVisualEffectView.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C0E54D2D2A4B8711003D00C8 /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				C0E54D2E2A4B8724003D00C8 /* WeatherColorSet.swift */,
+				C0E54D362A4B8D52003D00C8 /* WeatherColorSet+SkyType.swift */,
+				C0E54D302A4B8742003D00C8 /* WeatherColor.swift */,
+				C0E54D382A4C5445003D00C8 /* SkyType.swift */,
+			);
+			path = Style;
 			sourceTree = "<group>";
 		};
 		DE709730352D66B5F51FACE3 /* Pods */ = {
@@ -454,10 +486,12 @@
 			files = (
 				C04E2C6C2A47773B00A5B1E8 /* GeocodingJSON.swift in Sources */,
 				C0E54D1E2A49EB84003D00C8 /* DailyForecastContainer.swift in Sources */,
+				C0E54D392A4C5445003D00C8 /* SkyType.swift in Sources */,
 				C04E2C572A473FD600A5B1E8 /* GeoWeatherListView.swift in Sources */,
 				C08D19652A48AC8300834A21 /* GeoWeatherListView+DataSource.swift in Sources */,
 				C04E2C562A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift in Sources */,
 				C0E54D262A4B39B8003D00C8 /* UIVisualEffectView.swift in Sources */,
+				C0E54D2C2A4B86E5003D00C8 /* WeatherType.swift in Sources */,
 				C04E2C0A2A473EAA00A5B1E8 /* AppDelegate.swift in Sources */,
 				C0E54D202A4A292C003D00C8 /* HourForecastCell.swift in Sources */,
 				C08D196D2A48BAF300834A21 /* GeoWeatherDetailView.swift in Sources */,
@@ -467,17 +501,23 @@
 				C0E54D242A4B0F06003D00C8 /* DatedForecast.swift in Sources */,
 				C04E2C642A475E0F00A5B1E8 /* Weather.swift in Sources */,
 				C0E54D222A4A2954003D00C8 /* HourlyForecastCollectionView.swift in Sources */,
+				C0E54D2A2A4B868B003D00C8 /* WeatherCode.swift in Sources */,
 				C04E2C682A476D0200A5B1E8 /* Geocoding.swift in Sources */,
 				C04E2C592A473FD600A5B1E8 /* GeoWeatherListViewModel.swift in Sources */,
 				C04E2C662A475E1A00A5B1E8 /* HourForecast.swift in Sources */,
+				C0E54D352A4B8792003D00C8 /* GradientView+WeatherColorSet.swift in Sources */,
 				C04E2C142A473EAA00A5B1E8 /* OpenMeteo.xcdatamodeld in Sources */,
 				C08D196C2A48BAF300834A21 /* GeoWeatherDetailController.swift in Sources */,
+				C0E54D332A4B8768003D00C8 /* GradientView.swift in Sources */,
 				C08D196B2A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift in Sources */,
 				C04E2C602A47425600A5B1E8 /* WeatherJSON.swift in Sources */,
 				C0E54D192A49D993003D00C8 /* DayForecast.swift in Sources */,
+				C0E54D2F2A4B8724003D00C8 /* WeatherColorSet.swift in Sources */,
 				C04E2C6A2A476FB800A5B1E8 /* GeoWeather.swift in Sources */,
+				C0E54D372A4B8D52003D00C8 /* WeatherColorSet+SkyType.swift in Sources */,
 				C0E54D1C2A49EB47003D00C8 /* Date.swift in Sources */,
 				C08D19632A48AC1000834A21 /* GeoWeatherCell.swift in Sources */,
+				C0E54D312A4B8742003D00C8 /* WeatherColor.swift in Sources */,
 				C04E2C0C2A473EAA00A5B1E8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

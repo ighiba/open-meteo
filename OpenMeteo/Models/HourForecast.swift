@@ -9,5 +9,6 @@ import Foundation
 
 struct HourForecast: DatedForecast {
     var date: Date
+    var weatherCode: Int16
     var temperature: Float
 }

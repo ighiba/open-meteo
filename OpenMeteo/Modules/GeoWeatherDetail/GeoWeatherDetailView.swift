@@ -54,7 +54,7 @@ class GeoWeatherDetailView: UIScrollView {
     func configure(with geoWeather: GeoWeather) {
         geoNameLabel.text = geoWeather.geocoding.name
         currentTemperatureLabel.setTemperature(geoWeather.weather.obtainForecastForCurrentHour().temperature)
-        hourlyForecastCollectionView.configure(with: geoWeather.weather.obtainHourlyForecastForCurrentDay())
+        hourlyForecastCollectionView.configure(with: geoWeather.weather.obtainHourlyForecastFor(nextHours: 24))
         dailyForecastContainer.configure(with: geoWeather.weather.obtainDailyForecastFor(nextDays: 7))
     }
     

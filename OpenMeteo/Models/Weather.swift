@@ -8,14 +8,26 @@
 import Foundation
 
 struct Weather {
-    var current: HourForecast
-    var forecastByHour: [HourForecast]
-    var forecastByDay: [DayForecast]
+    private var current: HourForecast
+    private var hourlyForecast: [HourForecast]
+    private var dailyForecast: [DayForecast]
     
-    init(current: HourForecast, forecastByHour: [HourForecast]) {
+    init(current: HourForecast, hourly hourlyForecast: [HourForecast], daily dailyForecast: [DayForecast]) {
         self.current = current
-        self.forecastByHour = forecastByHour
-        self.forecastByDay = DayForecast.transform(from: forecastByHour)
+        self.hourlyForecast = hourlyForecast
+        self.dailyForecast = dailyForecast
+    }
+    
+    func obtainWeatherTypeForCurrentHour() -> WeatherType {
+        var weatherCode: Int16
+        if Calendar.current.isDate(current.date, equalTo: Date(), toGranularity: .hour) {
+            weatherCode = current.weatherCode
+        } else {
+            // if outdated or offline
+            weatherCode = obtainForecastForCurrentHour().weatherCode
+        }
+
+        return WeatherCode(rawValue: weatherCode)?.obtainWeatherType() ?? .clearSky
     }
     
     func obtainForecastForCurrentHour() -> HourForecast {
@@ -23,16 +35,16 @@ struct Weather {
             return current
         } else {
             // if outdated or offline
-            return obtainHourlyForecastForCurrentDay().first ?? current
+            return obtainHourlyForecastFor(nextHours: 24).first ?? current
         }
     }
     
-    func obtainHourlyForecastForCurrentDay() -> [HourForecast] {
-        return obtainForecastFromCurrentDate(forecastByHour, forNextItems: 24, toGranularity: .hour)
+    func obtainHourlyForecastFor(nextHours hours: UInt) -> [HourForecast] {
+        return obtainForecastFromCurrentDate(hourlyForecast, forNextItems: hours, toGranularity: .hour)
     }
     
     func obtainDailyForecastFor(nextDays days: UInt) -> [DayForecast] {
-        return obtainForecastFromCurrentDate(forecastByDay, forNextItems: days, toGranularity: .day)
+        return obtainForecastFromCurrentDate(dailyForecast, forNextItems: days, toGranularity: .day)
     }
     
     private func obtainForecastFromCurrentDate<T: DatedForecast>(
@@ -49,6 +61,32 @@ struct Weather {
             return [T](slice)
         }
         return []
+    }
+    
+    func obtainCurrentDayForecast() -> DayForecast? {
+        return obtainDailyForecastFor(nextDays: 1).first
+    }
+    
+    func isSunriseNow() -> Bool {
+        guard let today = obtainCurrentDayForecast() else { return false }
+        let sunriseOffset = today.sunriseTime.timeIntervalSinceNow
+        
+        return (sunriseOffset <= 3600) && (sunriseOffset >= -3600)
+    }
+    
+    func isSunsetNow() -> Bool {
+        guard let today = obtainCurrentDayForecast() else { return false }
+        let sunsetOffset = today.sunsetTime.timeIntervalSinceNow
+        
+        return (sunsetOffset <= 3600) && (sunsetOffset >= -3600)
+    }
+    
+    func isNightNow() -> Bool {
+        guard let today = obtainCurrentDayForecast() else { return false }
+        let sunriseOffset = today.sunriseTime.timeIntervalSinceNow
+        let sunsetOffset = today.sunsetTime.timeIntervalSinceNow
+
+        return (sunriseOffset > 0 && sunsetOffset < 0) || (sunriseOffset < 0 && sunsetOffset < 0)
     }
 }
 
