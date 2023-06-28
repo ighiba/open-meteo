@@ -11,7 +11,7 @@ struct DayForecast: DatedForecast {
     var date: Date
     var sunriseTime: Date
     var sunsetTime: Date
-    var weatherCode: Int16
+    var weatherCode: WeatherCode
     var minTemperature: Float
     var maxTemperature: Float
 }

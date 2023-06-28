@@ -24,7 +24,7 @@ final class WeatherJSON: Decodable {
 //        case windspeed
 //        case winddirection
         case weathercode
-//        case isDay = "isDay"
+        case isDay = "is_day"
         case time
     }
     
@@ -32,6 +32,7 @@ final class WeatherJSON: Decodable {
         case time
         case temperature = "temperature_2m"
         case weathercode
+        case isDay = "is_day"
     }
     
     enum DailyCodingKeys: String, CodingKey {
@@ -56,9 +57,16 @@ final class WeatherJSON: Decodable {
             dateFormatter.formatOptions = .withInternetDateTime
             return dateFormatter.date(from: timeString + ":00+00:00") ?? Date()
         }()
+        let currentIsDay = try? currentWeatherContainer?.decode(Int.self, forKey: .isDay)
         let temperature = try? currentWeatherContainer?.decode(Float.self, forKey: .temperature)
-        let currentWeatherCode = try? currentWeatherContainer?.decode(Int16.self, forKey: .weathercode)
-        let currentWeather = HourForecast(date: time, weatherCode: currentWeatherCode ?? 0, temperature: temperature ?? 0)
+        let currentWeatherCodeRaw = try? currentWeatherContainer?.decode(Int16.self, forKey: .weathercode)
+        let currentWeatherCode = WeatherCode(rawValue: currentWeatherCodeRaw ?? 0) ?? .clearSky
+        let currentWeather = HourForecast(
+            date: time,
+            isDay: currentIsDay != 0,
+            weatherCode: currentWeatherCode,
+            temperature: temperature ?? 0
+        )
         
         let hourlyContainer = try? rootContainer.nestedContainer(keyedBy: HourlyCodingKeys.self, forKey: .hourly)
         
@@ -69,15 +77,23 @@ final class WeatherJSON: Decodable {
             timeList = timeStrings.map { dateFormatter.date(from: $0 + ":00+00:00") }
         }
 
+        let isDayList = try? hourlyContainer?.decode([Int].self, forKey: .isDay)
         let temperatureList = try? hourlyContainer?.decode([Float].self, forKey: .temperature)
         let weatherCodeList = try? hourlyContainer?.decode([Int16].self, forKey: .weathercode)
         
         var hourlyForecastList: [HourForecast] = []
-        for i in 0 ..< timeList.count {
-            guard let time = timeList[i],
-                  let temperature = temperatureList?[i],
-                  let weatherCode = weatherCodeList?[i] else { continue }
-            hourlyForecastList.append(HourForecast(date: time, weatherCode: weatherCode, temperature: temperature))
+        for index in 0 ..< timeList.count {
+            guard let time = timeList[index],
+                  let isDay = isDayList?[index],
+                  let temperature = temperatureList?[index],
+                  let code = weatherCodeList?[index] else { continue }
+            let hourlyForecast = HourForecast(
+                date: time,
+                isDay: isDay != 0,
+                weatherCode: WeatherCode(rawValue: code) ?? .clearSky,
+                temperature: temperature
+            )
+            hourlyForecastList.append(hourlyForecast)
         }
         
         let dailyContainer = try? rootContainer.nestedContainer(keyedBy: DailyCodingKeys.self, forKey: .daily)
@@ -115,13 +131,13 @@ final class WeatherJSON: Decodable {
             let sunsetTime = sunsetDateList?[index] ?? Date(timeIntervalSinceReferenceDate: 0)
             let minTemperature = dailyTemperatureMinList?[index] ?? 0
             let maxTemperature = dailyTemperatureMaxList?[index] ?? 0
-            let weatherCode = dailyWeatherCodeList?[index] ?? 0
+            let code = dailyWeatherCodeList?[index] ?? 0
 
             let dailyForecast = DayForecast(
                 date: date,
                 sunriseTime: sunriseTime,
                 sunsetTime: sunsetTime,
-                weatherCode: weatherCode,
+                weatherCode: WeatherCode(rawValue: code) ?? .clearSky,
                 minTemperature: minTemperature,
                 maxTemperature: maxTemperature
             )

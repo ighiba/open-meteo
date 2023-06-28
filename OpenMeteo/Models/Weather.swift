@@ -7,8 +7,6 @@
 
 import Foundation
 
-// MARK: - Enums
-
 enum DayPhase {
     case day
     case night
@@ -34,6 +32,8 @@ enum WeatherType {
     case thunderstorm
 }
 
+private let oneHour: TimeInterval = 3600
+
 struct Weather {
     
     // MARK: - Properties
@@ -42,11 +42,8 @@ struct Weather {
     private var hourlyForecast: [HourForecast]
     private var dailyForecast: [DayForecast]
     
-    private let oneHour: TimeInterval = 3600
-    
     var currentWeatherCode: WeatherCode {
-        let weatherCode = obtainForecastForCurrentHour().weatherCode
-        return WeatherCode(rawValue: weatherCode) ?? .clearSky
+        return obtainForecastForCurrentHour().weatherCode
     }
     
     var currentWeatherType: WeatherType {

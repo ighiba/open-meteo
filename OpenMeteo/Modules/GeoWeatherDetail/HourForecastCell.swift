@@ -14,7 +14,7 @@ class HourForecastCell: UICollectionViewCell {
     static let width: CGFloat = 40
     static let height: CGFloat = 130
     
-    private let horizontalOffset: CGFloat = 20
+    private let horizontalOffset: CGFloat = 15
     
     // MARK: - Init
     
@@ -32,6 +32,7 @@ class HourForecastCell: UICollectionViewCell {
     func setViews() {
         self.addSubview(hourLabel)
         self.addSubview(temperatureLabel)
+        self.addSubview(weatherIconView)
         
         hourLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(horizontalOffset)
@@ -39,8 +40,15 @@ class HourForecastCell: UICollectionViewCell {
         }
         
         temperatureLabel.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(horizontalOffset)
+            make.bottom.equalToSuperview().inset(horizontalOffset - 5)
             make.centerX.equalToSuperview()
+        }
+        
+        weatherIconView.snp.makeConstraints { make in
+            make.width.equalTo(Self.width)
+            make.height.equalTo(Self.width)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
         }
     }
     
@@ -51,6 +59,8 @@ class HourForecastCell: UICollectionViewCell {
         
         hourLabel.sizeToFit()
         temperatureLabel.sizeToFit()
+        
+        weatherIconView.setIcon(for: hourForecast.weatherCode.obtainWeatherType(), isDay: hourForecast.isDay)
     }
     
     // MARK: - Views
@@ -74,5 +84,7 @@ class HourForecastCell: UICollectionViewCell {
         
         return label
     }()
+    
+    lazy var weatherIconView: WeatherIconView = WeatherIconView(weatherIcon: .sun)
     
 }

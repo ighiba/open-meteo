@@ -51,6 +51,8 @@
 		C0E54D372A4B8D52003D00C8 /* WeatherColorSet+SkyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D362A4B8D52003D00C8 /* WeatherColorSet+SkyType.swift */; };
 		C0E54D392A4C5445003D00C8 /* SkyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D382A4C5445003D00C8 /* SkyType.swift */; };
 		C0E54D3D2A4C587B003D00C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C0E54D3F2A4C587B003D00C8 /* Localizable.strings */; };
+		C0E54D442A4CC270003D00C8 /* WeatherIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D432A4CC270003D00C8 /* WeatherIconView.swift */; };
+		C0E54D462A4CC29A003D00C8 /* WeatherIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D452A4CC29A003D00C8 /* WeatherIcon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +125,8 @@
 		C0E54D3A2A4C57F4003D00C8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		C0E54D3E2A4C587B003D00C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C0E54D402A4C588D003D00C8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C0E54D432A4CC270003D00C8 /* WeatherIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconView.swift; sourceTree = "<group>"; };
+		C0E54D452A4CC29A003D00C8 /* WeatherIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIcon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				C08D19722A48F05B00834A21 /* TemperatureLabel.swift */,
+				C0E54D432A4CC270003D00C8 /* WeatherIconView.swift */,
 				C0E54D322A4B8768003D00C8 /* GradientView.swift */,
 				C0E54D342A4B8792003D00C8 /* GradientView+WeatherColorSet.swift */,
 			);
@@ -297,6 +302,7 @@
 				C0E54D2E2A4B8724003D00C8 /* WeatherColorSet.swift */,
 				C0E54D362A4B8D52003D00C8 /* WeatherColorSet+SkyType.swift */,
 				C0E54D302A4B8742003D00C8 /* WeatherColor.swift */,
+				C0E54D452A4CC29A003D00C8 /* WeatherIcon.swift */,
 				C0E54D382A4C5445003D00C8 /* SkyType.swift */,
 			);
 			path = Style;
@@ -501,7 +507,9 @@
 				C08D19732A48F05B00834A21 /* TemperatureLabel.swift in Sources */,
 				C0E54D172A49A5DE003D00C8 /* DayForecastRow.swift in Sources */,
 				C08D196E2A48BAF300834A21 /* GeoWeatherDetailViewModel.swift in Sources */,
+				C0E54D462A4CC29A003D00C8 /* WeatherIcon.swift in Sources */,
 				C0E54D242A4B0F06003D00C8 /* DatedForecast.swift in Sources */,
+				C0E54D442A4CC270003D00C8 /* WeatherIconView.swift in Sources */,
 				C04E2C642A475E0F00A5B1E8 /* Weather.swift in Sources */,
 				C0E54D222A4A2954003D00C8 /* HourlyForecastCollectionView.swift in Sources */,
 				C0E54D2A2A4B868B003D00C8 /* WeatherCode.swift in Sources */,
