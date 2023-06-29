@@ -31,6 +31,7 @@ final class WeatherJSON: Decodable {
     enum HourlyCodingKeys: String, CodingKey {
         case time
         case temperature = "temperature_2m"
+        case precipitationProbability = "precipitation_probability"
         case weathercode
         case isDay = "is_day"
     }
@@ -43,6 +44,7 @@ final class WeatherJSON: Decodable {
         case temperatureMin = "temperature_2m_min"
         case sunrise
         case sunset
+        case precipitationProbabilityMax = "precipitation_probability_max"
     }
     
     init(from decoder: Decoder) throws {
@@ -64,6 +66,7 @@ final class WeatherJSON: Decodable {
         let currentWeather = HourForecast(
             date: time,
             isDay: currentIsDay != 0,
+            precipitationProbability: 0,
             weatherCode: currentWeatherCode,
             temperature: temperature ?? 0
         )
@@ -79,6 +82,7 @@ final class WeatherJSON: Decodable {
 
         let isDayList = try? hourlyContainer?.decode([Int].self, forKey: .isDay)
         let temperatureList = try? hourlyContainer?.decode([Float].self, forKey: .temperature)
+        let precipitationProbabilityList = try? hourlyContainer?.decode([Int16].self, forKey: .precipitationProbability)
         let weatherCodeList = try? hourlyContainer?.decode([Int16].self, forKey: .weathercode)
         
         var hourlyForecastList: [HourForecast] = []
@@ -86,10 +90,12 @@ final class WeatherJSON: Decodable {
             guard let time = timeList[index],
                   let isDay = isDayList?[index],
                   let temperature = temperatureList?[index],
+                  let precipitationProbability = precipitationProbabilityList?[index],
                   let code = weatherCodeList?[index] else { continue }
             let hourlyForecast = HourForecast(
                 date: time,
                 isDay: isDay != 0,
+                precipitationProbability: precipitationProbability,
                 weatherCode: WeatherCode(rawValue: code) ?? .clearSky,
                 temperature: temperature
             )
@@ -110,7 +116,8 @@ final class WeatherJSON: Decodable {
         let dailyWeatherCodeList = try? dailyContainer?.decode([Int16].self, forKey: .weathercode)
         let dailySunriseListString = try? dailyContainer?.decode([String].self, forKey: .sunrise)
         let dailySunsetListString = try? dailyContainer?.decode([String].self, forKey: .sunset)
-        
+        let precipitationMaxList = try? dailyContainer?.decode([Int16].self, forKey: .precipitationProbabilityMax)
+
         let sunriseDateList = dailySunriseListString?.compactMap({ dateString in
             let dateFormatter = ISO8601DateFormatter()
             dateFormatter.formatOptions = .withInternetDateTime
@@ -129,9 +136,10 @@ final class WeatherJSON: Decodable {
             let date = dateList[index]
             let sunriseTime = sunriseDateList?[index] ?? Date(timeIntervalSinceReferenceDate: 0)
             let sunsetTime = sunsetDateList?[index] ?? Date(timeIntervalSinceReferenceDate: 0)
+            let code = dailyWeatherCodeList?[index] ?? 0
             let minTemperature = dailyTemperatureMinList?[index] ?? 0
             let maxTemperature = dailyTemperatureMaxList?[index] ?? 0
-            let code = dailyWeatherCodeList?[index] ?? 0
+            let precipitationMax = precipitationMaxList?[index] ?? 0
 
             let dailyForecast = DayForecast(
                 date: date,
@@ -139,7 +147,8 @@ final class WeatherJSON: Decodable {
                 sunsetTime: sunsetTime,
                 weatherCode: WeatherCode(rawValue: code) ?? .clearSky,
                 minTemperature: minTemperature,
-                maxTemperature: maxTemperature
+                maxTemperature: maxTemperature,
+                precipitationProbabilityMax: precipitationMax
             )
             dailyForecastList.append(dailyForecast)
         }

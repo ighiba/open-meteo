@@ -18,6 +18,7 @@ class DayForecastRow: UIView {
     // MARK: - Views
     
     lazy var dateLabel = configureDateLabel()
+    lazy var precipitationProbabilityLabel = configurePrecipitationProbabilityLabel()
     private let weatherIconView = WeatherIconView(weatherIcon: .sun)
     private let minMaxTemeperatureRangeContainer = TemperatureRangeContainer()
     
@@ -37,11 +38,17 @@ class DayForecastRow: UIView {
     
     private func setViews() {
         self.addSubview(dateLabel)
+        self.addSubview(precipitationProbabilityLabel)
         self.addSubview(weatherIconView)
         self.addSubview(minMaxTemeperatureRangeContainer)
         
         dateLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(verticalOffset)
+            make.centerY.equalToSuperview()
+        }
+        
+        precipitationProbabilityLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(weatherIconView.snp.leading).offset(-verticalOffset / 2)
             make.centerY.equalToSuperview()
         }
         
@@ -62,10 +69,24 @@ class DayForecastRow: UIView {
     }
     
     func configure(with forecast: DayForecast) {
-        dateLabel.setAttributedTextWithShadow(forecast.date.string(withFormat: "dd MMMM"))
-
+        let dateText = forecast.date.string(withFormat: "dd MMMM")
+        let precipitationMax = forecast.precipitationProbabilityMax
+        let weatherType = forecast.weatherCode.obtainWeatherType()
+        
+        dateLabel.setAttributedTextWithShadow(dateText)
+        precipitationProbabilityLabel.setPrecipitationProbability(precipitationMax)
         minMaxTemeperatureRangeContainer.setTemperature(min: forecast.minTemperature, max: forecast.maxTemperature)
-        weatherIconView.setIcon(for: forecast.weatherCode.obtainWeatherType())
+        weatherIconView.setIcon(for: weatherType)
+    }
+
+    func configurePrecipitationProbabilityLabel() -> PrecipitationProbabilityLabel {
+        let label = PrecipitationProbabilityLabel()
+        
+        label.text = "0%"
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.textColor = UIColor(named: "PrecipitationLabel")
+        
+        return label
     }
 
     func configureDateLabel() -> UILabel {

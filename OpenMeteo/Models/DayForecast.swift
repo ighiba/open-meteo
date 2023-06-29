@@ -14,4 +14,5 @@ struct DayForecast: DatedForecast {
     var weatherCode: WeatherCode
     var minTemperature: Float
     var maxTemperature: Float
+    var precipitationProbabilityMax: Int16
 }
