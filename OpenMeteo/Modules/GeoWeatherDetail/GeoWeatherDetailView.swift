@@ -70,7 +70,7 @@ class GeoWeatherDetailView: UIScrollView {
     // MARK: - Views
     
     lazy var contentContainer: UIStackView = {
-        let container = UIStackView(arrangedSubviews:[
+        let container = UIStackView(arrangedSubviews: [
             mainInfoContainer,
             hourlyForecastCollectionView,
             dailyForecastContainer

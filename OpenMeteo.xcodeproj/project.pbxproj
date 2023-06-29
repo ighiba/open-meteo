@@ -55,6 +55,7 @@
 		C0E54D462A4CC29A003D00C8 /* WeatherIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D452A4CC29A003D00C8 /* WeatherIcon.swift */; };
 		C0E54D482A4CECBA003D00C8 /* TemperatureLabelSymboled.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D472A4CECBA003D00C8 /* TemperatureLabelSymboled.swift */; };
 		C0E54D4A2A4CECEA003D00C8 /* TemperatureRangeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D492A4CECEA003D00C8 /* TemperatureRangeContainer.swift */; };
+		C0E54D4C2A4DD497003D00C8 /* UILabel+NSShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +132,7 @@
 		C0E54D452A4CC29A003D00C8 /* WeatherIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIcon.swift; sourceTree = "<group>"; };
 		C0E54D472A4CECBA003D00C8 /* TemperatureLabelSymboled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureLabelSymboled.swift; sourceTree = "<group>"; };
 		C0E54D492A4CECEA003D00C8 /* TemperatureRangeContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureRangeContainer.swift; sourceTree = "<group>"; };
+		C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+NSShadow.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +300,7 @@
 			children = (
 				C0E54D1B2A49EB47003D00C8 /* Date.swift */,
 				C0E54D252A4B39B8003D00C8 /* UIVisualEffectView.swift */,
+				C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				C08D196B2A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift in Sources */,
 				C04E2C602A47425600A5B1E8 /* WeatherJSON.swift in Sources */,
 				C0E54D192A49D993003D00C8 /* DayForecast.swift in Sources */,
+				C0E54D4C2A4DD497003D00C8 /* UILabel+NSShadow.swift in Sources */,
 				C0E54D2F2A4B8724003D00C8 /* WeatherColorSet.swift in Sources */,
 				C04E2C6A2A476FB800A5B1E8 /* GeoWeather.swift in Sources */,
 				C0E54D482A4CECBA003D00C8 /* TemperatureLabelSymboled.swift in Sources */,

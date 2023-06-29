@@ -10,14 +10,29 @@ import SnapKit
 
 class TemperatureLabelSymboled: UIView {
     
+    // MARK: - Properties
+    
     private var symbolName: String = ""
+    private var temperatureFontSize: CGFloat = 20
 
-    private let symbolWidth: CGFloat = 11
     private let symbolInset: CGFloat = 3
-    private let temperatureLabelWidth: CGFloat = 42
-
-    init(symbolName: String) {
+    private var symbolWidth: CGFloat {
+        return temperatureFontSize * 0.58
+    }
+    
+    private var temperatureLabelWidth: CGFloat {
+        return temperatureFontSize * 2.1
+    }
+    
+    var prefferedWidth: CGFloat {
+        return symbolWidth + temperatureLabelWidth + (symbolInset * 2) + (symbolWidth / 2)
+    }
+    
+    // MARK: - Init
+    
+    init(symbolName: String, temperatureFontSize: CGFloat) {
         self.symbolName = symbolName
+        self.temperatureFontSize = temperatureFontSize
         super.init(frame: .zero)
         setViews()
     }
@@ -73,8 +88,13 @@ class TemperatureLabelSymboled: UIView {
         }
     }
     
+    func setColors(_ color: UIColor) {
+        temperatureLabel.textColor = color
+        symbolView.tintColor = color
+    }
+    
     func setTemperature(_ temperature: Float) {
-        temperatureLabel.text = String(format: "%.0f°", temperature)
+        temperatureLabel.setTemperature(temperature)
     }
     
     // MARK: - Views
@@ -85,11 +105,11 @@ class TemperatureLabelSymboled: UIView {
         imageView.tintColor = .label
         return imageView
     }()
-    
-    lazy var temperatureLabel: UILabel = {
-        let label = UILabel()
+
+    lazy var temperatureLabel: TemperatureLabel = {
+        let label = TemperatureLabel()
         label.text = "0"
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: temperatureFontSize)
         return label
     }()
 }

@@ -16,7 +16,6 @@ class GeoWeatherCell: UICollectionViewCell {
     static let height: CGFloat = 100
     
     private let horizontalOffset: CGFloat = 20
-    private let temperatureContainerSize = CGSize(width: 100, height: 50)
     
     // MARK: - Init
     
@@ -30,70 +29,111 @@ class GeoWeatherCell: UICollectionViewCell {
     }
     
     // MARK: - Layout
-    
-    override func updateConstraints() {
-        super.updateConstraints()
-    }
-    
-    func setViews() {
-        self.backgroundColor = .red
-        self.layer.cornerRadius = Self.height / 5
-        
-        self.addSubview(geoNameLabel)
-        currentTemperatureContainer.addSubview(currentTemperatureLabel)
-        self.addSubview(currentTemperatureContainer)
 
+    func setViews() {
+        self.layer.cornerRadius = Self.height / 5
+        backgroundGradientView.layer.cornerRadius = Self.height / 5
+        backgroundGradientView.layer.masksToBounds = true
+        
+        self.addSubview(backgroundGradientView)
+        self.addSubview(geoNameLabel)
+        self.addSubview(weatherCodeDescriptionLabel)
+        self.addSubview(currentTemperatureLabel)
+        self.addSubview(todayMinMaxTemeperatureContainer)
+
+        backgroundGradientView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
+        
         geoNameLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(horizontalOffset)
-            make.centerY.equalToSuperview()
+            make.top.equalTo(currentTemperatureLabel).offset(10)
         }
         
-        currentTemperatureContainer.snp.makeConstraints { make in
-            make.width.equalTo(temperatureContainerSize.width)
-            make.height.equalTo(temperatureContainerSize.height)
-            make.trailing.equalToSuperview().inset(horizontalOffset)
-            make.centerY.equalToSuperview()
+        weatherCodeDescriptionLabel.snp.makeConstraints { make in
+            make.leading.equalTo(geoNameLabel)
+            make.centerY.equalTo(todayMinMaxTemeperatureContainer)
         }
-        
+
         currentTemperatureLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(horizontalOffset)
+            make.centerY.equalToSuperview().offset(-horizontalOffset / 2)
+        }
+        
+        todayMinMaxTemeperatureContainer.snp.makeConstraints { make in
+            make.top.equalTo(currentTemperatureLabel.snp.bottom)
+            make.centerX.equalTo(currentTemperatureLabel)
+            make.width.equalTo(todayMinMaxTemeperatureContainer.preferredWidth)
+            make.height.equalTo(20)
         }
     }
     
     // MARK: - Methods
     
     func configure(with geoWeather: GeoWeather) {
-        geoNameLabel.text = geoWeather.geocoding.name
+        updateBackgroundView(with: geoWeather)
+        geoNameLabel.setAttributedTextWithShadow(geoWeather.geocoding.name)
+        weatherCodeDescriptionLabel.setAttributedTextWithShadow(geoWeather.weather.currentWeatherCode.localizedDescription)
         currentTemperatureLabel.setTemperature(geoWeather.weather.obtainForecastForCurrentHour().temperature)
+        todayMinMaxTemeperatureContainer.setTemperature(
+            min: geoWeather.weather.currentDayMinTemperature,
+            max: geoWeather.weather.currentDayMaxTemperature
+        )
+    }
+
+    func updateBackgroundView(with geoWeather: GeoWeather) {
+        let skyType = geoWeather.weather.obtainSkyType()
+        let colorSet = WeatherColorSet.obtainColorSet(fromSkyType: skyType)
+        backgroundGradientView.setColors(weatherColorSet: colorSet)
     }
     
     // MARK: - Views
+    
+    private var backgroundGradientView = GradientView()
     
     private let geoNameLabel: UILabel = {
         let label = UILabel()
         
         label.text = "Location name"
-        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 35, weight: .bold)
+        label.textColor = .white
         label.sizeToFit()
         
         return label
     }()
     
-    lazy var currentTemperatureContainer: UIView = {
-        let container = UIView()
+    private let weatherCodeDescriptionLabel: UILabel = {
+        let label = UILabel()
         
-        container.backgroundColor = .systemGray4
-        container.layer.cornerRadius = temperatureContainerSize.height / 5
+        label.text = "-"
+        label.font = UIFont.systemFont(ofSize: 15, weight: .light)
+        label.textColor = .white
+        label.sizeToFit()
         
-        return container
+        return label
     }()
     
     let currentTemperatureLabel: TemperatureLabel = {
         let label = TemperatureLabel()
         
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 50)
+        label.textColor = .white
 
         return label
+    }()
+    
+    private let todayMinMaxTemeperatureContainer: TemperatureRangeContainer = {
+        let fontSize: CGFloat = 15
+        let container = TemperatureRangeContainer(withFontSize: fontSize)
+        
+        container.minTemperatureLabel.temperatureLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .light)
+        container.maxTemperatureLabel.temperatureLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .light)
+        
+        container.setColors(.white)
+        
+        return container
     }()
 }

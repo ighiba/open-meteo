@@ -9,12 +9,18 @@ import UIKit
 
 class TemperatureRangeContainer: UIView {
     
-    lazy var minTemperatureLabel = TemperatureLabelSymboled(symbolName: "arrow.down")
-    lazy var maxTemperatureLabel = TemperatureLabelSymboled(symbolName: "arrow.up")
+    var minTemperatureLabel: TemperatureLabelSymboled
+    var maxTemperatureLabel: TemperatureLabelSymboled
     
-    init() {
+    var preferredWidth: CGFloat {
+        return minTemperatureLabel.prefferedWidth + maxTemperatureLabel.prefferedWidth
+    }
+    
+    init(withFontSize fontSize: CGFloat = 20) {
+        self.minTemperatureLabel = TemperatureLabelSymboled(symbolName: "arrow.down", temperatureFontSize: fontSize)
+        self.maxTemperatureLabel = TemperatureLabelSymboled(symbolName: "arrow.up", temperatureFontSize: fontSize)
         super.init(frame: .zero)
-        self.setTemperature(min: 0, max: 0)
+        setTemperature(min: 0, max: 0)
         setViews()
     }
     
@@ -28,6 +34,11 @@ class TemperatureRangeContainer: UIView {
 
         minTemperatureLabel.makeConstraints(superview: self, toLeading: true)
         maxTemperatureLabel.makeConstraints(superview: self, toLeading: false)
+    }
+    
+    func setColors(_ color: UIColor) {
+        minTemperatureLabel.setColors(color)
+        maxTemperatureLabel.setColors(color)
     }
     
     func setTemperature(min: Float, max: Float) {

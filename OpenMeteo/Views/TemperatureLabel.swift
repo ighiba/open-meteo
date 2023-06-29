@@ -9,12 +9,15 @@ import UIKit
 
 class TemperatureLabel: UILabel {
     
-    init(_ temperature: Float? = nil) {
+    private var showTemperatureUnit: Bool
+    
+    init(_ temperature: Float? = nil, withTemperatureUnit: Bool = false) {
+        self.showTemperatureUnit = withTemperatureUnit
         super.init(frame: .zero)
         if let temperature = temperature {
             setTemperature(temperature)
         } else {
-            self.text = "--"
+            self.setAttributedTextWithShadow("--")
         }
     }
     
@@ -23,7 +26,8 @@ class TemperatureLabel: UILabel {
     }
     
     func setTemperature(_ temperature: Float) {
-        self.text = String(format: "%.0f", temperature) + "°C"
-        self.sizeToFit()
+        let temperatureUnit = showTemperatureUnit ? "C" : ""
+        let newText = String(format: "%.0f", temperature) + "°\(temperatureUnit)"
+        self.setAttributedTextWithShadow(newText)
     }
 }
