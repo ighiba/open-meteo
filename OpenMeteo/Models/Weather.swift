@@ -140,7 +140,8 @@ struct Weather {
     
     private func isNightNow() -> Bool {
         guard let sunriseOffset = obtainSunriseOffset(), let sunsetOffset = obtainSunsetOffset() else { return false }
-        return (sunriseOffset > 0 && sunsetOffset < 0) || (sunriseOffset < 0 && sunsetOffset < 0)
+        return isAfterSunsetAndBeforeMidnight(sunriseOffset, sunsetOffset) ||
+               isAfterMidnightAndBeforeSunrise(sunriseOffset, sunsetOffset)
     }
     
     private func obtainSunriseOffset() -> TimeInterval? {
@@ -149,6 +150,14 @@ struct Weather {
     
     private func obtainSunsetOffset() -> TimeInterval? {
         return obtainCurrentDayForecast()?.sunsetTime.timeIntervalSinceNow
+    }
+    
+    private func isAfterSunsetAndBeforeMidnight(_ sunriseOffset: TimeInterval, _ sunsetOffset: TimeInterval) -> Bool {
+        return sunriseOffset < 0 && sunsetOffset < 0
+    }
+    
+    private func isAfterMidnightAndBeforeSunrise(_ sunriseOffset: TimeInterval, _ sunsetOffset: TimeInterval) -> Bool {
+        return sunriseOffset > 0 && sunsetOffset > 0
     }
 }
 
