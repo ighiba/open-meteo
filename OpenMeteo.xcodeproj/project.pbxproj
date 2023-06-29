@@ -56,6 +56,7 @@
 		C0E54D482A4CECBA003D00C8 /* TemperatureLabelSymboled.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D472A4CECBA003D00C8 /* TemperatureLabelSymboled.swift */; };
 		C0E54D4A2A4CECEA003D00C8 /* TemperatureRangeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D492A4CECEA003D00C8 /* TemperatureRangeContainer.swift */; };
 		C0E54D4C2A4DD497003D00C8 /* UILabel+NSShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */; };
+		C0EC33A42A4DF9D500EAC0D6 /* StyledContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +134,7 @@
 		C0E54D472A4CECBA003D00C8 /* TemperatureLabelSymboled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureLabelSymboled.swift; sourceTree = "<group>"; };
 		C0E54D492A4CECEA003D00C8 /* TemperatureRangeContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureRangeContainer.swift; sourceTree = "<group>"; };
 		C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+NSShadow.swift"; sourceTree = "<group>"; };
+		C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,6 +315,7 @@
 				C0E54D302A4B8742003D00C8 /* WeatherColor.swift */,
 				C0E54D452A4CC29A003D00C8 /* WeatherIcon.swift */,
 				C0E54D382A4C5445003D00C8 /* SkyType.swift */,
+				C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */,
 			);
 			path = Style;
 			sourceTree = "<group>";
@@ -503,6 +506,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0EC33A42A4DF9D500EAC0D6 /* StyledContainer.swift in Sources */,
 				C04E2C6C2A47773B00A5B1E8 /* GeocodingJSON.swift in Sources */,
 				C0E54D1E2A49EB84003D00C8 /* DailyForecastContainer.swift in Sources */,
 				C0E54D392A4C5445003D00C8 /* SkyType.swift in Sources */,

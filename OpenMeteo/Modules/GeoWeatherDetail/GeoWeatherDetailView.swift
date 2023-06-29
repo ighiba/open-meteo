@@ -11,6 +11,12 @@ import SnapKit
 class GeoWeatherDetailView: UIScrollView {
     
     private let spacing: CGFloat = 25
+    
+    var preferredContainersStyle: ContainerStyle = .light {
+        didSet {
+            updateViewsStyle(with: preferredContainersStyle)
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,15 +62,25 @@ class GeoWeatherDetailView: UIScrollView {
     }
     
     func configure(with geoWeather: GeoWeather) {
-        geoNameLabel.setAttributedTextWithShadow( geoWeather.geocoding.name)
-        currentTemperatureLabel.setTemperature(geoWeather.weather.obtainForecastForCurrentHour().temperature)
-        todayMinMaxTemeperatureRangeContainer.setTemperature(
-            min: geoWeather.weather.currentDayMinTemperature,
-            max: geoWeather.weather.currentDayMaxTemperature
-        )
-        weatherCodeDescriptionLabel.text = geoWeather.weather.currentWeatherCode.localizedDescription
-        hourlyForecastCollectionView.configure(with: geoWeather.weather.obtainHourlyForecastFor(nextHours: 24))
-        dailyForecastContainer.configure(with: geoWeather.weather.obtainDailyForecastFor(nextDays: 7))
+        let locationName = geoWeather.geocoding.name
+        let currentTemperature = geoWeather.weather.obtainForecastForCurrentHour().temperature
+        let currentMinTemperature = geoWeather.weather.currentDayMinTemperature
+        let currentMaxTemperature = geoWeather.weather.currentDayMaxTemperature
+        let weatherCodeDescription = geoWeather.weather.currentWeatherCode.localizedDescription
+        let hourlyForecastFor24Hours = geoWeather.weather.obtainHourlyForecastFor(nextHours: 24)
+        let dailyForecastForWeek =  geoWeather.weather.obtainDailyForecastFor(nextDays: 7)
+        
+        geoNameLabel.setAttributedTextWithShadow(locationName)
+        currentTemperatureLabel.setTemperature(currentTemperature)
+        todayMinMaxTemeperatureRangeContainer.setTemperature(min: currentMinTemperature, max: currentMaxTemperature)
+        weatherCodeDescriptionLabel.setAttributedTextWithShadow(weatherCodeDescription)
+        hourlyForecastCollectionView.configure(with: hourlyForecastFor24Hours)
+        dailyForecastContainer.configure(with: dailyForecastForWeek)
+    }
+    
+    func updateViewsStyle(with style: ContainerStyle) {
+        hourlyForecastCollectionView.updateContainerStyle(with: style)
+        dailyForecastContainer.updateContainerStyle(with: style)
     }
     
     // MARK: - Views
@@ -112,7 +128,7 @@ class GeoWeatherDetailView: UIScrollView {
     private let currentTemperatureLabel: TemperatureLabel = {
         let label = TemperatureLabel()
 
-        label.font = UIFont.systemFont(ofSize: 50)
+        label.font = UIFont.systemFont(ofSize: 60)
         label.textColor = .white
 
         return label

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HourlyForecastCollectionView: UICollectionView {
+class HourlyForecastCollectionView: UICollectionView, StyledContainer {
     
     private let verticalSectionInset: CGFloat = 10
 
@@ -40,7 +40,7 @@ class HourlyForecastCollectionView: UICollectionView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.layer.cornerRadius = self.bounds.width / 20
+        self.layer.cornerRadius = 15
         
         hideHorizontalScrollIndicator()
         hideVerticalScrollIndicator()
@@ -49,6 +49,10 @@ class HourlyForecastCollectionView: UICollectionView {
     func setViews() {
         self.backgroundColor = .clear
         self.backgroundView = UIVisualEffectView.obtainBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
+    }
+    
+    func updateContainerStyle(with style: ContainerStyle) {
+        self.backgroundView = UIVisualEffectView.obtainBlur(style: style.blurStyle, withAlpha: style.alpha)
     }
     
     func configure(with hourForecastList: [HourForecast]) {

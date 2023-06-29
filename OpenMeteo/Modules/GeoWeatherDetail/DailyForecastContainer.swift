@@ -8,7 +8,9 @@
 import UIKit
 import SnapKit
 
-class DailyForecastContainer: UIStackView {
+class DailyForecastContainer: UIStackView, StyledContainer {
+    
+    private var blurEffectView = UIVisualEffectView.obtainBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
     
     init() {
         super.init(frame: .zero)
@@ -32,7 +34,7 @@ class DailyForecastContainer: UIStackView {
         
         self.backgroundColor = .clear
         
-        let blurEffectView = UIVisualEffectView.obtainBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
+        
         self.insertSubview(blurEffectView, at: 0)
         blurEffectView.snp.makeConstraints { make in
             make.leading.equalToSuperview()
@@ -40,6 +42,10 @@ class DailyForecastContainer: UIStackView {
             make.top.equalToSuperview()
             make.bottom.equalToSuperview()
         }
+    }
+    
+    func updateContainerStyle(with style: ContainerStyle) {
+        blurEffectView.updateBlur(style: style.blurStyle, withAlpha: style.alpha)
     }
     
     func configure(with dayForecastList: [DayForecast]) {

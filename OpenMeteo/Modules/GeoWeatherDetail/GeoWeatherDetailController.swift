@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 class GeoWeatherDetailViewController: UIViewController {
+    
+    // MARK: - Properties
 
     var viewModel: GeoWeatherDetailViewModelDelegate! {
         didSet {
@@ -20,6 +22,8 @@ class GeoWeatherDetailViewController: UIViewController {
 
     let backgroundView = GradientView()
     var geoWeatherDetailScrollView = GeoWeatherDetailView()
+    
+    // MARK: - Layout
 
     override func loadView() {
         self.view = backgroundView
@@ -40,13 +44,35 @@ class GeoWeatherDetailViewController: UIViewController {
         configureViews(with: viewModel.geoWeather)
     }
     
-    func configureViews(with geoWeather: GeoWeather) {
-        geoWeatherDetailScrollView.configure(with: geoWeather)
-        updateBackgroundView(with: geoWeather)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        animateChangeNavBarStyle(withDuration: 0.3, to: .black)
     }
     
-    func updateBackgroundView(with geoWeather: GeoWeather) {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        animateChangeNavBarStyle(withDuration: 0.3, to: .default)
+    }
+    
+    private func animateChangeNavBarStyle(withDuration duration: TimeInterval, to style: UIBarStyle) {
+        UIView.animate(withDuration: duration) {
+            self.navigationController?.navigationBar.barStyle = style
+        }
+    }
+    
+    func configureViews(with geoWeather: GeoWeather) {
+        geoWeatherDetailScrollView.configure(with: geoWeather)
+
         let skyType = geoWeather.weather.obtainSkyType()
+        updateViews(for: skyType)
+    }
+    
+    func updateViews(for skyType: SkyType) {
+        updateBackgroundView(for: skyType)
+        geoWeatherDetailScrollView.preferredContainersStyle = ContainerStyle.obtainContainerStyle(for: skyType)
+    }
+    
+    func updateBackgroundView(for skyType: SkyType) {
         let colorSet = WeatherColorSet.obtainColorSet(fromSkyType: skyType)
         backgroundView.setColors(weatherColorSet: colorSet)
     }
