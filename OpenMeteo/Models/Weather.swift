@@ -25,9 +25,13 @@ enum DayPhase {
 
 enum WeatherType {
     case clearSky
-    case cloudly
+    case partlyCloudy
+    case overcast
     case fog
+    case drizzle
     case rain
+    case rainHeavy
+    case hail
     case snow
     case thunderstorm
 }
@@ -109,9 +113,9 @@ struct Weather {
         switch currentWeatherType {
         case .clearSky:
             return obtainCurrentDayPhase().obtainSkyType()
-        case .fog, .cloudly:
+        case .partlyCloudy, .fog, .overcast, .drizzle:
             return .cloudy
-        case .rain, .snow, .thunderstorm:
+        case .rain, .rainHeavy, .hail, .snow, .thunderstorm:
             return .rain
         }
     }
@@ -160,6 +164,3 @@ struct Weather {
         return sunriseOffset > 0 && sunsetOffset > 0
     }
 }
-
-
-
