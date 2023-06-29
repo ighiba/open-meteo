@@ -54,7 +54,8 @@ class HourForecastCell: UICollectionViewCell {
     }
     
     func configure(with hourForecast: HourForecast, for indexPath: IndexPath) {
-        let hourLabelText = indexPath.row == 0 ? "Now" : hourForecast.date.string(withFormat: "HH")
+        let nowString = NSLocalizedString("Now", comment: "")
+        let hourLabelText = indexPath.row == 0 ? nowString : hourForecast.date.string(withFormat: "HH")
         hourLabel.text = hourLabelText
         temperatureLabel.text = String(format: "%.0f", hourForecast.temperature) + "°"
         
@@ -70,7 +71,7 @@ class HourForecastCell: UICollectionViewCell {
         let label = UILabel()
         
         label.text = "12"
-        label.font = UIFont.systemFont(ofSize: 17)
+        label.font = UIFont.systemFont(ofSize: 15)
         label.sizeToFit()
         
         return label
