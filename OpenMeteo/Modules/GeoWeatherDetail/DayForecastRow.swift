@@ -19,13 +19,13 @@ class DayForecastRow: UIView {
     
     lazy var dateLabel = configureDateLabel()
     private let weatherIconView = WeatherIconView(weatherIcon: .sun)
-    private let temperatureRangeContainer = TemperatureRangeContainer()
+    private let minMaxTemeperatureRangeContainer = TemperatureRangeContainer()
     
     // MARK: - Init
     
     init() {
         super.init(frame: .zero)
-        temperatureRangeContainer.setColors(.white)
+        minMaxTemeperatureRangeContainer.setColors(.white)
         setViews()
     }
     
@@ -38,7 +38,7 @@ class DayForecastRow: UIView {
     private func setViews() {
         self.addSubview(dateLabel)
         self.addSubview(weatherIconView)
-        self.addSubview(temperatureRangeContainer)
+        self.addSubview(minMaxTemeperatureRangeContainer)
         
         dateLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(verticalOffset)
@@ -48,13 +48,13 @@ class DayForecastRow: UIView {
         weatherIconView.snp.makeConstraints { make in
             make.width.equalTo(iconWidthHeight)
             make.height.equalTo(iconWidthHeight)
-            make.centerX.equalTo(self.snp.centerX)
+            make.trailing.equalTo(minMaxTemeperatureRangeContainer.snp.leading)
             make.centerY.equalToSuperview()
         }
         
-        temperatureRangeContainer.snp.makeConstraints { make in
-            make.leading.equalTo(weatherIconView.snp.trailing).offset(verticalOffset / 4)
-            make.trailing.equalToSuperview().inset(verticalOffset)
+        minMaxTemeperatureRangeContainer.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(verticalOffset / 4)
+            make.width.equalTo(minMaxTemeperatureRangeContainer.preferredWidth)
             make.centerY.equalToSuperview()
             make.top.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -64,7 +64,7 @@ class DayForecastRow: UIView {
     func configure(with forecast: DayForecast) {
         dateLabel.setAttributedTextWithShadow(forecast.date.string(withFormat: "dd MMMM"))
 
-        temperatureRangeContainer.setTemperature(min: forecast.minTemperature, max: forecast.maxTemperature)
+        minMaxTemeperatureRangeContainer.setTemperature(min: forecast.minTemperature, max: forecast.maxTemperature)
         weatherIconView.setIcon(for: forecast.weatherCode.obtainWeatherType())
     }
 

@@ -39,7 +39,7 @@ class GeoWeatherCell: UICollectionViewCell {
         self.addSubview(geoNameLabel)
         self.addSubview(weatherCodeDescriptionLabel)
         self.addSubview(currentTemperatureLabel)
-        self.addSubview(todayMinMaxTemeperatureContainer)
+        self.addSubview(todayMinMaxTemeperatureRangeContainer)
 
         backgroundGradientView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -55,7 +55,7 @@ class GeoWeatherCell: UICollectionViewCell {
         
         weatherCodeDescriptionLabel.snp.makeConstraints { make in
             make.leading.equalTo(geoNameLabel)
-            make.centerY.equalTo(todayMinMaxTemeperatureContainer)
+            make.centerY.equalTo(todayMinMaxTemeperatureRangeContainer)
         }
 
         currentTemperatureLabel.snp.makeConstraints { make in
@@ -63,10 +63,10 @@ class GeoWeatherCell: UICollectionViewCell {
             make.centerY.equalToSuperview().offset(-horizontalOffset / 2)
         }
         
-        todayMinMaxTemeperatureContainer.snp.makeConstraints { make in
+        todayMinMaxTemeperatureRangeContainer.snp.makeConstraints { make in
             make.top.equalTo(currentTemperatureLabel.snp.bottom)
             make.centerX.equalTo(currentTemperatureLabel)
-            make.width.equalTo(todayMinMaxTemeperatureContainer.preferredWidth)
+            make.width.equalTo(todayMinMaxTemeperatureRangeContainer.preferredWidth)
             make.height.equalTo(20)
         }
     }
@@ -78,7 +78,7 @@ class GeoWeatherCell: UICollectionViewCell {
         geoNameLabel.setAttributedTextWithShadow(geoWeather.geocoding.name)
         weatherCodeDescriptionLabel.setAttributedTextWithShadow(geoWeather.weather.currentWeatherCode.localizedDescription)
         currentTemperatureLabel.setTemperature(geoWeather.weather.obtainForecastForCurrentHour().temperature)
-        todayMinMaxTemeperatureContainer.setTemperature(
+        todayMinMaxTemeperatureRangeContainer.setTemperature(
             min: geoWeather.weather.currentDayMinTemperature,
             max: geoWeather.weather.currentDayMaxTemperature
         )
@@ -125,7 +125,7 @@ class GeoWeatherCell: UICollectionViewCell {
         return label
     }()
     
-    private let todayMinMaxTemeperatureContainer: TemperatureRangeContainer = {
+    private let todayMinMaxTemeperatureRangeContainer: TemperatureRangeContainer = {
         let fontSize: CGFloat = 15
         let container = TemperatureRangeContainer(withFontSize: fontSize)
         

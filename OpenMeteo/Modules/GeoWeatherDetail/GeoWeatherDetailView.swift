@@ -37,8 +37,8 @@ class GeoWeatherDetailView: UIScrollView {
             make.width.equalToSuperview().multipliedBy(0.9)
         }
         
-        todayMinMaxTemeperatureContainer.snp.makeConstraints { make in
-            make.width.equalTo(contentContainer.snp.width).multipliedBy(0.5)
+        todayMinMaxTemeperatureRangeContainer.snp.makeConstraints { make in
+            make.width.equalTo(todayMinMaxTemeperatureRangeContainer.preferredWidth)
             make.height.equalTo(25)
         }
 
@@ -58,7 +58,7 @@ class GeoWeatherDetailView: UIScrollView {
     func configure(with geoWeather: GeoWeather) {
         geoNameLabel.setAttributedTextWithShadow( geoWeather.geocoding.name)
         currentTemperatureLabel.setTemperature(geoWeather.weather.obtainForecastForCurrentHour().temperature)
-        todayMinMaxTemeperatureContainer.setTemperature(
+        todayMinMaxTemeperatureRangeContainer.setTemperature(
             min: geoWeather.weather.currentDayMinTemperature,
             max: geoWeather.weather.currentDayMaxTemperature
         )
@@ -87,7 +87,7 @@ class GeoWeatherDetailView: UIScrollView {
         let container = UIStackView(arrangedSubviews: [
             geoNameLabel,
             currentTemperatureLabel,
-            todayMinMaxTemeperatureContainer,
+            todayMinMaxTemeperatureRangeContainer,
             weatherCodeDescriptionLabel
         ])
         
@@ -118,7 +118,7 @@ class GeoWeatherDetailView: UIScrollView {
         return label
     }()
     
-    private let todayMinMaxTemeperatureContainer: TemperatureRangeContainer = {
+    private let todayMinMaxTemeperatureRangeContainer: TemperatureRangeContainer = {
         let container = TemperatureRangeContainer()
         
         container.setColors(.white)
