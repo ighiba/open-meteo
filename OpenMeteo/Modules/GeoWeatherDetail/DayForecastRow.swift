@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class DayForecastRow: UIView {
     
@@ -46,12 +47,12 @@ class DayForecastRow: UIView {
         weatherIconView.snp.makeConstraints { make in
             make.width.equalTo(iconWidthHeight)
             make.height.equalTo(iconWidthHeight)
-            make.leading.equalTo(self.snp.centerX)
+            make.centerX.equalTo(self.snp.centerX)
             make.centerY.equalToSuperview()
         }
         
         temperatureRangeContainer.snp.makeConstraints { make in
-            make.leading.equalTo(weatherIconView.snp.trailing)
+            make.leading.equalTo(weatherIconView.snp.trailing).offset(verticalOffset / 4)
             make.trailing.equalToSuperview().inset(verticalOffset)
             make.centerY.equalToSuperview()
             make.top.equalToSuperview()

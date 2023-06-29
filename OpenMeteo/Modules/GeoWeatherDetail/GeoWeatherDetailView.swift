@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class GeoWeatherDetailView: UIScrollView {
     
@@ -35,6 +36,11 @@ class GeoWeatherDetailView: UIScrollView {
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.9)
         }
+        
+        todayMinMaxTemeperatureContainer.snp.makeConstraints { make in
+            make.width.equalTo(contentContainer.snp.width).multipliedBy(0.5)
+            make.height.equalTo(25)
+        }
 
         hourlyForecastCollectionView.snp.makeConstraints { make in
             make.width.equalToSuperview()
@@ -52,6 +58,10 @@ class GeoWeatherDetailView: UIScrollView {
     func configure(with geoWeather: GeoWeather) {
         geoNameLabel.text = geoWeather.geocoding.name
         currentTemperatureLabel.setTemperature(geoWeather.weather.obtainForecastForCurrentHour().temperature)
+        todayMinMaxTemeperatureContainer.setTemperature(
+            min: geoWeather.weather.currentDayMinTemperature,
+            max: geoWeather.weather.currentDayMaxTemperature
+        )
         weatherCodeDescriptionLabel.text = geoWeather.weather.currentWeatherCode.localizedDescription
         hourlyForecastCollectionView.configure(with: geoWeather.weather.obtainHourlyForecastFor(nextHours: 24))
         dailyForecastContainer.configure(with: geoWeather.weather.obtainDailyForecastFor(nextDays: 7))
@@ -74,7 +84,12 @@ class GeoWeatherDetailView: UIScrollView {
     }()
     
     lazy var mainInfoContainer: UIStackView = {
-        let container = UIStackView(arrangedSubviews: [geoNameLabel, currentTemperatureLabel, weatherCodeDescriptionLabel])
+        let container = UIStackView(arrangedSubviews: [
+            geoNameLabel,
+            currentTemperatureLabel,
+            todayMinMaxTemeperatureContainer,
+            weatherCodeDescriptionLabel
+        ])
         
         container.axis = .vertical
         container.alignment = .center
@@ -100,6 +115,8 @@ class GeoWeatherDetailView: UIScrollView {
 
         return label
     }()
+    
+    private let todayMinMaxTemeperatureContainer = TemperatureRangeContainer()
     
     private let weatherCodeDescriptionLabel: UILabel = {
         let label = UILabel()

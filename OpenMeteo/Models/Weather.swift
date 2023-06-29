@@ -50,6 +50,14 @@ struct Weather {
         return currentWeatherCode.obtainWeatherType()
     }
     
+    var currentDayMinTemperature: Float {
+        return obtainCurrentDayForecast()?.minTemperature ?? 0
+    }
+    
+    var currentDayMaxTemperature: Float {
+        return obtainCurrentDayForecast()?.maxTemperature ?? 0
+    }
+    
     // MARK: - Init
     
     init(current: HourForecast, hourly hourlyForecast: [HourForecast], daily dailyForecast: [DayForecast]) {

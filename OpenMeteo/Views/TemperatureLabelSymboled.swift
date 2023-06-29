@@ -10,7 +10,11 @@ import SnapKit
 
 class TemperatureLabelSymboled: UIView {
     
-    private var symbolName: String
+    private var symbolName: String = ""
+
+    private let symbolWidth: CGFloat = 11
+    private let symbolInset: CGFloat = 3
+    private let temperatureLabelWidth: CGFloat = 42
 
     init(symbolName: String) {
         self.symbolName = symbolName
@@ -19,7 +23,6 @@ class TemperatureLabelSymboled: UIView {
     }
     
     override init(frame: CGRect) {
-        self.symbolName = ""
         super.init(frame: frame)
         setViews()
     }
@@ -34,20 +37,32 @@ class TemperatureLabelSymboled: UIView {
         self.addSubview(symbolView)
         self.addSubview(temperatureLabel)
         
-        symbolView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(10)
-            make.width.equalTo(11)
-            make.height.equalTo(22)
-        }
-        
-        temperatureLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(symbolView.snp.trailing).offset(3)
-        }
+        self.temperatureLabel.textAlignment = .left
     }
     
     func makeConstraints(superview: UIView, toLeading: Bool) {
+        symbolView.snp.makeConstraints { make in
+            if toLeading {
+                make.trailing.equalTo(temperatureLabel.snp.leading).inset(-symbolInset)
+            } else {
+                make.leading.equalToSuperview().offset(symbolWidth / 2)
+            }
+            make.centerY.equalToSuperview()
+            make.width.equalTo(symbolWidth)
+            make.height.equalTo(symbolWidth * 2)
+        }
+        
+        temperatureLabel.snp.makeConstraints { make in
+            if toLeading {
+                make.trailing.equalToSuperview()
+            } else {
+                make.leading.equalTo(symbolView.snp.trailing).offset(symbolInset)
+            }
+            make.centerY.equalToSuperview()
+            make.width.equalTo(temperatureLabelWidth)
+            make.height.equalToSuperview()
+        }
+        
         self.snp.makeConstraints { make in
             let sideConstraint = toLeading ? make.leading : make.trailing
             sideConstraint.equalTo(superview)
@@ -60,7 +75,6 @@ class TemperatureLabelSymboled: UIView {
     
     func setTemperature(_ temperature: Float) {
         temperatureLabel.text = String(format: "%.0f°", temperature)
-        temperatureLabel.sizeToFit()
     }
     
     // MARK: - Views
@@ -76,7 +90,6 @@ class TemperatureLabelSymboled: UIView {
         let label = UILabel()
         label.text = "0"
         label.font = UIFont.systemFont(ofSize: 20)
-        label.sizeToFit()
         return label
     }()
 }
