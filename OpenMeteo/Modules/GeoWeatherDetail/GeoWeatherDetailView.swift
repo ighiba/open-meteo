@@ -32,7 +32,7 @@ class GeoWeatherDetailView: UIScrollView {
         self.addSubview(contentContainer)
 
         contentContainer.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(spacing)
+            make.top.equalToSuperview()
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.9)
         }
@@ -56,7 +56,7 @@ class GeoWeatherDetailView: UIScrollView {
     }
     
     func configure(with geoWeather: GeoWeather) {
-        geoNameLabel.text = geoWeather.geocoding.name
+        geoNameLabel.setAttributedTextWithShadow( geoWeather.geocoding.name)
         currentTemperatureLabel.setTemperature(geoWeather.weather.obtainForecastForCurrentHour().temperature)
         todayMinMaxTemeperatureContainer.setTemperature(
             min: geoWeather.weather.currentDayMinTemperature,
@@ -102,7 +102,8 @@ class GeoWeatherDetailView: UIScrollView {
         let label = UILabel()
         
         label.text = "..."
-        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 40, weight: .bold)
+        label.textColor = .white
         label.sizeToFit()
         
         return label
@@ -111,18 +112,26 @@ class GeoWeatherDetailView: UIScrollView {
     private let currentTemperatureLabel: TemperatureLabel = {
         let label = TemperatureLabel()
 
-        label.font = UIFont.systemFont(ofSize: 40)
+        label.font = UIFont.systemFont(ofSize: 50)
+        label.textColor = .white
 
         return label
     }()
     
-    private let todayMinMaxTemeperatureContainer = TemperatureRangeContainer()
+    private let todayMinMaxTemeperatureContainer: TemperatureRangeContainer = {
+        let container = TemperatureRangeContainer()
+        
+        container.setColors(.white)
+        
+        return container
+    }()
     
     private let weatherCodeDescriptionLabel: UILabel = {
         let label = UILabel()
         
         label.text = "-"
         label.font = UIFont.systemFont(ofSize: 18, weight: .light)
+        label.textColor = .white
         label.sizeToFit()
         
         return label

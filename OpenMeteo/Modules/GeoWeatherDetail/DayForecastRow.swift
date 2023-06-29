@@ -25,6 +25,7 @@ class DayForecastRow: UIView {
     
     init() {
         super.init(frame: .zero)
+        temperatureRangeContainer.setColors(.white)
         setViews()
     }
     
@@ -61,8 +62,7 @@ class DayForecastRow: UIView {
     }
     
     func configure(with forecast: DayForecast) {
-        dateLabel.text = forecast.date.string(withFormat: "dd MMMM")
-        dateLabel.sizeToFit()
+        dateLabel.setAttributedTextWithShadow(forecast.date.string(withFormat: "dd MMMM"))
 
         temperatureRangeContainer.setTemperature(min: forecast.minTemperature, max: forecast.maxTemperature)
         weatherIconView.setIcon(for: forecast.weatherCode.obtainWeatherType())
@@ -72,6 +72,7 @@ class DayForecastRow: UIView {
         let label = UILabel()
         label.text = "01.01.2000"
         label.font = UIFont.systemFont(ofSize: 20)
+        label.textColor = .white
         label.sizeToFit()
         return label
     }

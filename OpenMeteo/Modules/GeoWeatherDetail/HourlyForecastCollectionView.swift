@@ -47,8 +47,8 @@ class HourlyForecastCollectionView: UICollectionView {
     }
 
     func setViews() {
-        self.backgroundColor = .systemGray6.withAlphaComponent(0.1)
-        self.backgroundView = UIVisualEffectView.obtainBlur(style: .light)
+        self.backgroundColor = .clear
+        self.backgroundView = UIVisualEffectView.obtainBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
     }
     
     func configure(with hourForecastList: [HourForecast]) {

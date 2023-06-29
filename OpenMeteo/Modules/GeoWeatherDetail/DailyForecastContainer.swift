@@ -30,9 +30,9 @@ class DailyForecastContainer: UIStackView {
         self.distribution = .fillProportionally
         self.alignment = .center
         
-        self.backgroundColor = .systemGray6.withAlphaComponent(0.1)
-
-        let blurEffectView = UIVisualEffectView.obtainBlur(style: .light)
+        self.backgroundColor = .clear
+        
+        let blurEffectView = UIVisualEffectView.obtainBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
         self.insertSubview(blurEffectView, at: 0)
         blurEffectView.snp.makeConstraints { make in
             make.leading.equalToSuperview()

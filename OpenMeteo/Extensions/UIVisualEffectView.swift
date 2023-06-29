@@ -8,10 +8,11 @@
 import UIKit
 
 extension UIVisualEffectView {
-    static func obtainBlur(style: UIBlurEffect.Style) -> UIVisualEffectView {
+    static func obtainBlur(style: UIBlurEffect.Style, withAlpha alpha: CGFloat = 1.0) -> UIVisualEffectView {
         let blurEffect = UIBlurEffect(style: style)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.layer.masksToBounds = true
+        blurEffectView.alpha = alpha
         return blurEffectView
     }
 }
