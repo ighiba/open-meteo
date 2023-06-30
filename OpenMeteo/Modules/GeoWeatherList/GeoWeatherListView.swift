@@ -20,6 +20,8 @@ class GeoWeatherListViewController: UICollectionViewController {
     }
 
     var dataSource: DataSource!
+
+    private var initialPathForAnimator: CGPath?
     
     // MARK: - Init
     
@@ -37,6 +39,7 @@ class GeoWeatherListViewController: UICollectionViewController {
         super.viewDidLoad()
 
         self.collectionView.delegate = self
+        self.navigationController?.delegate = self
         self.collectionView.collectionViewLayout = createLayout()
         self.collectionView.register(GeoWeatherCell.self, forCellWithReuseIdentifier: GeoWeatherCell.identifier)
         
@@ -45,7 +48,6 @@ class GeoWeatherListViewController: UICollectionViewController {
         }
         
         updateSnapshot()
-        openDetail(for: IndexPath(row: 1, section: 0))
     }
     
     func createLayout() -> UICollectionViewLayout {
@@ -72,24 +74,41 @@ class GeoWeatherListViewController: UICollectionViewController {
 
     private func openDetail(for indexPath: IndexPath) {
         guard let geoWeather = geoWeather(withIndexPath: indexPath),
-              let detailView = GeoWeatherDetailModuleAssembly.configureModule(with: geoWeather) as? GeoWeatherDetailViewController else {
+              let detailViewController = GeoWeatherDetailModuleAssembly.configureModule(with: geoWeather) as? GeoWeatherDetailViewController else {
             return
         }
-        self.navigationController?.pushViewController(detailView, animated: true)
+
+        guard let cell = self.collectionView.cellForItem(at: indexPath) else { return }
+        
+        let cellOnRootViewRect = cell.convert(cell.bounds, to: self.view)
+        initialPathForAnimator = UIBezierPath(roundedRect: cellOnRootViewRect, cornerRadius: cell.layer.cornerRadius).cgPath
+        
+        detailViewController.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(detailViewController, animated: true)
     }
     
     func geoWeather(withIndexPath indexPath: IndexPath) -> GeoWeather? {
         guard indexPath.row <= viewModel.geoWeatherList.count else { return nil }
         return viewModel.geoWeatherList[indexPath.row]
     }
-
 }
 
-// MARK: - Delegate
+// MARK: - Delegates
 
 extension GeoWeatherListViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         openDetail(for: indexPath)
     }
+    
+    
 }
 
+extension GeoWeatherListViewController: UINavigationControllerDelegate  {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if operation == .push {
+            guard let initialPath = initialPathForAnimator else { return nil }
+            return GeoWeatherDetailTransitionAnimator(initialPath: initialPath)
+        }
+        return nil
+    }
+}

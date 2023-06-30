@@ -26,6 +26,9 @@
 		C04E2C6A2A476FB800A5B1E8 /* GeoWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C692A476FB800A5B1E8 /* GeoWeather.swift */; };
 		C04E2C6C2A47773B00A5B1E8 /* GeocodingJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */; };
 		C04E2C6E2A477B0B00A5B1E8 /* GeocodingJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C6D2A477B0B00A5B1E8 /* GeocodingJSONTests.swift */; };
+		C066C6B82A4F66D3004FDDE8 /* CALayerAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6B72A4F66D3004FDDE8 /* CALayerAnimationDelegate.swift */; };
+		C066C6BA2A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6B92A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift */; };
+		C066C6BC2A4F738A004FDDE8 /* CAShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6BB2A4F738A004FDDE8 /* CAShapeLayer.swift */; };
 		C08D19632A48AC1000834A21 /* GeoWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */; };
 		C08D19652A48AC8300834A21 /* GeoWeatherListView+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19642A48AC8300834A21 /* GeoWeatherListView+DataSource.swift */; };
 		C08D196B2A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */; };
@@ -103,6 +106,9 @@
 		C04E2C692A476FB800A5B1E8 /* GeoWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeather.swift; sourceTree = "<group>"; };
 		C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingJSON.swift; sourceTree = "<group>"; };
 		C04E2C6D2A477B0B00A5B1E8 /* GeocodingJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingJSONTests.swift; sourceTree = "<group>"; };
+		C066C6B72A4F66D3004FDDE8 /* CALayerAnimationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayerAnimationDelegate.swift; sourceTree = "<group>"; };
+		C066C6B92A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailTransitionAnimator.swift; sourceTree = "<group>"; };
+		C066C6BB2A4F738A004FDDE8 /* CAShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAShapeLayer.swift; sourceTree = "<group>"; };
 		C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherCell.swift; sourceTree = "<group>"; };
 		C08D19642A48AC8300834A21 /* GeoWeatherListView+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeoWeatherListView+DataSource.swift"; sourceTree = "<group>"; };
 		C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailModuleAssembly.swift; sourceTree = "<group>"; };
@@ -200,6 +206,7 @@
 			children = (
 				C04E2C092A473EAA00A5B1E8 /* AppDelegate.swift */,
 				C04E2C0B2A473EAA00A5B1E8 /* SceneDelegate.swift */,
+				C066C6B62A4F66C4004FDDE8 /* Helpers */,
 				C0E54D2D2A4B8711003D00C8 /* Style */,
 				C0E54D1A2A49EB3D003D00C8 /* Extensions */,
 				C04E2C5E2A47424600A5B1E8 /* Models */,
@@ -251,6 +258,7 @@
 				C08D19642A48AC8300834A21 /* GeoWeatherListView+DataSource.swift */,
 				C04E2C552A473FD600A5B1E8 /* GeoWeatherListViewModel.swift */,
 				C04E2C522A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift */,
+				C066C6B92A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift */,
 			);
 			path = GeoWeatherList;
 			sourceTree = "<group>";
@@ -269,6 +277,14 @@
 				C04E2C692A476FB800A5B1E8 /* GeoWeather.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		C066C6B62A4F66C4004FDDE8 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C066C6B72A4F66D3004FDDE8 /* CALayerAnimationDelegate.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		C08D19662A48BACE00834A21 /* GeoWeatherDetail */ = {
@@ -304,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				C0E54D1B2A49EB47003D00C8 /* Date.swift */,
+				C066C6BB2A4F738A004FDDE8 /* CAShapeLayer.swift */,
 				C0E54D252A4B39B8003D00C8 /* UIVisualEffectView.swift */,
 				C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */,
 			);
@@ -511,6 +528,7 @@
 			files = (
 				C0EC33A42A4DF9D500EAC0D6 /* StyledContainer.swift in Sources */,
 				C04E2C6C2A47773B00A5B1E8 /* GeocodingJSON.swift in Sources */,
+				C066C6BA2A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift in Sources */,
 				C0E54D1E2A49EB84003D00C8 /* DailyForecastContainer.swift in Sources */,
 				C0E54D392A4C5445003D00C8 /* SkyType.swift in Sources */,
 				C04E2C572A473FD600A5B1E8 /* GeoWeatherListView.swift in Sources */,
@@ -523,6 +541,7 @@
 				C08D19732A48F05B00834A21 /* TemperatureLabel.swift in Sources */,
 				C0E54D172A49A5DE003D00C8 /* DayForecastRow.swift in Sources */,
 				C08D196E2A48BAF300834A21 /* GeoWeatherDetailViewModel.swift in Sources */,
+				C066C6BC2A4F738A004FDDE8 /* CAShapeLayer.swift in Sources */,
 				C0E54D462A4CC29A003D00C8 /* WeatherIcon.swift in Sources */,
 				C0E54D242A4B0F06003D00C8 /* DatedForecast.swift in Sources */,
 				C0E54D442A4CC270003D00C8 /* WeatherIconView.swift in Sources */,
@@ -536,6 +555,7 @@
 				C0E54D352A4B8792003D00C8 /* GradientView+WeatherColorSet.swift in Sources */,
 				C08D196C2A48BAF300834A21 /* GeoWeatherDetailController.swift in Sources */,
 				C0E54D332A4B8768003D00C8 /* GradientView.swift in Sources */,
+				C066C6B82A4F66D3004FDDE8 /* CALayerAnimationDelegate.swift in Sources */,
 				C08D196B2A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift in Sources */,
 				C04E2C602A47425600A5B1E8 /* WeatherJSON.swift in Sources */,
 				C0ECBB082A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift in Sources */,
