@@ -48,6 +48,8 @@ class DayForecastRow: UIView {
         }
         
         precipitationProbabilityLabel.snp.makeConstraints { make in
+            make.height.equalTo(Self.height)
+            make.width.equalTo(Self.height)
             make.trailing.equalTo(weatherIconView.snp.leading).offset(-verticalOffset / 2)
             make.centerY.equalToSuperview()
         }
@@ -83,7 +85,8 @@ class DayForecastRow: UIView {
         let label = PrecipitationProbabilityLabel()
         
         label.text = "0%"
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         label.textColor = UIColor(named: "PrecipitationLabel")
         
         return label

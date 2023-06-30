@@ -40,7 +40,7 @@ class HourlyForecastCollectionView: UICollectionView, StyledContainer {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.layer.cornerRadius = 15
+        self.layer.cornerRadius = 16
         
         hideHorizontalScrollIndicator()
         hideVerticalScrollIndicator()

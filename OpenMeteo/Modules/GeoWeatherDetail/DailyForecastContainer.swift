@@ -23,8 +23,8 @@ class DailyForecastContainer: UIStackView, StyledContainer {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.layer.cornerRadius = self.bounds.width / 20
-        self.subviews.first(where: { $0 is UIVisualEffectView })?.layer.cornerRadius = self.layer.cornerRadius
+        self.layer.cornerRadius = 16
+        blurEffectView.layer.cornerRadius = self.layer.cornerRadius
     }
     
     func setViews() {
@@ -33,7 +33,6 @@ class DailyForecastContainer: UIStackView, StyledContainer {
         self.alignment = .center
         
         self.backgroundColor = .clear
-        
         
         self.insertSubview(blurEffectView, at: 0)
         blurEffectView.snp.makeConstraints { make in
@@ -55,7 +54,7 @@ class DailyForecastContainer: UIStackView, StyledContainer {
         addArrangedSubviews(with: dayForecastList)
     }
     
-    func addArrangedSubviews(with dayForecastList: [DayForecast]) {
+    private func addArrangedSubviews(with dayForecastList: [DayForecast]) {
         let forecastRows = obtainForecastContainerRows(dayForecastList)
         forecastRows.forEach { row in
             self.addArrangedSubview(row)
@@ -69,7 +68,7 @@ class DailyForecastContainer: UIStackView, StyledContainer {
         }
     }
     
-    func obtainForecastContainerRows(_ dayForecastList: [DayForecast]) -> [DayForecastRow] {
+    private func obtainForecastContainerRows(_ dayForecastList: [DayForecast]) -> [DayForecastRow] {
         let containerRows = dayForecastList.map { forecast in
             let forecastRow = DayForecastRow()
             forecastRow.configure(with: forecast)

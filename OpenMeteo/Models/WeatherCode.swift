@@ -107,7 +107,7 @@ extension WeatherCode {
             return .clearSky
             
         case .partlyCloudy:
-            return .partlyCloudy
+            return .partiallyCloudy
             
         case .overcast:
             return .overcast

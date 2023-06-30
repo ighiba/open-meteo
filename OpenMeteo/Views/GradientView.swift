@@ -26,9 +26,13 @@ class GradientView: UIView {
         return CAGradientLayer.self
     }
     
-    init() {
+    init(startPoint: CGPoint = CGPoint(x: 0.5, y: 0.0), endPoint: CGPoint = CGPoint(x: 0.5, y: 1.0)) {
         super.init(frame: .zero)
         self.layer.addSublayer(gradientLayer)
+        print(gradientLayer.startPoint)
+        print(gradientLayer.endPoint)
+        gradientLayer.startPoint = startPoint
+        gradientLayer.endPoint = endPoint
     }
     
     required init?(coder: NSCoder) {

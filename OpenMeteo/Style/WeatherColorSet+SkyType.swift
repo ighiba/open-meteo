@@ -10,12 +10,22 @@ import Foundation
 extension WeatherColorSet {
     static func obtainColorSet(fromSkyType skyType: SkyType) -> WeatherColorSet {
         switch skyType {
-        case .day:     return .clearSky
-        case .night:   return .midnightSky
-        case .sunrise: return .sunriseSky
-        case .sunset:  return .sunsetSky
-        case .cloudy:  return .clodySky
-        case .rain:    return .rainSky
+        case .day:
+            return .clearSky
+        case .night:
+            return .midnightSky
+        case .sunrise:
+            return .sunriseSky
+        case .sunset:
+            return .sunsetSky
+        case .cloudy:
+            return .clodySky
+        case .partiallyCloudyDay:
+            return .partiallyCloudyDaySky
+        case .partiallyCloudyNight:
+            return .partiallyCloudyNightSky
+        case .rain:
+            return .rainSky
         }
     }
 }

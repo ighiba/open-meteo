@@ -13,5 +13,7 @@ enum SkyType {
     case sunrise
     case sunset
     case cloudy
+    case partiallyCloudyDay
+    case partiallyCloudyNight
     case rain
 }

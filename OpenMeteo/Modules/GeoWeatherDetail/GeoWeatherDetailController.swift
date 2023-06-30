@@ -20,7 +20,7 @@ class GeoWeatherDetailViewController: UIViewController {
         }
     }
 
-    let backgroundView = GradientView()
+    let backgroundView = GradientView(endPoint: CGPoint(x: 0.5, y: 1.1))
     var geoWeatherDetailScrollView = GeoWeatherDetailView()
     
     // MARK: - Layout

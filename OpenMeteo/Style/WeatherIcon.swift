@@ -38,7 +38,7 @@ struct WeatherIcon {
         switch weatherType {
         case .clearSky:
             return isDay ? .sun : .moon
-        case .partlyCloudy:
+        case .partiallyCloudy:
             return isDay ? .cloudSun : .cloudMoon
         case .overcast:
             return cloud

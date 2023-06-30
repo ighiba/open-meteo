@@ -25,7 +25,7 @@ enum DayPhase {
 
 enum WeatherType {
     case clearSky
-    case partlyCloudy
+    case partiallyCloudy
     case overcast
     case fog
     case drizzle
@@ -86,7 +86,10 @@ struct Weather {
     }
     
     func obtainCurrentDayForecast() -> DayForecast? {
-        return obtainDailyForecastFor(nextDays: 1).first
+        let day = dailyForecast.first(where: { forecast in
+            Calendar.current.isDate(forecast.date, equalTo: Date(), toGranularity: .day)
+        })
+        return day
     }
     
     func obtainDailyForecastFor(nextDays days: UInt) -> [DayForecast] {
@@ -110,18 +113,22 @@ struct Weather {
     }
     
     func obtainSkyType() -> SkyType {
+        let dayPhase = obtainCurrentDayPhase()
         switch currentWeatherType {
         case .clearSky:
-            return obtainCurrentDayPhase().obtainSkyType()
-        case .partlyCloudy, .fog, .overcast, .drizzle:
+            return dayPhase.obtainSkyType()
+        case .partiallyCloudy:
+            return dayPhase == .night ? .partiallyCloudyNight : .partiallyCloudyDay
+        case .fog, .overcast, .drizzle:
             return .cloudy
         case .rain, .rainHeavy, .hail, .snow, .thunderstorm:
             return .rain
         }
     }
+
     
     func obtainCurrentDayPhase() -> DayPhase {
-        if isSunsetNow() {
+        if isSunriseNow() {
             return .sunrise
         } else if isSunsetNow() {
             return .sunset

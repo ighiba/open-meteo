@@ -37,9 +37,9 @@ enum ContainerStyle {
 extension ContainerStyle {
     static func obtainContainerStyle(for skyType: SkyType) -> ContainerStyle {
         switch skyType {
-        case .day, .sunrise, .sunset, .cloudy, .rain:
+        case .day, .sunrise, .sunset, .cloudy, .rain, .partiallyCloudyDay:
             return .dark
-        case .night:
+        case .night, .partiallyCloudyNight:
             return .light
         }
     }
