@@ -13,7 +13,7 @@ enum DayPhase {
     case sunrise
     case sunset
     
-    func obtainSkyType() -> SkyType {
+    func obtainClearSkyType() -> SkyType {
         switch self {
         case .day:     return .day
         case .night:   return .night
@@ -116,7 +116,7 @@ struct Weather {
         let dayPhase = obtainCurrentDayPhase()
         switch currentWeatherType {
         case .clearSky:
-            return dayPhase.obtainSkyType()
+            return dayPhase.obtainClearSkyType()
         case .partiallyCloudy:
             return dayPhase == .night ? .partiallyCloudyNight : .partiallyCloudyDay
         case .fog, .overcast, .drizzle:
@@ -126,7 +126,6 @@ struct Weather {
         }
     }
 
-    
     func obtainCurrentDayPhase() -> DayPhase {
         if isSunriseNow() {
             return .sunrise

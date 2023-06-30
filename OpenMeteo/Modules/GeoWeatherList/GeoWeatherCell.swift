@@ -92,7 +92,7 @@ class GeoWeatherCell: UICollectionViewCell {
     
     // MARK: - Views
     
-    private var backgroundGradientView = GradientView()
+    private var backgroundGradientView = GradientView(endPoint: CGPoint(x: 0.5, y: 1.5))
     
     private let geoNameLabel: UILabel = {
         let label = UILabel()
