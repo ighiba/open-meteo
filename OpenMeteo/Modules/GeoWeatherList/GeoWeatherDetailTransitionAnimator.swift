@@ -9,8 +9,8 @@ import UIKit
 
 class GeoWeatherDetailTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
-    private let transitionAnimationDuration: TimeInterval = 0.15
-    private let pathAnimationDuration: TimeInterval = 0.2
+    private let transitionAnimationDuration: TimeInterval = 0.05
+    private let pathAnimationDuration: TimeInterval = 0.3
     private var initialPath: CGPath
     
     init(initialPath: CGPath) {

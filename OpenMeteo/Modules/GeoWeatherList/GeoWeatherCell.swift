@@ -17,11 +17,14 @@ class GeoWeatherCell: UICollectionViewCell {
     
     private let horizontalOffset: CGFloat = 20
     
+    var longTapEndedCallback: (() -> Void)?
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setViews()
+        setGestureRecognizers()
     }
     
     required init?(coder: NSCoder) {
@@ -88,6 +91,34 @@ class GeoWeatherCell: UICollectionViewCell {
         let skyType = geoWeather.weather.obtainSkyType()
         let colorSet = WeatherColorSet.obtainColorSet(fromSkyType: skyType)
         backgroundGradientView.setColors(weatherColorSet: colorSet)
+    }
+    
+    private func setGestureRecognizers() {
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressEvent))
+        longPress.minimumPressDuration = 0.1
+        self.addGestureRecognizer(longPress)
+    }
+    
+    @objc func longPressEvent(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            animateTapBegin()
+        } else if sender.state == .ended {
+            amimateTapEnded()
+        }
+    }
+
+    private func animateTapBegin() {
+        UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut, .beginFromCurrentState]) {
+            self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        }
+    }
+    
+    private func amimateTapEnded() {
+        UIView.animate(withDuration: 0.05, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
+            self.transform = .identity
+        }) { [weak self] _ in
+            self?.longTapEndedCallback?()
+        }
     }
     
     // MARK: - Views

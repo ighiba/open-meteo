@@ -72,7 +72,7 @@ class GeoWeatherListViewController: UICollectionViewController {
     
     // MARK: - Methods
 
-    private func openDetail(for indexPath: IndexPath) {
+    func openDetail(for indexPath: IndexPath) {
         guard let geoWeather = geoWeather(withIndexPath: indexPath),
               let detailViewController = GeoWeatherDetailModuleAssembly.configureModule(with: geoWeather) as? GeoWeatherDetailViewController else {
             return
@@ -81,6 +81,18 @@ class GeoWeatherListViewController: UICollectionViewController {
         guard let cell = self.collectionView.cellForItem(at: indexPath) else { return }
         
         let cellOnRootViewRect = cell.convert(cell.bounds, to: self.view)
+//        let diff = GeoWeatherCell.height / cellOnRootViewRect.height
+//
+//        let identityWidth = cellOnRootViewRect.width * diff
+//        let identityHeight = cellOnRootViewRect.height * diff
+//        let identityX = cellOnRootViewRect.origin.x - (identityWidth - cellOnRootViewRect.width) / 2
+//        let identityY = cellOnRootViewRect.origin.y - (identityHeight - cellOnRootViewRect.height) / 2
+//        cellOnRootViewRect = CGRect(x: identityX,
+//                                    y: identityY,
+//                                    width: identityWidth,
+//                                    height: identityHeight)
+
+        
         initialPathForAnimator = UIBezierPath(roundedRect: cellOnRootViewRect, cornerRadius: cell.layer.cornerRadius).cgPath
         
         detailViewController.modalPresentationStyle = .fullScreen

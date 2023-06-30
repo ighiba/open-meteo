@@ -35,6 +35,9 @@ extension GeoWeatherListViewController {
         guard let weatherCell = cell as? GeoWeatherCell, let geoWeather = geoWeather(withId: itemIdentifier) else { return cell }
         
         weatherCell.configure(with: geoWeather)
+        weatherCell.longTapEndedCallback = { [weak self] in 
+            self?.openDetail(for: indexPath)
+        }
         
         return weatherCell
     }
