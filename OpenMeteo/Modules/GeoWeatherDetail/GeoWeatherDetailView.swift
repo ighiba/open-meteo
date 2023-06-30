@@ -109,7 +109,7 @@ class GeoWeatherDetailView: UIScrollView {
         
         container.axis = .vertical
         container.alignment = .center
-        container.spacing = 10
+        container.setCustomSpacing(10, after: todayMinMaxTemeperatureRangeContainer)
         
         return container
     }()

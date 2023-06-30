@@ -13,7 +13,7 @@ class HourForecastCell: UICollectionViewCell {
     static let reuseIdentifier = "hourForecastCell"
     
     static let width: CGFloat = 40
-    static let height: CGFloat = 130
+    static let height: CGFloat = 160
     
     private let horizontalOffset: CGFloat = 15
     
@@ -32,6 +32,7 @@ class HourForecastCell: UICollectionViewCell {
     
     func setViews() {
         self.addSubview(hourLabel)
+        self.addSubview(precipitationProbabilityLabel)
         self.addSubview(temperatureLabel)
         self.addSubview(weatherIconView)
         
@@ -40,8 +41,8 @@ class HourForecastCell: UICollectionViewCell {
             make.centerX.equalToSuperview()
         }
         
-        temperatureLabel.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(horizontalOffset - 5)
+        precipitationProbabilityLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(weatherIconView.snp.top).offset(-2)
             make.centerX.equalToSuperview()
         }
         
@@ -49,20 +50,24 @@ class HourForecastCell: UICollectionViewCell {
             make.width.equalTo(Self.width)
             make.height.equalTo(Self.width)
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
+            make.top.equalTo(self.snp.centerY).offset(-horizontalOffset)
+        }
+        
+        temperatureLabel.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(horizontalOffset - 5)
+            make.centerX.equalToSuperview()
         }
     }
     
     func configure(with hourForecast: HourForecast, for indexPath: IndexPath) {
         let nowString = NSLocalizedString("Now", comment: "")
         let hourLabelText = indexPath.row == 0 ? nowString : hourForecast.date.string(withFormat: "HH")
+        let weatherType =  hourForecast.weatherCode.obtainWeatherType()
+        
         hourLabel.setAttributedTextWithShadow(hourLabelText)
         temperatureLabel.setTemperature(hourForecast.temperature)
-        
-        hourLabel.sizeToFit()
-        temperatureLabel.sizeToFit()
-        
-        weatherIconView.setIcon(for: hourForecast.weatherCode.obtainWeatherType(), isDay: hourForecast.isDay)
+        precipitationProbabilityLabel.setPrecipitationProbability(hourForecast.precipitationProbability)
+        weatherIconView.setIcon(for: weatherType, isDay: hourForecast.isDay)
     }
     
     // MARK: - Views
@@ -74,6 +79,16 @@ class HourForecastCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = .white
         label.sizeToFit()
+        
+        return label
+    }()
+    
+    lazy var precipitationProbabilityLabel: PrecipitationProbabilityLabel = {
+        let label = PrecipitationProbabilityLabel()
+        
+        label.text = "0%"
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.textColor = UIColor(named: "PrecipitationLabel")
         
         return label
     }()
