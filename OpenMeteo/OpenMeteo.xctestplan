@@ -1,0 +1,40 @@
+{
+  "configurations" : [
+    {
+      "id" : "EE3B1DC8-7ECC-4D07-8648-10A552DE596E",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:OpenMeteo.xcodeproj",
+          "identifier" : "C04E2C052A473EAA00A5B1E8",
+          "name" : "OpenMeteo"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:OpenMeteo.xcodeproj",
+        "identifier" : "C04E2C1E2A473EAB00A5B1E8",
+        "name" : "OpenMeteoTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "target" : {
+        "containerPath" : "container:OpenMeteo.xcodeproj",
+        "identifier" : "C04E2C282A473EAB00A5B1E8",
+        "name" : "OpenMeteoUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
