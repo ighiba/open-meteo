@@ -20,8 +20,11 @@ class GeoWeatherDetailViewController: UIViewController {
         }
     }
 
+    let closeButtonContainer = BlurredButtonContainer(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     let backgroundView = GradientView(endPoint: CGPoint(x: 0.5, y: 1.1))
     var geoWeatherDetailScrollView = GeoWeatherDetailView()
+    
+    lazy var navigationBarOffset = self.view.convert(self.navigationController!.navigationBar.frame, to: self.view).origin.y
     
     // MARK: - Layout
 
@@ -39,9 +42,8 @@ class GeoWeatherDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configureNavigationBar()
         geoWeatherDetailScrollView.delegate = self
+        configureNavigationBar()
         configureViews(with: viewModel.geoWeather)
     }
     
@@ -63,12 +65,13 @@ class GeoWeatherDetailViewController: UIViewController {
     
     func configureNavigationBar() {
         self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
         
-        let closeButton = UIButton(type: .system)
-        closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-        
-        let closeButtonBarItem = UIBarButtonItem(customView: closeButton)
+        closeButtonContainer.button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        closeButtonContainer.setBlurAlpha(0.0)
+
+        let closeButtonBarItem = UIBarButtonItem(customView: closeButtonContainer)
         self.navigationItem.rightBarButtonItem = closeButtonBarItem
         self.navigationItem.hidesBackButton = true
     }
@@ -82,7 +85,9 @@ class GeoWeatherDetailViewController: UIViewController {
     
     func updateViews(for skyType: SkyType) {
         updateBackgroundView(for: skyType)
-        geoWeatherDetailScrollView.preferredContainersStyle = ContainerStyle.obtainContainerStyle(for: skyType)
+        let preferredContainersStyle = ContainerStyle.obtainContainerStyle(for: skyType)
+        geoWeatherDetailScrollView.preferredContainersStyle = preferredContainersStyle
+        closeButtonContainer.updateBlurStyle(preferredContainersStyle.blurStyle)
     }
     
     func updateBackgroundView(for skyType: SkyType) {
@@ -103,7 +108,12 @@ extension GeoWeatherDetailViewController {
 
 extension GeoWeatherDetailViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
+        let offsetY = scrollView.contentOffset.y + navigationBarOffset
+        if offsetY < 0 {
+            closeButtonContainer.animateHideButtonBackground()
+        } else {
+            closeButtonContainer.animateShowButtonBackground()
+        }
     }
 }
 
