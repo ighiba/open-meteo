@@ -12,5 +12,7 @@ struct HourForecast: DatedForecast {
     var isDay: Bool
     var precipitationProbability: Int16
     var weatherCode: WeatherCode
+    var wind: Wind
     var temperature: Float
+    var apparentTemperature: Float
 }

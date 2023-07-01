@@ -52,6 +52,21 @@ class GeoWeatherDetailView: UIScrollView {
             make.width.equalToSuperview()
             make.height.equalTo(HourForecastCell.height)
         }
+        
+        apparentTemperatureAndWindHorizontalStack.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalTo(contentContainer.snp.width).multipliedBy(0.5).inset(spacing / 4)
+        }
+        
+        apparentTemperatureContainer.snp.makeConstraints { make in
+            make.width.equalTo(apparentTemperatureAndWindHorizontalStack.snp.height)
+            make.height.equalToSuperview()
+        }
+        
+        windContainer.snp.makeConstraints { make in
+            make.width.equalTo(apparentTemperatureAndWindHorizontalStack.snp.height)
+            make.height.equalToSuperview()
+        }
 
         self.contentLayoutGuide.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -63,12 +78,15 @@ class GeoWeatherDetailView: UIScrollView {
     
     func configure(with geoWeather: GeoWeather) {
         let locationName = geoWeather.geocoding.name
-        let currentTemperature = geoWeather.weather.obtainForecastForCurrentHour().temperature
+        let forecastForCurrentHour = geoWeather.weather.obtainForecastForCurrentHour()
+        let currentTemperature = forecastForCurrentHour.temperature
         let currentMinTemperature = geoWeather.weather.currentDayMinTemperature
         let currentMaxTemperature = geoWeather.weather.currentDayMaxTemperature
         let weatherCodeDescription = geoWeather.weather.currentWeatherCode.localizedDescription
         let hourlyForecastFor24Hours = geoWeather.weather.obtainHourlyForecastFor(nextHours: 24)
         let dailyForecastForWeek =  geoWeather.weather.obtainDailyForecastFor(nextDays: 7)
+        let apparentTemperature = forecastForCurrentHour.apparentTemperature
+        let wind = forecastForCurrentHour.wind
         
         geoNameLabel.setAttributedTextWithShadow(locationName)
         currentTemperatureLabel.setTemperature(currentTemperature)
@@ -76,11 +94,15 @@ class GeoWeatherDetailView: UIScrollView {
         weatherCodeDescriptionLabel.setAttributedTextWithShadow(weatherCodeDescription)
         hourlyForecastCollectionView.configure(with: hourlyForecastFor24Hours)
         dailyForecastContainer.configure(with: dailyForecastForWeek)
+        apparentTemperatureContainer.configure(withApparent: apparentTemperature, current: currentTemperature)
+        windContainer.configure(with: wind)
     }
     
     func updateViewsStyle(with style: ContainerStyle) {
         hourlyForecastCollectionView.updateContainerStyle(with: style)
         dailyForecastContainer.updateContainerStyle(with: style)
+        apparentTemperatureContainer.updateContainerStyle(with: style)
+        windContainer.updateContainerStyle(with: style)
     }
     
     // MARK: - Views
@@ -89,7 +111,8 @@ class GeoWeatherDetailView: UIScrollView {
         let container = UIStackView(arrangedSubviews: [
             mainInfoContainer,
             hourlyForecastCollectionView,
-            dailyForecastContainer
+            dailyForecastContainer,
+            apparentTemperatureAndWindHorizontalStack
         ])
         
         container.axis = .vertical
@@ -98,7 +121,7 @@ class GeoWeatherDetailView: UIScrollView {
         
         return container
     }()
-    
+
     lazy var mainInfoContainer: UIStackView = {
         let container = UIStackView(arrangedSubviews: [
             geoNameLabel,
@@ -153,7 +176,28 @@ class GeoWeatherDetailView: UIScrollView {
         return label
     }()
     
-    private let hourlyForecastCollectionView = HourlyForecastCollectionView()
+    private let hourlyForecastCollectionView: HourlyForecastCollectionView = {
+        return HourlyForecastCollectionView()
+    }()
     
-    private let dailyForecastContainer = DailyForecastContainer()
+    private let dailyForecastContainer: DailyForecastContainer = {
+        return DailyForecastContainer()
+    }()
+    
+    lazy var apparentTemperatureAndWindHorizontalStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [apparentTemperatureContainer, windContainer])
+        
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        
+        return stack
+    }()
+    
+    lazy var apparentTemperatureContainer: ApparentTemperatureContainer = {
+        return ApparentTemperatureContainer()
+    }()
+    
+    lazy var windContainer: WindContainer = {
+        return WindContainer()
+    }()
 }

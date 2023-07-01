@@ -21,8 +21,8 @@ final class WeatherJSON: Decodable {
     
     enum CurrentWeatherCodingKeys: String, CodingKey {
         case temperature
-//        case windspeed
-//        case winddirection
+        case windSpeed = "windspeed"
+        case windDirection = "winddirection"
         case weathercode
         case isDay = "is_day"
         case time
@@ -31,8 +31,11 @@ final class WeatherJSON: Decodable {
     enum HourlyCodingKeys: String, CodingKey {
         case time
         case temperature = "temperature_2m"
+        case apparentTemperature = "apparent_temperature"
         case precipitationProbability = "precipitation_probability"
         case weathercode
+        case windSpeed = "windspeed_10m"
+        case windDirection = "winddirection_10m"
         case isDay = "is_day"
     }
     
@@ -62,13 +65,17 @@ final class WeatherJSON: Decodable {
         let currentIsDay = try? currentWeatherContainer?.decode(Int.self, forKey: .isDay)
         let temperature = try? currentWeatherContainer?.decode(Float.self, forKey: .temperature)
         let currentWeatherCodeRaw = try? currentWeatherContainer?.decode(Int16.self, forKey: .weathercode)
-        let currentWeatherCode = WeatherCode(rawValue: currentWeatherCodeRaw ?? 0) ?? .clearSky
-        let currentWeather = HourForecast(
+        let currentWindSpeed = try? currentWeatherContainer?.decode(Float.self, forKey: .windSpeed)
+        let currentWindDirection = try? currentWeatherContainer?.decode(Int16.self, forKey: .windDirection)
+        
+        var currentWeather = HourForecast(
             date: time,
             isDay: currentIsDay != 0,
             precipitationProbability: 0,
-            weatherCode: currentWeatherCode,
-            temperature: temperature ?? 0
+            weatherCode: WeatherCode(rawValue: currentWeatherCodeRaw ?? 0) ?? .clearSky,
+            wind: Wind(speed: currentWindSpeed ?? 0, direction: currentWindDirection ?? 0),
+            temperature: temperature ?? 0,
+            apparentTemperature: 0
         )
         
         let hourlyContainer = try? rootContainer.nestedContainer(keyedBy: HourlyCodingKeys.self, forKey: .hourly)
@@ -84,6 +91,9 @@ final class WeatherJSON: Decodable {
         let temperatureList = try? hourlyContainer?.decode([Float].self, forKey: .temperature)
         let precipitationProbabilityList = try? hourlyContainer?.decode([Int16].self, forKey: .precipitationProbability)
         let weatherCodeList = try? hourlyContainer?.decode([Int16].self, forKey: .weathercode)
+        let windSpeedList = try? hourlyContainer?.decode([Float].self, forKey: .windSpeed)
+        let windDirectionList = try? hourlyContainer?.decode([Int16].self, forKey: .windDirection)
+        let apparentTemperatureList = try? hourlyContainer?.decode([Float].self, forKey: .apparentTemperature)
         
         var hourlyForecastList: [HourForecast] = []
         for index in 0 ..< timeList.count {
@@ -91,13 +101,21 @@ final class WeatherJSON: Decodable {
                   let isDay = isDayList?[index],
                   let temperature = temperatureList?[index],
                   let precipitationProbability = precipitationProbabilityList?[index],
-                  let code = weatherCodeList?[index] else { continue }
+                  let code = weatherCodeList?[index],
+                  let windSpeed = windSpeedList?[index],
+                  let windDirection = windDirectionList?[index],
+                  let apparentTemperature = apparentTemperatureList?[index]
+            else {
+                continue
+            }
             let hourlyForecast = HourForecast(
                 date: time,
                 isDay: isDay != 0,
                 precipitationProbability: precipitationProbability,
                 weatherCode: WeatherCode(rawValue: code) ?? .clearSky,
-                temperature: temperature
+                wind: Wind(speed: windSpeed, direction: windDirection),
+                temperature: temperature,
+                apparentTemperature: apparentTemperature
             )
             hourlyForecastList.append(hourlyForecast)
         }
@@ -152,6 +170,10 @@ final class WeatherJSON: Decodable {
             )
             dailyForecastList.append(dailyForecast)
         }
+        
+        // because api doesn't provide apparent temperature for current
+        let currentApparentTemperature = hourlyForecastList.first{ $0.date == currentWeather.date }?.apparentTemperature
+        currentWeather.apparentTemperature = currentApparentTemperature ?? 0
 
         self.weather = Weather(current: currentWeather, hourly: hourlyForecastList, daily: dailyForecastList)
     }
