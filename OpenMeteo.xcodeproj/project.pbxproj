@@ -109,6 +109,7 @@
 		C066C6B72A4F66D3004FDDE8 /* CALayerAnimationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayerAnimationDelegate.swift; sourceTree = "<group>"; };
 		C066C6B92A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailTransitionAnimator.swift; sourceTree = "<group>"; };
 		C066C6BB2A4F738A004FDDE8 /* CAShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAShapeLayer.swift; sourceTree = "<group>"; };
+		C066C6C12A5039D3004FDDE8 /* OpenMeteo.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = OpenMeteo.xctestplan; path = OpenMeteo/OpenMeteo.xctestplan; sourceTree = "<group>"; };
 		C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherCell.swift; sourceTree = "<group>"; };
 		C08D19642A48AC8300834A21 /* GeoWeatherListView+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeoWeatherListView+DataSource.swift"; sourceTree = "<group>"; };
 		C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailModuleAssembly.swift; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 				C04E2C072A473EAA00A5B1E8 /* Products */,
 				DE709730352D66B5F51FACE3 /* Pods */,
 				5E7DF11332C3B575EEF22C05 /* Frameworks */,
+				C066C6C12A5039D3004FDDE8 /* OpenMeteo.xctestplan */,
 			);
 			sourceTree = "<group>";
 		};
@@ -206,8 +208,8 @@
 			children = (
 				C04E2C092A473EAA00A5B1E8 /* AppDelegate.swift */,
 				C04E2C0B2A473EAA00A5B1E8 /* SceneDelegate.swift */,
-				C066C6B62A4F66C4004FDDE8 /* Helpers */,
 				C0E54D2D2A4B8711003D00C8 /* Style */,
+				C066C6B62A4F66C4004FDDE8 /* Helpers */,
 				C0E54D1A2A49EB3D003D00C8 /* Extensions */,
 				C04E2C5E2A47424600A5B1E8 /* Models */,
 				C08D19712A48F04500834A21 /* Views */,

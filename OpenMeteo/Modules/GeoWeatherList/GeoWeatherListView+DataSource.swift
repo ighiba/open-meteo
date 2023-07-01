@@ -31,7 +31,6 @@ extension GeoWeatherListViewController {
         for indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GeoWeatherCell.identifier, for: indexPath)
-        
         guard let weatherCell = cell as? GeoWeatherCell, let geoWeather = geoWeather(withId: itemIdentifier) else { return cell }
         
         weatherCell.configure(with: geoWeather)

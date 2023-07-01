@@ -7,15 +7,14 @@
 
 import UIKit
 
-class GeoWeatherDetailTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-
-    private let transitionAnimationDuration: TimeInterval = 0.05
-    private let pathAnimationDuration: TimeInterval = 0.3
-    private var initialPath: CGPath
+class TransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
-    init(initialPath: CGPath) {
-        self.initialPath = initialPath
-        super.init()
+    var transitionAnimationDuration: TimeInterval {
+        return 0.1
+    }
+    
+    var pathAnimationDuration: TimeInterval {
+        return 0.2
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
@@ -23,6 +22,43 @@ class GeoWeatherDetailTransitionAnimator: NSObject, UIViewControllerAnimatedTran
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        // implement in child
+    }
+    
+    fileprivate func configurePathAnimation(fromValue: CGPath?, toValue: CGPath?, completion: @escaping (Bool) -> Void) -> CABasicAnimation {
+        let pathAnimation = CABasicAnimation(keyPath: "path")
+        
+        pathAnimation.fromValue = fromValue
+        pathAnimation.toValue = toValue
+        pathAnimation.duration = pathAnimationDuration
+        pathAnimation.delegate = CALayerAnimationDelegate(animation: pathAnimation, completion: { flag in
+            completion(flag)
+        })
+        
+        return pathAnimation
+    }
+}
+
+// MARK: - Push
+
+class GeoWeatherDetailPushTransitionAnimator: TransitionAnimator {
+    
+    override var transitionAnimationDuration: TimeInterval {
+        return 0.05
+    }
+    
+    override var pathAnimationDuration: TimeInterval {
+        return 0.3
+    }
+
+    private var initialPath: CGPath
+    
+    init(initialPath: CGPath) {
+        self.initialPath = initialPath
+        super.init()
+    }
+
+    override func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromViewController = transitionContext.viewController(forKey: .from),
               let fromView = transitionContext.view(forKey: .from),
               let toView = transitionContext.view(forKey: .to)
@@ -42,6 +78,7 @@ class GeoWeatherDetailTransitionAnimator: NSObject, UIViewControllerAnimatedTran
 
         let pathAnimation = configurePathAnimation(fromValue: initialPath, toValue: finalPath) { _ in
             toView.layer.mask = nil
+            fromViewSnapshot.removeFromSuperview()
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
 
@@ -53,17 +90,58 @@ class GeoWeatherDetailTransitionAnimator: NSObject, UIViewControllerAnimatedTran
             detailViewMask.add(pathAnimation, forKey: "pathAnimation")
         }
     }
+}
 
-    private func configurePathAnimation(fromValue: CGPath?, toValue: CGPath?, completion: @escaping (Bool) -> Void) -> CABasicAnimation {
-        let pathAnimation = CABasicAnimation(keyPath: "path")
+// MARK: - Pop
+
+class GeoWeatherDetailPopTransitionAnimator: TransitionAnimator {
+    
+    override var transitionAnimationDuration: TimeInterval {
+        return 0.2
+    }
+    
+    override var pathAnimationDuration: TimeInterval {
+        return 0.2
+    }
+
+    private var finalPath: CGPath
+    
+    init(finalPath: CGPath) {
+        self.finalPath = finalPath
+        super.init()
+    }
+
+    override func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        guard let fromViewController = transitionContext.viewController(forKey: .from),
+              let fromView = transitionContext.view(forKey: .from),
+              let toView = transitionContext.view(forKey: .to)
+        else {
+            return
+        }
         
-        pathAnimation.fromValue = fromValue
-        pathAnimation.toValue = toValue
-        pathAnimation.duration = pathAnimationDuration
-        pathAnimation.delegate = CALayerAnimationDelegate(animation: pathAnimation, completion: { flag in
-            completion(flag)
-        })
+        guard let fromViewSnapshot = fromViewController.view.snapshotView(afterScreenUpdates: false) else { return }
+
+        transitionContext.containerView.addSubview(toView)
+        transitionContext.containerView.addSubview(fromViewSnapshot)
+
+        let initialPath = UIBezierPath(roundedRect: fromView.frame, cornerRadius: 15).cgPath
+        let detailViewMask = CAShapeLayer(with: initialPath)
+        fromViewSnapshot.layer.mask = detailViewMask
+
+        let transitionAnimationDuration = self.transitionAnimationDuration
         
-        return pathAnimation
+        let pathAnimation = configurePathAnimation(fromValue: initialPath, toValue: finalPath) { _ in
+            fromViewSnapshot.alpha = 1.0
+            
+            UIView.animate(withDuration: transitionAnimationDuration) {
+                fromViewSnapshot.alpha = 0.0
+            } completion: { _ in
+                fromViewSnapshot.removeFromSuperview()
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+            }
+        }
+        
+        detailViewMask.path = self.finalPath
+        detailViewMask.add(pathAnimation, forKey: "pathAnimation")
     }
 }

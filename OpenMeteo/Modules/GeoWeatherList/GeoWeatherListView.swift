@@ -94,7 +94,6 @@ class GeoWeatherListViewController: UICollectionViewController {
 
         
         initialPathForAnimator = UIBezierPath(roundedRect: cellOnRootViewRect, cornerRadius: cell.layer.cornerRadius).cgPath
-        
         detailViewController.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
@@ -111,16 +110,24 @@ extension GeoWeatherListViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         openDetail(for: indexPath)
     }
-    
-    
 }
 
 extension GeoWeatherListViewController: UINavigationControllerDelegate  {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if operation == .push {
-            guard let initialPath = initialPathForAnimator else { return nil }
-            return GeoWeatherDetailTransitionAnimator(initialPath: initialPath)
+        guard let initialPath = initialPathForAnimator else { return nil }
+        if operation == .push && isValidPushDestionation(from: fromVC, to: toVC) {
+            return GeoWeatherDetailPushTransitionAnimator(initialPath: initialPath)
+        } else if operation == .pop && isValidPopDestionation(from: fromVC, to: toVC) {
+            return GeoWeatherDetailPopTransitionAnimator(finalPath: initialPath)
         }
         return nil
+    }
+    
+    private func isValidPushDestionation(from fromVC: UIViewController, to toVC: UIViewController) -> Bool {
+        return fromVC is GeoWeatherListViewController && toVC is GeoWeatherDetailViewController
+    }
+    
+    private func isValidPopDestionation(from fromVC: UIViewController, to toVC: UIViewController) -> Bool {
+        return fromVC is GeoWeatherDetailViewController && toVC is GeoWeatherListViewController
     }
 }
