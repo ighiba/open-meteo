@@ -40,6 +40,7 @@ class GeoWeatherDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureNavigationBar()
         geoWeatherDetailScrollView.delegate = self
         configureViews(with: viewModel.geoWeather)
     }
@@ -60,6 +61,18 @@ class GeoWeatherDetailViewController: UIViewController {
         }
     }
     
+    func configureNavigationBar() {
+        self.navigationController?.navigationBar.tintColor = .white
+        
+        let closeButton = UIButton(type: .system)
+        closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        
+        let closeButtonBarItem = UIBarButtonItem(customView: closeButton)
+        self.navigationItem.rightBarButtonItem = closeButtonBarItem
+        self.navigationItem.hidesBackButton = true
+    }
+    
     func configureViews(with geoWeather: GeoWeather) {
         geoWeatherDetailScrollView.configure(with: geoWeather)
 
@@ -77,6 +90,16 @@ class GeoWeatherDetailViewController: UIViewController {
         backgroundView.setColors(weatherColorSet: colorSet)
     }
 }
+
+// MARK: - Actions
+
+extension GeoWeatherDetailViewController {
+    @objc func closeButtonTapped(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - Delegate
 
 extension GeoWeatherDetailViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
