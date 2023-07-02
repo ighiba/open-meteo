@@ -10,31 +10,6 @@ import Foundation
 struct Wind {
     var speed: Float
     var direction: Int16
-    
-    var localizedSpeedText: String {
-        
-//        let locale = Locale.current
-//        let resultUnitSpeed: UnitSpeed
-//
-//        if let countryCode = locale.regionCode {
-//            if countryCode == "US" {
-//                resultUnitSpeed = UnitSpeed.milesPerHour
-//            } else {
-//                resultUnitSpeed = UnitSpeed.metersPerSecond
-//            }
-//        } else {
-//            resultUnitSpeed = UnitSpeed.metersPerSecond
-//        }
-//
-//
-        var measurement = Measurement(value: Double(speed), unit: UnitSpeed.kilometersPerHour).converted(to: .metersPerSecond)
-        let formatter = MeasurementFormatter()
-        formatter.unitStyle = .short
-        formatter.unitOptions = .providedUnit
-        measurement.value = measurement.value.rounded()
-        
-        return formatter.string(from: measurement)
-    }
 }
 
 enum WindDirection {

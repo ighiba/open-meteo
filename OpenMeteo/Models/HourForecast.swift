@@ -10,6 +10,7 @@ import Foundation
 struct HourForecast: DatedForecast {
     var date: Date
     var isDay: Bool
+    var relativeHumidity: Int16
     var precipitationProbability: Int16
     var weatherCode: WeatherCode
     var wind: Wind

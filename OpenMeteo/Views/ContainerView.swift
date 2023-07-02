@@ -6,14 +6,20 @@
 //
 
 import UIKit
+import SnapKit
 
 class ContainerView: UIView, StyledContainer {
+    
+    var containerName: String {
+        return ""
+    }
 
     private var blurEffectView = UIVisualEffectView.obtainBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
 
     init() {
         super.init(frame: .zero)
         setViews()
+        setContainerName(containerName)
     }
     
     required init?(coder: NSCoder) {
@@ -48,7 +54,7 @@ class ContainerView: UIView, StyledContainer {
         blurEffectView.updateBlur(style: style.blurStyle, withAlpha: style.alpha)
     }
     
-    func setContainerName(_ text: String) {
+    private func setContainerName(_ text: String) {
         containerNameLabel.setAttributedTextWithShadow(text.uppercased())
     }
 

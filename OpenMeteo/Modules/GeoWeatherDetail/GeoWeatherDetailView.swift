@@ -67,6 +67,22 @@ class GeoWeatherDetailView: UIScrollView {
             make.width.equalTo(apparentTemperatureAndWindHorizontalStack.snp.height)
             make.height.equalToSuperview()
         }
+        
+        relativeHumidityAndPrecipitationStack.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalTo(contentContainer.snp.width).multipliedBy(0.5).inset(spacing / 4)
+        }
+        
+        relativeHumidityContainer.snp.makeConstraints { make in
+            make.width.equalTo(relativeHumidityAndPrecipitationStack.snp.height)
+            make.height.equalToSuperview()
+        }
+        
+        precipitationSumContainer.snp.makeConstraints { make in
+            make.width.equalTo(relativeHumidityAndPrecipitationStack.snp.height)
+            make.height.equalToSuperview()
+        }
+        
 
         self.contentLayoutGuide.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -87,6 +103,9 @@ class GeoWeatherDetailView: UIScrollView {
         let dailyForecastForWeek =  geoWeather.weather.obtainDailyForecastFor(nextDays: 7)
         let apparentTemperature = forecastForCurrentHour.apparentTemperature
         let wind = forecastForCurrentHour.wind
+        let relativeHumidity = forecastForCurrentHour.relativeHumidity
+        let precipitationSum = geoWeather.weather.obtainCurrentDayForecast()?.precipitationSum ?? 0
+        let tomorrowPrecipitationSum = geoWeather.weather.obtainDailyForecastFor(nextDays: 1).last?.precipitationSum
         
         geoNameLabel.setAttributedTextWithShadow(locationName)
         currentTemperatureLabel.setTemperature(currentTemperature)
@@ -96,6 +115,8 @@ class GeoWeatherDetailView: UIScrollView {
         dailyForecastContainer.configure(with: dailyForecastForWeek)
         apparentTemperatureContainer.configure(withApparent: apparentTemperature, current: currentTemperature)
         windContainer.configure(with: wind)
+        relativeHumidityContainer.configure(relativeHumidity: relativeHumidity)
+        precipitationSumContainer.configure(with: precipitationSum, tomorrowPrecipitation: tomorrowPrecipitationSum)
     }
     
     func updateViewsStyle(with style: ContainerStyle) {
@@ -103,6 +124,8 @@ class GeoWeatherDetailView: UIScrollView {
         dailyForecastContainer.updateContainerStyle(with: style)
         apparentTemperatureContainer.updateContainerStyle(with: style)
         windContainer.updateContainerStyle(with: style)
+        relativeHumidityContainer.updateContainerStyle(with: style)
+        precipitationSumContainer.updateContainerStyle(with: style)
     }
     
     // MARK: - Views
@@ -112,7 +135,8 @@ class GeoWeatherDetailView: UIScrollView {
             mainInfoContainer,
             hourlyForecastCollectionView,
             dailyForecastContainer,
-            apparentTemperatureAndWindHorizontalStack
+            apparentTemperatureAndWindHorizontalStack,
+            relativeHumidityAndPrecipitationStack
         ])
         
         container.axis = .vertical
@@ -199,5 +223,22 @@ class GeoWeatherDetailView: UIScrollView {
     
     lazy var windContainer: WindContainer = {
         return WindContainer()
+    }()
+    
+    lazy var relativeHumidityAndPrecipitationStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [relativeHumidityContainer, precipitationSumContainer])
+        
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        
+        return stack
+    }()
+    
+    lazy var relativeHumidityContainer: RelativeHumidityContainer = {
+        return RelativeHumidityContainer()
+    }()
+    
+    lazy var precipitationSumContainer: PrecipitationSumContainer = {
+        return PrecipitationSumContainer()
     }()
 }

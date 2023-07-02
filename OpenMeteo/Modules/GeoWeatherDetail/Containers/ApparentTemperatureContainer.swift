@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class ApparentTemperatureContainer: ContainerView {
     
@@ -26,16 +27,19 @@ final class ApparentTemperatureContainer: ContainerView {
         }
 
         static func compareTemperatures(apparent apparentTemperature: Float, current currentTemperature: Float) -> Self {
-            var difference = abs(currentTemperature - apparentTemperature)
-            difference = difference > 0.5 ? difference : 1
-            if String(format: "%.0f", apparentTemperature) == String(format: "%.0f", currentTemperature) {
+            let difference = currentTemperature.rounded(.toNearestOrEven) - apparentTemperature.rounded(.toNearestOrEven)
+            if difference == 0 {
                 return .equal
-            } else if apparentTemperature > currentTemperature {
+            } else if difference < 0 {
                 return .warmer(difference)
             } else {
                 return .colder(difference)
             }
         }
+    }
+    
+    override var containerName: String {
+        return NSLocalizedString("Feels like", comment: "")
     }
 
     override func setViews() {
@@ -49,18 +53,18 @@ final class ApparentTemperatureContainer: ContainerView {
         }
         
         descriptionLabel.snp.makeConstraints { make in
+            make.width.equalToSuperview().multipliedBy(0.85)
+            make.bottom.equalToSuperview().offset(-5)
             make.centerX.equalToSuperview()
-            make.top.equalTo(temperatureLabel.snp.bottom).offset(5)
+            make.top.equalTo(temperatureLabel.snp.bottom)
         }
     }
 
     func configure(withApparent apparentTemperature: Float, current currentTemperature: Float) {
-        let containerName = NSLocalizedString("Feels like", comment: "")
         let apparentTemperatureType = ApparentTemperatureType.compareTemperatures(apparent: apparentTemperature,
                                                                                current: currentTemperature)
         let descriptionText = apparentTemperatureType.localizedDescription
-        
-        self.setContainerName(containerName)
+
         temperatureLabel.setTemperature(apparentTemperature)
         descriptionLabel.setAttributedTextWithShadow(descriptionText)
     }
@@ -78,6 +82,7 @@ final class ApparentTemperatureContainer: ContainerView {
         let label = UILabel()
         
         label.font = UIFont.systemFont(ofSize: 15)
+        label.textAlignment = .center
         label.textColor = .white.withAlphaComponent(0.5)
         
         return label

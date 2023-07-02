@@ -32,6 +32,7 @@ final class WeatherJSON: Decodable {
         case time
         case temperature = "temperature_2m"
         case apparentTemperature = "apparent_temperature"
+        case relativeHumidity = "relativehumidity_2m"
         case precipitationProbability = "precipitation_probability"
         case weathercode
         case windSpeed = "windspeed_10m"
@@ -47,6 +48,7 @@ final class WeatherJSON: Decodable {
         case temperatureMin = "temperature_2m_min"
         case sunrise
         case sunset
+        case precipitationSum = "precipitation_sum"
         case precipitationProbabilityMax = "precipitation_probability_max"
     }
     
@@ -71,6 +73,7 @@ final class WeatherJSON: Decodable {
         var currentWeather = HourForecast(
             date: time,
             isDay: currentIsDay != 0,
+            relativeHumidity: 0,
             precipitationProbability: 0,
             weatherCode: WeatherCode(rawValue: currentWeatherCodeRaw ?? 0) ?? .clearSky,
             wind: Wind(speed: currentWindSpeed ?? 0, direction: currentWindDirection ?? 0),
@@ -89,6 +92,7 @@ final class WeatherJSON: Decodable {
 
         let isDayList = try? hourlyContainer?.decode([Int].self, forKey: .isDay)
         let temperatureList = try? hourlyContainer?.decode([Float].self, forKey: .temperature)
+        let relativeHumidityList = try? hourlyContainer?.decode([Int16].self, forKey: .relativeHumidity)
         let precipitationProbabilityList = try? hourlyContainer?.decode([Int16].self, forKey: .precipitationProbability)
         let weatherCodeList = try? hourlyContainer?.decode([Int16].self, forKey: .weathercode)
         let windSpeedList = try? hourlyContainer?.decode([Float].self, forKey: .windSpeed)
@@ -100,6 +104,7 @@ final class WeatherJSON: Decodable {
             guard let time = timeList[index],
                   let isDay = isDayList?[index],
                   let temperature = temperatureList?[index],
+                  let relativeHumidity = relativeHumidityList?[index],
                   let precipitationProbability = precipitationProbabilityList?[index],
                   let code = weatherCodeList?[index],
                   let windSpeed = windSpeedList?[index],
@@ -111,6 +116,7 @@ final class WeatherJSON: Decodable {
             let hourlyForecast = HourForecast(
                 date: time,
                 isDay: isDay != 0,
+                relativeHumidity: relativeHumidity,
                 precipitationProbability: precipitationProbability,
                 weatherCode: WeatherCode(rawValue: code) ?? .clearSky,
                 wind: Wind(speed: windSpeed, direction: windDirection),
@@ -134,7 +140,8 @@ final class WeatherJSON: Decodable {
         let dailyWeatherCodeList = try? dailyContainer?.decode([Int16].self, forKey: .weathercode)
         let dailySunriseListString = try? dailyContainer?.decode([String].self, forKey: .sunrise)
         let dailySunsetListString = try? dailyContainer?.decode([String].self, forKey: .sunset)
-        let precipitationMaxList = try? dailyContainer?.decode([Int16].self, forKey: .precipitationProbabilityMax)
+        let dailyPrecipitationSumList = try? dailyContainer?.decode([Float].self, forKey: .precipitationSum)
+        let dailyPrecipitationMaxList = try? dailyContainer?.decode([Int16].self, forKey: .precipitationProbabilityMax)
 
         let sunriseDateList = dailySunriseListString?.compactMap({ dateString in
             let dateFormatter = ISO8601DateFormatter()
@@ -157,7 +164,8 @@ final class WeatherJSON: Decodable {
             let code = dailyWeatherCodeList?[index] ?? 0
             let minTemperature = dailyTemperatureMinList?[index] ?? 0
             let maxTemperature = dailyTemperatureMaxList?[index] ?? 0
-            let precipitationMax = precipitationMaxList?[index] ?? 0
+            let precipitationSum = dailyPrecipitationSumList?[index] ?? 0
+            let precipitationMax = dailyPrecipitationMaxList?[index] ?? 0
 
             let dailyForecast = DayForecast(
                 date: date,
@@ -166,14 +174,16 @@ final class WeatherJSON: Decodable {
                 weatherCode: WeatherCode(rawValue: code) ?? .clearSky,
                 minTemperature: minTemperature,
                 maxTemperature: maxTemperature,
+                precipitationSum: precipitationSum,
                 precipitationProbabilityMax: precipitationMax
             )
             dailyForecastList.append(dailyForecast)
         }
         
-        // because api doesn't provide apparent temperature for current
-        let currentApparentTemperature = hourlyForecastList.first{ $0.date == currentWeather.date }?.apparentTemperature
-        currentWeather.apparentTemperature = currentApparentTemperature ?? 0
+        // because api doesn't provide this values for current
+        let currentHour = hourlyForecastList.first{ $0.date == currentWeather.date }
+        currentWeather.relativeHumidity = currentHour?.relativeHumidity ?? 0
+        currentWeather.apparentTemperature = currentHour?.apparentTemperature ?? 0
 
         self.weather = Weather(current: currentWeather, hourly: hourlyForecastList, daily: dailyForecastList)
     }

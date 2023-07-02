@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import SnapKit
 
 final class WindContainer: ContainerView {
+    
+    override var containerName: String {
+        return NSLocalizedString("Wind", comment: "")
+    }
 
     override func setViews() {
         super.setViews()
@@ -27,10 +32,20 @@ final class WindContainer: ContainerView {
     
     func configure(with wind: Wind) {
         let windDirectionDescriptionShort = WindDirection.obtain(by: wind.direction)?.localizedDescriptionShort ?? "--"
+        let windSpeedText = transfromIntoLocalizedText(wind.speed)
         
-        self.setContainerName(NSLocalizedString("Wind", comment: ""))
-        windSpeedLabel.setAttributedTextWithShadow(wind.localizedSpeedText)
+        windSpeedLabel.setAttributedTextWithShadow(windSpeedText)
         windDirectionLabel.setAttributedTextWithShadow(windDirectionDescriptionShort)
+    }
+    
+    private func transfromIntoLocalizedText(_ windSpeed: Float) -> String {
+        var measurement = Measurement(value: Double(windSpeed), unit: UnitSpeed.kilometersPerHour).converted(to: .metersPerSecond)
+        let formatter = MeasurementFormatter()
+        formatter.unitStyle = .short
+        formatter.unitOptions = .providedUnit
+        measurement.value = measurement.value.rounded()
+        
+        return formatter.string(from: measurement)
     }
     
     private let windSpeedLabel: UILabel = {

@@ -10,6 +10,11 @@
 
 "Feels like" = "Ощущается как";
 "Wind" = "Ветер";
+"Relative humidity" = "Влажность";
+"Precipitation" = "Осадки";
+"Tomorrow, %@ of precipitation is expected" = "Завтра ожидается %@ осадков";
+"No precipitation is expected tomorrow" = "Завтра осадков не ожидается";
+
 "No difference" = "Нет разницы";
 "Warmer by %.0f°" = "Теплее на %.0f°";
 "Colder by %.0f°" = "Холоднее на %.0f°";

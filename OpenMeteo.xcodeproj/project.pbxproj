@@ -34,6 +34,8 @@
 		C066C6C72A50CD90004FDDE8 /* Wind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6C62A50CD90004FDDE8 /* Wind.swift */; };
 		C066C6CA2A50E01E004FDDE8 /* WindContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6C92A50E01E004FDDE8 /* WindContainer.swift */; };
 		C066C6CC2A50E04A004FDDE8 /* ApparentTemperatureContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6CB2A50E04A004FDDE8 /* ApparentTemperatureContainer.swift */; };
+		C066C6CE2A50F145004FDDE8 /* RelativeHumidityContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6CD2A50F145004FDDE8 /* RelativeHumidityContainer.swift */; };
+		C066C6D02A50F36A004FDDE8 /* PrecipitationSumContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6CF2A50F36A004FDDE8 /* PrecipitationSumContainer.swift */; };
 		C08D19632A48AC1000834A21 /* GeoWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */; };
 		C08D19652A48AC8300834A21 /* GeoWeatherListView+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19642A48AC8300834A21 /* GeoWeatherListView+DataSource.swift */; };
 		C08D196B2A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */; };
@@ -120,6 +122,8 @@
 		C066C6C62A50CD90004FDDE8 /* Wind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wind.swift; sourceTree = "<group>"; };
 		C066C6C92A50E01E004FDDE8 /* WindContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindContainer.swift; sourceTree = "<group>"; };
 		C066C6CB2A50E04A004FDDE8 /* ApparentTemperatureContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApparentTemperatureContainer.swift; sourceTree = "<group>"; };
+		C066C6CD2A50F145004FDDE8 /* RelativeHumidityContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeHumidityContainer.swift; sourceTree = "<group>"; };
+		C066C6CF2A50F36A004FDDE8 /* PrecipitationSumContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationSumContainer.swift; sourceTree = "<group>"; };
 		C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherCell.swift; sourceTree = "<group>"; };
 		C08D19642A48AC8300834A21 /* GeoWeatherListView+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeoWeatherListView+DataSource.swift"; sourceTree = "<group>"; };
 		C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailModuleAssembly.swift; sourceTree = "<group>"; };
@@ -303,8 +307,12 @@
 		C066C6C82A50E006004FDDE8 /* Containers */ = {
 			isa = PBXGroup;
 			children = (
-				C066C6C92A50E01E004FDDE8 /* WindContainer.swift */,
+				C0E54D212A4A2954003D00C8 /* HourlyForecastCollectionView.swift */,
+				C0E54D1D2A49EB84003D00C8 /* DailyForecastContainer.swift */,
 				C066C6CB2A50E04A004FDDE8 /* ApparentTemperatureContainer.swift */,
+				C066C6C92A50E01E004FDDE8 /* WindContainer.swift */,
+				C066C6CD2A50F145004FDDE8 /* RelativeHumidityContainer.swift */,
+				C066C6CF2A50F36A004FDDE8 /* PrecipitationSumContainer.swift */,
 			);
 			path = Containers;
 			sourceTree = "<group>";
@@ -312,10 +320,9 @@
 		C08D19662A48BACE00834A21 /* GeoWeatherDetail */ = {
 			isa = PBXGroup;
 			children = (
+				C066C6C82A50E006004FDDE8 /* Containers */,
 				C0E54D162A49A5DE003D00C8 /* DayForecastRow.swift */,
-				C0E54D1D2A49EB84003D00C8 /* DailyForecastContainer.swift */,
 				C0E54D1F2A4A292C003D00C8 /* HourForecastCell.swift */,
-				C0E54D212A4A2954003D00C8 /* HourlyForecastCollectionView.swift */,
 				C08D19692A48BAF300834A21 /* GeoWeatherDetailView.swift */,
 				C08D19682A48BAF300834A21 /* GeoWeatherDetailController.swift */,
 				C08D196A2A48BAF300834A21 /* GeoWeatherDetailViewModel.swift */,
@@ -327,7 +334,6 @@
 		C08D19712A48F04500834A21 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C066C6C82A50E006004FDDE8 /* Containers */,
 				C0ECBB072A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift */,
 				C08D19722A48F05B00834A21 /* TemperatureLabel.swift */,
 				C0E54D472A4CECBA003D00C8 /* TemperatureLabelSymboled.swift */,
@@ -561,6 +567,7 @@
 				C08D19652A48AC8300834A21 /* GeoWeatherListView+DataSource.swift in Sources */,
 				C04E2C562A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift in Sources */,
 				C0E54D262A4B39B8003D00C8 /* UIVisualEffectView.swift in Sources */,
+				C066C6D02A50F36A004FDDE8 /* PrecipitationSumContainer.swift in Sources */,
 				C04E2C0A2A473EAA00A5B1E8 /* AppDelegate.swift in Sources */,
 				C0E54D202A4A292C003D00C8 /* HourForecastCell.swift in Sources */,
 				C08D196D2A48BAF300834A21 /* GeoWeatherDetailView.swift in Sources */,
@@ -577,6 +584,7 @@
 				C0E54D2A2A4B868B003D00C8 /* WeatherCode.swift in Sources */,
 				C04E2C682A476D0200A5B1E8 /* Geocoding.swift in Sources */,
 				C04E2C592A473FD600A5B1E8 /* GeoWeatherListViewModel.swift in Sources */,
+				C066C6CE2A50F145004FDDE8 /* RelativeHumidityContainer.swift in Sources */,
 				C04E2C662A475E1A00A5B1E8 /* HourForecast.swift in Sources */,
 				C066C6C52A50CD45004FDDE8 /* ContainerView.swift in Sources */,
 				C0E54D4A2A4CECEA003D00C8 /* TemperatureRangeContainer.swift in Sources */,

@@ -10,6 +10,11 @@
 
 "Feels like" = "Feels like";
 "Wind" = "Wind";
+"Relative humidity" = "Relative humidity";
+"Precipitation" = "Precipitation";
+"Tomorrow, %@ of precipitation is expected" = "Tomorrow, %@ of precipitation is expected";
+"No precipitation is expected tomorrow" = "No precipitation is expected tomorrow";
+
 "No difference" = "No difference";
 "Warmer by %.0f°" = "Warmer by %.0f°";
 "Colder by %.0f°" = "Colder by %.0f°";
