@@ -22,5 +22,17 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     
     var geoWeatherDidChangedHandler: ((GeoWeather) -> Void)?
     
+    func updateGeoWeather(with geocoding: Geocoding) {
+        #if DEBUG
+        DispatchQueue.global().async {
+            sleep(1)
+            DispatchQueue.main.sync {
+                var geoWeather = GeoWeather.sampleData[0]
+                geoWeather.id = Int.random(in: 32543...Int.max)
+                self.geoWeather = geoWeather
+            }
+        }
+        #endif
+    }
 }
 

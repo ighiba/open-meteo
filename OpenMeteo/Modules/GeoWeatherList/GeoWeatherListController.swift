@@ -23,6 +23,8 @@ class GeoWeatherListViewController: UICollectionViewController {
 
     private var initialPathForAnimator: CGPath?
     
+    private var dimmedView: UIView?
+    
     // MARK: - Init
     
     init() {
@@ -37,7 +39,10 @@ class GeoWeatherListViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        setNavigationBar()
+        updateNavigationBarAppearance()
+        
         self.collectionView.delegate = self
         self.navigationController?.delegate = self
         self.collectionView.collectionViewLayout = createLayout()
@@ -48,6 +53,37 @@ class GeoWeatherListViewController: UICollectionViewController {
         }
         
         updateSnapshot()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateNavigationBarAppearance()
+    }
+    
+    func setNavigationBar() {
+        let searchController = GeoSearchModuleAssembly.configureModule() as! GeoSearchViewController
+        searchController.geoWeatherListViewControllerDelegate = self
+        self.navigationItem.searchController = searchController
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        
+        self.title = NSLocalizedString("Weather", comment: "")
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    func updateNavigationBarAppearance() {
+        self.navigationItem.largeTitleDisplayMode = .always
+        self.navigationController?.navigationBar.barStyle = .default
+
+        self.navigationController?.navigationBar.tintColor = nil
+        
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithDefaultBackground()
+        
+        let scrollEdgeAppearance = UINavigationBarAppearance()
+        scrollEdgeAppearance.configureWithTransparentBackground()
+        
+        self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
     }
     
     func createLayout() -> UICollectionViewLayout {
@@ -62,7 +98,7 @@ class GeoWeatherListViewController: UICollectionViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
       
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: spacing, bottom: 0, trailing: spacing)
+        section.contentInsets = NSDirectionalEdgeInsets(top: spacing, leading: spacing, bottom: 0, trailing: spacing)
         section.interGroupSpacing = spacing
         
         let layout = UICollectionViewCompositionalLayout(section: section)
@@ -81,20 +117,13 @@ class GeoWeatherListViewController: UICollectionViewController {
         guard let cell = self.collectionView.cellForItem(at: indexPath) else { return }
         
         let cellOnRootViewRect = cell.convert(cell.bounds, to: self.view)
-//        let diff = GeoWeatherCell.height / cellOnRootViewRect.height
-//
-//        let identityWidth = cellOnRootViewRect.width * diff
-//        let identityHeight = cellOnRootViewRect.height * diff
-//        let identityX = cellOnRootViewRect.origin.x - (identityWidth - cellOnRootViewRect.width) / 2
-//        let identityY = cellOnRootViewRect.origin.y - (identityHeight - cellOnRootViewRect.height) / 2
-//        cellOnRootViewRect = CGRect(x: identityX,
-//                                    y: identityY,
-//                                    width: identityWidth,
-//                                    height: identityHeight)
 
-        
         initialPathForAnimator = UIBezierPath(roundedRect: cellOnRootViewRect, cornerRadius: cell.layer.cornerRadius).cgPath
         detailViewController.modalPresentationStyle = .fullScreen
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
     
@@ -131,3 +160,47 @@ extension GeoWeatherListViewController: UINavigationControllerDelegate  {
         return fromVC is GeoWeatherDetailViewController && toVC is GeoWeatherListViewController
     }
 }
+
+extension GeoWeatherListViewController: GeoWeatherListViewControllerDelegate {
+    
+    
+    private var dimmedViewTransitionDuration: TimeInterval {
+        return 0.3
+    }
+    
+    func addGeoWeather(_ geoWeather: GeoWeather) {
+        viewModel.addGeoWeather(geoWeather)
+    }
+    
+    func showDimmedView() {
+        guard dimmedView == nil else { return }
+        dimmedView = UIView()
+        dimmedView?.backgroundColor = .clear
+        
+        self.view.addSubview(dimmedView!)
+        self.collectionView.isUserInteractionEnabled = false
+        guard let navigationController = self.navigationController else { return }
+        navigationController.navigationBar.backgroundColor = .white
+        dimmedView?.snp.makeConstraints { make in
+            make.top.equalTo(navigationController.navigationBar)
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
+
+        UIView.animate(withDuration: dimmedViewTransitionDuration) { [weak self] in
+            self?.dimmedView?.backgroundColor = .darkGray.withAlphaComponent(0.3)
+        }
+    }
+    
+    func hideDimmedView() {
+        UIView.animate(withDuration: dimmedViewTransitionDuration, delay: 0, animations: { [weak self] in
+            self?.dimmedView?.backgroundColor = .clear
+        }, completion: { [weak self] _ in
+            self?.dimmedView?.removeFromSuperview()
+            self?.dimmedView = nil
+            self?.collectionView.isUserInteractionEnabled = true
+        })
+    }
+}
+

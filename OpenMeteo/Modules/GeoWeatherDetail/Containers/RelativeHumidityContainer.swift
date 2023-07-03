@@ -34,6 +34,7 @@ final class RelativeHumidityContainer: ContainerView {
         
         label.font = UIFont.systemFont(ofSize: 40)
         label.textColor = .white
+        label.text = "--"
         
         return label
     }()

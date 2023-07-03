@@ -53,6 +53,7 @@ final class WindContainer: ContainerView {
         
         label.font = UIFont.systemFont(ofSize: 30)
         label.textColor = .white
+        label.text = "--"
         
         return label
     }()

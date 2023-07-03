@@ -10,6 +10,11 @@ import SnapKit
 
 class GeoWeatherDetailViewController: UIViewController {
     
+    enum NavigationBarConfiguration {
+        case detail
+        case add
+    }
+    
     // MARK: - Properties
 
     var viewModel: GeoWeatherDetailViewModelDelegate! {
@@ -24,7 +29,14 @@ class GeoWeatherDetailViewController: UIViewController {
     let backgroundView = GradientView(endPoint: CGPoint(x: 0.5, y: 1.1))
     var geoWeatherDetailScrollView = GeoWeatherDetailView()
     
-    lazy var navigationBarOffset = self.view.convert(self.navigationController!.navigationBar.frame, to: self.view).origin.y
+    var navigationBarConfiguration: NavigationBarConfiguration = .detail
+    
+    var didAddedCallback: ((GeoWeather) -> Void)?
+    
+    lazy var navigationBarOffset: CGFloat = {
+        let navigationBarRect = self.navigationController?.navigationBar.frame ?? .zero
+        return self.view.convert(navigationBarRect, to: self.view).origin.y
+    }()
     
     // MARK: - Layout
 
@@ -44,36 +56,53 @@ class GeoWeatherDetailViewController: UIViewController {
         super.viewDidLoad()
         geoWeatherDetailScrollView.delegate = self
         configureNavigationBar()
-        configureViews(with: viewModel.geoWeather)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        animateChangeNavBarStyle(withDuration: 0.3, to: .black)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        animateChangeNavBarStyle(withDuration: 0.3, to: .default)
-    }
-    
-    private func animateChangeNavBarStyle(withDuration duration: TimeInterval, to style: UIBarStyle) {
-        UIView.animate(withDuration: duration) {
-            self.navigationController?.navigationBar.barStyle = style
+        updateNavigationBarAppearance()
+        
+        if viewModel.geoWeather != nil {
+            configureViews(with: viewModel.geoWeather)
+        } else {
+            configureViewsWithPlaceholder()
         }
     }
-    
-    func configureNavigationBar() {
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
         
-        closeButtonContainer.button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-        closeButtonContainer.setBlurAlpha(0.0)
-
-        let closeButtonBarItem = UIBarButtonItem(customView: closeButtonContainer)
-        self.navigationItem.rightBarButtonItem = closeButtonBarItem
+    func configureNavigationBar() {
+        var leftBarButtonItem: UIBarButtonItem? = nil
+        var rightBarButtonItem: UIBarButtonItem? = nil
+        
+        switch navigationBarConfiguration {
+            
+        case .detail:
+            rightBarButtonItem = UIBarButtonItem(customView: closeButtonContainer)
+            closeButtonContainer.button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+            closeButtonContainer.setBlurAlpha(0.0)
+        case .add:
+            leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeAddButtonTapped))
+            rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addButtonTapped))
+            break
+        }
+        
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
         self.navigationItem.hidesBackButton = true
+    }
+    
+    func updateNavigationBarAppearance() {
+        self.navigationItem.largeTitleDisplayMode = .never
+    
+        self.navigationController?.navigationBar.backgroundColor = .clear
+        self.navigationController?.navigationBar.tintColor = .white
+        
+        let navBarAppearance = UINavigationBarAppearance()
+        
+        navBarAppearance.configureWithTransparentBackground()
+        navBarAppearance.backgroundColor = .white.withAlphaComponent(0.0)
+        
+        self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = nil
+    }
+
+    func configureViewsWithPlaceholder() {
+        updateViews(for: .day)
     }
     
     func configureViews(with geoWeather: GeoWeather) {
@@ -101,6 +130,15 @@ class GeoWeatherDetailViewController: UIViewController {
 extension GeoWeatherDetailViewController {
     @objc func closeButtonTapped(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
+    }
+
+    @objc func closeAddButtonTapped(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true)
+    }
+    
+    @objc func addButtonTapped(_ sender: UIBarButtonItem) {
+        didAddedCallback?(viewModel.geoWeather)
+        self.dismiss(animated: true)
     }
 }
 

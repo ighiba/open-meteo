@@ -41,6 +41,8 @@ class DailyForecastContainer: UIStackView, StyledContainer {
             make.top.equalToSuperview()
             make.bottom.equalToSuperview()
         }
+        
+        addPlaceholder()
     }
     
     func updateContainerStyle(with style: ContainerStyle) {
@@ -49,7 +51,7 @@ class DailyForecastContainer: UIStackView, StyledContainer {
     
     func configure(with dayForecastList: [DayForecast]) {
         self.arrangedSubviews.forEach { subview in
-            self.removeArrangedSubview(subview)
+            subview.removeFromSuperview()
         }
         addArrangedSubviews(with: dayForecastList)
     }
@@ -63,7 +65,7 @@ class DailyForecastContainer: UIStackView, StyledContainer {
                 make.height.equalTo(DayForecastRow.height)
             }
             if row != forecastRows.last {
-                self.addSeparator()
+                addSeparator()
             }
         }
     }
@@ -85,6 +87,25 @@ class DailyForecastContainer: UIStackView, StyledContainer {
         separator.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.9)
             make.height.equalTo(1)
+        }
+    }
+    
+    private func makeConstraintsForRow(_ row: UIView) {
+        row.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalTo(DayForecastRow.height)
+        }
+    }
+    
+    private func addPlaceholder() {
+        let placeholderRowsRange = 0 ..< 7
+        placeholderRowsRange.forEach { i in
+            let row = UIView()
+            self.addArrangedSubview(row)
+            makeConstraintsForRow(row)
+            if i != placeholderRowsRange.last {
+                addSeparator()
+            }
         }
     }
 }
