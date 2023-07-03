@@ -25,6 +25,10 @@ class GeoWeatherListViewController: UICollectionViewController {
     
     private var dimmedView: UIView?
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     // MARK: - Init
     
     init() {
@@ -53,6 +57,11 @@ class GeoWeatherListViewController: UICollectionViewController {
         }
         
         updateSnapshot()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
     }
     
     override func viewDidAppear(_ animated: Bool) {

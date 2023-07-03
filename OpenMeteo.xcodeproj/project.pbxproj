@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		30720A06BFBA96D2A2BA6B2B /* Pods_OpenMeteo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D9983A7EC377E34541D0904 /* Pods_OpenMeteo.framework */; };
+		C01D28C62A5330C900412BCD /* OpenMeteoNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D28C52A5330C900412BCD /* OpenMeteoNavigationController.swift */; };
 		C04E2C0A2A473EAA00A5B1E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C092A473EAA00A5B1E8 /* AppDelegate.swift */; };
 		C04E2C0C2A473EAA00A5B1E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C0B2A473EAA00A5B1E8 /* SceneDelegate.swift */; };
 		C04E2C162A473EAA00A5B1E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C04E2C152A473EAA00A5B1E8 /* Assets.xcassets */; };
@@ -95,6 +96,7 @@
 		1D9983A7EC377E34541D0904 /* Pods_OpenMeteo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenMeteo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DFDD54B38659B70F701CCFB /* Pods-OpenMeteo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenMeteo.release.xcconfig"; path = "Target Support Files/Pods-OpenMeteo/Pods-OpenMeteo.release.xcconfig"; sourceTree = "<group>"; };
 		9B82575E5454D329C2ED10A8 /* Pods-OpenMeteo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenMeteo.debug.xcconfig"; path = "Target Support Files/Pods-OpenMeteo/Pods-OpenMeteo.debug.xcconfig"; sourceTree = "<group>"; };
+		C01D28C52A5330C900412BCD /* OpenMeteoNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMeteoNavigationController.swift; sourceTree = "<group>"; };
 		C04E2C062A473EAA00A5B1E8 /* OpenMeteo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenMeteo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C04E2C092A473EAA00A5B1E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C04E2C0B2A473EAA00A5B1E8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				C04E2C552A473FD600A5B1E8 /* GeoWeatherListViewModel.swift */,
 				C04E2C522A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift */,
 				C066C6B92A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift */,
+				C01D28C52A5330C900412BCD /* OpenMeteoNavigationController.swift */,
 			);
 			path = GeoWeatherList;
 			sourceTree = "<group>";
@@ -623,6 +626,7 @@
 				C0ECBB082A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift in Sources */,
 				C0E54D192A49D993003D00C8 /* DayForecast.swift in Sources */,
 				C0E54D4C2A4DD497003D00C8 /* UILabel+NSShadow.swift in Sources */,
+				C01D28C62A5330C900412BCD /* OpenMeteoNavigationController.swift in Sources */,
 				C0E54D2F2A4B8724003D00C8 /* WeatherColorSet.swift in Sources */,
 				C04E2C6A2A476FB800A5B1E8 /* GeoWeather.swift in Sources */,
 				C0E54D482A4CECBA003D00C8 /* TemperatureLabelSymboled.swift in Sources */,

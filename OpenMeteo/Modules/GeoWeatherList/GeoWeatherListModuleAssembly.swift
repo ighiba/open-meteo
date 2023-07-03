@@ -14,7 +14,7 @@ class GeoWeatherListModuleAssembly {
 
         view.viewModel = viewModel
 
-        let navigationController = UINavigationController()
+        let navigationController = OpenMeteoNavigationController()
         navigationController.viewControllers = [view]
 
         return navigationController

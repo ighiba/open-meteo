@@ -38,6 +38,16 @@ class GeoWeatherDetailViewController: UIViewController {
         return self.view.convert(navigationBarRect, to: self.view).origin.y
     }()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return statusBarStyle
+    }
+    
+    var statusBarStyle: UIStatusBarStyle = .darkContent {
+        didSet {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
     // MARK: - Layout
 
     override func loadView() {
@@ -54,14 +64,23 @@ class GeoWeatherDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        geoWeatherDetailScrollView.delegate = self
+
         configureNavigationBar()
         updateNavigationBarAppearance()
+        
+        geoWeatherDetailScrollView.delegate = self
         
         if viewModel.geoWeather != nil {
             configureViews(with: viewModel.geoWeather)
         } else {
             configureViewsWithPlaceholder()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.statusBarStyle = .lightContent
         }
     }
         
