@@ -38,6 +38,8 @@ class GeoWeatherCell: UICollectionViewCell {
         backgroundGradientView.layer.cornerRadius = Self.height / 5
         backgroundGradientView.layer.masksToBounds = true
         
+        setBackgroundPlaceholder()
+        
         self.addSubview(backgroundGradientView)
         self.addSubview(geoNameLabel)
         self.addSubview(weatherCodeDescriptionLabel)
@@ -53,6 +55,7 @@ class GeoWeatherCell: UICollectionViewCell {
         
         geoNameLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(horizontalOffset)
+            make.trailing.equalTo(todayMinMaxTemeperatureRangeContainer.snp.leading)
             make.top.equalTo(currentTemperatureLabel).offset(10)
         }
         
@@ -77,20 +80,25 @@ class GeoWeatherCell: UICollectionViewCell {
     // MARK: - Methods
     
     func configure(with geoWeather: GeoWeather) {
-        updateBackgroundView(with: geoWeather)
-        geoNameLabel.setAttributedTextWithShadow(geoWeather.geocoding.name)
-        weatherCodeDescriptionLabel.setAttributedTextWithShadow(geoWeather.weather.currentWeatherCode.localizedDescription)
-        currentTemperatureLabel.setTemperature(geoWeather.weather.obtainForecastForCurrentHour().temperature)
+        geoNameLabel.text = geoWeather.geocoding.name
+        guard let weather = geoWeather.weather else { return }
+        updateBackgroundView(with: weather)
+        weatherCodeDescriptionLabel.setAttributedTextWithShadow(weather.currentWeatherCode.localizedDescription)
+        currentTemperatureLabel.setTemperature(weather.obtainForecastForCurrentHour().temperature)
         todayMinMaxTemeperatureRangeContainer.setTemperature(
-            min: geoWeather.weather.currentDayMinTemperature,
-            max: geoWeather.weather.currentDayMaxTemperature
+            min: weather.currentDayMinTemperature,
+            max: weather.currentDayMaxTemperature
         )
     }
 
-    func updateBackgroundView(with geoWeather: GeoWeather) {
-        let skyType = geoWeather.weather.obtainSkyType()
+    func updateBackgroundView(with weather: Weather) {
+        let skyType = weather.obtainSkyType()
         let colorSet = WeatherColorSet.obtainColorSet(fromSkyType: skyType)
         backgroundGradientView.setColors(weatherColorSet: colorSet)
+    }
+    
+    func setBackgroundPlaceholder() {
+        backgroundGradientView.setColors(weatherColorSet: .clearSky)
     }
     
     private func setGestureRecognizers() {
@@ -129,7 +137,7 @@ class GeoWeatherCell: UICollectionViewCell {
         let label = UILabel()
         
         label.text = "Location name"
-        label.font = UIFont.systemFont(ofSize: 35, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         label.textColor = .white
         label.sizeToFit()
         
@@ -139,7 +147,7 @@ class GeoWeatherCell: UICollectionViewCell {
     private let weatherCodeDescriptionLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "-"
+        label.text = "..."
         label.font = UIFont.systemFont(ofSize: 15, weight: .light)
         label.textColor = .white
         label.sizeToFit()

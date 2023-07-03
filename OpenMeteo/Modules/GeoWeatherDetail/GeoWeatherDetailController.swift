@@ -70,11 +70,7 @@ class GeoWeatherDetailViewController: UIViewController {
         
         geoWeatherDetailScrollView.delegate = self
         
-        if viewModel.geoWeather != nil {
-            configureViews(with: viewModel.geoWeather)
-        } else {
-            configureViewsWithPlaceholder()
-        }
+        configureViews(with: viewModel.geoWeather)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,15 +116,15 @@ class GeoWeatherDetailViewController: UIViewController {
         self.navigationController?.navigationBar.scrollEdgeAppearance = nil
     }
 
-    func configureViewsWithPlaceholder() {
-        updateViews(for: .day)
-    }
-    
     func configureViews(with geoWeather: GeoWeather) {
-        geoWeatherDetailScrollView.configure(with: geoWeather)
-
-        let skyType = geoWeather.weather.obtainSkyType()
-        updateViews(for: skyType)
+        geoWeatherDetailScrollView.configure(geocoding: geoWeather.geocoding, weather: geoWeather.weather)
+        
+        if let weather = geoWeather.weather {
+            let skyType = weather.obtainSkyType()
+            updateViews(for: skyType)
+        } else {
+            updateViews(for: .day)
+        }
     }
     
     func updateViews(for skyType: SkyType) {

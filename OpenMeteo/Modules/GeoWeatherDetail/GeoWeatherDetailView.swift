@@ -92,22 +92,33 @@ class GeoWeatherDetailView: UIScrollView {
         }
     }
     
-    func configure(with geoWeather: GeoWeather) {
-        let locationName = geoWeather.geocoding.name
-        let forecastForCurrentHour = geoWeather.weather.obtainForecastForCurrentHour()
+    func configure(geocoding: Geocoding, weather: Weather?) {
+        configureGeocodingViews(geocoding)
+        
+        if let weather = weather {
+            configureWeatherViews(weather)
+        }
+    }
+    
+    private func configureGeocodingViews(_ geocoding: Geocoding) {
+        let locationName = geocoding.name
+        geoNameLabel.setAttributedTextWithShadow(locationName)
+    }
+    
+    private func configureWeatherViews(_ weather: Weather) {
+        let forecastForCurrentHour = weather.obtainForecastForCurrentHour()
         let currentTemperature = forecastForCurrentHour.temperature
-        let currentMinTemperature = geoWeather.weather.currentDayMinTemperature
-        let currentMaxTemperature = geoWeather.weather.currentDayMaxTemperature
-        let weatherCodeDescription = geoWeather.weather.currentWeatherCode.localizedDescription
-        let hourlyForecastFor24Hours = geoWeather.weather.obtainHourlyForecastFor(nextHours: 24)
-        let dailyForecastForWeek =  geoWeather.weather.obtainDailyForecastFor(nextDays: 7)
+        let currentMinTemperature = weather.currentDayMinTemperature
+        let currentMaxTemperature = weather.currentDayMaxTemperature
+        let weatherCodeDescription = weather.currentWeatherCode.localizedDescription
+        let hourlyForecastFor24Hours = weather.obtainHourlyForecastFor(nextHours: 24)
+        let dailyForecastForWeek =  weather.obtainDailyForecastFor(nextDays: 7)
         let apparentTemperature = forecastForCurrentHour.apparentTemperature
         let wind = forecastForCurrentHour.wind
         let relativeHumidity = forecastForCurrentHour.relativeHumidity
-        let precipitationSum = geoWeather.weather.obtainCurrentDayForecast()?.precipitationSum ?? 0
-        let tomorrowPrecipitationSum = geoWeather.weather.obtainDailyForecastFor(nextDays: 1).last?.precipitationSum
+        let precipitationSum = weather.obtainCurrentDayForecast()?.precipitationSum ?? 0
+        let tomorrowPrecipitationSum = weather.obtainDailyForecastFor(nextDays: 1).last?.precipitationSum
         
-        geoNameLabel.setAttributedTextWithShadow(locationName)
         currentTemperatureLabel.setTemperature(currentTemperature)
         todayMinMaxTemeperatureRangeContainer.setTemperature(min: currentMinTemperature, max: currentMaxTemperature)
         weatherCodeDescriptionLabel.setAttributedTextWithShadow(weatherCodeDescription)
@@ -165,7 +176,7 @@ class GeoWeatherDetailView: UIScrollView {
         let label = UILabel()
         
         label.text = "..."
-        label.font = UIFont.systemFont(ofSize: 40, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 35, weight: .bold)
         label.textColor = .white
         label.sizeToFit()
         

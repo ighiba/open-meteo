@@ -20,9 +20,12 @@ extension GeoWeatherListViewController {
         snapshot.appendSections([0])
         snapshot.appendItems(viewModel.geoWeatherList.map { $0.id } )
         if !ids.isEmpty {
-            dataSource.apply(snapshot)
+            snapshot.reloadItems(ids)
+            dataSource.apply(snapshot, animatingDifferences: true)
+            return
         }
-        dataSource.apply(snapshot, animatingDifferences: true)
+
+        dataSource.apply(snapshot)
     }
     
     func configureCell(

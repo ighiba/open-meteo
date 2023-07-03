@@ -16,6 +16,10 @@ class GeoWeatherListViewController: UICollectionViewController {
             viewModel.geoWeatherListDidChangedHandler = { [weak self] geoWeatherList in
                 self?.updateSnapshot()
             }
+            
+            viewModel.geoWeatherIdsDidChangedHandler = { [weak self] ids in
+                self?.updateSnapshot(reloading: ids)
+            }
         }
     }
 

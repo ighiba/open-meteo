@@ -17,14 +17,13 @@ class GeoWeatherDetailModuleAssembly {
 
         return view
     }
-
     
     class func configureModule(with geocoding: Geocoding) -> UIViewController {
         let view = GeoWeatherDetailViewController()
         let viewModel = GeoWeatherDetailViewModel()
 
+        viewModel.geoWeather = GeoWeather(id: geocoding.id, geocoding: geocoding)
         view.viewModel = viewModel
-        viewModel.updateGeoWeather(with: geocoding)
 
         return view
     }

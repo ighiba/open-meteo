@@ -17,6 +17,9 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     var geoWeather: GeoWeather! {
         didSet {
             geoWeatherDidChangedHandler?(geoWeather)
+            if geoWeather.weather == nil {
+                updateWeather()
+            }
         }
     }
     
@@ -30,6 +33,18 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
                 var geoWeather = GeoWeather.sampleData[0]
                 geoWeather.id = Int.random(in: 32543...Int.max)
                 self.geoWeather = geoWeather
+            }
+        }
+        #endif
+    }
+    
+    private func updateWeather() {
+        #if DEBUG
+        DispatchQueue.global().async {
+            sleep(5)
+            DispatchQueue.main.sync { [self] in
+                let weather = GeoWeather.sampleData[0].weather!
+                self.geoWeather = GeoWeather(id: geoWeather.id, geocoding: geoWeather.geocoding, weather: weather)
             }
         }
         #endif
