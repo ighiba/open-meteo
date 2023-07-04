@@ -12,7 +12,7 @@ class GeoWeatherDetailViewController: UIViewController {
     
     enum NavigationBarConfiguration {
         case detail
-        case add
+        case add(isAlreadyAdded: Bool)
     }
     
     // MARK: - Properties
@@ -90,10 +90,10 @@ class GeoWeatherDetailViewController: UIViewController {
             rightBarButtonItem = UIBarButtonItem(customView: closeButtonContainer)
             closeButtonContainer.button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
             closeButtonContainer.setBlurAlpha(0.0)
-        case .add:
+        case .add(let isAlreadyAdded):
             leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeAddButtonTapped))
+            guard !isAlreadyAdded else { break }
             rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addButtonTapped))
-            break
         }
         
         self.navigationItem.leftBarButtonItem = leftBarButtonItem

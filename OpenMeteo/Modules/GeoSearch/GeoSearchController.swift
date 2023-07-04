@@ -8,6 +8,7 @@
 import UIKit
 
 protocol GeoWeatherListViewControllerDelegate {
+    func isGeoAlreadyAdded(withId id: Geocoding.ID) -> Bool
     func addGeoWeather(_ geoWeather: GeoWeather)
     func showDimmedView()
     func hideDimmedView()
@@ -84,7 +85,8 @@ class GeoSearchViewController: UISearchController {
 
         let navigationController = UINavigationController(rootViewController: detailViewController)
 
-        detailViewController.navigationBarConfiguration = .add
+        let isAlreadyAdded = geoWeatherListViewControllerDelegate?.isGeoAlreadyAdded(withId: geocoding.id) ?? false
+        detailViewController.navigationBarConfiguration = .add(isAlreadyAdded: isAlreadyAdded)
         detailViewController.didAddedCallback = { [weak self] geoWeather in
             self?.geoWeatherListViewControllerDelegate?.addGeoWeather(geoWeather)
             self?.geoWeatherListViewControllerDelegate?.hideDimmedView()

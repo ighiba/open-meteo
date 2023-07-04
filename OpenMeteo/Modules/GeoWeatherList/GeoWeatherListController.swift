@@ -180,6 +180,11 @@ extension GeoWeatherListViewController: GeoWeatherListViewControllerDelegate {
         return 0.3
     }
     
+    func isGeoAlreadyAdded(withId id: Geocoding.ID) -> Bool {
+        let ids = viewModel.geoWeatherList.map { $0.geocoding.id }
+        return ids.contains(id)
+    }
+    
     func addGeoWeather(_ geoWeather: GeoWeather) {
         viewModel.addGeoWeather(geoWeather)
     }
