@@ -101,7 +101,8 @@ class GeoWeatherListViewController: UICollectionViewController {
     }
     
     func createLayout() -> UICollectionViewLayout {
-        let spacing: CGFloat = 20
+        let horizontalSpacing: CGFloat = 20
+        let verticalSpacing: CGFloat = 15
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                             heightDimension: .fractionalHeight(1.0))
@@ -112,8 +113,13 @@ class GeoWeatherListViewController: UICollectionViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
       
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: spacing, leading: spacing, bottom: 0, trailing: spacing)
-        section.interGroupSpacing = spacing
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: verticalSpacing,
+            leading: horizontalSpacing,
+            bottom: horizontalSpacing,
+            trailing: horizontalSpacing
+        )
+        section.interGroupSpacing = verticalSpacing
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         
