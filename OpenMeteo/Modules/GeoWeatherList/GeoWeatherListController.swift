@@ -61,6 +61,7 @@ class GeoWeatherListViewController: UICollectionViewController {
         }
         
         updateSnapshot()
+        viewModel.updateAllWeather()
     }
     
     override func viewWillAppear(_ animated: Bool) {

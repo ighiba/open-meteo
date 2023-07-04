@@ -12,8 +12,14 @@ enum FetchSearchResult {
     case failure(error: FetchErorr)
 }
 
+enum FetchWeatherResult {
+    case success(weather: Weather)
+    case failure(error: FetchErorr)
+}
+
 protocol NetworkManager: AnyObject {
     func fetchSearchResults(for searchString: String, completion: @escaping (FetchSearchResult) -> Void)
+    func fetchWeather(for geocoding: Geocoding, completion: @escaping (FetchWeatherResult) -> Void)
 }
 
 class NetworkManagerImpl: NetworkManager {
@@ -68,6 +74,57 @@ class NetworkManagerImpl: NetworkManager {
                 }
                 
                 result = .success(geocodingList: geocodingJson.geocodingList)
+            } else {
+                result = .failure(error: .unknown)
+            }
+        }.resume()
+    }
+    
+    func fetchWeather(for geocoding: Geocoding, completion: @escaping (FetchWeatherResult) -> Void) {
+        let hourlyQuery = "temperature_2m,relativehumidity_2m,apparent_temperature,precipitation_probability,weathercode,windspeed_10m,winddirection_10m,is_day"
+        let dailyQuery = "weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,precipitation_probability_max"
+
+        var forecastUrlSearch = URL(string: "https://api.open-meteo.com/v1/forecast")
+        forecastUrlSearch = forecastUrlSearch?.appending(params: [
+            "latitude"        : "\(geocoding.latitude)",
+            "longitude"       : "\(geocoding.longitude)",
+            "hourly"          : hourlyQuery,
+            "daily"           : dailyQuery,
+            "current_weather"  : "true",
+            "timezone"         : "GMT"
+            
+        ])
+        
+        guard let url = forecastUrlSearch else {
+            completion(.failure(error: .urlError))
+            return
+        }
+        
+        session.dataTask(with: url) { [weak self] data, response, error in
+            var result: FetchWeatherResult
+            
+            defer {
+                DispatchQueue.main.async {
+                    completion(result)
+                }
+            }
+            
+            guard let strongSelf = self else {
+                result = .failure(error: .unknown)
+                return
+            }
+            guard let response = response as? HTTPURLResponse, strongSelf.validCodes.contains(response.statusCode) else {
+                result = .failure(error: .networkError(statusCode: 404))
+                return
+            }
+            
+            if error == nil, let parsData = data  {
+                guard let weatherJson = try? strongSelf.decoder.decode(WeatherJSON.self, from: parsData) else {
+                    result = .failure(error: .decodeError)
+                    return
+                }
+                
+                result = .success(weather: weatherJson.weather)
             } else {
                 result = .failure(error: .unknown)
             }

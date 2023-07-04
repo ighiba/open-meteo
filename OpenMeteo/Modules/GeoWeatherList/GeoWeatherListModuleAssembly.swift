@@ -13,6 +13,7 @@ class GeoWeatherListModuleAssembly {
         let viewModel = GeoWeatherListViewModel()
 
         view.viewModel = viewModel
+        viewModel.networkManager = NetworkManagerImpl()
 
         let navigationController = OpenMeteoNavigationController()
         navigationController.viewControllers = [view]
