@@ -19,17 +19,18 @@ class GeoSearchViewController: UISearchController {
 
     var viewModel: GeoSearchViewModelDelegate! {
         didSet {
-            viewModel.geocodingListDidChangedHandler = { [weak self] geocodingList in
+            viewModel.geocodingListDidChangeHandler = { [weak self] in
                 self?.updateSnapshot()
             }
         }
     }
     
     var dataSource: DataSource!
+    
     var geoWeatherListViewControllerDelegate: GeoWeatherListViewControllerDelegate?
-    var searchResultsUpdaterDelegate: SearchResultsUpdatingDelegate! {
+    var searchBarDelegate: SearchBarDelegate! {
         didSet {
-            self.searchResultsUpdater = searchResultsUpdaterDelegate
+            self.searchBar.delegate = searchBarDelegate
         }
     }
     
@@ -52,7 +53,6 @@ class GeoSearchViewController: UISearchController {
         super.viewDidLoad()
         
         self.delegate = self
-        self.searchBar.delegate = self
         self.searchBar.placeholder = NSLocalizedString("Search", comment: "")
         self.searchBar.searchBarStyle = .prominent
         self.obscuresBackgroundDuringPresentation = false
@@ -65,8 +65,10 @@ class GeoSearchViewController: UISearchController {
             return self.configureCell(tableView: tableView, itemIdentifier: itemIdentifier, for: indexPath)
         }
         
-        searchResultsUpdaterDelegate = SearchResultsUpdatingDelegate(searchResultsUpdateHandler: { [weak self] searchString in
-            self?.viewModel.search(string: searchString)
+        searchBarDelegate = SearchBarDelegate(textDidChangeHandler: { [weak self] searchText in
+            self?.viewModel.searchTextDidChange(searchText)
+        }, searchDidClickHandler: { [weak self] searchText in
+            self?.viewModel.searchButtonDidClick(with: searchText)
         })
 
         updateSnapshot()
@@ -101,19 +103,16 @@ class GeoSearchViewController: UISearchController {
 
 extension GeoSearchViewController: UISearchControllerDelegate {
     func willPresentSearchController(_ searchController: UISearchController) {
-        print("willPresentSearchController")
-        self.geoWeatherListViewControllerDelegate?.showDimmedView()
-        
+        geoWeatherListViewControllerDelegate?.showDimmedView()
     }
     
     func willDismissSearchController(_ searchController: UISearchController) {
-        print("willDismissSearchController")
-        self.geoWeatherListViewControllerDelegate?.hideDimmedView()
+        geoWeatherListViewControllerDelegate?.hideDimmedView()
     }
-}
-
-extension GeoSearchViewController: UISearchBarDelegate {
     
+    func didDismissSearchController(_ searchController: UISearchController) {
+        viewModel.clearGeocodingList()
+    }
 }
 
 // MARK: - Table Delegate
@@ -132,15 +131,11 @@ extension GeoSearchViewController {
     typealias DataSource = UITableViewDiffableDataSource<Int, Geocoding.ID>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Geocoding.ID>
     
-    func updateSnapshot(reloading idsThatChanged: [Geocoding.ID] = []) {
-        let ids = idsThatChanged.filter { id in viewModel.geocodingList.contains(where: { $0.id == id }) }
+    func updateSnapshot() {
         var snapshot = Snapshot()
         snapshot.appendSections([0])
-        snapshot.appendItems(viewModel.geocodingList.map { $0.id } )
-        if !ids.isEmpty {
-            dataSource.apply(snapshot)
-        }
-        dataSource.apply(snapshot, animatingDifferences: true)
+        snapshot.appendItems(viewModel.geocodingList.map { $0.id })
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
     
     func configureCell(
@@ -168,18 +163,23 @@ extension GeoSearchViewController {
     }
 }
 
-class SearchResultsUpdatingDelegate: NSObject, UISearchResultsUpdating {
+class SearchBarDelegate: NSObject, UISearchBarDelegate {
     
-    var searchResultsUpdateHandler: ((String) -> Void)
+    var textDidChangeHandler: ((String) -> Void)?
+    var searchDidClickHandler: ((String) -> Void)?
     
-    init(searchResultsUpdateHandler: @escaping ((String) -> Void)) {
-        self.searchResultsUpdateHandler = searchResultsUpdateHandler
+    init(textDidChangeHandler: ((String) -> Void)?, searchDidClickHandler: ((String) -> Void)?) {
+        self.textDidChangeHandler = textDidChangeHandler
+        self.searchDidClickHandler = searchDidClickHandler
     }
     
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text, !searchText.isEmpty else { return }
-        print("need update for text \(searchText) ")
-        searchResultsUpdateHandler(searchText)
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+        searchDidClickHandler?(searchText)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        textDidChangeHandler?(searchText)
     }
 }
 

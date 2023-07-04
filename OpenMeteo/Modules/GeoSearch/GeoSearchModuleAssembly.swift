@@ -13,6 +13,7 @@ class GeoSearchModuleAssembly {
         let viewModel = GeoSearchViewModel()
 
         view.viewModel = viewModel
+        viewModel.networkManager = NetworkManagerImpl()
 
         return view
     }

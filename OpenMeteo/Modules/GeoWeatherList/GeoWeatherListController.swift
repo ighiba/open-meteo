@@ -176,7 +176,6 @@ extension GeoWeatherListViewController: UINavigationControllerDelegate  {
 
 extension GeoWeatherListViewController: GeoWeatherListViewControllerDelegate {
     
-    
     private var dimmedViewTransitionDuration: TimeInterval {
         return 0.3
     }
