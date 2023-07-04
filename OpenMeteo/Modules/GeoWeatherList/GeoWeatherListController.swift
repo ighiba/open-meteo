@@ -134,6 +134,9 @@ class GeoWeatherListViewController: UICollectionViewController {
 
         initialPathForAnimator = UIBezierPath(roundedRect: cellOnRootViewRect, cornerRadius: cell.layer.cornerRadius).cgPath
         detailViewController.modalPresentationStyle = .fullScreen
+        detailViewController.updateHandler = { [weak self] in
+            self?.updateSnapshot(reloading: [geoWeather.id])
+        }
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()

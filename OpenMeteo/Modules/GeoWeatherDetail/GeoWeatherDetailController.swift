@@ -32,6 +32,7 @@ class GeoWeatherDetailViewController: UIViewController {
     var navigationBarConfiguration: NavigationBarConfiguration = .detail
     
     var didAddedCallback: ((GeoWeather) -> Void)?
+    var updateHandler: (() -> Void)?
     
     lazy var navigationBarOffset: CGFloat = {
         let navigationBarRect = self.navigationController?.navigationBar.frame ?? .zero
@@ -70,6 +71,8 @@ class GeoWeatherDetailViewController: UIViewController {
         
         geoWeatherDetailScrollView.delegate = self
         
+        viewModel.updateWeather()
+        
         configureViews(with: viewModel.geoWeather)
     }
     
@@ -78,6 +81,11 @@ class GeoWeatherDetailViewController: UIViewController {
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.statusBarStyle = .lightContent
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        updateHandler?()
     }
         
     func configureNavigationBar() {

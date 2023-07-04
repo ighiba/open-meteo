@@ -72,7 +72,6 @@ class NetworkManagerImpl: NetworkManager {
                     result = .failure(error: .decodeError)
                     return
                 }
-                
                 result = .success(geocodingList: geocodingJson.geocodingList)
             } else {
                 result = .failure(error: .unknown)
@@ -123,7 +122,6 @@ class NetworkManagerImpl: NetworkManager {
                     result = .failure(error: .decodeError)
                     return
                 }
-                
                 result = .success(weather: weatherJson.weather)
             } else {
                 result = .failure(error: .unknown)

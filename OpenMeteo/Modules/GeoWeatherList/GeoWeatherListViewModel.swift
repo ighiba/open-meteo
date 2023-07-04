@@ -43,7 +43,7 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         weatherCancellables.forEach { $0.cancel() }
         weatherCancellables.removeAll()
        
-        updateGeoWeatherList(geoWeatherList)
+        //updateGeoWeatherList(geoWeatherList)
     }
     
     func addGeoWeather(_ geoWeather: GeoWeather) {

@@ -6,48 +6,63 @@
 //
 
 import Foundation
+import Combine
 
 protocol GeoWeatherDetailViewModelDelegate: AnyObject {
     var geoWeather: GeoWeather! { get }
     var geoWeatherDidChangedHandler: ((GeoWeather) -> Void)? { get set }
+    func updateWeather()
 }
 
 class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     
+    // MARK: - Properties
+    
     var geoWeather: GeoWeather! {
         didSet {
             geoWeatherDidChangedHandler?(geoWeather)
-            if geoWeather.weather == nil {
-                updateWeather()
-            }
         }
     }
     
     var geoWeatherDidChangedHandler: ((GeoWeather) -> Void)?
     
-    func updateGeoWeather(with geocoding: Geocoding) {
-        #if DEBUG
-        DispatchQueue.global().async {
-            sleep(1)
-            DispatchQueue.main.sync {
-                var geoWeather = GeoWeather.sampleData[0]
-                geoWeather.id = Int.random(in: 32543...Int.max)
-                self.geoWeather = geoWeather
+    var networkManager: NetworkManager!
+    
+    var weatherCancellables = Set<AnyCancellable>()
+    
+    // MARK: - Methods
+    
+    func updateWeather() {
+        weatherCancellables.forEach { $0.cancel() }
+        weatherCancellables.removeAll()
+        
+        fetchWeatherPublisher(geocoding: geoWeather.geocoding)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    print(error)
+                }
+            } receiveValue: { [weak self] weather in
+                self?.geoWeather.weather = weather
+                self?.geoWeatherDidChangedHandler?((self?.geoWeather)!)
             }
-        }
-        #endif
+            .store(in: &weatherCancellables)
     }
     
-    private func updateWeather() {
-        #if DEBUG
-        DispatchQueue.global().async {
-            sleep(5)
-            DispatchQueue.main.sync { [self] in
-                let weather = GeoWeather.sampleData[0].weather!
-                self.geoWeather = GeoWeather(id: geoWeather.id, geocoding: geoWeather.geocoding, weather: weather)
+    private func fetchWeatherPublisher(geocoding: Geocoding) -> AnyPublisher<Weather, FetchErorr> {
+        return Future<Weather, FetchErorr> { [weak self] promise in
+            self?.networkManager.fetchWeather(for: geocoding) { result in
+                switch result {
+                case .success(let weather):
+                    promise(.success(weather))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
             }
         }
-        #endif
+        .eraseToAnyPublisher()
     }
 }
 
