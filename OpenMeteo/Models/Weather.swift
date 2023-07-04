@@ -41,6 +41,7 @@ private let oneHour: TimeInterval = 3600
 struct Weather {
     
     // MARK: - Properties
+    var lastUpdateTimestamp: Date
     
     private var current: HourForecast
     private var hourlyForecast: [HourForecast]
@@ -65,12 +66,18 @@ struct Weather {
     // MARK: - Init
     
     init(current: HourForecast, hourly hourlyForecast: [HourForecast], daily dailyForecast: [DayForecast]) {
+        self.lastUpdateTimestamp = Date()
         self.current = current
         self.hourlyForecast = hourlyForecast
         self.dailyForecast = dailyForecast
     }
     
     // MARK: - Methods
+    
+    func isNeededUpdate() -> Bool {
+        print(current.date.timeIntervalSinceNow)
+        return lastUpdateTimestamp.timeIntervalSinceNow <= -900 || current.date.timeIntervalSinceNow <= -oneHour
+    }
     
     func obtainForecastForCurrentHour() -> HourForecast {
         if Calendar.current.isDate(current.date, equalTo: Date(), toGranularity: .hour) {

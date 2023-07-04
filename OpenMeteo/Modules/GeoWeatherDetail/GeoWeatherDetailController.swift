@@ -10,7 +10,7 @@ import SnapKit
 
 class GeoWeatherDetailViewController: UIViewController {
     
-    enum NavigationBarConfiguration {
+    enum NavigationBarConfiguration: Equatable {
         case detail
         case add(isAlreadyAdded: Bool)
     }
@@ -71,7 +71,8 @@ class GeoWeatherDetailViewController: UIViewController {
         
         geoWeatherDetailScrollView.delegate = self
         
-        viewModel.updateWeather()
+        let needForceUpdate = navigationBarConfiguration != .detail
+        viewModel.updateWeather(forcedUpdate: needForceUpdate)
         
         configureViews(with: viewModel.geoWeather)
     }

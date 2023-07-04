@@ -11,7 +11,7 @@ import Combine
 protocol GeoWeatherDetailViewModelDelegate: AnyObject {
     var geoWeather: GeoWeather! { get }
     var geoWeatherDidChangedHandler: ((GeoWeather) -> Void)? { get set }
-    func updateWeather()
+    func updateWeather(forcedUpdate: Bool)
 }
 
 class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
@@ -32,7 +32,9 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     
     // MARK: - Methods
     
-    func updateWeather() {
+    func updateWeather(forcedUpdate: Bool) {
+        guard needUpdate(for: geoWeather.weather) || forcedUpdate else { return }
+        
         weatherCancellables.forEach { $0.cancel() }
         weatherCancellables.removeAll()
         
@@ -49,6 +51,12 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
                 self?.geoWeatherDidChangedHandler?((self?.geoWeather)!)
             }
             .store(in: &weatherCancellables)
+    }
+    
+    private func needUpdate(for weather: Weather?) -> Bool {
+        guard let weather = weather else { return true }
+        print(weather.lastUpdateTimestamp.timeIntervalSinceNow)
+        return weather.isNeededUpdate()
     }
     
     private func fetchWeatherPublisher(geocoding: Geocoding) -> AnyPublisher<Weather, FetchErorr> {

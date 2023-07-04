@@ -31,7 +31,7 @@ final class ApparentTemperatureContainer: ContainerView {
             if difference == 0 {
                 return .equal
             } else if difference < 0 {
-                return .warmer(difference)
+                return .warmer(abs(difference))
             } else {
                 return .colder(difference)
             }
