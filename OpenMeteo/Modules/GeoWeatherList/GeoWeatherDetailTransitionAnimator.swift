@@ -37,6 +37,20 @@ class TransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         return pathAnimation
     }
+    
+    fileprivate func captureSnapshot(_ viewcontroller: UIViewController, afterScreenUpdates: Bool) -> UIImageView? {
+        let image = captureSnapshotImage(viewcontroller, afterScreenUpdates: afterScreenUpdates)
+        return UIImageView(image: image)
+    }
+    
+    fileprivate func captureSnapshotImage(_ viewcontroller: UIViewController, afterScreenUpdates: Bool) -> UIImage? {
+        guard let navigationController = viewcontroller.navigationController else { return nil }
+        let renderer = UIGraphicsImageRenderer(size: navigationController.view.bounds.size)
+        let snapshot = renderer.image { context in
+            navigationController.view.drawHierarchy(in: navigationController.view.bounds, afterScreenUpdates: afterScreenUpdates)
+        }
+        return snapshot
+    }
 }
 
 // MARK: - Push
@@ -48,7 +62,7 @@ class GeoWeatherDetailPushTransitionAnimator: TransitionAnimator {
     }
     
     override var pathAnimationDuration: TimeInterval {
-        return 0.3
+        return 0.2
     }
 
     private var initialPath: CGPath
@@ -60,15 +74,22 @@ class GeoWeatherDetailPushTransitionAnimator: TransitionAnimator {
 
     override func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromViewController = transitionContext.viewController(forKey: .from),
+              let toViewController = transitionContext.viewController(forKey: .to),
               let fromView = transitionContext.view(forKey: .from),
               let toView = transitionContext.view(forKey: .to)
         else {
+            transitionContext.completeTransition(false)
             return
         }
         
-        guard let fromViewSnapshot = fromViewController.view.snapshotView(afterScreenUpdates: false) else { return }
+        guard let fromViewSnapshot = captureSnapshot(fromViewController, afterScreenUpdates: false) else {
+            transitionContext.completeTransition(false)
+            return
+        }
 
-        transitionContext.containerView.insertSubview(fromViewSnapshot, at: 0)
+        configureNavigationBarPush(for: toViewController)
+
+        transitionContext.containerView.addSubview(fromViewSnapshot)
         transitionContext.containerView.addSubview(toView)
 
         let detailViewMask = CAShapeLayer(with: initialPath)
@@ -89,6 +110,11 @@ class GeoWeatherDetailPushTransitionAnimator: TransitionAnimator {
             detailViewMask.path = finalPath
             detailViewMask.add(pathAnimation, forKey: "pathAnimation")
         }
+    }
+    
+    private func configureNavigationBarPush(for viewController: UIViewController) {
+        viewController.navigationController?.setNavigationBarHidden(true, animated: false)
+        viewController.navigationController?.setNavigationBarHidden(false, animated: true)
     }
 }
 
@@ -113,16 +139,30 @@ class GeoWeatherDetailPopTransitionAnimator: TransitionAnimator {
 
     override func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromViewController = transitionContext.viewController(forKey: .from),
+              let toViewController = transitionContext.viewController(forKey: .to),
               let fromView = transitionContext.view(forKey: .from),
               let toView = transitionContext.view(forKey: .to)
+              
         else {
+            transitionContext.completeTransition(false)
             return
         }
-        
-        guard let fromViewSnapshot = fromViewController.view.snapshotView(afterScreenUpdates: false) else { return }
 
+        configureNavigationBarPop(for: fromViewController)
+        
+        guard let fromViewSnapshot = captureSnapshot(fromViewController, afterScreenUpdates: false) else {
+            transitionContext.completeTransition(false)
+            return
+        }
+
+        fromViewSnapshot.frame = convertNavigationBarToSuperview(
+            for: fromViewSnapshot,
+            to: fromViewController.view,
+            navBarFrame: fromViewController.navigationController?.navigationBar.frame ?? .zero
+        )
+        
+        toViewController.navigationController?.navigationBar.addSubview(fromViewSnapshot)
         transitionContext.containerView.addSubview(toView)
-        transitionContext.containerView.addSubview(fromViewSnapshot)
 
         let initialPath = UIBezierPath(roundedRect: fromView.frame, cornerRadius: 15).cgPath
         let detailViewMask = CAShapeLayer(with: initialPath)
@@ -132,7 +172,6 @@ class GeoWeatherDetailPopTransitionAnimator: TransitionAnimator {
         
         let pathAnimation = configurePathAnimation(fromValue: initialPath, toValue: finalPath) { _ in
             fromViewSnapshot.alpha = 1.0
-            
             UIView.animate(withDuration: transitionAnimationDuration) {
                 fromViewSnapshot.alpha = 0.0
             } completion: { _ in
@@ -143,5 +182,23 @@ class GeoWeatherDetailPopTransitionAnimator: TransitionAnimator {
         
         detailViewMask.path = self.finalPath
         detailViewMask.add(pathAnimation, forKey: "pathAnimation")
+    }
+    
+    private func configureNavigationBarPop(for viewController: UIViewController) {
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithDefaultBackground()
+        
+        let scrollEdgeAppearance = UINavigationBarAppearance()
+        scrollEdgeAppearance.configureWithTransparentBackground()
+        
+        viewController.navigationController?.navigationBar.standardAppearance = navBarAppearance
+        viewController.navigationController?.navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
+        viewController.navigationController?.setNavigationBarHidden(true, animated: false)
+        viewController.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    private func convertNavigationBarToSuperview(for view: UIView, to superview: UIView, navBarFrame: CGRect) -> CGRect {
+        let verticalOffset = -superview.convert(navBarFrame, to: superview).origin.y
+        return CGRect(x: 0, y: verticalOffset, width: view.frame.width, height: view.frame.height)
     }
 }

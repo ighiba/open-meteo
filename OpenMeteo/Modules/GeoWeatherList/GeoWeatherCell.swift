@@ -40,7 +40,7 @@ class GeoWeatherCell: UICollectionViewCell {
         
         setBackgroundPlaceholder()
         
-        self.addSubview(backgroundGradientView)
+        self.backgroundView = backgroundGradientView
         self.addSubview(geoNameLabel)
         self.addSubview(weatherCodeDescriptionLabel)
         self.addSubview(currentTemperatureLabel)
