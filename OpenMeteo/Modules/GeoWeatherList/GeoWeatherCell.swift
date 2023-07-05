@@ -16,6 +16,9 @@ class GeoWeatherCell: UICollectionViewCell {
     static let height: CGFloat = 100
 
     private let horizontalOffset: CGFloat = 20
+    private var cornerRadius: CGFloat {
+        return Self.height / 5
+    }
     
     var longTapEndedCallback: (() -> Void)?
     var removeButtonTappedHandler: (() -> Void)?
@@ -39,8 +42,8 @@ class GeoWeatherCell: UICollectionViewCell {
     // MARK: - Layout
 
     func setViews() {
-        self.layer.cornerRadius = Self.height / 5
-        backgroundGradientView.layer.cornerRadius = Self.height / 5
+        self.layer.cornerRadius = cornerRadius
+        backgroundGradientView.layer.cornerRadius = cornerRadius
         backgroundGradientView.layer.masksToBounds = true
         
         setBackgroundPlaceholder()
@@ -94,14 +97,20 @@ class GeoWeatherCell: UICollectionViewCell {
     
     func configure(with geoWeather: GeoWeather) {
         geoNameLabel.text = geoWeather.geocoding.name
-        guard let weather = geoWeather.weather else { return }
-        updateBackgroundView(with: weather)
-        weatherCodeDescriptionLabel.setAttributedTextWithShadow(weather.currentWeatherCode.localizedDescription)
-        currentTemperatureLabel.setTemperature(weather.obtainForecastForCurrentHour().temperature)
-        todayMinMaxTemeperatureRangeContainer.setTemperature(
-            min: weather.currentDayMinTemperature,
-            max: weather.currentDayMaxTemperature
-        )
+        if let weather = geoWeather.weather {
+            updateBackgroundView(with: weather)
+            weatherCodeDescriptionLabel.setAttributedTextWithShadow(weather.currentWeatherCode.localizedDescription)
+            currentTemperatureLabel.setTemperature(weather.obtainForecastForCurrentHour().temperature)
+            todayMinMaxTemeperatureRangeContainer.setTemperature(
+                min: weather.currentDayMinTemperature,
+                max: weather.currentDayMaxTemperature
+            )
+        } else {
+            setBackgroundPlaceholder()
+            weatherCodeDescriptionLabel.setAttributedTextWithShadow("..")
+            currentTemperatureLabel.setPlaceholder()
+            todayMinMaxTemeperatureRangeContainer.setPlaceholders()
+        }
     }
 
     func updateBackgroundView(with weather: Weather) {
@@ -135,7 +144,7 @@ class GeoWeatherCell: UICollectionViewCell {
             removeItemButton.isHidden = false
             let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 60)
             let rect = backgroundGradientView.bounds.inset(by: insets)
-            let finalPath = UIBezierPath(roundedRect: rect, cornerRadius: Self.height / 5).cgPath
+            let finalPath = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius).cgPath
             let mask = CAShapeLayer(with: finalPath)
             backgroundGradientView.layer.mask = mask
             currentTemperatureLabel.layer.opacity = 0.0
@@ -174,7 +183,7 @@ class GeoWeatherCell: UICollectionViewCell {
         removeItemButton.isHidden = false
         backgroundGradientView.layer.animatePath(
             initialRect: backgroundGradientView.frame,
-            cornerRadius: Self.height / 5,
+            cornerRadius: cornerRadius,
             insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 60),
             duration: duration) { [weak self] _ in
                 guard let button = self?.removeItemButton else { return }
@@ -191,7 +200,7 @@ class GeoWeatherCell: UICollectionViewCell {
         self.sendSubviewToBack(removeItemButton)
         backgroundGradientView.layer.animatePath(
             initialRect: backgroundGradientView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 60)),
-            cornerRadius: Self.height / 5,
+            cornerRadius: cornerRadius,
             insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -60),
             duration: duration) { [weak self] _ in
                 self?.backgroundGradientView.layer.mask = nil
@@ -228,7 +237,7 @@ class GeoWeatherCell: UICollectionViewCell {
     private let geoNameLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "Location name"
+        label.text = "..."
         label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         label.textColor = .white
         label.sizeToFit()

@@ -45,4 +45,9 @@ class TemperatureRangeContainer: UIView {
         minTemperatureLabel.setTemperature(min)
         maxTemperatureLabel.setTemperature(max)
     }
+    
+    func setPlaceholders() {
+        minTemperatureLabel.temperatureLabel.setPlaceholder()
+        maxTemperatureLabel.temperatureLabel.setPlaceholder()
+    }
 }

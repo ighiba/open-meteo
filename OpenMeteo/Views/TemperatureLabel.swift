@@ -17,7 +17,7 @@ class TemperatureLabel: UILabel {
         if let temperature = temperature {
             setTemperature(temperature)
         } else {
-            self.setAttributedTextWithShadow("--")
+            setPlaceholder()
         }
     }
     
@@ -29,5 +29,9 @@ class TemperatureLabel: UILabel {
         let temperatureUnit = showTemperatureUnit ? "C" : ""
         let newText = String(format: "%.0f", temperature) + "°\(temperatureUnit)"
         self.setAttributedTextWithShadow(newText)
+    }
+    
+    func setPlaceholder() {
+        self.setAttributedTextWithShadow("--")
     }
 }
