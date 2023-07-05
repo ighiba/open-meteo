@@ -195,6 +195,8 @@ class GeoWeatherDetailPopTransitionAnimator: TransitionAnimator {
         viewController.navigationController?.navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
         viewController.navigationController?.setNavigationBarHidden(true, animated: false)
         viewController.navigationController?.setNavigationBarHidden(false, animated: false)
+        
+        viewController.navigationController?.navigationBar.tintColor = nil
     }
     
     private func convertNavigationBarToSuperview(for view: UIView, to superview: UIView, navBarFrame: CGRect) -> CGRect {

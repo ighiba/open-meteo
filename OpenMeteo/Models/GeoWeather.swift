@@ -25,6 +25,19 @@ class GeoWeather: Identifiable {
     }
 }
 
+extension [GeoWeather] {
+    func item(withId id: GeoWeather.ID) -> GeoWeather? {
+        if let index = self.index(for: id) {
+            return self[index]
+        }
+        return nil
+    }
+    
+    func index(for id: GeoWeather.ID) -> Int? {
+        return self.firstIndex { $0.id == id }
+    }
+}
+
 #if DEBUG
 
 let geoMoscow = Geocoding(id: 524901, name: "Москва", latitude: 55.75222, longitude: 37.61556, country: "Russia")

@@ -12,4 +12,28 @@ extension CAShapeLayer {
         self.init()
         self.path = path
     }
+    
+    func animatePath(
+        from fromValue: CGPath,
+        to toValue: CGPath,
+        duration: TimeInterval,
+        isRemovedOnCompletion: Bool = false,
+        timingFunctionName: CAMediaTimingFunctionName = .easeInEaseOut,
+        completion: ((Bool) -> Void)? = nil
+    ) {
+        self.removeAnimation(forKey: "path")
+        let pathAnimation = CABasicAnimation(keyPath: "path")
+        
+        pathAnimation.fromValue = fromValue
+        pathAnimation.toValue = toValue
+        pathAnimation.duration = duration
+        pathAnimation.isRemovedOnCompletion = isRemovedOnCompletion
+        pathAnimation.timingFunction = CAMediaTimingFunction(name: timingFunctionName)
+        pathAnimation.delegate = CALayerAnimationDelegate(animation: pathAnimation, completion: { flag in
+            completion?(flag)
+        })
+        
+        self.path = toValue
+        self.add(pathAnimation, forKey: "pathAnimation")
+    }
 }

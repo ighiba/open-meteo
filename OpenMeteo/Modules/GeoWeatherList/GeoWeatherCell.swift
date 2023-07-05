@@ -14,17 +14,22 @@ class GeoWeatherCell: UICollectionViewCell {
     
     static let identifier = "geoWeatherCell"
     static let height: CGFloat = 100
-    
+
     private let horizontalOffset: CGFloat = 20
     
     var longTapEndedCallback: (() -> Void)?
+    var removeButtonTappedHandler: (() -> Void)?
+    
+    lazy var longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressEvent))
+    
+    var isEditing = false
     
     // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setViews()
-        setGestureRecognizers()
+        addGestureRecognizers()
     }
     
     required init?(coder: NSCoder) {
@@ -41,10 +46,11 @@ class GeoWeatherCell: UICollectionViewCell {
         setBackgroundPlaceholder()
         
         self.backgroundView = backgroundGradientView
-        self.addSubview(geoNameLabel)
-        self.addSubview(weatherCodeDescriptionLabel)
-        self.addSubview(currentTemperatureLabel)
-        self.addSubview(todayMinMaxTemeperatureRangeContainer)
+        backgroundGradientView.addSubview(geoNameLabel)
+        backgroundGradientView.addSubview(weatherCodeDescriptionLabel)
+        backgroundGradientView.addSubview(currentTemperatureLabel)
+        backgroundGradientView.addSubview(todayMinMaxTemeperatureRangeContainer)
+        self.insertSubview(removeItemButton, at: 0)
 
         backgroundGradientView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -75,6 +81,13 @@ class GeoWeatherCell: UICollectionViewCell {
             make.width.equalTo(todayMinMaxTemeperatureRangeContainer.preferredWidth)
             make.height.equalTo(20)
         }
+        
+        removeItemButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.equalTo(40)
+            make.height.equalTo(40)
+        }
     }
     
     // MARK: - Methods
@@ -101,20 +114,99 @@ class GeoWeatherCell: UICollectionViewCell {
         backgroundGradientView.setColors(weatherColorSet: .clearSky)
     }
     
-    private func setGestureRecognizers() {
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressEvent))
+    private func addGestureRecognizers() {
         longPress.minimumPressDuration = 0.1
         self.addGestureRecognizer(longPress)
     }
     
-    @objc func longPressEvent(_ sender: UILongPressGestureRecognizer) {
-        if sender.state == .began {
-            animateTapBegin()
-        } else if sender.state == .ended {
-            amimateTapEnded()
+    private func removeGestureRecognizers() {
+        self.removeGestureRecognizer(longPress)
+    }
+    
+    func startEditing(animated: Bool = true, completion: (() -> Void)? = nil) {
+        isEditing = true
+        if animated {
+            animateIsEditingBegin() {
+                completion?()
+            }
+        } else {
+            backgroundGradientView.isUserInteractionEnabled = false
+            removeGestureRecognizers()
+            removeItemButton.isHidden = false
+            let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 60)
+            let rect = backgroundGradientView.bounds.inset(by: insets)
+            let finalPath = UIBezierPath(roundedRect: rect, cornerRadius: Self.height / 5).cgPath
+            let mask = CAShapeLayer(with: finalPath)
+            backgroundGradientView.layer.mask = mask
+            currentTemperatureLabel.layer.opacity = 0.0
+            todayMinMaxTemeperatureRangeContainer.layer.opacity = 0.0
         }
     }
+    
+    func endEditing(animated: Bool = true, completion: (() -> Void)? = nil) {
+        if animated {
+            animateIsEditingEnd() { [weak self] in
+                self?.isEditing = false
+                completion?()
+            }
+        } else {
+            removeAllAnimations()
+            currentTemperatureLabel.layer.opacity = 1.0
+            todayMinMaxTemeperatureRangeContainer.layer.opacity = 1.0
+            backgroundGradientView.layer.mask = nil
+            removeItemButton.isHidden = true
+            addGestureRecognizers()
+            backgroundGradientView.isUserInteractionEnabled = true
+        }
+    }
+    
+    private func removeAllAnimations() {
+        currentTemperatureLabel.layer.removeAllAnimations()
+        todayMinMaxTemeperatureRangeContainer.layer.removeAllAnimations()
+        removeItemButton.layer.removeAllAnimations()
+    }
+    
+    // MARK: - Animations
+    
+    private func animateIsEditingBegin(duration: TimeInterval = 0.2, completion: (() -> Void)? = nil) {
+        backgroundGradientView.isUserInteractionEnabled = false
+        removeGestureRecognizers()
+        removeItemButton.isHidden = false
+        backgroundGradientView.layer.animatePath(
+            initialRect: backgroundGradientView.frame,
+            cornerRadius: Self.height / 5,
+            insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 60),
+            duration: duration) { [weak self] _ in
+                guard let button = self?.removeItemButton else { return }
+                self?.bringSubviewToFront(button)
+                completion?()
+            }
+        currentTemperatureLabel.layer.animateOpacity(from: 1.0, to: 0.0, duration: duration / 2)
+        todayMinMaxTemeperatureRangeContainer.layer.animateOpacity(from: 1.0, to: 0.0, duration: duration / 2)
 
+        removeItemButton.layer.animateRotation(from: -CGFloat.pi * 0.5, to: 0, duration: duration)
+    }
+    
+    private func animateIsEditingEnd(duration: TimeInterval = 0.2, completion: (() -> Void)? = nil) {
+        self.sendSubviewToBack(removeItemButton)
+        backgroundGradientView.layer.animatePath(
+            initialRect: backgroundGradientView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 60)),
+            cornerRadius: Self.height / 5,
+            insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -60),
+            duration: duration) { [weak self] _ in
+                self?.backgroundGradientView.layer.mask = nil
+                self?.backgroundGradientView.isUserInteractionEnabled = true
+                self?.removeItemButton.isHidden = true
+                self?.addGestureRecognizers()
+                self?.removeAllAnimations()
+                completion?()
+            }
+        currentTemperatureLabel.layer.animateOpacity(from: 0.0, to: 1.0, duration: duration / 2)
+        todayMinMaxTemeperatureRangeContainer.layer.animateOpacity(from: 0.0, to: 1.0, duration: duration / 2)
+
+        removeItemButton.layer.animateRotation(from: 0.0, to: -CGFloat.pi * 0.5, duration: duration)
+    }
+    
     private func animateTapBegin() {
         UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut, .beginFromCurrentState]) {
             self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
@@ -175,4 +267,39 @@ class GeoWeatherCell: UICollectionViewCell {
         
         return container
     }()
+    
+    private var removeItemButton: UIButton = {
+        let button = UIButton(type: .custom)
+        
+        let symbolConfig = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30))
+        let image = UIImage(systemName: "minus.circle.fill", withConfiguration: symbolConfig)
+        button.setImage(image, for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: -20, left: -20, bottom: -20, right: -20)
+        button.tintColor = .red
+        button.addTarget(nil, action: #selector(removeButtonTapped), for: .touchUpInside)
+        button.isHidden = true
+        
+        return button
+    }()
+}
+
+// MARK: - Actions
+
+extension GeoWeatherCell {
+    @objc func longPressEvent(_ sender: UILongPressGestureRecognizer) {
+        guard !isEditing else { return }
+        if sender.state == .began {
+            animateTapBegin()
+        } else if sender.state == .ended {
+            amimateTapEnded()
+        }
+    }
+    
+    @objc func removeButtonTapped(_ sender: UIButton) {
+
+        animateIsEditingEnd(duration: 0.1) { [weak self] in
+            self?.isEditing = false
+            self?.removeButtonTappedHandler?()
+        }
+    }
 }

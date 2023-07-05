@@ -33,6 +33,13 @@ class GeoWeatherListViewController: UICollectionViewController {
         return .darkContent
     }
     
+    private(set) var isAnimatingEditing = false {
+        didSet {
+            self.navigationController?.navigationBar.isUserInteractionEnabled = !isAnimatingEditing
+            self.view.isUserInteractionEnabled = !isAnimatingEditing
+        }
+    }
+    
     // MARK: - Init
     
     init() {
@@ -65,6 +72,24 @@ class GeoWeatherListViewController: UICollectionViewController {
         viewModel.updateAllWeather()
     }
     
+    func beginListEditing() {
+        for i in 0 ..< self.viewModel.geoWeatherList.count {
+            let cell = self.collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? GeoWeatherCell
+            cell?.startEditing() { [weak self] in
+                self?.isAnimatingEditing = false
+            }
+        }
+    }
+    
+    func endListEditing() {
+        for i in 0 ..< self.viewModel.geoWeatherList.count {
+            let cell = self.collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? GeoWeatherCell
+            cell?.endEditing() { [weak self] in
+                self?.isAnimatingEditing = false
+            }
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
@@ -83,6 +108,18 @@ class GeoWeatherListViewController: UICollectionViewController {
         
         self.title = NSLocalizedString("Weather", comment: "")
         self.navigationController?.navigationBar.prefersLargeTitles = true
+
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        self.isAnimatingEditing = true
+        if editing {
+            beginListEditing()
+        } else {
+            endListEditing()
+        }
     }
     
     func updateNavigationBarAppearance() {
@@ -161,6 +198,7 @@ class GeoWeatherListViewController: UICollectionViewController {
 
 extension GeoWeatherListViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard !self.isEditing else { return }
         openDetail(for: indexPath)
     }
 }

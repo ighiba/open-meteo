@@ -75,6 +75,7 @@
 		C0E54D4C2A4DD497003D00C8 /* UILabel+NSShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */; };
 		C0E6CA342A55A0E700D6695B /* GeoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA332A55A0E700D6695B /* GeoModel.swift */; };
 		C0E6CA362A55A22500D6695B /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA352A55A22500D6695B /* DataManager.swift */; };
+		C0E6CA382A55FEAA00D6695B /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA372A55FEAA00D6695B /* CALayer.swift */; };
 		C0EC33A42A4DF9D500EAC0D6 /* StyledContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */; };
 		C0ECBB062A4E410C0086EFB6 /* OpenMeteo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C0ECBB042A4E410C0086EFB6 /* OpenMeteo.xcdatamodeld */; };
 		C0ECBB082A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ECBB072A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift */; };
@@ -175,6 +176,7 @@
 		C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+NSShadow.swift"; sourceTree = "<group>"; };
 		C0E6CA332A55A0E700D6695B /* GeoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoModel.swift; sourceTree = "<group>"; };
 		C0E6CA352A55A22500D6695B /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		C0E6CA372A55FEAA00D6695B /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
 		C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledContainer.swift; sourceTree = "<group>"; };
 		C0ECBB052A4E410C0086EFB6 /* OpenMeteo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenMeteo.xcdatamodel; sourceTree = "<group>"; };
 		C0ECBB072A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationProbabilityLabel.swift; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 			isa = PBXGroup;
 			children = (
 				C0E54D1B2A49EB47003D00C8 /* Date.swift */,
+				C0E6CA372A55FEAA00D6695B /* CALayer.swift */,
 				C066C6BB2A4F738A004FDDE8 /* CAShapeLayer.swift */,
 				C0E54D252A4B39B8003D00C8 /* UIVisualEffectView.swift */,
 				C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */,
@@ -640,6 +643,7 @@
 				C0E6CA342A55A0E700D6695B /* GeoModel.swift in Sources */,
 				C0E54D462A4CC29A003D00C8 /* WeatherIcon.swift in Sources */,
 				C0E54D242A4B0F06003D00C8 /* DatedForecast.swift in Sources */,
+				C0E6CA382A55FEAA00D6695B /* CALayer.swift in Sources */,
 				C0E54D442A4CC270003D00C8 /* WeatherIconView.swift in Sources */,
 				C04E2C642A475E0F00A5B1E8 /* Weather.swift in Sources */,
 				C0E54D222A4A2954003D00C8 /* HourlyForecastCollectionView.swift in Sources */,

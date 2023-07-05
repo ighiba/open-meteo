@@ -40,18 +40,25 @@ extension GeoWeatherListViewController {
         weatherCell.longTapEndedCallback = { [weak self] in 
             self?.openDetail(for: indexPath)
         }
+        weatherCell.removeButtonTappedHandler = { [weak self] in
+            let id = geoWeather.id
+            self?.removeItem(withId: id)
+        }
+        
+        if isEditing && !isAnimatingEditing {
+            weatherCell.startEditing(animated: false)
+        } else if !isEditing && weatherCell.isEditing {
+            weatherCell.endEditing(animated: false)
+        }
         
         return weatherCell
     }
     
-    func geoWeather(withId id: GeoWeather.ID) -> GeoWeather? {
-        if let index = indexOfGeoWeather(for: id) {
-            return viewModel.geoWeatherList[index]
-        }
-        return nil
+    func removeItem(withId id: GeoWeather.ID) {
+        viewModel.removeGeoWeather(withId: id)
     }
     
-    func indexOfGeoWeather(for id: GeoWeather.ID) -> Int? {
-        return viewModel.geoWeatherList.firstIndex { $0.id == id }
+    func geoWeather(withId id: GeoWeather.ID) -> GeoWeather? {
+        return viewModel.geoWeatherList.item(withId: id)
     }
 }
