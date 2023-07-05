@@ -25,9 +25,12 @@ class GeoWeatherDetailViewController: UIViewController {
         }
     }
 
-    let closeButtonContainer = BlurredButtonContainer(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-    let backgroundView = GradientView(endPoint: CGPoint(x: 0.5, y: 1.1))
-    var geoWeatherDetailScrollView = GeoWeatherDetailView()
+    
+    private let backgroundView = GradientView(endPoint: CGPoint(x: 0.5, y: 1.1))
+    private var geoWeatherDetailScrollView = GeoWeatherDetailView()
+    
+    private var closeButtonContainer: BlurredButtonContainer?
+    private var addButtonContainer: BlurredButtonContainer?
     
     var navigationBarConfiguration: NavigationBarConfiguration = .detail
     
@@ -93,16 +96,17 @@ class GeoWeatherDetailViewController: UIViewController {
         var leftBarButtonItem: UIBarButtonItem? = nil
         var rightBarButtonItem: UIBarButtonItem? = nil
         
+        closeButtonContainer = configureButtonContainer(withSystemName: "xmark", action: #selector(closeButtonTapped))
+        
         switch navigationBarConfiguration {
-            
         case .detail:
-            rightBarButtonItem = UIBarButtonItem(customView: closeButtonContainer)
-            closeButtonContainer.button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-            closeButtonContainer.setBlurAlpha(0.0)
+            closeButtonContainer?.setBlurAlpha(0.0)
+            rightBarButtonItem = UIBarButtonItem(customView: closeButtonContainer!)
         case .add(let isAlreadyAdded):
-            leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeAddButtonTapped))
+            leftBarButtonItem = UIBarButtonItem(customView: closeButtonContainer!)
             guard !isAlreadyAdded else { break }
-            rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addButtonTapped))
+            addButtonContainer = configureButtonContainer(withSystemName: "plus", action: #selector(addButtonTapped))
+            rightBarButtonItem = UIBarButtonItem(customView: addButtonContainer!)
         }
         
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
@@ -140,12 +144,23 @@ class GeoWeatherDetailViewController: UIViewController {
         updateBackgroundView(for: skyType)
         let preferredContainersStyle = ContainerStyle.obtainContainerStyle(for: skyType)
         geoWeatherDetailScrollView.preferredContainersStyle = preferredContainersStyle
-        closeButtonContainer.updateBlurStyle(preferredContainersStyle.blurStyle)
+        closeButtonContainer?.updateBlurStyle(preferredContainersStyle.blurStyle)
+        addButtonContainer?.updateBlurStyle(preferredContainersStyle.blurStyle)
     }
     
     func updateBackgroundView(for skyType: SkyType) {
         let colorSet = WeatherColorSet.obtainColorSet(fromSkyType: skyType)
         backgroundView.setColors(weatherColorSet: colorSet)
+    }
+    
+    private func configureButtonContainer(withSystemName systemName: String, action: Selector) -> BlurredButtonContainer {
+        let button = UIButton(type: .system)
+        
+        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        button.setImage(UIImage(systemName:systemName), for: .normal)
+        button.addTarget(self, action: action, for: .touchUpInside)
+        
+        return BlurredButtonContainer(button: button)
     }
 }
 
@@ -153,11 +168,12 @@ class GeoWeatherDetailViewController: UIViewController {
 
 extension GeoWeatherDetailViewController {
     @objc func closeButtonTapped(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
-    }
-
-    @objc func closeAddButtonTapped(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true)
+        switch navigationBarConfiguration {
+        case .detail:
+            self.navigationController?.popViewController(animated: true)
+        case .add(_):
+            self.dismiss(animated: true)
+        }
     }
     
     @objc func addButtonTapped(_ sender: UIBarButtonItem) {
@@ -172,9 +188,11 @@ extension GeoWeatherDetailViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y + navigationBarOffset
         if offsetY < 0 {
-            closeButtonContainer.animateHideButtonBackground()
+            closeButtonContainer?.animateHideButtonBackground()
+            addButtonContainer?.animateHideButtonBackground()
         } else {
-            closeButtonContainer.animateShowButtonBackground()
+            closeButtonContainer?.animateShowButtonBackground()
+            addButtonContainer?.animateShowButtonBackground()
         }
     }
 }

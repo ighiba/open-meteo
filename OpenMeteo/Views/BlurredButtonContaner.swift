@@ -13,11 +13,12 @@ class BlurredButtonContainer: UIView {
     private let minAlpha: CGFloat = 0.0
     private let maxAlpha: CGFloat = 0.7
     
-    var buttonFrame: CGRect
+    var button: UIButton
     
-    override init(frame: CGRect) {
-        buttonFrame = frame
-        super.init(frame: frame)
+    init(button: UIButton) {
+        self.button = button
+        super.init(frame: button.frame)
+
         setViews()
     }
     
@@ -39,15 +40,6 @@ class BlurredButtonContainer: UIView {
         blurEffectView.layer.cornerRadius = blurEffectView.bounds.width / 2
         
         return blurEffectView
-    }()
-    
-    lazy var button: UIButton = {
-        let button = UIButton(type: .system)
-        
-        button.frame = buttonFrame
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
-        
-        return button
     }()
     
     func setBlurAlpha(_ alpha: CGFloat) {

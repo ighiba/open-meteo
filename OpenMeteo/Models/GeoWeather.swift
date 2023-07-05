@@ -38,15 +38,15 @@ extension GeoWeather {
         GeoWeather(id: 0, geocoding: geoMoscow, weather: realWeatherMoscow),
         GeoWeather(id: 1, geocoding: geoPskov, weather: realWeatherPskov),
         GeoWeather(id: 2, geocoding: geoStPetersburg),
-        GeoWeather(id: 3, geocoding: geoMoscow, weather: realWeatherMoscow),
-        GeoWeather(id: 4, geocoding: geoPskov, weather: realWeatherPskov),
-        GeoWeather(id: 5, geocoding: geoStPetersburg),
-        GeoWeather(id: 6, geocoding: geoMoscow, weather: realWeatherMoscow),
-        GeoWeather(id: 7, geocoding: geoPskov, weather: realWeatherPskov),
-        GeoWeather(id: 8, geocoding: geoStPetersburg),
-        GeoWeather(id: 9, geocoding: geoMoscow, weather: realWeatherMoscow),
-        GeoWeather(id: 10, geocoding: geoPskov, weather: realWeatherPskov),
-        GeoWeather(id: 11, geocoding: geoStPetersburg)
+//        GeoWeather(id: 3, geocoding: geoMoscow, weather: realWeatherMoscow),
+//        GeoWeather(id: 4, geocoding: geoPskov, weather: realWeatherPskov),
+//        GeoWeather(id: 5, geocoding: geoStPetersburg),
+//        GeoWeather(id: 6, geocoding: geoMoscow, weather: realWeatherMoscow),
+//        GeoWeather(id: 7, geocoding: geoPskov, weather: realWeatherPskov),
+//        GeoWeather(id: 8, geocoding: geoStPetersburg),
+//        GeoWeather(id: 9, geocoding: geoMoscow, weather: realWeatherMoscow),
+//        GeoWeather(id: 10, geocoding: geoPskov, weather: realWeatherPskov),
+//        GeoWeather(id: 11, geocoding: geoStPetersburg)
     ]
 }
 

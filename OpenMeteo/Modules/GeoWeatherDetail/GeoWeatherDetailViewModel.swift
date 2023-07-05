@@ -33,6 +33,7 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     // MARK: - Methods
     
     func updateWeather(forcedUpdate: Bool) {
+        return
         guard needUpdate(for: geoWeather.weather) || forcedUpdate else { return }
         
         weatherCancellables.forEach { $0.cancel() }
