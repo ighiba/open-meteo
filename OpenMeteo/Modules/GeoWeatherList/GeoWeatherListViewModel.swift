@@ -15,7 +15,7 @@ protocol GeoWeatherListViewModelDelegate: AnyObject {
     func loadInitialData()
     func updateAllWeather()
     func addGeoWeather(_ geoWeather: GeoWeather)
-    func removeGeoWeather(withId id: GeoWeather.ID)
+    func deleteGeoWeather(withId id: GeoWeather.ID)
 }
 
 class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
@@ -49,7 +49,7 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     }
     
     private func obtainAndConfigureDataFromStore() -> [GeoWeather] {
-        let geoModelList = dataManager.geoModelList()
+        let geoModelList = dataManager.obtainGeoModelList()
         let geoWeatherList = geoModelList.map({ Geocoding(geoModel: $0) }).map({ GeoWeather(geocoding: $0) })
         return geoWeatherList
     }
@@ -67,9 +67,10 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         updateGeoWeatherList([geoWeather])
     }
     
-    func removeGeoWeather(withId id: GeoWeather.ID) {
+    func deleteGeoWeather(withId id: GeoWeather.ID) {
         guard let index = geoWeatherList.index(for: id) else { return }
-        geoWeatherList.remove(at: index)
+        let deletedGeoWeather = geoWeatherList.remove(at: index)
+        dataManager.delete(geoModelWithId: deletedGeoWeather.geocoding.id)
     }
     
     private func updateGeoWeatherList(_ geoWeatherList: [GeoWeather]) {

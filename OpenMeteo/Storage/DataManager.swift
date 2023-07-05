@@ -10,7 +10,8 @@ import RealmSwift
 
 protocol DataManager: AnyObject {
     func save(_ geoModelList: [GeoModel])
-    func geoModelList() -> [GeoModel]
+    func obtainGeoModelList() -> [GeoModel]
+    func delete(geoModelWithId id: Int)
 }
 
 class DataManagerImpl: DataManager {
@@ -23,8 +24,15 @@ class DataManagerImpl: DataManager {
         }
     }
     
-    func geoModelList() -> [GeoModel] {
+    func obtainGeoModelList() -> [GeoModel] {
         let models = realm.objects(GeoModel.self)
         return Array(models)
+    }
+    
+    func delete(geoModelWithId id: Int) {
+        guard let model = realm.object(ofType: GeoModel.self, forPrimaryKey: id) else { return }
+        try? realm.write {
+            realm.delete(model)
+        }
     }
 }

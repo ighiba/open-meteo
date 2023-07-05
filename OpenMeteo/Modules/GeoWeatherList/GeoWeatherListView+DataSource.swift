@@ -40,7 +40,7 @@ extension GeoWeatherListViewController {
         weatherCell.longTapEndedCallback = { [weak self] in 
             self?.openDetail(for: indexPath)
         }
-        weatherCell.removeButtonTappedHandler = { [weak self] in
+        weatherCell.deleteButtonTappedHandler = { [weak self] in
             let id = geoWeather.id
             self?.removeItem(withId: id)
         }
@@ -55,7 +55,7 @@ extension GeoWeatherListViewController {
     }
     
     func removeItem(withId id: GeoWeather.ID) {
-        viewModel.removeGeoWeather(withId: id)
+        viewModel.deleteGeoWeather(withId: id)
     }
     
     func geoWeather(withId id: GeoWeather.ID) -> GeoWeather? {
