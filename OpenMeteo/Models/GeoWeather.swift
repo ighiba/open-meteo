@@ -12,14 +12,14 @@ class GeoWeather: Identifiable {
     var geocoding: Geocoding
     var weather: Weather?
     
-    init(id: Int, geocoding: Geocoding) {
-        self.id = id
+    init(geocoding: Geocoding) {
+        self.id = geocoding.id
         self.geocoding = geocoding
         self.weather = nil
     }
     
-    init(id: Int, geocoding: Geocoding, weather: Weather) {
-        self.id = id
+    init(geocoding: Geocoding, weather: Weather) {
+        self.id = geocoding.id
         self.geocoding = geocoding
         self.weather = weather
     }
@@ -35,9 +35,9 @@ let geoStPetersburg = Geocoding(id: 504342, name: "Санкт-Петербург
 extension GeoWeather {
 
     static let sampleData = [
-        GeoWeather(id: 0, geocoding: geoMoscow, weather: realWeatherMoscow),
-        GeoWeather(id: 1, geocoding: geoPskov, weather: realWeatherPskov),
-        GeoWeather(id: 2, geocoding: geoStPetersburg),
+        GeoWeather(geocoding: geoMoscow, weather: realWeatherMoscow),
+        GeoWeather(geocoding: geoPskov, weather: realWeatherPskov),
+        GeoWeather(geocoding: geoStPetersburg),
 //        GeoWeather(id: 3, geocoding: geoMoscow, weather: realWeatherMoscow),
 //        GeoWeather(id: 4, geocoding: geoPskov, weather: realWeatherPskov),
 //        GeoWeather(id: 5, geocoding: geoStPetersburg),

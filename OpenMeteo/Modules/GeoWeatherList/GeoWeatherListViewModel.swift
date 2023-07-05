@@ -12,6 +12,7 @@ protocol GeoWeatherListViewModelDelegate: AnyObject {
     var geoWeatherList: [GeoWeather] { get }
     var geoWeatherListDidChangedHandler: (([GeoWeather]) -> Void)? { get set }
     var geoWeatherIdsDidChangedHandler: (([GeoWeather.ID]) -> Void)? { get set }
+    func loadInitialData()
     func updateAllWeather()
     func addGeoWeather(_ geoWeather: GeoWeather)
 }
@@ -30,20 +31,30 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     var geoWeatherIdsDidChangedHandler: (([GeoWeather.ID]) -> Void)?
     
     var networkManager: NetworkManager!
+    var dataManager: DataManager!
     
     private var weatherCancellables = Set<AnyCancellable>()
-    
-    init() {
-        geoWeatherList = GeoWeather.sampleData
-    }
 
     // MARK: - Methods
     
+    func loadInitialData() {
+        configureAndSaveDataInStore(GeoWeather.sampleData)
+        geoWeatherList = obtainAndConfigureDataFromStore()
+    }
+    
+    private func configureAndSaveDataInStore(_ geoWeatherList: [GeoWeather]) {
+        let geoModelList = geoWeatherList.map({ $0.geocoding }).map({ GeoModel(geocoding: $0)})
+        dataManager.save(geoModelList)
+    }
+    
+    private func obtainAndConfigureDataFromStore() -> [GeoWeather] {
+        let geoModelList = dataManager.geoModelList()
+        let geoWeatherList = geoModelList.map({ Geocoding(geoModel: $0) }).map({ GeoWeather(geocoding: $0) })
+        return geoWeatherList
+    }
+    
     func updateAllWeather() {
-        weatherCancellables.forEach { $0.cancel() }
-        weatherCancellables.removeAll()
-       
-        //updateGeoWeatherList(geoWeatherList)
+        updateGeoWeatherList(geoWeatherList)
     }
     
     func addGeoWeather(_ geoWeather: GeoWeather) {
@@ -51,10 +62,13 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         guard !ids.contains(geoWeather.id) else { return }
         
         geoWeatherList = geoWeatherList + [geoWeather]
+        configureAndSaveDataInStore([geoWeather])
         updateGeoWeatherList([geoWeather])
     }
     
     private func updateGeoWeatherList(_ geoWeatherList: [GeoWeather]) {
+        weatherCancellables.forEach { $0.cancel() }
+        weatherCancellables.removeAll()
         updateWeatherForGeoWeatherList(geoWeatherList: geoWeatherList)
             .sink { completion in
                 switch completion {

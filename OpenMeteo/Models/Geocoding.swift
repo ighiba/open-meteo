@@ -14,3 +14,13 @@ struct Geocoding: Identifiable, Codable {
     var longitude: Float
     var country: String
 }
+
+extension Geocoding {
+    init(geoModel: GeoModel) {
+        self.id = geoModel.id
+        self.name = geoModel.name
+        self.latitude = geoModel.latitude
+        self.longitude = geoModel.longitude
+        self.country = geoModel.country
+    }
+}

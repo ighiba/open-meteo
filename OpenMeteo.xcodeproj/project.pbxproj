@@ -73,6 +73,8 @@
 		C0E54D482A4CECBA003D00C8 /* TemperatureLabelSymboled.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D472A4CECBA003D00C8 /* TemperatureLabelSymboled.swift */; };
 		C0E54D4A2A4CECEA003D00C8 /* TemperatureRangeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D492A4CECEA003D00C8 /* TemperatureRangeContainer.swift */; };
 		C0E54D4C2A4DD497003D00C8 /* UILabel+NSShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */; };
+		C0E6CA342A55A0E700D6695B /* GeoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA332A55A0E700D6695B /* GeoModel.swift */; };
+		C0E6CA362A55A22500D6695B /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA352A55A22500D6695B /* DataManager.swift */; };
 		C0EC33A42A4DF9D500EAC0D6 /* StyledContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */; };
 		C0ECBB062A4E410C0086EFB6 /* OpenMeteo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C0ECBB042A4E410C0086EFB6 /* OpenMeteo.xcdatamodeld */; };
 		C0ECBB082A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ECBB072A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift */; };
@@ -171,6 +173,8 @@
 		C0E54D472A4CECBA003D00C8 /* TemperatureLabelSymboled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureLabelSymboled.swift; sourceTree = "<group>"; };
 		C0E54D492A4CECEA003D00C8 /* TemperatureRangeContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureRangeContainer.swift; sourceTree = "<group>"; };
 		C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+NSShadow.swift"; sourceTree = "<group>"; };
+		C0E6CA332A55A0E700D6695B /* GeoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoModel.swift; sourceTree = "<group>"; };
+		C0E6CA352A55A22500D6695B /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledContainer.swift; sourceTree = "<group>"; };
 		C0ECBB052A4E410C0086EFB6 /* OpenMeteo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenMeteo.xcdatamodel; sourceTree = "<group>"; };
 		C0ECBB072A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationProbabilityLabel.swift; sourceTree = "<group>"; };
@@ -250,6 +254,7 @@
 				C0E54D2D2A4B8711003D00C8 /* Style */,
 				C066C6B62A4F66C4004FDDE8 /* Helpers */,
 				C0E54D1A2A49EB3D003D00C8 /* Extensions */,
+				C0E6CA302A55A0B500D6695B /* Storage */,
 				C01D28C72A53736F00412BCD /* Network */,
 				C04E2C5E2A47424600A5B1E8 /* Models */,
 				C08D19712A48F04500834A21 /* Views */,
@@ -409,6 +414,15 @@
 				C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */,
 			);
 			path = Style;
+			sourceTree = "<group>";
+		};
+		C0E6CA302A55A0B500D6695B /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				C0E6CA332A55A0E700D6695B /* GeoModel.swift */,
+				C0E6CA352A55A22500D6695B /* DataManager.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 		DE709730352D66B5F51FACE3 /* Pods */ = {
@@ -614,6 +628,7 @@
 				C0E54D202A4A292C003D00C8 /* HourForecastCell.swift in Sources */,
 				C08D196D2A48BAF300834A21 /* GeoWeatherDetailView.swift in Sources */,
 				C066C6C32A50961D004FDDE8 /* BlurredButtonContaner.swift in Sources */,
+				C0E6CA362A55A22500D6695B /* DataManager.swift in Sources */,
 				C066C6DF2A523381004FDDE8 /* GeoSearchModuleAssembly.swift in Sources */,
 				C08D19732A48F05B00834A21 /* TemperatureLabel.swift in Sources */,
 				C01D28CB2A5430B700412BCD /* URL.swift in Sources */,
@@ -622,6 +637,7 @@
 				C066C6E02A523381004FDDE8 /* GeoSearchController.swift in Sources */,
 				C066C6E42A523CD8004FDDE8 /* GeocodingCell.swift in Sources */,
 				C066C6BC2A4F738A004FDDE8 /* CAShapeLayer.swift in Sources */,
+				C0E6CA342A55A0E700D6695B /* GeoModel.swift in Sources */,
 				C0E54D462A4CC29A003D00C8 /* WeatherIcon.swift in Sources */,
 				C0E54D242A4B0F06003D00C8 /* DatedForecast.swift in Sources */,
 				C0E54D442A4CC270003D00C8 /* WeatherIconView.swift in Sources */,

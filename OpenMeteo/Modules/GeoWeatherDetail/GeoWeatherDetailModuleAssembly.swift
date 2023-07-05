@@ -23,7 +23,7 @@ class GeoWeatherDetailModuleAssembly {
         let view = GeoWeatherDetailViewController()
         let viewModel = GeoWeatherDetailViewModel()
 
-        viewModel.geoWeather = GeoWeather(id: geocoding.id, geocoding: geocoding)
+        viewModel.geoWeather = GeoWeather(geocoding: geocoding)
         viewModel.networkManager = NetworkManagerImpl()
         view.viewModel = viewModel
 

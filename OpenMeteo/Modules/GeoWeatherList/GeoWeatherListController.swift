@@ -61,6 +61,7 @@ class GeoWeatherListViewController: UICollectionViewController {
         }
         
         updateSnapshot()
+        viewModel.loadInitialData()
         viewModel.updateAllWeather()
     }
     
