@@ -90,6 +90,7 @@ class GeoSearchViewController: UISearchController {
         detailViewController.didAddedCallback = { [weak self] geoWeather in
             self?.geoWeatherListViewControllerDelegate?.addGeoWeather(geoWeather)
             self?.geoWeatherListViewControllerDelegate?.hideDimmedView()
+            self?.viewModel.clearGeocodingList()
             self?.searchBar.text = nil
             self?.dismiss(animated: true)
         }
