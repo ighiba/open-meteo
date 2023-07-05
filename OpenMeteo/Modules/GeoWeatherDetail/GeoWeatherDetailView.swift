@@ -82,7 +82,6 @@ class GeoWeatherDetailView: UIScrollView {
             make.width.equalTo(relativeHumidityAndPrecipitationStack.snp.height)
             make.height.equalToSuperview()
         }
-        
 
         self.contentLayoutGuide.snp.makeConstraints { make in
             make.top.equalToSuperview()

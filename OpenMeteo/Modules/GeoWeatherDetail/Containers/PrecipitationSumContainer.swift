@@ -52,9 +52,9 @@ final class PrecipitationSumContainer: ContainerView {
     }
     
     private func transfromIntoLocalizedText(_ precipitationSum: Float) -> String {
-        var measurement = Measurement(value: Double(0.49), unit: UnitLength.millimeters)
+        var measurement = Measurement(value: Double(precipitationSum), unit: UnitLength.millimeters)
         measurement.value = measurement.value.rounded()
-        
+
         let formatter = MeasurementFormatter()
         formatter.unitStyle = .short
         formatter.unitOptions = .providedUnit
