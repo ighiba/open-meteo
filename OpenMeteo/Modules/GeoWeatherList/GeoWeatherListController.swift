@@ -72,24 +72,6 @@ class GeoWeatherListViewController: UICollectionViewController {
         viewModel.updateAllWeather()
     }
     
-    func beginListEditing() {
-        for i in 0 ..< self.viewModel.geoWeatherList.count {
-            let cell = self.collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? GeoWeatherCell
-            cell?.startEditing() { [weak self] in
-                self?.isAnimatingEditing = false
-            }
-        }
-    }
-    
-    func endListEditing() {
-        for i in 0 ..< self.viewModel.geoWeatherList.count {
-            let cell = self.collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? GeoWeatherCell
-            cell?.endEditing() { [weak self] in
-                self?.isAnimatingEditing = false
-            }
-        }
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
@@ -110,16 +92,6 @@ class GeoWeatherListViewController: UICollectionViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
 
         self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-    
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        self.isAnimatingEditing = true
-        if editing {
-            beginListEditing()
-        } else {
-            endListEditing()
-        }
     }
     
     func updateNavigationBarAppearance() {
@@ -165,6 +137,34 @@ class GeoWeatherListViewController: UICollectionViewController {
     }
     
     // MARK: - Methods
+    
+    func beginListEditing() {
+        for i in 0 ..< self.viewModel.geoWeatherList.count {
+            let cell = self.collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? GeoWeatherCell
+            cell?.startEditing() { [weak self] in
+                self?.isAnimatingEditing = false
+            }
+        }
+    }
+    
+    func endListEditing() {
+        for i in 0 ..< self.viewModel.geoWeatherList.count {
+            let cell = self.collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? GeoWeatherCell
+            cell?.endEditing() { [weak self] in
+                self?.isAnimatingEditing = false
+            }
+        }
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        self.isAnimatingEditing = true
+        if editing {
+            beginListEditing()
+        } else {
+            endListEditing()
+        }
+    }
 
     func openDetail(for indexPath: IndexPath) {
         guard let geoWeather = geoWeather(withIndexPath: indexPath),
@@ -189,7 +189,7 @@ class GeoWeatherListViewController: UICollectionViewController {
     }
     
     func geoWeather(withIndexPath indexPath: IndexPath) -> GeoWeather? {
-        guard indexPath.row <= viewModel.geoWeatherList.count else { return nil }
+        guard viewModel.geoWeatherList.indices.contains(indexPath.row) else { return nil }
         return viewModel.geoWeatherList[indexPath.row]
     }
 }
