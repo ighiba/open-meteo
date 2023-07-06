@@ -16,7 +16,18 @@ protocol DataManager: AnyObject {
 
 class DataManagerImpl: DataManager {
     
-    lazy var realm = try! Realm(configuration: .defaultConfiguration)
+    let config = Realm.Configuration(
+        schemaVersion: 2,
+        migrationBlock: { migration, oldSchemaVersion in
+            if oldSchemaVersion < 2 {
+                migration.enumerateObjects(ofType: GeoModel.className()) { oldObject, newObject in
+                    newObject?[#keyPath(GeoModel.adminLocation)] = ""
+                }
+            }
+        }
+    )
+    
+    lazy var realm = try! Realm(configuration: config)
 
     func save(_ geoModelList: [GeoModel]) {
         try? realm.write {

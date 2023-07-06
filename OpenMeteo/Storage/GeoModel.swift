@@ -15,17 +15,19 @@ class GeoModel: Object {
     @Persisted var latitude: Float = 0
     @Persisted var longitude: Float = 0
     @Persisted var country: String = ""
+    @Persisted var adminLocation: String = ""
     
     override init() {
         super.init()
     }
  
-    init(id: Int, name: String, latitude: Float, longitude: Float, country: String) {
+    init(id: Int, name: String, latitude: Float, longitude: Float, country: String, adminLocation: String) {
         self.id = id
         self.name = name
         self.latitude = latitude
         self.longitude = longitude
         self.country = country
+        self.adminLocation = adminLocation
     }
     
     override class func primaryKey() -> String? {
@@ -40,7 +42,8 @@ extension GeoModel {
             name: geocoding.name,
             latitude: geocoding.latitude,
             longitude: geocoding.longitude,
-            country: geocoding.country
+            country: geocoding.country,
+            adminLocation: geocoding.adminLocation
         )
     }
 }

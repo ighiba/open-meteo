@@ -13,6 +13,7 @@ struct Geocoding: Identifiable, Codable {
     var latitude: Float
     var longitude: Float
     var country: String
+    var adminLocation: String
 }
 
 extension Geocoding {
@@ -22,5 +23,6 @@ extension Geocoding {
         self.latitude = geoModel.latitude
         self.longitude = geoModel.longitude
         self.country = geoModel.country
+        self.adminLocation = geoModel.adminLocation
     }
 }

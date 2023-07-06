@@ -63,7 +63,8 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
             name: currentLocationLocalized,
             latitude: latitude,
             longitude: longitude,
-            country: ""
+            country: "",
+            adminLocation: ""
         )
         
         let geoWeatherForUpdate: GeoWeather

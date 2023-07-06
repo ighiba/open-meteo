@@ -40,9 +40,33 @@ extension [GeoWeather] {
 
 #if DEBUG
 
-let geoMoscow = Geocoding(id: 524901, name: "Москва", latitude: 55.75222, longitude: 37.61556, country: "Russia")
-let geoPskov = Geocoding(id: 504341, name: "Псков", latitude: 57.8136, longitude: 28.3496, country: "Russia")
-let geoStPetersburg = Geocoding(id: 504342, name: "Санкт-Петербург", latitude: 59.93863, longitude: 30.31413, country: "Russia")
+let geoMoscow = Geocoding(
+    id: 524901,
+    name: "Москва",
+    latitude: 55.75222,
+    longitude: 37.61556,
+    country: "Russia",
+    adminLocation: "Moskovskaya. obl"
+)
+
+let geoPskov = Geocoding(
+    id: 504341,
+    name: "Псков",
+    latitude: 57.8136,
+    longitude: 28.3496,
+    country: "Russia",
+    adminLocation: "Pskovskaya. obl"
+
+)
+
+let geoStPetersburg = Geocoding(
+    id: 504342,
+    name: "Санкт-Петербург",
+    latitude: 59.93863,
+    longitude: 30.31413,
+    country: "Russia",
+    adminLocation: "Leningradskaya. obl"
+)
 
 
 extension GeoWeather {
