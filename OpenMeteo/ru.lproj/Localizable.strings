@@ -11,6 +11,9 @@
 "Weather" = "Погода";
 "Search" = "Поиск";
 
+"Network error" = "Ошибка сети";
+"We couldn't fetch the weather details due to a network problem.\nPlease make sure you have a stable internet connection and try again." = "Не удалось получить данные о погоде из-за проблемы с сетью. \nПожалуйста, убедитесь, что у вас стабильное интернет-соединение и попробуйте снова.";
+
 "Now" = "Сейчас";
 
 "Feels like" = "Ощущается как";

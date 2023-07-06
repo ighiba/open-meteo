@@ -78,6 +78,7 @@
 		C0E6CA382A55FEAA00D6695B /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA372A55FEAA00D6695B /* CALayer.swift */; };
 		C0E6CA3A2A56D6EF00D6695B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA392A56D6EF00D6695B /* LocationManager.swift */; };
 		C0E6CA3C2A56DCAB00D6695B /* GeoListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA3B2A56DCAB00D6695B /* GeoListModel.swift */; };
+		C0E6CA402A570F8000D6695B /* GeoWeatherDetailNetworkErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA3F2A570F8000D6695B /* GeoWeatherDetailNetworkErrorView.swift */; };
 		C0EC33A42A4DF9D500EAC0D6 /* StyledContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */; };
 		C0ECBB062A4E410C0086EFB6 /* OpenMeteo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C0ECBB042A4E410C0086EFB6 /* OpenMeteo.xcdatamodeld */; };
 		C0ECBB082A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ECBB072A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift */; };
@@ -181,6 +182,7 @@
 		C0E6CA372A55FEAA00D6695B /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
 		C0E6CA392A56D6EF00D6695B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		C0E6CA3B2A56DCAB00D6695B /* GeoListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoListModel.swift; sourceTree = "<group>"; };
+		C0E6CA3F2A570F8000D6695B /* GeoWeatherDetailNetworkErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailNetworkErrorView.swift; sourceTree = "<group>"; };
 		C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledContainer.swift; sourceTree = "<group>"; };
 		C0ECBB052A4E410C0086EFB6 /* OpenMeteo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenMeteo.xcdatamodel; sourceTree = "<group>"; };
 		C0ECBB072A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationProbabilityLabel.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				C0E54D162A49A5DE003D00C8 /* DayForecastRow.swift */,
 				C0E54D1F2A4A292C003D00C8 /* HourForecastCell.swift */,
 				C08D19692A48BAF300834A21 /* GeoWeatherDetailView.swift */,
+				C0E6CA3F2A570F8000D6695B /* GeoWeatherDetailNetworkErrorView.swift */,
 				C08D19682A48BAF300834A21 /* GeoWeatherDetailController.swift */,
 				C08D196A2A48BAF300834A21 /* GeoWeatherDetailViewModel.swift */,
 				C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */,
@@ -657,6 +660,7 @@
 				C0E54D222A4A2954003D00C8 /* HourlyForecastCollectionView.swift in Sources */,
 				C0E54D2A2A4B868B003D00C8 /* WeatherCode.swift in Sources */,
 				C04E2C682A476D0200A5B1E8 /* Geocoding.swift in Sources */,
+				C0E6CA402A570F8000D6695B /* GeoWeatherDetailNetworkErrorView.swift in Sources */,
 				C04E2C592A473FD600A5B1E8 /* GeoWeatherListViewModel.swift in Sources */,
 				C066C6CE2A50F145004FDDE8 /* RelativeHumidityContainer.swift in Sources */,
 				C04E2C662A475E1A00A5B1E8 /* HourForecast.swift in Sources */,

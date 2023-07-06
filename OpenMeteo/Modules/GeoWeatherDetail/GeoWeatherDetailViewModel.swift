@@ -11,6 +11,7 @@ import Combine
 protocol GeoWeatherDetailViewModelDelegate: AnyObject {
     var geoWeather: GeoWeather! { get }
     var geoWeatherDidChangedHandler: ((GeoWeather) -> Void)? { get set }
+    var networkErrorHandler: (() -> Void)? { get set }
     func updateWeather(forcedUpdate: Bool)
 }
 
@@ -25,6 +26,7 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     }
     
     var geoWeatherDidChangedHandler: ((GeoWeather) -> Void)?
+    var networkErrorHandler: (() -> Void)?
     
     var networkManager: NetworkManager!
     
@@ -33,19 +35,19 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     // MARK: - Methods
     
     func updateWeather(forcedUpdate: Bool) {
-        return
         guard needUpdate(for: geoWeather.weather) || forcedUpdate else { return }
         
         weatherCancellables.forEach { $0.cancel() }
         weatherCancellables.removeAll()
         
         fetchWeatherPublisher(geocoding: geoWeather.geocoding)
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
                 case .finished:
                     break
                 case .failure(let error):
                     print(error)
+                    self?.networkErrorHandler?()
                 }
             } receiveValue: { [weak self] weather in
                 self?.geoWeather.weather = weather

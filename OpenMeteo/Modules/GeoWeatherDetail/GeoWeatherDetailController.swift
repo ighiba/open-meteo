@@ -22,6 +22,10 @@ class GeoWeatherDetailViewController: UIViewController {
             viewModel.geoWeatherDidChangedHandler = { [weak self] geoWeather in
                 self?.configureViews(with: geoWeather)
             }
+            viewModel.networkErrorHandler = { [weak self] in
+                guard self?.viewModel.geoWeather.weather == nil else { return }
+                self?.showNetworkErrorView()
+            }
         }
     }
 
@@ -56,13 +60,7 @@ class GeoWeatherDetailViewController: UIViewController {
     override func loadView() {
         self.view = backgroundView
         self.view.addSubview(geoWeatherDetailScrollView)
-        
-        geoWeatherDetailScrollView.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
+        makeConstraintsForMainView(geoWeatherDetailScrollView)
     }
 
     override func viewDidLoad() {
@@ -89,6 +87,15 @@ class GeoWeatherDetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         updateHandler?()
+    }
+    
+    private func makeConstraintsForMainView(_ view: UIView) {
+        view.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
     }
         
     func configureNavigationBar() {
@@ -160,6 +167,27 @@ class GeoWeatherDetailViewController: UIViewController {
         button.addTarget(self, action: action, for: .touchUpInside)
         
         return BlurredButtonContainer(button: button)
+    }
+    
+    private func showNetworkErrorView() {
+        let transitionDuration = 0.3
+        
+        let errorView = GeoWeatherDetailNetworkErrorView.configureDefault()
+        self.view.addSubview(errorView)
+        makeConstraintsForMainView(errorView)
+        
+        geoWeatherDetailScrollView.alpha = 1.0
+        UIView.animate(withDuration: transitionDuration / 3, delay: 0, animations: { [weak self] in
+            self?.geoWeatherDetailScrollView.alpha = 0.0
+        }, completion: { [weak self] _ in
+            self?.geoWeatherDetailScrollView.removeFromSuperview()
+            self?.geoWeatherDetailScrollView.alpha = 1.0
+        })
+        
+        errorView.alpha = 0.0
+        UIView.animate(withDuration: transitionDuration) {
+            errorView.alpha = 1.0
+        }
     }
 }
 

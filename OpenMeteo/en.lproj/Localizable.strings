@@ -11,6 +11,9 @@
 "Weather" = "Weather";
 "Search" = "Search";
 
+"Network error" = "Network error";
+"We couldn't fetch the weather details due to a network problem.\nPlease make sure you have a stable internet connection and try again." = "We couldn't fetch the weather details due to a network problem.\nPlease make sure you have a stable internet connection and try again.";
+
 "Now" = "Now";
 
 "Feels like" = "Feels like";
