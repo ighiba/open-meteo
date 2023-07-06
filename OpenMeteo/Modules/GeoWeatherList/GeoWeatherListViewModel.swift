@@ -8,6 +8,8 @@
 import Foundation
 import Combine
 
+private let currentLocationId: Int = -1
+
 protocol GeoWeatherListViewModelDelegate: AnyObject {
     var geoWeatherList: [GeoWeather] { get }
     var geoWeatherListDidChangedHandler: (([GeoWeather]) -> Void)? { get set }
@@ -33,29 +35,54 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     
     var networkManager: NetworkManager!
     var dataManager: DataManager!
+    var locationManager: LocationManager!
     
     private var weatherCancellables = Set<AnyCancellable>()
 
     // MARK: - Methods
     
     func loadInitialData() {
-        configureAndSaveDataInStore(GeoWeather.sampleData)
+        #if DEBUG
+        //configureAndSaveDataInStore(GeoWeather.sampleData)
+        #endif
+        
+        locationManager.locationUpdateHandler = { [weak self] latitude, longitude in
+            self?.addCurrentLocation(latitude: latitude, longitude: longitude)
+        }
+        
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+        
         geoWeatherList = obtainAndConfigureDataFromStore()
     }
     
-    private func configureAndSaveDataInStore(_ geoWeatherList: [GeoWeather]) {
-        let geoModelList = geoWeatherList.map({ $0.geocoding }).map({ GeoModel(geocoding: $0)})
-        dataManager.save(geoModelList)
-    }
-    
-    private func obtainAndConfigureDataFromStore() -> [GeoWeather] {
-        let geoModelList = dataManager.obtainGeoModelList()
-        let geoWeatherList = geoModelList.map({ Geocoding(geoModel: $0) }).map({ GeoWeather(geocoding: $0) })
-        return geoWeatherList
+    private func addCurrentLocation(latitude: Float, longitude: Float) {
+        let currentLocationLocalized = NSLocalizedString("Your location", comment: "")
+        let currentLocationGeocoding = Geocoding(
+            id: currentLocationId,
+            name: currentLocationLocalized,
+            latitude: latitude,
+            longitude: longitude,
+            country: ""
+        )
+        
+        let geoWeatherForUpdate: GeoWeather
+        
+        if let currentLocationGeoWeather = geoWeatherList.item(withId: currentLocationId) {
+            currentLocationGeoWeather.geocoding = currentLocationGeocoding
+            geoWeatherForUpdate = currentLocationGeoWeather
+        } else {
+            let newCurrentLocation = GeoWeather(geocoding: currentLocationGeocoding)
+            geoWeatherForUpdate = newCurrentLocation
+        }
+        
+        insertGeoWeather(geoWeatherForUpdate, at: 0)
     }
     
     func updateAllWeather() {
-        //updateGeoWeatherList(geoWeatherList)
+        weatherCancellables.forEach { $0.cancel() }
+        weatherCancellables.removeAll()
+        updateGeoWeatherList(geoWeatherList)
     }
     
     func addGeoWeather(_ geoWeather: GeoWeather) {
@@ -67,15 +94,34 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         updateGeoWeatherList([geoWeather])
     }
     
+    func insertGeoWeather(_ geoWeather: GeoWeather, at index: Int) {
+        if let existingIndex = geoWeatherList.index(for: geoWeather.id) {
+            geoWeatherList.remove(at: existingIndex)
+        }
+        geoWeatherList.insert(geoWeather, at: index)
+        configureAndSaveDataInStore(geoWeatherList)
+        updateGeoWeatherList([geoWeather])
+    }
+    
     func deleteGeoWeather(withId id: GeoWeather.ID) {
         guard let index = geoWeatherList.index(for: id) else { return }
         let deletedGeoWeather = geoWeatherList.remove(at: index)
         dataManager.delete(geoModelWithId: deletedGeoWeather.geocoding.id)
     }
     
+    private func configureAndSaveDataInStore(_ geoWeatherList: [GeoWeather]) {
+        let geoModelList = geoWeatherList.map({ $0.geocoding }).map({ GeoModel(geocoding: $0)})
+        dataManager.save(geoModelList)
+    }
+    
+    private func obtainAndConfigureDataFromStore() -> [GeoWeather] {
+        let geoModelList = dataManager.obtainGeoModelList()
+        print(geoModelList)
+        let geoWeatherList = geoModelList.map({ Geocoding(geoModel: $0) }).map({ GeoWeather(geocoding: $0) })
+        return geoWeatherList
+    }
+    
     private func updateGeoWeatherList(_ geoWeatherList: [GeoWeather]) {
-        weatherCancellables.forEach { $0.cancel() }
-        weatherCancellables.removeAll()
         updateWeatherForGeoWeatherList(geoWeatherList: geoWeatherList)
             .sink { completion in
                 switch completion {
@@ -120,4 +166,3 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         .eraseToAnyPublisher()
     }
 }
-

@@ -20,19 +20,28 @@ class DataManagerImpl: DataManager {
 
     func save(_ geoModelList: [GeoModel]) {
         try? realm.write {
-            realm.add(geoModelList, update: .modified)
+            
+            let model = GeoListModel()
+            model.geoList.append(objectsIn: geoModelList)
+            
+            realm.add(model, update: .modified)
         }
     }
     
     func obtainGeoModelList() -> [GeoModel] {
-        let models = realm.objects(GeoModel.self)
-        return Array(models)
+        guard let model = realm.object(ofType: GeoListModel.self, forPrimaryKey: 0) else { return [] }
+        return Array(model.geoList)
     }
     
     func delete(geoModelWithId id: Int) {
-        guard let model = realm.object(ofType: GeoModel.self, forPrimaryKey: id) else { return }
+        guard let model = realm.object(ofType: GeoListModel.self, forPrimaryKey: 0),
+              let index = model.geoList.firstIndex(where: { $0.id == id })
+        else {
+            return
+        }
+
         try? realm.write {
-            realm.delete(model)
+            model.geoList.remove(at: index)
         }
     }
 }

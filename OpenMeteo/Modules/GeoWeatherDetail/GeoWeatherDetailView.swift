@@ -175,7 +175,7 @@ class GeoWeatherDetailView: UIScrollView {
         let label = UILabel()
         
         label.text = "..."
-        label.font = UIFont.systemFont(ofSize: 35, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         label.textColor = .white
         label.sizeToFit()
         
