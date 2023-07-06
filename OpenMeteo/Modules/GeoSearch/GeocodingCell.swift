@@ -20,8 +20,9 @@ final class GeocodingCell: UITableViewCell {
     }
     
     func configure(with geocoding: Geocoding) {
-        let titleText = "\(geocoding.name), \(geocoding.country)"
-        let detailText = "\(geocoding.latitude), \(geocoding.longitude)"
+        let adminLocation = geocoding.adminLocation.isEmpty ? "" : ", \(geocoding.adminLocation)"
+        let titleText = "\(geocoding.name)\(adminLocation)"
+        let detailText = "\(geocoding.country)"
         
         self.textLabel?.text = titleText
         self.detailTextLabel?.text = detailText
