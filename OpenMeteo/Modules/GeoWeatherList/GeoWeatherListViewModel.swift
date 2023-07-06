@@ -88,7 +88,6 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     func addGeoWeather(_ geoWeather: GeoWeather) {
         let ids = geoWeatherList.map { $0.id }
         guard !ids.contains(geoWeather.id) else { return }
-        
         geoWeatherList = geoWeatherList + [geoWeather]
         configureAndSaveDataInStore([geoWeather])
         updateGeoWeatherList([geoWeather])
@@ -96,9 +95,14 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     
     func insertGeoWeather(_ geoWeather: GeoWeather, at index: Int) {
         if let existingIndex = geoWeatherList.index(for: geoWeather.id) {
-            geoWeatherList.remove(at: existingIndex)
+            if existingIndex != index {
+                geoWeatherList.move(fromOffsets: IndexSet(integer: existingIndex), toOffset: index)
+            } else {
+                geoWeatherList[index] = geoWeather
+            }
+        } else {
+            geoWeatherList.insert(geoWeather, at: index)
         }
-        geoWeatherList.insert(geoWeather, at: index)
         configureAndSaveDataInStore(geoWeatherList)
         updateGeoWeatherList([geoWeather])
     }
@@ -116,7 +120,6 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     
     private func obtainAndConfigureDataFromStore() -> [GeoWeather] {
         let geoModelList = dataManager.obtainGeoModelList()
-        print(geoModelList)
         let geoWeatherList = geoModelList.map({ Geocoding(geoModel: $0) }).map({ GeoWeather(geocoding: $0) })
         return geoWeatherList
     }
