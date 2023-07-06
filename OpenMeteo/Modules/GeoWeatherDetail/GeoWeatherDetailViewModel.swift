@@ -51,7 +51,8 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
                 }
             } receiveValue: { [weak self] weather in
                 self?.geoWeather.weather = weather
-                self?.geoWeatherDidChangedHandler?((self?.geoWeather)!)
+                guard let geoWeather = self?.geoWeather else { return }
+                self?.geoWeatherDidChangedHandler?(geoWeather)
             }
             .store(in: &weatherCancellables)
     }

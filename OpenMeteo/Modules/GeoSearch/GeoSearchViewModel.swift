@@ -26,7 +26,6 @@ class GeoSearchViewModel: GeoSearchViewModelDelegate {
         }
     }
     
-    
     var geocodingListDidChangeHandler: (() -> Void)?
     
     var networkManager: NetworkManager!
@@ -55,7 +54,7 @@ class GeoSearchViewModel: GeoSearchViewModelDelegate {
         searchCancellable = debouncePublsher
             .debounce(for: .seconds(debounceInterval), scheduler: DispatchQueue.main)
             .sink { [weak self] searchText in
-                print("\(Date())  performing search")
+                print("\(Date())  performing search for: \(searchText)")
                 self?.networkManager.fetchSearchResults(for: searchText) { [weak self] result in
                     switch result {
                     case .success(let geocodingList):

@@ -20,7 +20,7 @@
 		C04E2C2E2A473EAB00A5B1E8 /* OpenMeteoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C2D2A473EAB00A5B1E8 /* OpenMeteoUITests.swift */; };
 		C04E2C302A473EAB00A5B1E8 /* OpenMeteoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C2F2A473EAB00A5B1E8 /* OpenMeteoUITestsLaunchTests.swift */; };
 		C04E2C562A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C522A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift */; };
-		C04E2C572A473FD600A5B1E8 /* GeoWeatherListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C532A473FD600A5B1E8 /* GeoWeatherListController.swift */; };
+		C04E2C572A473FD600A5B1E8 /* GeoWeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C532A473FD600A5B1E8 /* GeoWeatherListViewController.swift */; };
 		C04E2C592A473FD600A5B1E8 /* GeoWeatherListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C552A473FD600A5B1E8 /* GeoWeatherListViewModel.swift */; };
 		C04E2C602A47425600A5B1E8 /* WeatherJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */; };
 		C04E2C622A474EDD00A5B1E8 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C612A474EDD00A5B1E8 /* TestData.swift */; };
@@ -41,11 +41,11 @@
 		C066C6CE2A50F145004FDDE8 /* RelativeHumidityContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6CD2A50F145004FDDE8 /* RelativeHumidityContainer.swift */; };
 		C066C6D02A50F36A004FDDE8 /* PrecipitationSumContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6CF2A50F36A004FDDE8 /* PrecipitationSumContainer.swift */; };
 		C066C6DF2A523381004FDDE8 /* GeoSearchModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6DB2A523381004FDDE8 /* GeoSearchModuleAssembly.swift */; };
-		C066C6E02A523381004FDDE8 /* GeoSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6DC2A523381004FDDE8 /* GeoSearchController.swift */; };
+		C066C6E02A523381004FDDE8 /* GeoSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6DC2A523381004FDDE8 /* GeoSearchViewController.swift */; };
 		C066C6E22A523381004FDDE8 /* GeoSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6DE2A523381004FDDE8 /* GeoSearchViewModel.swift */; };
 		C066C6E42A523CD8004FDDE8 /* GeocodingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6E32A523CD8004FDDE8 /* GeocodingCell.swift */; };
 		C08D19632A48AC1000834A21 /* GeoWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */; };
-		C08D19652A48AC8300834A21 /* GeoWeatherListView+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19642A48AC8300834A21 /* GeoWeatherListView+DataSource.swift */; };
+		C08D19652A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19642A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift */; };
 		C08D196B2A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */; };
 		C08D196C2A48BAF300834A21 /* GeoWeatherDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19682A48BAF300834A21 /* GeoWeatherDetailController.swift */; };
 		C08D196D2A48BAF300834A21 /* GeoWeatherDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19692A48BAF300834A21 /* GeoWeatherDetailView.swift */; };
@@ -79,6 +79,7 @@
 		C0E6CA3A2A56D6EF00D6695B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA392A56D6EF00D6695B /* LocationManager.swift */; };
 		C0E6CA3C2A56DCAB00D6695B /* GeoListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA3B2A56DCAB00D6695B /* GeoListModel.swift */; };
 		C0E6CA402A570F8000D6695B /* GeoWeatherDetailNetworkErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA3F2A570F8000D6695B /* GeoWeatherDetailNetworkErrorView.swift */; };
+		C0E6CA422A571CFB00D6695B /* GeoSearchViewController+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA412A571CFB00D6695B /* GeoSearchViewController+DataSource.swift */; };
 		C0EC33A42A4DF9D500EAC0D6 /* StyledContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */; };
 		C0ECBB062A4E410C0086EFB6 /* OpenMeteo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C0ECBB042A4E410C0086EFB6 /* OpenMeteo.xcdatamodeld */; };
 		C0ECBB082A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ECBB072A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift */; };
@@ -121,7 +122,7 @@
 		C04E2C2D2A473EAB00A5B1E8 /* OpenMeteoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMeteoUITests.swift; sourceTree = "<group>"; };
 		C04E2C2F2A473EAB00A5B1E8 /* OpenMeteoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMeteoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C04E2C522A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherListModuleAssembly.swift; sourceTree = "<group>"; };
-		C04E2C532A473FD600A5B1E8 /* GeoWeatherListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherListController.swift; sourceTree = "<group>"; };
+		C04E2C532A473FD600A5B1E8 /* GeoWeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherListViewController.swift; sourceTree = "<group>"; };
 		C04E2C552A473FD600A5B1E8 /* GeoWeatherListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherListViewModel.swift; sourceTree = "<group>"; };
 		C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherJSON.swift; sourceTree = "<group>"; };
 		C04E2C612A474EDD00A5B1E8 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
@@ -143,11 +144,11 @@
 		C066C6CD2A50F145004FDDE8 /* RelativeHumidityContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeHumidityContainer.swift; sourceTree = "<group>"; };
 		C066C6CF2A50F36A004FDDE8 /* PrecipitationSumContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationSumContainer.swift; sourceTree = "<group>"; };
 		C066C6DB2A523381004FDDE8 /* GeoSearchModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoSearchModuleAssembly.swift; sourceTree = "<group>"; };
-		C066C6DC2A523381004FDDE8 /* GeoSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoSearchController.swift; sourceTree = "<group>"; };
+		C066C6DC2A523381004FDDE8 /* GeoSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoSearchViewController.swift; sourceTree = "<group>"; };
 		C066C6DE2A523381004FDDE8 /* GeoSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoSearchViewModel.swift; sourceTree = "<group>"; };
 		C066C6E32A523CD8004FDDE8 /* GeocodingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingCell.swift; sourceTree = "<group>"; };
 		C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherCell.swift; sourceTree = "<group>"; };
-		C08D19642A48AC8300834A21 /* GeoWeatherListView+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeoWeatherListView+DataSource.swift"; sourceTree = "<group>"; };
+		C08D19642A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeoWeatherListViewController+DataSource.swift"; sourceTree = "<group>"; };
 		C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailModuleAssembly.swift; sourceTree = "<group>"; };
 		C08D19682A48BAF300834A21 /* GeoWeatherDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailController.swift; sourceTree = "<group>"; };
 		C08D19692A48BAF300834A21 /* GeoWeatherDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailView.swift; sourceTree = "<group>"; };
@@ -183,6 +184,7 @@
 		C0E6CA392A56D6EF00D6695B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		C0E6CA3B2A56DCAB00D6695B /* GeoListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoListModel.swift; sourceTree = "<group>"; };
 		C0E6CA3F2A570F8000D6695B /* GeoWeatherDetailNetworkErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailNetworkErrorView.swift; sourceTree = "<group>"; };
+		C0E6CA412A571CFB00D6695B /* GeoSearchViewController+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeoSearchViewController+DataSource.swift"; sourceTree = "<group>"; };
 		C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledContainer.swift; sourceTree = "<group>"; };
 		C0ECBB052A4E410C0086EFB6 /* OpenMeteo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenMeteo.xcdatamodel; sourceTree = "<group>"; };
 		C0ECBB072A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationProbabilityLabel.swift; sourceTree = "<group>"; };
@@ -310,8 +312,8 @@
 			isa = PBXGroup;
 			children = (
 				C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */,
-				C08D19642A48AC8300834A21 /* GeoWeatherListView+DataSource.swift */,
-				C04E2C532A473FD600A5B1E8 /* GeoWeatherListController.swift */,
+				C08D19642A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift */,
+				C04E2C532A473FD600A5B1E8 /* GeoWeatherListViewController.swift */,
 				C04E2C552A473FD600A5B1E8 /* GeoWeatherListViewModel.swift */,
 				C04E2C522A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift */,
 				C066C6B92A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift */,
@@ -363,7 +365,8 @@
 			isa = PBXGroup;
 			children = (
 				C066C6E32A523CD8004FDDE8 /* GeocodingCell.swift */,
-				C066C6DC2A523381004FDDE8 /* GeoSearchController.swift */,
+				C0E6CA412A571CFB00D6695B /* GeoSearchViewController+DataSource.swift */,
+				C066C6DC2A523381004FDDE8 /* GeoSearchViewController.swift */,
 				C066C6DE2A523381004FDDE8 /* GeoSearchViewModel.swift */,
 				C066C6DB2A523381004FDDE8 /* GeoSearchModuleAssembly.swift */,
 			);
@@ -376,8 +379,8 @@
 				C066C6C82A50E006004FDDE8 /* Containers */,
 				C0E54D162A49A5DE003D00C8 /* DayForecastRow.swift */,
 				C0E54D1F2A4A292C003D00C8 /* HourForecastCell.swift */,
-				C08D19692A48BAF300834A21 /* GeoWeatherDetailView.swift */,
 				C0E6CA3F2A570F8000D6695B /* GeoWeatherDetailNetworkErrorView.swift */,
+				C08D19692A48BAF300834A21 /* GeoWeatherDetailView.swift */,
 				C08D19682A48BAF300834A21 /* GeoWeatherDetailController.swift */,
 				C08D196A2A48BAF300834A21 /* GeoWeatherDetailViewModel.swift */,
 				C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */,
@@ -631,8 +634,8 @@
 				C066C6CA2A50E01E004FDDE8 /* WindContainer.swift in Sources */,
 				C0E54D1E2A49EB84003D00C8 /* DailyForecastContainer.swift in Sources */,
 				C0E54D392A4C5445003D00C8 /* SkyType.swift in Sources */,
-				C04E2C572A473FD600A5B1E8 /* GeoWeatherListController.swift in Sources */,
-				C08D19652A48AC8300834A21 /* GeoWeatherListView+DataSource.swift in Sources */,
+				C04E2C572A473FD600A5B1E8 /* GeoWeatherListViewController.swift in Sources */,
+				C08D19652A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift in Sources */,
 				C04E2C562A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift in Sources */,
 				C0E54D262A4B39B8003D00C8 /* UIVisualEffectView.swift in Sources */,
 				C066C6D02A50F36A004FDDE8 /* PrecipitationSumContainer.swift in Sources */,
@@ -648,7 +651,7 @@
 				C01D28CB2A5430B700412BCD /* URL.swift in Sources */,
 				C0E54D172A49A5DE003D00C8 /* DayForecastRow.swift in Sources */,
 				C08D196E2A48BAF300834A21 /* GeoWeatherDetailViewModel.swift in Sources */,
-				C066C6E02A523381004FDDE8 /* GeoSearchController.swift in Sources */,
+				C066C6E02A523381004FDDE8 /* GeoSearchViewController.swift in Sources */,
 				C066C6E42A523CD8004FDDE8 /* GeocodingCell.swift in Sources */,
 				C066C6BC2A4F738A004FDDE8 /* CAShapeLayer.swift in Sources */,
 				C0E6CA342A55A0E700D6695B /* GeoModel.swift in Sources */,
@@ -678,6 +681,7 @@
 				C0ECBB082A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift in Sources */,
 				C0E54D192A49D993003D00C8 /* DayForecast.swift in Sources */,
 				C0E54D4C2A4DD497003D00C8 /* UILabel+NSShadow.swift in Sources */,
+				C0E6CA422A571CFB00D6695B /* GeoSearchViewController+DataSource.swift in Sources */,
 				C01D28C62A5330C900412BCD /* OpenMeteoNavigationController.swift in Sources */,
 				C0E54D2F2A4B8724003D00C8 /* WeatherColorSet.swift in Sources */,
 				C04E2C6A2A476FB800A5B1E8 /* GeoWeather.swift in Sources */,

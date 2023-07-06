@@ -24,7 +24,6 @@ extension GeoWeatherListViewController {
             dataSource.apply(snapshot, animatingDifferences: true)
             return
         }
-
         dataSource.apply(snapshot)
     }
     
