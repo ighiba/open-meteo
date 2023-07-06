@@ -50,7 +50,7 @@ class GeoSearchViewModel: GeoSearchViewModelDelegate {
         guard searchString.count > 2 else { return }
         
         let debouncePublsher = PassthroughSubject<String, Never>()
-        let debounceInterval: TimeInterval = withDebounce ? 1 : 0
+        let debounceInterval: TimeInterval = withDebounce ? 0.5 : 0.0
         
         searchCancellable = debouncePublsher
             .debounce(for: .seconds(debounceInterval), scheduler: DispatchQueue.main)

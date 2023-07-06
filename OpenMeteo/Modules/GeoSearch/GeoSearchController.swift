@@ -35,12 +35,11 @@ class GeoSearchViewController: UISearchController {
         }
     }
     
-    var resultsTableViewController: UITableViewController!
+    var resultsTableViewController = UITableViewController(style: .plain)
     
     // MARK: - Init
     
     init() {
-        resultsTableViewController = UITableViewController(style: .plain)
         super.init(searchResultsController: resultsTableViewController)
     }
     
