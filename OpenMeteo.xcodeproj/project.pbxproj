@@ -81,7 +81,6 @@
 		C0E6CA402A570F8000D6695B /* GeoWeatherDetailNetworkErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA3F2A570F8000D6695B /* GeoWeatherDetailNetworkErrorView.swift */; };
 		C0E6CA422A571CFB00D6695B /* GeoSearchViewController+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CA412A571CFB00D6695B /* GeoSearchViewController+DataSource.swift */; };
 		C0EC33A42A4DF9D500EAC0D6 /* StyledContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */; };
-		C0ECBB062A4E410C0086EFB6 /* OpenMeteo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C0ECBB042A4E410C0086EFB6 /* OpenMeteo.xcdatamodeld */; };
 		C0ECBB082A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ECBB072A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift */; };
 /* End PBXBuildFile section */
 
@@ -186,7 +185,6 @@
 		C0E6CA3F2A570F8000D6695B /* GeoWeatherDetailNetworkErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailNetworkErrorView.swift; sourceTree = "<group>"; };
 		C0E6CA412A571CFB00D6695B /* GeoSearchViewController+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeoSearchViewController+DataSource.swift"; sourceTree = "<group>"; };
 		C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledContainer.swift; sourceTree = "<group>"; };
-		C0ECBB052A4E410C0086EFB6 /* OpenMeteo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenMeteo.xcdatamodel; sourceTree = "<group>"; };
 		C0ECBB072A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationProbabilityLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -274,7 +272,6 @@
 				C04E2C172A473EAA00A5B1E8 /* LaunchScreen.storyboard */,
 				C0E54D3F2A4C587B003D00C8 /* Localizable.strings */,
 				C04E2C1A2A473EAA00A5B1E8 /* Info.plist */,
-				C0ECBB042A4E410C0086EFB6 /* OpenMeteo.xcdatamodeld */,
 			);
 			path = OpenMeteo;
 			sourceTree = "<group>";
@@ -686,7 +683,6 @@
 				C0E54D2F2A4B8724003D00C8 /* WeatherColorSet.swift in Sources */,
 				C04E2C6A2A476FB800A5B1E8 /* GeoWeather.swift in Sources */,
 				C0E54D482A4CECBA003D00C8 /* TemperatureLabelSymboled.swift in Sources */,
-				C0ECBB062A4E410C0086EFB6 /* OpenMeteo.xcdatamodeld in Sources */,
 				C0E54D372A4B8D52003D00C8 /* WeatherColorSet+SkyType.swift in Sources */,
 				C0E54D1C2A49EB47003D00C8 /* Date.swift in Sources */,
 				C08D19632A48AC1000834A21 /* GeoWeatherCell.swift in Sources */,
@@ -1045,19 +1041,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		C0ECBB042A4E410C0086EFB6 /* OpenMeteo.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				C0ECBB052A4E410C0086EFB6 /* OpenMeteo.xcdatamodel */,
-			);
-			currentVersion = C0ECBB052A4E410C0086EFB6 /* OpenMeteo.xcdatamodel */;
-			path = OpenMeteo.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = C04E2BFE2A473EAA00A5B1E8 /* Project object */;
 }
