@@ -7,22 +7,6 @@
 
 import Foundation
 
-enum DayPhase {
-    case day
-    case night
-    case sunrise
-    case sunset
-    
-    func obtainClearSkyType() -> SkyType {
-        switch self {
-        case .day:     return .day
-        case .night:   return .night
-        case .sunrise: return .sunrise
-        case .sunset:  return .sunset
-        }
-    }
-}
-
 enum WeatherType {
     case clearSky
     case partiallyCloudy
