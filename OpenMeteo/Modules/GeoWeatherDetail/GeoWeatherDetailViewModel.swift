@@ -59,7 +59,6 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     
     private func needUpdate(for weather: Weather?) -> Bool {
         guard let weather = weather else { return true }
-        print(weather.lastUpdateTimestamp.timeIntervalSinceNow)
         return weather.isNeededUpdate()
     }
     

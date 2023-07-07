@@ -83,8 +83,8 @@ class GeoWeatherListViewController: UICollectionViewController {
     }
     
     func setNavigationBar() {
-        let searchController = GeoSearchModuleAssembly.configureModule() as! GeoSearchViewController
-        searchController.geoWeatherListViewControllerDelegate = self
+        let searchController = GeoSearchModuleAssembly.configureModule() as? GeoSearchViewController
+        searchController?.geoWeatherListViewControllerDelegate = self
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
         
@@ -138,31 +138,37 @@ class GeoWeatherListViewController: UICollectionViewController {
     
     // MARK: - Methods
     
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        self.navigationItem.searchController?.searchBar.isUserInteractionEnabled = !editing
+        self.isAnimatingEditing = true
+        if editing {
+            beginListEditing()
+        } else {
+            endListEditing()
+        }
+    }
+    
     func beginListEditing() {
-        for i in 0 ..< self.viewModel.geoWeatherList.count {
-            let cell = self.collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? GeoWeatherCell
-            cell?.startEditing() { [weak self] in
+        forEachCell { [weak self] cell in
+            cell?.startEditing() {
                 self?.isAnimatingEditing = false
             }
         }
     }
     
     func endListEditing() {
-        for i in 0 ..< self.viewModel.geoWeatherList.count {
-            let cell = self.collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? GeoWeatherCell
+        forEachCell { [weak self] cell in
             cell?.endEditing() { [weak self] in
                 self?.isAnimatingEditing = false
             }
         }
     }
     
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        self.isAnimatingEditing = true
-        if editing {
-            beginListEditing()
-        } else {
-            endListEditing()
+    private func forEachCell(_ body: (GeoWeatherCell?) -> Void) {
+        for i in 0 ..< self.viewModel.geoWeatherList.count {
+            let cell = self.collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? GeoWeatherCell
+            body(cell)
         }
     }
 

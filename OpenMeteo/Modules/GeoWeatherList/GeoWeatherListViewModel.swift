@@ -91,7 +91,7 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         let ids = geoWeatherList.map { $0.id }
         guard !ids.contains(geoWeather.id) else { return }
         geoWeatherList = geoWeatherList + [geoWeather]
-        configureAndSaveDataInStore([geoWeather])
+        configureAndSaveDataInStore(geoWeatherList)
         updateGeoWeatherList([geoWeather])
     }
     
@@ -106,7 +106,7 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
             geoWeatherList.insert(geoWeather, at: index)
         }
         configureAndSaveDataInStore(geoWeatherList)
-        updateGeoWeatherList([geoWeather])
+        updateGeoWeatherList(geoWeatherList)
     }
     
     func deleteGeoWeather(withId id: GeoWeather.ID) {
