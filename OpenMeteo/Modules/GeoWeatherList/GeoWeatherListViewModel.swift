@@ -12,8 +12,8 @@ private let currentLocationId: Int = -1
 
 protocol GeoWeatherListViewModelDelegate: AnyObject {
     var geoWeatherList: [GeoWeather] { get }
-    var geoWeatherListDidChangedHandler: (([GeoWeather]) -> Void)? { get set }
-    var geoWeatherIdsDidChangedHandler: (([GeoWeather.ID]) -> Void)? { get set }
+    var geoWeatherListDidChangeHandler: (([GeoWeather]) -> Void)? { get set }
+    var geoWeatherIdsDidChangeHandler: (([GeoWeather.ID]) -> Void)? { get set }
     func loadInitialData()
     func updateAllWeather()
     func addGeoWeather(_ geoWeather: GeoWeather)
@@ -26,12 +26,12 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
 
     var geoWeatherList: [GeoWeather] = [] {
         didSet {
-            geoWeatherListDidChangedHandler?(geoWeatherList)
+            geoWeatherListDidChangeHandler?(geoWeatherList)
         }
     }
     
-    var geoWeatherListDidChangedHandler: (([GeoWeather]) -> Void)?
-    var geoWeatherIdsDidChangedHandler: (([GeoWeather.ID]) -> Void)?
+    var geoWeatherListDidChangeHandler: (([GeoWeather]) -> Void)?
+    var geoWeatherIdsDidChangeHandler: (([GeoWeather.ID]) -> Void)?
     
     var networkManager: NetworkManager!
     var dataManager: DataManager!
@@ -141,13 +141,13 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
             .store(in: &weatherCancellables)
     }
     
-    private func updateWeatherForGeoWeatherList(geoWeatherList: [GeoWeather]) -> AnyPublisher<Void, FetchErorr> {
+    private func updateWeatherForGeoWeatherList(geoWeatherList: [GeoWeather]) -> AnyPublisher<Void, FetchError> {
         let fetchWeatherPublishers = geoWeatherList.map { geoWeather in
             fetchWeatherPublisher(geocoding: geoWeather.geocoding)
                 .map { [weak self] weather in
                     print("updated weather for \(geoWeather.geocoding.name)")
                     geoWeather.weather = weather
-                    self?.geoWeatherIdsDidChangedHandler?([geoWeather.id])
+                    self?.geoWeatherIdsDidChangeHandler?([geoWeather.id])
                 }
                 .eraseToAnyPublisher()
         }
@@ -157,8 +157,8 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
             .eraseToAnyPublisher()
     }
     
-    private func fetchWeatherPublisher(geocoding: Geocoding) -> AnyPublisher<Weather, FetchErorr> {
-        return Future<Weather, FetchErorr> { [weak self] promise in
+    private func fetchWeatherPublisher(geocoding: Geocoding) -> AnyPublisher<Weather, FetchError> {
+        return Future<Weather, FetchError> { [weak self] promise in
             self?.networkManager.fetchWeather(for: geocoding) { result in
                 switch result {
                 case .success(let weather):

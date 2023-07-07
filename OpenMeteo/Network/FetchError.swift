@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FetchErorr: Error {
+enum FetchError: Error {
     case stringQueryError
     case urlError
     case networkError(statusCode: Int)

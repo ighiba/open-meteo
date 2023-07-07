@@ -9,12 +9,12 @@ import Foundation
 
 enum FetchSearchResult {
     case success(geocodingList: [Geocoding])
-    case failure(error: FetchErorr)
+    case failure(error: FetchError)
 }
 
 enum FetchWeatherResult {
     case success(weather: Weather)
-    case failure(error: FetchErorr)
+    case failure(error: FetchError)
 }
 
 protocol NetworkManager: AnyObject {

@@ -19,10 +19,10 @@ class GeoWeatherDetailViewController: UIViewController {
 
     var viewModel: GeoWeatherDetailViewModelDelegate! {
         didSet {
-            viewModel.geoWeatherDidChangedHandler = { [weak self] geoWeather in
+            viewModel.geoWeatherDidChangeHandler = { [weak self] geoWeather in
                 self?.configureViews(with: geoWeather)
             }
-            viewModel.networkErrorHandler = { [weak self] in
+            viewModel.networkErrorHasOccurredHandler = { [weak self] in
                 guard self?.viewModel.geoWeather.weather == nil else { return }
                 self?.showNetworkErrorView()
             }
@@ -37,7 +37,7 @@ class GeoWeatherDetailViewController: UIViewController {
     
     var navigationBarConfiguration: NavigationBarConfiguration = .detail
     
-    var didAddedCallback: ((GeoWeather) -> Void)?
+    var didAddHandler: ((GeoWeather) -> Void)?
     var updateHandler: (() -> Void)?
     
     lazy var navigationBarOffset: CGFloat = {
@@ -202,7 +202,7 @@ extension GeoWeatherDetailViewController {
     }
     
     @objc func addButtonTapped(_ sender: UIBarButtonItem) {
-        didAddedCallback?(viewModel.geoWeather)
+        didAddHandler?(viewModel.geoWeather)
         self.dismiss(animated: true)
     }
 }

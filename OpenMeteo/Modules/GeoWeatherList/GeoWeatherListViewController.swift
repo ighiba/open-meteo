@@ -13,11 +13,11 @@ class GeoWeatherListViewController: UICollectionViewController {
 
     var viewModel: GeoWeatherListViewModelDelegate! {
         didSet {
-            viewModel.geoWeatherListDidChangedHandler = { [weak self] geoWeatherList in
+            viewModel.geoWeatherListDidChangeHandler = { [weak self] geoWeatherList in
                 self?.updateSnapshot()
             }
             
-            viewModel.geoWeatherIdsDidChangedHandler = { [weak self] ids in
+            viewModel.geoWeatherIdsDidChangeHandler = { [weak self] ids in
                 self?.updateSnapshot(reloading: ids)
             }
         }

@@ -10,8 +10,8 @@ import Combine
 
 protocol GeoWeatherDetailViewModelDelegate: AnyObject {
     var geoWeather: GeoWeather! { get }
-    var geoWeatherDidChangedHandler: ((GeoWeather) -> Void)? { get set }
-    var networkErrorHandler: (() -> Void)? { get set }
+    var geoWeatherDidChangeHandler: ((GeoWeather) -> Void)? { get set }
+    var networkErrorHasOccurredHandler: (() -> Void)? { get set }
     func updateWeather(forcedUpdate: Bool)
 }
 
@@ -21,12 +21,12 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     
     var geoWeather: GeoWeather! {
         didSet {
-            geoWeatherDidChangedHandler?(geoWeather)
+            geoWeatherDidChangeHandler?(geoWeather)
         }
     }
     
-    var geoWeatherDidChangedHandler: ((GeoWeather) -> Void)?
-    var networkErrorHandler: (() -> Void)?
+    var geoWeatherDidChangeHandler: ((GeoWeather) -> Void)?
+    var networkErrorHasOccurredHandler: (() -> Void)?
     
     var networkManager: NetworkManager!
     
@@ -47,12 +47,12 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
                     break
                 case .failure(let error):
                     print(error)
-                    self?.networkErrorHandler?()
+                    self?.networkErrorHasOccurredHandler?()
                 }
             } receiveValue: { [weak self] weather in
                 self?.geoWeather.weather = weather
                 guard let geoWeather = self?.geoWeather else { return }
-                self?.geoWeatherDidChangedHandler?(geoWeather)
+                self?.geoWeatherDidChangeHandler?(geoWeather)
             }
             .store(in: &weatherCancellables)
     }
@@ -62,8 +62,8 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
         return weather.isNeededUpdate()
     }
     
-    private func fetchWeatherPublisher(geocoding: Geocoding) -> AnyPublisher<Weather, FetchErorr> {
-        return Future<Weather, FetchErorr> { [weak self] promise in
+    private func fetchWeatherPublisher(geocoding: Geocoding) -> AnyPublisher<Weather, FetchError> {
+        return Future<Weather, FetchError> { [weak self] promise in
             self?.networkManager.fetchWeather(for: geocoding) { result in
                 switch result {
                 case .success(let weather):
