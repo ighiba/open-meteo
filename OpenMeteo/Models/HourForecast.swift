@@ -16,4 +16,19 @@ struct HourForecast: DatedForecast {
     var wind: Wind
     var temperature: Float
     var apparentTemperature: Float
+    
+    init() {
+        self.init(date: Date(), isDay: true, relativeHumidity: 0, precipitationProbability: 0, weatherCode: .clearSky, wind: Wind(speed: 0, direction: 0), temperature: 0, apparentTemperature: 0)
+    }
+    
+    init(date: Date, isDay: Bool, relativeHumidity: Int16, precipitationProbability: Int16, weatherCode: WeatherCode, wind: Wind, temperature: Float, apparentTemperature: Float) {
+        self.date = date
+        self.isDay = isDay
+        self.relativeHumidity = relativeHumidity
+        self.precipitationProbability = precipitationProbability
+        self.weatherCode = weatherCode
+        self.wind = wind
+        self.temperature = temperature
+        self.apparentTemperature = apparentTemperature
+    }
 }

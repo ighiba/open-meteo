@@ -86,7 +86,7 @@ class GeoSearchViewController: UISearchController {
 
         let isAlreadyAdded = geoWeatherListViewControllerDelegate?.isGeoAlreadyAdded(withId: geocoding.id) ?? false
         detailViewController.navigationBarConfiguration = .add(isAlreadyAdded: isAlreadyAdded)
-        detailViewController.didAddHandler = { [weak self] geoWeather in
+        detailViewController.geoWeatherDidAdd = { [weak self] geoWeather in
             self?.geoWeatherListViewControllerDelegate?.addGeoWeather(geoWeather)
             self?.geoWeatherListViewControllerDelegate?.hideDimmedView()
             self?.viewModel.clearGeocodingList()

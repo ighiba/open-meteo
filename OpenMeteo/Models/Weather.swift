@@ -49,6 +49,10 @@ struct Weather {
     
     // MARK: - Init
     
+    init() {
+        self.init(current: HourForecast(), hourly: [], daily: [])
+    }
+    
     init(current: HourForecast, hourly hourlyForecast: [HourForecast], daily dailyForecast: [DayForecast]) {
         self.lastUpdateTimestamp = Date()
         self.current = current

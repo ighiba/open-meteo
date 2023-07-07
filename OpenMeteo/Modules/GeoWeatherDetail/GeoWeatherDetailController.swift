@@ -37,7 +37,7 @@ class GeoWeatherDetailViewController: UIViewController {
     
     var navigationBarConfiguration: NavigationBarConfiguration = .detail
     
-    var didAddHandler: ((GeoWeather) -> Void)?
+    var geoWeatherDidAdd: ((GeoWeather) -> Void)?
     var updateHandler: (() -> Void)?
     
     lazy var navigationBarOffset: CGFloat = {
@@ -202,7 +202,7 @@ extension GeoWeatherDetailViewController {
     }
     
     @objc func addButtonTapped(_ sender: UIBarButtonItem) {
-        didAddHandler?(viewModel.geoWeather)
+        geoWeatherDidAdd?(viewModel.geoWeather)
         self.dismiss(animated: true)
     }
 }
