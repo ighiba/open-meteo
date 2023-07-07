@@ -23,9 +23,9 @@ RealmSwift is used for managing the persistence of location data, enabling users
 
 ## Preview
 
-![SearchAndAdd](https://github.com/ighiba/open-meteo/assets/9763289/699dc042-76e9-4592-bfbe-a8c4065ae93f)
-![Detail](https://github.com/ighiba/open-meteo/assets/9763289/6c6b8fc1-80d9-46b6-bffc-e49fcf738d54)
-![DeleteItems](https://github.com/ighiba/open-meteo/assets/9763289/3cf95206-8e8b-4933-8365-b544c7e45400)
+![SearchAndAdd](https://github.com/ighiba/open-meteo/assets/9763289/1c1e382e-5ada-4de9-a937-e0e16c28914d)
+![Detail](https://github.com/ighiba/open-meteo/assets/9763289/b59b3f4e-2819-4658-b06e-3fb2edbcf59d)
+![DeleteItems](https://github.com/ighiba/open-meteo/assets/9763289/2b0d4270-86d7-49af-8508-4d2751b29b14)
 
 ## Installation
 
