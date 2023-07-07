@@ -126,9 +126,7 @@ class GeoWeatherDetailViewController: UIViewController {
         self.navigationController?.navigationBar.backgroundColor = .clear
         self.navigationController?.navigationBar.tintColor = .white
         
-        let navBarAppearance = UINavigationBarAppearance()
-        
-        navBarAppearance.configureWithTransparentBackground()
+        let navBarAppearance = UINavigationBarAppearance.configureTransparentBackgroundAppearance()
         navBarAppearance.backgroundColor = .white.withAlphaComponent(0.0)
         
         self.navigationController?.navigationBar.standardAppearance = navBarAppearance

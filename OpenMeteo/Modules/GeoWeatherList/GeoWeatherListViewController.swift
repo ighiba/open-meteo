@@ -100,11 +100,8 @@ class GeoWeatherListViewController: UICollectionViewController {
 
         self.navigationController?.navigationBar.tintColor = nil
         
-        let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.configureWithDefaultBackground()
-        
-        let scrollEdgeAppearance = UINavigationBarAppearance()
-        scrollEdgeAppearance.configureWithTransparentBackground()
+        let navBarAppearance = UINavigationBarAppearance.configureDefaultBackgroundAppearance()        
+        let scrollEdgeAppearance = UINavigationBarAppearance.configureTransparentBackgroundAppearance()
         
         self.navigationController?.navigationBar.standardAppearance = navBarAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
@@ -149,7 +146,7 @@ class GeoWeatherListViewController: UICollectionViewController {
         }
     }
     
-    func beginListEditing() {
+    private func beginListEditing() {
         forEachCell { [weak self] cell in
             cell?.startEditing() {
                 self?.isAnimatingEditing = false
@@ -157,7 +154,7 @@ class GeoWeatherListViewController: UICollectionViewController {
         }
     }
     
-    func endListEditing() {
+    private func endListEditing() {
         forEachCell { [weak self] cell in
             cell?.endEditing() { [weak self] in
                 self?.isAnimatingEditing = false
@@ -209,26 +206,6 @@ extension GeoWeatherListViewController {
     }
 }
 
-extension GeoWeatherListViewController: UINavigationControllerDelegate  {
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        guard let initialPath = initialPathForAnimator else { return nil }
-        if operation == .push && isValidPushDestionation(from: fromVC, to: toVC) {
-            return GeoWeatherDetailPushTransitionAnimator(initialPath: initialPath)
-        } else if operation == .pop && isValidPopDestionation(from: fromVC, to: toVC) {
-            return GeoWeatherDetailPopTransitionAnimator(finalPath: initialPath)
-        }
-        return nil
-    }
-    
-    private func isValidPushDestionation(from fromVC: UIViewController, to toVC: UIViewController) -> Bool {
-        return fromVC is GeoWeatherListViewController && toVC is GeoWeatherDetailViewController
-    }
-    
-    private func isValidPopDestionation(from fromVC: UIViewController, to toVC: UIViewController) -> Bool {
-        return fromVC is GeoWeatherDetailViewController && toVC is GeoWeatherListViewController
-    }
-}
-
 extension GeoWeatherListViewController: GeoWeatherListViewControllerDelegate {
     
     private var dimmedViewTransitionDuration: TimeInterval {
@@ -273,6 +250,26 @@ extension GeoWeatherListViewController: GeoWeatherListViewControllerDelegate {
             self?.dimmedView = nil
             self?.collectionView.isUserInteractionEnabled = true
         })
+    }
+}
+
+extension GeoWeatherListViewController: UINavigationControllerDelegate  {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard let initialPath = initialPathForAnimator else { return nil }
+        if operation == .push && isValidPushDestionation(from: fromVC, to: toVC) {
+            return GeoWeatherDetailPushTransitionAnimator(initialPath: initialPath)
+        } else if operation == .pop && isValidPopDestionation(from: fromVC, to: toVC) {
+            return GeoWeatherDetailPopTransitionAnimator(finalPath: initialPath)
+        }
+        return nil
+    }
+    
+    private func isValidPushDestionation(from fromVC: UIViewController, to toVC: UIViewController) -> Bool {
+        return fromVC is GeoWeatherListViewController && toVC is GeoWeatherDetailViewController
+    }
+    
+    private func isValidPopDestionation(from fromVC: UIViewController, to toVC: UIViewController) -> Bool {
+        return fromVC is GeoWeatherDetailViewController && toVC is GeoWeatherListViewController
     }
 }
 

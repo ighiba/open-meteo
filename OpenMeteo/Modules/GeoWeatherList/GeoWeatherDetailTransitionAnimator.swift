@@ -185,11 +185,8 @@ class GeoWeatherDetailPopTransitionAnimator: TransitionAnimator {
     }
     
     private func configureNavigationBarPop(for viewController: UIViewController) {
-        let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.configureWithDefaultBackground()
-        
-        let scrollEdgeAppearance = UINavigationBarAppearance()
-        scrollEdgeAppearance.configureWithTransparentBackground()
+        let navBarAppearance = UINavigationBarAppearance.configureDefaultBackgroundAppearance()
+        let scrollEdgeAppearance = UINavigationBarAppearance.configureTransparentBackgroundAppearance()
         
         viewController.navigationController?.navigationBar.standardAppearance = navBarAppearance
         viewController.navigationController?.navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
