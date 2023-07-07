@@ -3,7 +3,6 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ighiba/open-meteo/blob/main/LICENSE)
 
 ## Description
----
 
 OpenMeteo is an iOS application that provides weather information for different locations. It follows the MVVM architectural pattern and utilizes UIKit, SnapKit, and RealmSwift frameworks.
 
@@ -15,7 +14,6 @@ The app consists of three screens:
 RealmSwift is used for managing the persistence of location data, enabling users to save their preferred locations and retrieve them when launching the app. Weather data is obtained dynamically from the [Open-Meteo API](https://open-meteo.com/) for the selected locations.
 
 ## Features
----
 
 - View weather information for multiple locations.
 - Search for locations and get real-time weather data.
@@ -23,14 +21,13 @@ RealmSwift is used for managing the persistence of location data, enabling users
 - Automatic weather information for the user's current location.
 - Intuitive and user-friendly interface.
 
-## Screenshots
----
+## Preview
 
-<!-- ![Screenshot 1](screenshots/screenshot1.png) -->
-<!-- ![Screenshot 2](screenshots/screenshot2.png) -->
+![SearchAndAdd](https://github.com/ighiba/open-meteo/assets/9763289/699dc042-76e9-4592-bfbe-a8c4065ae93f)
+![Detail](https://github.com/ighiba/open-meteo/assets/9763289/6c6b8fc1-80d9-46b6-bffc-e49fcf738d54)
+![DeleteItems](https://github.com/ighiba/open-meteo/assets/9763289/3cf95206-8e8b-4933-8365-b544c7e45400)
 
 ## Installation
----
 
 1. Clone the repository:
 
@@ -49,7 +46,6 @@ pod install
 4. Build and run the app on a simulator or device.
 
 ## Dependencies
----
 
 The app uses the following dependencies, which are managed using CocoaPods:
 
@@ -59,14 +55,12 @@ The app uses the following dependencies, which are managed using CocoaPods:
 Make sure you have CocoaPods installed on your system.
 
 ## Requirements
----
 
 - iOS 13.0+
 - Xcode 14.0+
 - Swift 5.0+
 
 ## Usage
----
 
 Provide instructions on how to use your app. For example:
 
@@ -76,12 +70,10 @@ Provide instructions on how to use your app. For example:
 4. Use the Location Search screen to search for specific locations and view their weather details.
 
 ## API
----
 
 The app uses the free open-source weather [Open-Meteo API](https://open-meteo.com/) to fetch weather data for different locations.
 
 ## License
----
 
 This project is licensed under the [MIT License](LICENSE).
 
