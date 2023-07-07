@@ -16,7 +16,7 @@ extension UINavigationBarAppearance {
     
     class func configureTransparentBackgroundAppearance() -> UINavigationBarAppearance {
         let appearance = UINavigationBarAppearance()
-        appearance.configureWithDefaultBackground()
+        appearance.configureWithTransparentBackground()
         return appearance
     }
 }

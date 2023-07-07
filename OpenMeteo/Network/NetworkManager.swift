@@ -18,8 +18,8 @@ enum FetchWeatherResult {
 }
 
 protocol NetworkManager: AnyObject {
-    func fetchSearchResults(for searchString: String, completion: @escaping (FetchSearchResult) -> Void)
     func fetchWeather(for geocoding: Geocoding, completion: @escaping (FetchWeatherResult) -> Void)
+    func fetchSearchResults(for searchString: String, completion: @escaping (FetchSearchResult) -> Void)
 }
 
 class NetworkManagerImpl: NetworkManager {
@@ -29,18 +29,91 @@ class NetworkManagerImpl: NetworkManager {
     
     private let validCodes = 200...299
     
+    private let forecastDays = 10
+    
+    private let hourlyQuery = [
+        "temperature_2m",
+        "relativehumidity_2m",
+        "apparent_temperature",
+        "precipitation_probability",
+        "weathercode",
+        "windspeed_10m",
+        "winddirection_10m",
+        "is_day"
+    ]
+    
+    private let dailyQuery = [
+        "weathercode",
+        "temperature_2m_max",
+        "temperature_2m_min",
+        "sunrise",
+        "sunset",
+        "precipitation_sum",
+        "precipitation_probability_max"
+    ]
+    
+    func fetchWeather(for geocoding: Geocoding, completion: @escaping (FetchWeatherResult) -> Void) {
+        let forecastUrlSearch = URL(string: "https://api.open-meteo.com/v1/forecast")?.appending(params: [
+            "latitude"        : "\(geocoding.latitude)",
+            "longitude"       : "\(geocoding.longitude)",
+            "hourly"          : hourlyQuery.joined(separator: ","),
+            "daily"           : dailyQuery.joined(separator: ","),
+            "forecast_days"    : "\(forecastDays)",
+            "current_weather"  : "true",
+            "timezone"         : "GMT"
+        ])
+        
+        guard let url = forecastUrlSearch else {
+            completion(.failure(error: .urlError))
+            return
+        }
+        
+        session.dataTask(with: url) { [weak self] data, response, error in
+            var result: FetchWeatherResult
+
+            defer {
+                DispatchQueue.main.async {
+                    completion(result)
+                }
+            }
+            
+            guard let strongSelf = self else {
+                result = .failure(error: .unknown)
+                return
+            }
+            
+            guard let httpUrlResponse = response as? HTTPURLResponse else {
+                result = .failure(error: .unknown)
+                return
+            }
+            
+            guard strongSelf.validCodes.contains(httpUrlResponse.statusCode) else {
+                result = .failure(error: .networkError(statusCode: httpUrlResponse.statusCode))
+                return
+            }
+            
+            if error == nil, let parsData = data  {
+                guard let weatherJson = try? strongSelf.decoder.decode(WeatherJSON.self, from: parsData) else {
+                    result = .failure(error: .decodeError)
+                    return
+                }
+                result = .success(weather: weatherJson.weather)
+            } else {
+                result = .failure(error: .unknown)
+            }
+        }.resume()
+    }
+    
     func fetchSearchResults(for searchString: String, completion: @escaping (FetchSearchResult) -> Void) {
         guard let queryString = encodeQueryParameter(searchString) else {
             completion(.failure(error: .stringQueryError))
             return
         }
         
-        var geocodingUrlSearch = URL(string: "https://geocoding-api.open-meteo.com/v1/search")
-        let language = Locale.current.languageCode ?? "en"
-        geocodingUrlSearch = geocodingUrlSearch?.appending(params: [
+        let geocodingUrlSearch = URL(string: "https://geocoding-api.open-meteo.com/v1/search")?.appending(params: [
             "name"    : queryString,
             "count"   : "10",
-            "language": language,
+            "language": Locale.current.languageCode ?? "en",
             "format"  : "json"
         ])
         
@@ -62,8 +135,14 @@ class NetworkManagerImpl: NetworkManager {
                 result = .success(geocodingList: [])
                 return
             }
-            guard let response = response as? HTTPURLResponse, strongSelf.validCodes.contains(response.statusCode) else {
-                result = .failure(error: .networkError(statusCode: 404))
+            
+            guard let httpUrlResponse = response as? HTTPURLResponse else {
+                result = .failure(error: .unknown)
+                return
+            }
+            
+            guard strongSelf.validCodes.contains(httpUrlResponse.statusCode) else {
+                result = .failure(error: .networkError(statusCode: httpUrlResponse.statusCode))
                 return
             }
             
@@ -73,56 +152,6 @@ class NetworkManagerImpl: NetworkManager {
                     return
                 }
                 result = .success(geocodingList: geocodingJson.geocodingList)
-            } else {
-                result = .failure(error: .unknown)
-            }
-        }.resume()
-    }
-    
-    func fetchWeather(for geocoding: Geocoding, completion: @escaping (FetchWeatherResult) -> Void) {
-        let hourlyQuery = "temperature_2m,relativehumidity_2m,apparent_temperature,precipitation_probability,weathercode,windspeed_10m,winddirection_10m,is_day"
-        let dailyQuery = "weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,precipitation_probability_max"
-
-        var forecastUrlSearch = URL(string: "https://api.open-meteo.com/v1/forecast")
-        forecastUrlSearch = forecastUrlSearch?.appending(params: [
-            "latitude"        : "\(geocoding.latitude)",
-            "longitude"       : "\(geocoding.longitude)",
-            "hourly"          : hourlyQuery,
-            "daily"           : dailyQuery,
-            "current_weather"  : "true",
-            "timezone"         : "GMT"
-            
-        ])
-        
-        guard let url = forecastUrlSearch else {
-            completion(.failure(error: .urlError))
-            return
-        }
-        
-        session.dataTask(with: url) { [weak self] data, response, error in
-            var result: FetchWeatherResult
-            
-            defer {
-                DispatchQueue.main.async {
-                    completion(result)
-                }
-            }
-            
-            guard let strongSelf = self else {
-                result = .failure(error: .unknown)
-                return
-            }
-            guard let response = response as? HTTPURLResponse, strongSelf.validCodes.contains(response.statusCode) else {
-                result = .failure(error: .networkError(statusCode: 404))
-                return
-            }
-            
-            if error == nil, let parsData = data  {
-                guard let weatherJson = try? strongSelf.decoder.decode(WeatherJSON.self, from: parsData) else {
-                    result = .failure(error: .decodeError)
-                    return
-                }
-                result = .success(weather: weatherJson.weather)
             } else {
                 result = .failure(error: .unknown)
             }
