@@ -22,11 +22,11 @@ extension GeoWeatherListViewController {
         if !ids.isEmpty {
             snapshot.reloadItems(ids)
             dataSource.apply(snapshot, animatingDifferences: true) { [weak self] in
-                self?.dismissRefreshControl()
+                self?.handleRefreshControlEnd()
             }
         } else {
             dataSource.apply(snapshot) { [weak self] in
-                self?.dismissRefreshControl()
+                self?.handleRefreshControlEnd()
             }
         }
     }

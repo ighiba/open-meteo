@@ -20,14 +20,18 @@ class GeoWeatherDetailViewController: UIViewController {
     var viewModel: GeoWeatherDetailViewModelDelegate! {
         didSet {
             viewModel.geoWeatherDidChangeHandler = { [weak self] geoWeather in
+                self?.handleRefreshControlEnd()
                 self?.configureViews(with: geoWeather)
             }
             viewModel.networkErrorHasOccurredHandler = { [weak self] in
+                self?.handleRefreshControlEnd()
                 guard self?.viewModel.geoWeather.weather == nil else { return }
                 self?.showNetworkErrorView()
             }
         }
     }
+    
+    lazy var refreshControl = UIRefreshControl()
 
     private let backgroundView = GradientView(endPoint: CGPoint(x: 0.5, y: 1.1))
     private var geoWeatherDetailScrollView = GeoWeatherDetailView()
@@ -66,6 +70,7 @@ class GeoWeatherDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureRefreshControl()
         configureNavigationBar()
         updateNavigationBarAppearance()
         
@@ -97,8 +102,14 @@ class GeoWeatherDetailViewController: UIViewController {
             make.bottom.equalToSuperview()
         }
     }
+    
+    private func configureRefreshControl() {
+        guard navigationBarConfiguration == .detail else { return }
+        geoWeatherDetailScrollView.refreshControl = refreshControl
+        refreshControl.tintColor = .white
+    }
         
-    func configureNavigationBar() {
+    private func configureNavigationBar() {
         var leftBarButtonItem: UIBarButtonItem? = nil
         var rightBarButtonItem: UIBarButtonItem? = nil
         
@@ -120,7 +131,7 @@ class GeoWeatherDetailViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
     }
     
-    func updateNavigationBarAppearance() {
+    private func updateNavigationBarAppearance() {
         self.navigationItem.largeTitleDisplayMode = .never
     
         self.navigationController?.navigationBar.backgroundColor = .clear
@@ -133,7 +144,7 @@ class GeoWeatherDetailViewController: UIViewController {
         self.navigationController?.navigationBar.scrollEdgeAppearance = nil
     }
 
-    func configureViews(with geoWeather: GeoWeather) {
+    private func configureViews(with geoWeather: GeoWeather) {
         geoWeatherDetailScrollView.configure(geocoding: geoWeather.geocoding, weather: geoWeather.weather)
         
         if let weather = geoWeather.weather {
@@ -144,7 +155,7 @@ class GeoWeatherDetailViewController: UIViewController {
         }
     }
     
-    func updateViews(for skyType: SkyType) {
+    private func updateViews(for skyType: SkyType) {
         updateBackgroundView(for: skyType)
         let preferredContainersStyle = ContainerStyle.obtainContainerStyle(for: skyType)
         geoWeatherDetailScrollView.preferredContainersStyle = preferredContainersStyle
@@ -152,7 +163,7 @@ class GeoWeatherDetailViewController: UIViewController {
         addButtonContainer?.updateBlurStyle(preferredContainersStyle.blurStyle)
     }
     
-    func updateBackgroundView(for skyType: SkyType) {
+    private func updateBackgroundView(for skyType: SkyType) {
         let colorSet = WeatherColorSet.obtainColorSet(fromSkyType: skyType)
         backgroundView.setColors(weatherColorSet: colorSet)
     }
@@ -187,6 +198,17 @@ class GeoWeatherDetailViewController: UIViewController {
             errorView.alpha = 1.0
         }
     }
+    
+    private func handleRefreshControlBegin() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.viewModel.updateWeather(forcedUpdate: true)
+        }
+    }
+    
+    private func handleRefreshControlEnd() {
+        guard refreshControl.isRefreshing else { return }
+        refreshControl.endRefreshing()
+    }
 }
 
 // MARK: - Actions
@@ -218,6 +240,12 @@ extension GeoWeatherDetailViewController: UIScrollViewDelegate {
         } else {
             closeButtonContainer?.animateShowButtonBackground()
             addButtonContainer?.animateShowButtonBackground()
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if refreshControl.isRefreshing {
+            handleRefreshControlBegin()
         }
     }
 }

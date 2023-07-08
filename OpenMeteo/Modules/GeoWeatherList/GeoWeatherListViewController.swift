@@ -25,7 +25,7 @@ class GeoWeatherListViewController: UICollectionViewController {
 
     var dataSource: DataSource!
     
-    let refreshControl = UIRefreshControl()
+    private let refreshControl = UIRefreshControl()
 
     private var initialPathForAnimator: CGPath?
     
@@ -108,11 +108,6 @@ class GeoWeatherListViewController: UICollectionViewController {
         
         self.navigationController?.navigationBar.standardAppearance = navBarAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
-    }
-    
-    func dismissRefreshControl() {
-        guard refreshControl.isRefreshing else { return }
-        self.collectionView.refreshControl?.endRefreshing()
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -203,11 +198,16 @@ class GeoWeatherListViewController: UICollectionViewController {
         guard viewModel.geoWeatherList.indices.contains(indexPath.row) else { return nil }
         return viewModel.geoWeatherList[indexPath.row]
     }
-    
+
     func handleRefreshControlBegin() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.viewModel.updateAllWeather()
         }
+    }
+    
+    func handleRefreshControlEnd() {
+        guard refreshControl.isRefreshing else { return }
+        refreshControl.endRefreshing()
     }
 }
 
