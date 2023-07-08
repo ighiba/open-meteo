@@ -24,6 +24,8 @@ class GeoWeatherListViewController: UICollectionViewController {
     }
 
     var dataSource: DataSource!
+    
+    let refreshControl = UIRefreshControl()
 
     private var initialPathForAnimator: CGPath?
     
@@ -60,13 +62,14 @@ class GeoWeatherListViewController: UICollectionViewController {
         
         self.collectionView.delegate = self
         self.navigationController?.delegate = self
+        self.collectionView.refreshControl = refreshControl
         self.collectionView.collectionViewLayout = createLayout()
         self.collectionView.register(GeoWeatherCell.self, forCellWithReuseIdentifier: GeoWeatherCell.identifier)
         
         dataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, itemIdentifier in
             return self.configureCell(collectionView: collectionView, itemIdentifier: itemIdentifier, for: indexPath)
         }
-        
+
         updateSnapshot()
         viewModel.loadInitialData()
         viewModel.updateAllWeather()
@@ -82,7 +85,7 @@ class GeoWeatherListViewController: UICollectionViewController {
         updateNavigationBarAppearance()
     }
     
-    func setNavigationBar() {
+    private func setNavigationBar() {
         let searchController = GeoSearchModuleAssembly.configureModule() as? GeoSearchViewController
         searchController?.geoWeatherListViewControllerDelegate = self
         self.navigationItem.searchController = searchController
@@ -94,7 +97,7 @@ class GeoWeatherListViewController: UICollectionViewController {
         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    func updateNavigationBarAppearance() {
+    private func updateNavigationBarAppearance() {
         self.navigationItem.largeTitleDisplayMode = .always
         self.navigationController?.navigationBar.barStyle = .default
 
@@ -107,7 +110,12 @@ class GeoWeatherListViewController: UICollectionViewController {
         self.navigationController?.navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
     }
     
-    func createLayout() -> UICollectionViewLayout {
+    func dismissRefreshControl() {
+        guard refreshControl.isRefreshing else { return }
+        self.collectionView.refreshControl?.endRefreshing()
+    }
+    
+    private func createLayout() -> UICollectionViewLayout {
         let horizontalSpacing: CGFloat = 20
         let verticalSpacing: CGFloat = 15
         
@@ -195,6 +203,12 @@ class GeoWeatherListViewController: UICollectionViewController {
         guard viewModel.geoWeatherList.indices.contains(indexPath.row) else { return nil }
         return viewModel.geoWeatherList[indexPath.row]
     }
+    
+    func handleRefreshControlBegin() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.viewModel.updateAllWeather()
+        }
+    }
 }
 
 // MARK: - Delegates
@@ -203,6 +217,12 @@ extension GeoWeatherListViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard !self.isEditing else { return }
         openDetail(for: indexPath)
+    }
+
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if refreshControl.isRefreshing {
+            handleRefreshControlBegin()
+        }
     }
 }
 

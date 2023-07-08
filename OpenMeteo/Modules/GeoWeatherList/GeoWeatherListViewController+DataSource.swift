@@ -21,10 +21,14 @@ extension GeoWeatherListViewController {
         snapshot.appendItems(viewModel.geoWeatherList.map { $0.id } )
         if !ids.isEmpty {
             snapshot.reloadItems(ids)
-            dataSource.apply(snapshot, animatingDifferences: true)
-            return
+            dataSource.apply(snapshot, animatingDifferences: true) { [weak self] in
+                self?.dismissRefreshControl()
+            }
+        } else {
+            dataSource.apply(snapshot) { [weak self] in
+                self?.dismissRefreshControl()
+            }
         }
-        dataSource.apply(snapshot)
     }
     
     func configureCell(
