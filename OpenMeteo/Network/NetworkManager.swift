@@ -7,15 +7,8 @@
 
 import Foundation
 
-enum FetchSearchResult {
-    case success(geocodingList: [Geocoding])
-    case failure(error: FetchError)
-}
-
-enum FetchWeatherResult {
-    case success(weather: Weather)
-    case failure(error: FetchError)
-}
+typealias FetchSearchResult = Result<[Geocoding], FetchError>
+typealias FetchWeatherResult = Result<Weather, FetchError>
 
 protocol NetworkManager: AnyObject {
     func fetchWeather(for geocoding: Geocoding, completion: @escaping (FetchWeatherResult) -> Void)
@@ -64,7 +57,7 @@ class NetworkManagerImpl: NetworkManager {
         ])
         
         guard let url = forecastUrlSearch else {
-            completion(.failure(error: .urlError))
+            completion(.failure(.urlError))
             return
         }
         
@@ -78,35 +71,35 @@ class NetworkManagerImpl: NetworkManager {
             }
             
             guard let strongSelf = self else {
-                result = .failure(error: .unknown)
+                result = .failure(.unknown)
                 return
             }
             
             guard let httpUrlResponse = response as? HTTPURLResponse else {
-                result = .failure(error: .unknown)
+                result = .failure(.unknown)
                 return
             }
             
             guard strongSelf.validCodes.contains(httpUrlResponse.statusCode) else {
-                result = .failure(error: .networkError(statusCode: httpUrlResponse.statusCode))
+                result = .failure(.networkError(statusCode: httpUrlResponse.statusCode))
                 return
             }
             
             if error == nil, let parsData = data  {
                 guard let weatherJson = try? strongSelf.decoder.decode(WeatherJSON.self, from: parsData) else {
-                    result = .failure(error: .decodeError)
+                    result = .failure(.decodeError)
                     return
                 }
-                result = .success(weather: weatherJson.weather)
+                result = .success(weatherJson.weather)
             } else {
-                result = .failure(error: .unknown)
+                result = .failure(.unknown)
             }
         }.resume()
     }
     
     func fetchSearchResults(for searchString: String, completion: @escaping (FetchSearchResult) -> Void) {
         guard let queryString = encodeQueryParameter(searchString) else {
-            completion(.failure(error: .stringQueryError))
+            completion(.failure(.stringQueryError))
             return
         }
         
@@ -118,7 +111,7 @@ class NetworkManagerImpl: NetworkManager {
         ])
         
         guard let url = geocodingUrlSearch else {
-            completion(.failure(error: .urlError))
+            completion(.failure(.urlError))
             return
         }
         
@@ -132,28 +125,28 @@ class NetworkManagerImpl: NetworkManager {
             }
             
             guard let strongSelf = self else {
-                result = .success(geocodingList: [])
+                result = .success([])
                 return
             }
             
             guard let httpUrlResponse = response as? HTTPURLResponse else {
-                result = .failure(error: .unknown)
+                result = .failure(.unknown)
                 return
             }
             
             guard strongSelf.validCodes.contains(httpUrlResponse.statusCode) else {
-                result = .failure(error: .networkError(statusCode: httpUrlResponse.statusCode))
+                result = .failure(.networkError(statusCode: httpUrlResponse.statusCode))
                 return
             }
             
             if error == nil, let parsData = data  {
                 guard let geocodingJson = try? strongSelf.decoder.decode(GeocodingJSON.self, from: parsData) else {
-                    result = .failure(error: .decodeError)
+                    result = .failure(.decodeError)
                     return
                 }
-                result = .success(geocodingList: geocodingJson.geocodingList)
+                result = .success(geocodingJson.geocodingList)
             } else {
-                result = .failure(error: .unknown)
+                result = .failure(.unknown)
             }
         }.resume()
     }
