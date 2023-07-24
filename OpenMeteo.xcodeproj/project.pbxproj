@@ -412,7 +412,15 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		C08D19662A48BACE00834A21 /* GeoWeatherDetail */ = {
+		C07C42FB2A6E861600E90193 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C08D196A2A48BAF300834A21 /* GeoWeatherDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C07C42FD2A6E863200E90193 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				C066C6C82A50E006004FDDE8 /* Containers */,
@@ -421,7 +429,15 @@
 				C0E6CA3F2A570F8000D6695B /* GeoWeatherDetailNetworkErrorView.swift */,
 				C08D19692A48BAF300834A21 /* GeoWeatherDetailView.swift */,
 				C08D19682A48BAF300834A21 /* GeoWeatherDetailController.swift */,
-				C08D196A2A48BAF300834A21 /* GeoWeatherDetailViewModel.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C08D19662A48BACE00834A21 /* GeoWeatherDetail */ = {
+			isa = PBXGroup;
+			children = (
+				C07C42FD2A6E863200E90193 /* View */,
+				C07C42FB2A6E861600E90193 /* ViewModel */,
 				C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */,
 			);
 			path = GeoWeatherDetail;
