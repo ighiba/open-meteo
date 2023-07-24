@@ -274,7 +274,7 @@
 				C01D28C72A53736F00412BCD /* Network */,
 				C04E2C5E2A47424600A5B1E8 /* Models */,
 				C08D19712A48F04500834A21 /* Views */,
-				C04E2C502A473FB100A5B1E8 /* Modules */,
+				C04E2C502A473FB100A5B1E8 /* Screens */,
 				C04E2C152A473EAA00A5B1E8 /* Assets.xcassets */,
 				C0E54D272A4B4B3F003D00C8 /* Colors.xcassets */,
 				C04E2C172A473EAA00A5B1E8 /* LaunchScreen.storyboard */,
@@ -303,25 +303,21 @@
 			path = OpenMeteoUITests;
 			sourceTree = "<group>";
 		};
-		C04E2C502A473FB100A5B1E8 /* Modules */ = {
+		C04E2C502A473FB100A5B1E8 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
 				C066C6DA2A523368004FDDE8 /* GeoSearch */,
 				C04E2C512A473FC100A5B1E8 /* GeoWeatherList */,
 				C08D19662A48BACE00834A21 /* GeoWeatherDetail */,
 			);
-			path = Modules;
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		C04E2C512A473FC100A5B1E8 /* GeoWeatherList */ = {
 			isa = PBXGroup;
 			children = (
-				C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */,
-				C08D19642A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift */,
-				C04E2C532A473FD600A5B1E8 /* GeoWeatherListViewController.swift */,
-				C04E2C552A473FD600A5B1E8 /* GeoWeatherListViewModel.swift */,
-				C04E2C522A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift */,
-				C066C6B92A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift */,
+				C07C42F72A6E846900E90193 /* View */,
+				C07C42F82A6E846F00E90193 /* ViewModel */,
 				C01D28C52A5330C900412BCD /* OpenMeteoNavigationController.swift */,
 			);
 			path = GeoWeatherList;
@@ -351,6 +347,8 @@
 				C066C6B72A4F66D3004FDDE8 /* CALayerAnimationDelegate.swift */,
 				C0E6CA392A56D6EF00D6695B /* LocationManager.swift */,
 				C093EF3C2A5835180076C4C3 /* SearchBarDelegate.swift */,
+				C04E2C522A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift */,
+				C066C6B92A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -378,6 +376,24 @@
 				C066C6DB2A523381004FDDE8 /* GeoSearchModuleAssembly.swift */,
 			);
 			path = GeoSearch;
+			sourceTree = "<group>";
+		};
+		C07C42F72A6E846900E90193 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */,
+				C08D19642A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift */,
+				C04E2C532A473FD600A5B1E8 /* GeoWeatherListViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C07C42F82A6E846F00E90193 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C04E2C552A473FD600A5B1E8 /* GeoWeatherListViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		C08D19662A48BACE00834A21 /* GeoWeatherDetail */ = {
