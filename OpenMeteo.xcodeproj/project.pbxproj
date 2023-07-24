@@ -233,6 +233,7 @@
 		C01D28C72A53736F00412BCD /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				C07C43032A6E87DE00E90193 /* Responses */,
 				C01D28C82A53738E00412BCD /* NetworkManager.swift */,
 				C01D28CC2A5434C600412BCD /* FetchError.swift */,
 			);
@@ -332,10 +333,8 @@
 				C0E54D182A49D993003D00C8 /* DayForecast.swift */,
 				C04E2C652A475E1A00A5B1E8 /* HourForecast.swift */,
 				C04E2C672A476D0200A5B1E8 /* Geocoding.swift */,
-				C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */,
 				C04E2C692A476FB800A5B1E8 /* GeoWeather.swift */,
 				C04E2C632A475E0F00A5B1E8 /* Weather.swift */,
-				C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */,
 				C0E54D292A4B868B003D00C8 /* WeatherCode.swift */,
 				C066C6C62A50CD90004FDDE8 /* Wind.swift */,
 			);
@@ -475,6 +474,15 @@
 				C0E54D432A4CC270003D00C8 /* WeatherIconView.swift */,
 			);
 			path = Misc;
+			sourceTree = "<group>";
+		};
+		C07C43032A6E87DE00E90193 /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */,
+				C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */,
+			);
+			path = Responses;
 			sourceTree = "<group>";
 		};
 		C08D19662A48BACE00834A21 /* GeoWeatherDetail */ = {
