@@ -319,6 +319,7 @@
 				C07C42F72A6E846900E90193 /* View */,
 				C07C42F82A6E846F00E90193 /* ViewModel */,
 				C01D28C52A5330C900412BCD /* OpenMeteoNavigationController.swift */,
+				C04E2C522A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift */,
 			);
 			path = GeoWeatherList;
 			sourceTree = "<group>";
@@ -347,7 +348,6 @@
 				C066C6B72A4F66D3004FDDE8 /* CALayerAnimationDelegate.swift */,
 				C0E6CA392A56D6EF00D6695B /* LocationManager.swift */,
 				C093EF3C2A5835180076C4C3 /* SearchBarDelegate.swift */,
-				C04E2C522A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift */,
 				C066C6B92A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift */,
 			);
 			path = Helpers;
@@ -369,10 +369,8 @@
 		C066C6DA2A523368004FDDE8 /* GeoSearch */ = {
 			isa = PBXGroup;
 			children = (
-				C066C6E32A523CD8004FDDE8 /* GeocodingCell.swift */,
-				C0E6CA412A571CFB00D6695B /* GeoSearchViewController+DataSource.swift */,
-				C066C6DC2A523381004FDDE8 /* GeoSearchViewController.swift */,
-				C066C6DE2A523381004FDDE8 /* GeoSearchViewModel.swift */,
+				C07C42F92A6E85C500E90193 /* View */,
+				C07C42FA2A6E85CD00E90193 /* ViewModel */,
 				C066C6DB2A523381004FDDE8 /* GeoSearchModuleAssembly.swift */,
 			);
 			path = GeoSearch;
@@ -392,6 +390,24 @@
 			isa = PBXGroup;
 			children = (
 				C04E2C552A473FD600A5B1E8 /* GeoWeatherListViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C07C42F92A6E85C500E90193 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C066C6E32A523CD8004FDDE8 /* GeocodingCell.swift */,
+				C0E6CA412A571CFB00D6695B /* GeoSearchViewController+DataSource.swift */,
+				C066C6DC2A523381004FDDE8 /* GeoSearchViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C07C42FA2A6E85CD00E90193 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C066C6DE2A523381004FDDE8 /* GeoSearchViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
