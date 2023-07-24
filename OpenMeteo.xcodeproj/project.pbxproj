@@ -273,7 +273,7 @@
 				C0E6CA302A55A0B500D6695B /* Storage */,
 				C01D28C72A53736F00412BCD /* Network */,
 				C04E2C5E2A47424600A5B1E8 /* Models */,
-				C08D19712A48F04500834A21 /* Views */,
+				C08D19712A48F04500834A21 /* UI */,
 				C04E2C502A473FB100A5B1E8 /* Screens */,
 				C04E2C152A473EAA00A5B1E8 /* Assets.xcassets */,
 				C0E54D272A4B4B3F003D00C8 /* Colors.xcassets */,
@@ -433,6 +433,50 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		C07C42FE2A6E868C00E90193 /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				C0ECBB072A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift */,
+				C08D19722A48F05B00834A21 /* TemperatureLabel.swift */,
+				C0E54D472A4CECBA003D00C8 /* TemperatureLabelSymboled.swift */,
+			);
+			path = Labels;
+			sourceTree = "<group>";
+		};
+		C07C42FF2A6E86C800E90193 /* Gradients */ = {
+			isa = PBXGroup;
+			children = (
+				C0E54D322A4B8768003D00C8 /* GradientView.swift */,
+				C0E54D342A4B8792003D00C8 /* GradientView+WeatherColorSet.swift */,
+			);
+			path = Gradients;
+			sourceTree = "<group>";
+		};
+		C07C43002A6E870700E90193 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				C066C6C22A50961D004FDDE8 /* BlurredButtonContaner.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		C07C43012A6E872500E90193 /* Containers */ = {
+			isa = PBXGroup;
+			children = (
+				C066C6C42A50CD45004FDDE8 /* ContainerView.swift */,
+			);
+			path = Containers;
+			sourceTree = "<group>";
+		};
+		C07C43022A6E877E00E90193 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				C0E54D492A4CECEA003D00C8 /* TemperatureRangeContainer.swift */,
+				C0E54D432A4CC270003D00C8 /* WeatherIconView.swift */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
 		C08D19662A48BACE00834A21 /* GeoWeatherDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -443,20 +487,16 @@
 			path = GeoWeatherDetail;
 			sourceTree = "<group>";
 		};
-		C08D19712A48F04500834A21 /* Views */ = {
+		C08D19712A48F04500834A21 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				C0ECBB072A4E47160086EFB6 /* PrecipitationProbabilityLabel.swift */,
-				C08D19722A48F05B00834A21 /* TemperatureLabel.swift */,
-				C0E54D472A4CECBA003D00C8 /* TemperatureLabelSymboled.swift */,
-				C0E54D492A4CECEA003D00C8 /* TemperatureRangeContainer.swift */,
-				C0E54D432A4CC270003D00C8 /* WeatherIconView.swift */,
-				C0E54D322A4B8768003D00C8 /* GradientView.swift */,
-				C0E54D342A4B8792003D00C8 /* GradientView+WeatherColorSet.swift */,
-				C066C6C22A50961D004FDDE8 /* BlurredButtonContaner.swift */,
-				C066C6C42A50CD45004FDDE8 /* ContainerView.swift */,
+				C07C42FE2A6E868C00E90193 /* Labels */,
+				C07C43002A6E870700E90193 /* Buttons */,
+				C07C42FF2A6E86C800E90193 /* Gradients */,
+				C07C43012A6E872500E90193 /* Containers */,
+				C07C43022A6E877E00E90193 /* Misc */,
 			);
-			path = Views;
+			path = UI;
 			sourceTree = "<group>";
 		};
 		C0E54D1A2A49EB3D003D00C8 /* Extensions */ = {
