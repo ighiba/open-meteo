@@ -485,6 +485,15 @@
 			path = Responses;
 			sourceTree = "<group>";
 		};
+		C07C43042A6E883C00E90193 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				C0E6CA332A55A0E700D6695B /* GeoModel.swift */,
+				C0E6CA3B2A56DCAB00D6695B /* GeoListModel.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
 		C08D19662A48BACE00834A21 /* GeoWeatherDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -510,14 +519,14 @@
 		C0E54D1A2A49EB3D003D00C8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C0E54D1B2A49EB47003D00C8 /* Date.swift */,
+				C02DE7032A65678300D38A31 /* Array+Identifiable.swift */,
 				C0E6CA372A55FEAA00D6695B /* CALayer.swift */,
 				C066C6BB2A4F738A004FDDE8 /* CAShapeLayer.swift */,
-				C0E54D252A4B39B8003D00C8 /* UIVisualEffectView.swift */,
+				C0E54D1B2A49EB47003D00C8 /* Date.swift */,
 				C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */,
 				C093EF3E2A5836C00076C4C3 /* UINavigationBarAppearance.swift */,
 				C01D28CA2A5430B700412BCD /* URL.swift */,
-				C02DE7032A65678300D38A31 /* Array+Identifiable.swift */,
+				C0E54D252A4B39B8003D00C8 /* UIVisualEffectView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -538,8 +547,7 @@
 		C0E6CA302A55A0B500D6695B /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				C0E6CA332A55A0E700D6695B /* GeoModel.swift */,
-				C0E6CA3B2A56DCAB00D6695B /* GeoListModel.swift */,
+				C07C43042A6E883C00E90193 /* Entities */,
 				C0E6CA352A55A22500D6695B /* DataManager.swift */,
 			);
 			path = Storage;
