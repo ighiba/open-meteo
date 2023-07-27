@@ -7,9 +7,11 @@
 
 import Foundation
 
-final class WeatherJSON: Decodable {
+final class WeatherJSON: DecodableResult {
     
-    private(set) var weather: Weather = Weather()
+    typealias T = Weather
+    
+    var result: Weather = Weather()
 
     enum RootCodingKeys: String, CodingKey {
         case latitude
@@ -64,7 +66,7 @@ final class WeatherJSON: Decodable {
         currentWeather.relativeHumidity = currentHour?.relativeHumidity ?? 0
         currentWeather.apparentTemperature = currentHour?.apparentTemperature ?? 0
 
-        self.weather = Weather(current: currentWeather, hourly: hourlyForecastList, daily: dailyForecastList)
+        self.result = Weather(current: currentWeather, hourly: hourlyForecastList, daily: dailyForecastList)
     }
     
     private func decodeCurrentWeather(inRoot rootContainer: KeyedDecodingContainer<WeatherJSON.RootCodingKeys>) -> HourForecast {

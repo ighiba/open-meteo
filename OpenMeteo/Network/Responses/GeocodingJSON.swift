@@ -7,10 +7,12 @@
 
 import Foundation
 
-final class GeocodingJSON: Decodable {
+final class GeocodingJSON: DecodableResult {
     
-    private(set) var geocodingList: [Geocoding]
-
+    typealias T = [Geocoding]
+    
+    var result: [Geocoding]
+    
     enum RootCodingKeys: String, CodingKey {
         case results
     }
@@ -19,6 +21,6 @@ final class GeocodingJSON: Decodable {
         let rootContainer = try decoder.container(keyedBy: RootCodingKeys.self)
         let resultGeocodingList = try? rootContainer.decode([Geocoding].self, forKey: .results)
 
-        self.geocodingList = resultGeocodingList ?? []
+        self.result = resultGeocodingList ?? []
     }
 }

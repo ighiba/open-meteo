@@ -23,55 +23,21 @@ class NetworkManagerImpl: NetworkManager {
     private let validCodes = 200...299
     
     func fetchWeather(endpoint: API.Forecast, completion: @escaping (FetchWeatherResult) -> Void) {
-        guard let url = endpoint.url else {
-            completion(.failure(.urlError))
-            return
-        }
-        
-        session.dataTask(with: url) { [weak self] data, response, error in
-            var result: FetchWeatherResult
-
-            defer {
-                DispatchQueue.main.async {
-                    completion(result)
-                }
-            }
-            
-            guard let strongSelf = self else {
-                result = .failure(.unknown)
-                return
-            }
-            
-            guard let httpUrlResponse = response as? HTTPURLResponse else {
-                result = .failure(.unknown)
-                return
-            }
-            
-            guard strongSelf.validCodes.contains(httpUrlResponse.statusCode) else {
-                result = .failure(.networkError(statusCode: httpUrlResponse.statusCode))
-                return
-            }
-            
-            if error == nil, let parsData = data  {
-                guard let weatherJson = try? strongSelf.decoder.decode(WeatherJSON.self, from: parsData) else {
-                    result = .failure(.decodeError)
-                    return
-                }
-                result = .success(weatherJson.weather)
-            } else {
-                result = .failure(.unknown)
-            }
-        }.resume()
+        fetch(endpoint: endpoint, decodingType: WeatherJSON.self, completion: completion)
     }
     
     func fetchSearchResults(endpoint: API.Search, completion: @escaping (FetchSearchResult) -> Void) {
+        fetch(endpoint: endpoint, decodingType: GeocodingJSON.self, completion: completion)
+    }
+    
+    private func fetch<T>(endpoint: Endpoint, decodingType: any DecodableResult<T>.Type, completion: @escaping (Result<T, FetchError>) -> Void) {
         guard let url = endpoint.url else {
             completion(.failure(.urlError))
             return
         }
         
         session.dataTask(with: url) { [weak self] data, response, error in
-            var result: FetchSearchResult
+            var result: Result<T, FetchError>
             
             defer {
                 DispatchQueue.main.async {
@@ -80,7 +46,7 @@ class NetworkManagerImpl: NetworkManager {
             }
             
             guard let strongSelf = self else {
-                result = .success([])
+                result = .failure(.unknown)
                 return
             }
             
@@ -95,11 +61,11 @@ class NetworkManagerImpl: NetworkManager {
             }
             
             if error == nil, let parsData = data  {
-                guard let geocodingJson = try? strongSelf.decoder.decode(GeocodingJSON.self, from: parsData) else {
+                guard let decodedJson = try? strongSelf.decoder.decode(decodingType, from: parsData) else {
                     result = .failure(.decodeError)
                     return
                 }
-                result = .success(geocodingJson.geocodingList)
+                result = .success(decodedJson.result)
             } else {
                 result = .failure(.unknown)
             }

@@ -49,6 +49,7 @@
 		C07C434A2A72AD8900E90193 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C43492A72AD8900E90193 /* Forecast.swift */; };
 		C07C434C2A72ADFC00E90193 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C434B2A72ADFC00E90193 /* API.swift */; };
 		C07C434E2A72AE2400E90193 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C434D2A72AE2400E90193 /* Search.swift */; };
+		C07C43502A73252B00E90193 /* DecodableResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C434F2A73252B00E90193 /* DecodableResult.swift */; };
 		C08D19632A48AC1000834A21 /* GeoWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */; };
 		C08D19652A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19642A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift */; };
 		C08D196B2A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */; };
@@ -159,6 +160,7 @@
 		C07C43492A72AD8900E90193 /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		C07C434B2A72ADFC00E90193 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		C07C434D2A72AE2400E90193 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		C07C434F2A73252B00E90193 /* DecodableResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableResult.swift; sourceTree = "<group>"; };
 		C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherCell.swift; sourceTree = "<group>"; };
 		C08D19642A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeoWeatherListViewController+DataSource.swift"; sourceTree = "<group>"; };
 		C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailModuleAssembly.swift; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 			children = (
 				C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */,
 				C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */,
+				C07C434F2A73252B00E90193 /* DecodableResult.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -776,6 +779,7 @@
 				C066C6CA2A50E01E004FDDE8 /* WindContainer.swift in Sources */,
 				C0E54D1E2A49EB84003D00C8 /* DailyForecastContainer.swift in Sources */,
 				C0E54D392A4C5445003D00C8 /* SkyType.swift in Sources */,
+				C07C43502A73252B00E90193 /* DecodableResult.swift in Sources */,
 				C04E2C572A473FD600A5B1E8 /* GeoWeatherListViewController.swift in Sources */,
 				C08D19652A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift in Sources */,
 				C04E2C562A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift in Sources */,

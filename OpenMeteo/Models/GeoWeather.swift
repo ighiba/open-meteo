@@ -75,11 +75,11 @@ extension GeoWeather {
 }
 
 let realWeatherPskov: Weather = {
-    return try! JSONDecoder().decode(WeatherJSON.self, from: weatherJSONDataPskov).weather
+    return try! JSONDecoder().decode(WeatherJSON.self, from: weatherJSONDataPskov).result
 }()
 
 let realWeatherMoscow: Weather = {
-    return try! JSONDecoder().decode(WeatherJSON.self, from: weatherJSONDataMoscow).weather
+    return try! JSONDecoder().decode(WeatherJSON.self, from: weatherJSONDataMoscow).result
 }()
 
 let weatherJSONDataPskov = """
