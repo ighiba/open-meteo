@@ -45,6 +45,10 @@
 		C066C6E02A523381004FDDE8 /* GeoSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6DC2A523381004FDDE8 /* GeoSearchViewController.swift */; };
 		C066C6E22A523381004FDDE8 /* GeoSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6DE2A523381004FDDE8 /* GeoSearchViewModel.swift */; };
 		C066C6E42A523CD8004FDDE8 /* GeocodingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6E32A523CD8004FDDE8 /* GeocodingCell.swift */; };
+		C07C43472A72AD5200E90193 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C43462A72AD5200E90193 /* Endpoint.swift */; };
+		C07C434A2A72AD8900E90193 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C43492A72AD8900E90193 /* Forecast.swift */; };
+		C07C434C2A72ADFC00E90193 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C434B2A72ADFC00E90193 /* API.swift */; };
+		C07C434E2A72AE2400E90193 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C434D2A72AE2400E90193 /* Search.swift */; };
 		C08D19632A48AC1000834A21 /* GeoWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */; };
 		C08D19652A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19642A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift */; };
 		C08D196B2A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */; };
@@ -151,6 +155,10 @@
 		C066C6DC2A523381004FDDE8 /* GeoSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoSearchViewController.swift; sourceTree = "<group>"; };
 		C066C6DE2A523381004FDDE8 /* GeoSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoSearchViewModel.swift; sourceTree = "<group>"; };
 		C066C6E32A523CD8004FDDE8 /* GeocodingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingCell.swift; sourceTree = "<group>"; };
+		C07C43462A72AD5200E90193 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		C07C43492A72AD8900E90193 /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
+		C07C434B2A72ADFC00E90193 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		C07C434D2A72AE2400E90193 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		C08D19622A48AC1000834A21 /* GeoWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherCell.swift; sourceTree = "<group>"; };
 		C08D19642A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeoWeatherListViewController+DataSource.swift"; sourceTree = "<group>"; };
 		C08D19672A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailModuleAssembly.swift; sourceTree = "<group>"; };
@@ -233,6 +241,7 @@
 		C01D28C72A53736F00412BCD /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				C07C43452A72AD3C00E90193 /* API */,
 				C07C43032A6E87DE00E90193 /* Responses */,
 				C01D28C82A53738E00412BCD /* NetworkManager.swift */,
 				C01D28CC2A5434C600412BCD /* FetchError.swift */,
@@ -494,6 +503,25 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
+		C07C43452A72AD3C00E90193 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				C07C43482A72AD7E00E90193 /* Endpoints */,
+				C07C434B2A72ADFC00E90193 /* API.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		C07C43482A72AD7E00E90193 /* Endpoints */ = {
+			isa = PBXGroup;
+			children = (
+				C07C43462A72AD5200E90193 /* Endpoint.swift */,
+				C07C43492A72AD8900E90193 /* Forecast.swift */,
+				C07C434D2A72AE2400E90193 /* Search.swift */,
+			);
+			path = Endpoints;
+			sourceTree = "<group>";
+		};
 		C08D19662A48BACE00834A21 /* GeoWeatherDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -753,10 +781,12 @@
 				C04E2C562A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift in Sources */,
 				C0E54D262A4B39B8003D00C8 /* UIVisualEffectView.swift in Sources */,
 				C066C6D02A50F36A004FDDE8 /* PrecipitationSumContainer.swift in Sources */,
+				C07C43472A72AD5200E90193 /* Endpoint.swift in Sources */,
 				C04E2C0A2A473EAA00A5B1E8 /* AppDelegate.swift in Sources */,
 				C0E54D202A4A292C003D00C8 /* HourForecastCell.swift in Sources */,
 				C08D196D2A48BAF300834A21 /* GeoWeatherDetailView.swift in Sources */,
 				C066C6C32A50961D004FDDE8 /* BlurredButtonContaner.swift in Sources */,
+				C07C434E2A72AE2400E90193 /* Search.swift in Sources */,
 				C0E6CA3A2A56D6EF00D6695B /* LocationManager.swift in Sources */,
 				C0E6CA362A55A22500D6695B /* DataManager.swift in Sources */,
 				C066C6DF2A523381004FDDE8 /* GeoSearchModuleAssembly.swift in Sources */,
@@ -764,6 +794,7 @@
 				C0E6CA3C2A56DCAB00D6695B /* GeoListModel.swift in Sources */,
 				C01D28CB2A5430B700412BCD /* URL.swift in Sources */,
 				C0E54D172A49A5DE003D00C8 /* DayForecastRow.swift in Sources */,
+				C07C434A2A72AD8900E90193 /* Forecast.swift in Sources */,
 				C08D196E2A48BAF300834A21 /* GeoWeatherDetailViewModel.swift in Sources */,
 				C02DE7042A65678300D38A31 /* Array+Identifiable.swift in Sources */,
 				C066C6E02A523381004FDDE8 /* GeoSearchViewController.swift in Sources */,
@@ -807,6 +838,7 @@
 				C0E54D1C2A49EB47003D00C8 /* Date.swift in Sources */,
 				C08D19632A48AC1000834A21 /* GeoWeatherCell.swift in Sources */,
 				C0E54D312A4B8742003D00C8 /* WeatherColor.swift in Sources */,
+				C07C434C2A72ADFC00E90193 /* API.swift in Sources */,
 				C04E2C0C2A473EAA00A5B1E8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

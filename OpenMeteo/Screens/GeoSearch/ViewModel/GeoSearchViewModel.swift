@@ -55,7 +55,7 @@ class GeoSearchViewModel: GeoSearchViewModelDelegate {
             .debounce(for: .seconds(debounceInterval), scheduler: DispatchQueue.main)
             .sink { [weak self] searchText in
                 print("\(Date())  performing search for: \(searchText)")
-                self?.networkManager.fetchSearchResults(for: searchText) { [weak self] result in
+                self?.networkManager.fetchSearchResults(endpoint: .geocoding(serchText: searchText)) { [weak self] result in
                     switch result {
                     case .success(let geocodingList):
                         self?.geocodingList = geocodingList
@@ -68,4 +68,3 @@ class GeoSearchViewModel: GeoSearchViewModelDelegate {
         debouncePublsher.send(searchString)
     }
 }
-

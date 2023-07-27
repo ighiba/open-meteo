@@ -11,8 +11,8 @@ typealias FetchSearchResult = Result<[Geocoding], FetchError>
 typealias FetchWeatherResult = Result<Weather, FetchError>
 
 protocol NetworkManager: AnyObject {
-    func fetchWeather(for geocoding: Geocoding, completion: @escaping (FetchWeatherResult) -> Void)
-    func fetchSearchResults(for searchString: String, completion: @escaping (FetchSearchResult) -> Void)
+    func fetchWeather(endpoint: API.Forecast, completion: @escaping (FetchWeatherResult) -> Void)
+    func fetchSearchResults(endpoint: API.Search, completion: @escaping (FetchSearchResult) -> Void)
 }
 
 class NetworkManagerImpl: NetworkManager {
@@ -22,41 +22,8 @@ class NetworkManagerImpl: NetworkManager {
     
     private let validCodes = 200...299
     
-    private let forecastDays = 10
-    
-    private let hourlyQuery = [
-        "temperature_2m",
-        "relativehumidity_2m",
-        "apparent_temperature",
-        "precipitation_probability",
-        "weathercode",
-        "windspeed_10m",
-        "winddirection_10m",
-        "is_day"
-    ]
-    
-    private let dailyQuery = [
-        "weathercode",
-        "temperature_2m_max",
-        "temperature_2m_min",
-        "sunrise",
-        "sunset",
-        "precipitation_sum",
-        "precipitation_probability_max"
-    ]
-    
-    func fetchWeather(for geocoding: Geocoding, completion: @escaping (FetchWeatherResult) -> Void) {
-        let forecastUrlSearch = URL(string: "https://api.open-meteo.com/v1/forecast")?.appending(params: [
-            "latitude"        : "\(geocoding.latitude)",
-            "longitude"       : "\(geocoding.longitude)",
-            "hourly"          : hourlyQuery.joined(separator: ","),
-            "daily"           : dailyQuery.joined(separator: ","),
-            "forecast_days"    : "\(forecastDays)",
-            "current_weather"  : "true",
-            "timezone"         : "GMT"
-        ])
-        
-        guard let url = forecastUrlSearch else {
+    func fetchWeather(endpoint: API.Forecast, completion: @escaping (FetchWeatherResult) -> Void) {
+        guard let url = endpoint.url else {
             completion(.failure(.urlError))
             return
         }
@@ -97,20 +64,8 @@ class NetworkManagerImpl: NetworkManager {
         }.resume()
     }
     
-    func fetchSearchResults(for searchString: String, completion: @escaping (FetchSearchResult) -> Void) {
-        guard let queryString = encodeQueryParameter(searchString) else {
-            completion(.failure(.stringQueryError))
-            return
-        }
-        
-        let geocodingUrlSearch = URL(string: "https://geocoding-api.open-meteo.com/v1/search")?.appending(params: [
-            "name"    : queryString,
-            "count"   : "10",
-            "language": Locale.current.languageCode ?? "en",
-            "format"  : "json"
-        ])
-        
-        guard let url = geocodingUrlSearch else {
+    func fetchSearchResults(endpoint: API.Search, completion: @escaping (FetchSearchResult) -> Void) {
+        guard let url = endpoint.url else {
             completion(.failure(.urlError))
             return
         }
@@ -150,11 +105,4 @@ class NetworkManagerImpl: NetworkManager {
             }
         }.resume()
     }
-    
-    private func encodeQueryParameter(_ parameter: String) -> String? {
-        let allowedCharacterSet = CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[] ").inverted
-        return parameter.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet)
-    }
 }
-
-

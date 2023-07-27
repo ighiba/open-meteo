@@ -158,7 +158,7 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     
     private func fetchWeatherPublisher(geocoding: Geocoding) -> AnyPublisher<Weather, FetchError> {
         return Future<Weather, FetchError> { [weak self] promise in
-            self?.networkManager.fetchWeather(for: geocoding) { result in
+            self?.networkManager.fetchWeather(endpoint: .standart(geocoding: geocoding)) { result in
                 switch result {
                 case .success(let weather):
                     promise(.success(weather))
