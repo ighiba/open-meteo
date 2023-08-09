@@ -490,9 +490,9 @@
 		C07C43032A6E87DE00E90193 /* Responses */ = {
 			isa = PBXGroup;
 			children = (
+				C07C434F2A73252B00E90193 /* DecodableResult.swift */,
 				C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */,
 				C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */,
-				C07C434F2A73252B00E90193 /* DecodableResult.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";

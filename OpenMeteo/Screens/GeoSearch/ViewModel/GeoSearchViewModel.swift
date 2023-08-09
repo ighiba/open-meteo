@@ -10,23 +10,16 @@ import Combine
 
 protocol GeoSearchViewModelDelegate: AnyObject {
     var geocodingList: [Geocoding] { get }
-    var geocodingListDidChangeHandler: (() -> Void)? { get set }
+    var geocodingListPublisher: Published<[Geocoding]>.Publisher { get }
     func clearGeocodingList()
     func searchTextDidChange(_ searchText: String)
     func searchButtonDidClick(with searchText: String)
 }
 
 class GeoSearchViewModel: GeoSearchViewModelDelegate {
-    
-    var geocodingList: [Geocoding] = [] {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.geocodingListDidChangeHandler?()
-            }
-        }
-    }
-    
-    var geocodingListDidChangeHandler: (() -> Void)?
+
+    @Published var geocodingList: [Geocoding] = []
+    var geocodingListPublisher: Published<[Geocoding]>.Publisher { $geocodingList }
     
     var networkManager: NetworkManager!
     private var searchCancellable: AnyCancellable?
@@ -48,10 +41,10 @@ class GeoSearchViewModel: GeoSearchViewModelDelegate {
 
         guard searchString.count > 2 else { return }
         
-        let debouncePublsher = PassthroughSubject<String, Never>()
+        let searchPublisher = PassthroughSubject<String, Never>()
         let debounceInterval: TimeInterval = withDebounce ? 0.5 : 0.0
         
-        searchCancellable = debouncePublsher
+        searchCancellable = searchPublisher
             .debounce(for: .seconds(debounceInterval), scheduler: DispatchQueue.main)
             .sink { [weak self] searchText in
                 print("\(Date())  performing search for: \(searchText)")
@@ -65,6 +58,6 @@ class GeoSearchViewModel: GeoSearchViewModelDelegate {
                 }
             }
         
-        debouncePublsher.send(searchString)
+        searchPublisher.send(searchString)
     }
 }

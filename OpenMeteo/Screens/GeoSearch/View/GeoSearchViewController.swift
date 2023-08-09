@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 protocol GeoWeatherListViewControllerDelegate {
     func isGeoAlreadyAdded(withId id: Geocoding.ID) -> Bool
@@ -18,13 +19,7 @@ class GeoSearchViewController: UISearchController {
     
     // MARK: - Properties
 
-    var viewModel: GeoSearchViewModelDelegate! {
-        didSet {
-            viewModel.geocodingListDidChangeHandler = { [weak self] in
-                self?.updateSnapshot()
-            }
-        }
-    }
+    var viewModel: GeoSearchViewModelDelegate!
     
     var dataSource: DataSource!
     
@@ -36,6 +31,8 @@ class GeoSearchViewController: UISearchController {
     }
     
     var resultsTableViewController = UITableViewController(style: .plain)
+    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     
@@ -70,8 +67,19 @@ class GeoSearchViewController: UISearchController {
         }, searchDidClickHandler: { [weak self] searchText in
             self?.viewModel.searchButtonDidClick(with: searchText)
         })
+        
+        configureBindings()
 
         updateSnapshot()
+    }
+    
+    private func configureBindings() {
+        viewModel.geocodingListPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateSnapshot()
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - Methods
