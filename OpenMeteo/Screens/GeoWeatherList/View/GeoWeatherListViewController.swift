@@ -6,24 +6,17 @@
 //
 
 import UIKit
+import Combine
 
 class GeoWeatherListViewController: UICollectionViewController {
     
     // MARK: - Properties
 
-    var viewModel: GeoWeatherListViewModelDelegate! {
-        didSet {
-            viewModel.geoWeatherListDidChangeHandler = { [weak self] geoWeatherList in
-                self?.updateSnapshot()
-            }
-            
-            viewModel.geoWeatherIdsDidChangeHandler = { [weak self] ids in
-                self?.updateSnapshot(reloading: ids)
-            }
-        }
-    }
+    var viewModel: GeoWeatherListViewModelDelegate!
 
     var dataSource: DataSource!
+    
+    private var cancellables = Set<AnyCancellable>()
     
     private let refreshControl = UIRefreshControl()
 
@@ -70,6 +63,7 @@ class GeoWeatherListViewController: UICollectionViewController {
             return self.configureCell(collectionView: collectionView, itemIdentifier: itemIdentifier, for: indexPath)
         }
 
+        configureBindings()
         updateSnapshot()
         viewModel.loadInitialData()
         viewModel.updateAllWeather()
@@ -134,6 +128,22 @@ class GeoWeatherListViewController: UICollectionViewController {
         let layout = UICollectionViewCompositionalLayout(section: section)
         
         return layout
+    }
+    
+    private func configureBindings() {
+        viewModel.geoWeatherListPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateSnapshot()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.idsThatChanged
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] ids in
+                self?.updateSnapshot(reloading: ids)
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - Methods

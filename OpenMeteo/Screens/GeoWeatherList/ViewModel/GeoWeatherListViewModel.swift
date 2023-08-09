@@ -12,8 +12,8 @@ private let currentLocationId: Int = -1
 
 protocol GeoWeatherListViewModelDelegate: AnyObject {
     var geoWeatherList: [GeoWeather] { get }
-    var geoWeatherListDidChangeHandler: (([GeoWeather]) -> Void)? { get set }
-    var geoWeatherIdsDidChangeHandler: (([GeoWeather.ID]) -> Void)? { get set }
+    var geoWeatherListPublisher: Published<[GeoWeather]>.Publisher { get }
+    var idsThatChanged: PassthroughSubject<[GeoWeather.ID], Never> { get }
     func loadInitialData()
     func updateAllWeather()
     func addGeoWeather(_ geoWeather: GeoWeather)
@@ -24,20 +24,15 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     
     // MARK: - Properties
 
-    var geoWeatherList: [GeoWeather] = [] {
-        didSet {
-            geoWeatherListDidChangeHandler?(geoWeatherList)
-        }
-    }
-    
-    var geoWeatherListDidChangeHandler: (([GeoWeather]) -> Void)?
-    var geoWeatherIdsDidChangeHandler: (([GeoWeather.ID]) -> Void)?
+    @Published var geoWeatherList: [GeoWeather] = []
+    var geoWeatherListPublisher: Published<[GeoWeather]>.Publisher { $geoWeatherList }
+    var idsThatChanged: PassthroughSubject<[GeoWeather.ID], Never> = PassthroughSubject()
     
     var networkManager: NetworkManager!
     var dataManager: DataManager!
     var locationManager: LocationManager!
     
-    private var weatherCancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Methods
     
@@ -81,8 +76,8 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     }
     
     func updateAllWeather() {
-        weatherCancellables.forEach { $0.cancel() }
-        weatherCancellables.removeAll()
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll()
         updateGeoWeatherList(geoWeatherList)
     }
     
@@ -137,16 +132,15 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
             } receiveValue: { _ in
                 
             }
-            .store(in: &weatherCancellables)
+            .store(in: &cancellables)
     }
     
     private func updateWeatherForGeoWeatherList(geoWeatherList: [GeoWeather]) -> AnyPublisher<Void, FetchError> {
         let fetchWeatherPublishers = geoWeatherList.map { geoWeather in
             fetchWeatherPublisher(geocoding: geoWeather.geocoding)
                 .map { [weak self] weather in
-                    print("updated weather for \(geoWeather.geocoding.name)")
                     geoWeather.weather = weather
-                    self?.geoWeatherIdsDidChangeHandler?([geoWeather.id])
+                    self?.idsThatChanged.send([geoWeather.id])
                 }
                 .eraseToAnyPublisher()
         }

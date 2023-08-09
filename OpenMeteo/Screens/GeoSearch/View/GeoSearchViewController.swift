@@ -69,7 +69,6 @@ class GeoSearchViewController: UISearchController {
         })
         
         configureBindings()
-
         updateSnapshot()
     }
     
