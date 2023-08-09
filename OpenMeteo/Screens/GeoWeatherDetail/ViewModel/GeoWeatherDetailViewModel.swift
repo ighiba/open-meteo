@@ -9,9 +9,9 @@ import Foundation
 import Combine
 
 protocol GeoWeatherDetailViewModelDelegate: AnyObject {
-    var geoWeather: GeoWeather! { get }
-    var geoWeatherDidChangeHandler: ((GeoWeather) -> Void)? { get set }
-    var networkErrorHasOccurredHandler: (() -> Void)? { get set }
+    var geoWeather: GeoWeather { get }
+    var geoWeatherPublisher: Published<GeoWeather>.Publisher { get }
+    var networkErrorPublisher: PassthroughSubject<FetchError, Never> { get }
     func updateWeather(forcedUpdate: Bool)
 }
 
@@ -19,26 +19,25 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     
     // MARK: - Properties
     
-    var geoWeather: GeoWeather! {
-        didSet {
-            geoWeatherDidChangeHandler?(geoWeather)
-        }
-    }
-    
-    var geoWeatherDidChangeHandler: ((GeoWeather) -> Void)?
-    var networkErrorHasOccurredHandler: (() -> Void)?
+    @Published var geoWeather: GeoWeather
+    var geoWeatherPublisher: Published<GeoWeather>.Publisher { $geoWeather }
+    var networkErrorPublisher: PassthroughSubject<FetchError, Never> = PassthroughSubject()
     
     var networkManager: NetworkManager!
     
-    var weatherCancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
+    init(geoWeather: GeoWeather) {
+        self.geoWeather = geoWeather
+    }
+
     // MARK: - Methods
     
     func updateWeather(forcedUpdate: Bool) {
         guard needUpdate(for: geoWeather.weather) || forcedUpdate else { return }
         
-        weatherCancellables.forEach { $0.cancel() }
-        weatherCancellables.removeAll()
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll()
         
         fetchWeatherPublisher(geocoding: geoWeather.geocoding)
             .sink { [weak self] completion in
@@ -47,14 +46,14 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
                     break
                 case .failure(let error):
                     print(error)
-                    self?.networkErrorHasOccurredHandler?()
+                    self?.networkErrorPublisher.send(error)
                 }
             } receiveValue: { [weak self] weather in
                 self?.geoWeather.weather = weather
                 guard let geoWeather = self?.geoWeather else { return }
-                self?.geoWeatherDidChangeHandler?(geoWeather)
+                self?.geoWeather = geoWeather
             }
-            .store(in: &weatherCancellables)
+            .store(in: &cancellables)
     }
     
     private func needUpdate(for weather: Weather?) -> Bool {

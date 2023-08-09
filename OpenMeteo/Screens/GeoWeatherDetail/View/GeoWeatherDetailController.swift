@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 class GeoWeatherDetailViewController: UIViewController {
     
@@ -17,19 +18,9 @@ class GeoWeatherDetailViewController: UIViewController {
     
     // MARK: - Properties
 
-    var viewModel: GeoWeatherDetailViewModelDelegate! {
-        didSet {
-            viewModel.geoWeatherDidChangeHandler = { [weak self] geoWeather in
-                self?.handleRefreshControlEnd()
-                self?.configureViews(with: geoWeather)
-            }
-            viewModel.networkErrorHasOccurredHandler = { [weak self] in
-                self?.handleRefreshControlEnd()
-                guard self?.viewModel.geoWeather.weather == nil else { return }
-                self?.showNetworkErrorView()
-            }
-        }
-    }
+    var viewModel: GeoWeatherDetailViewModelDelegate!
+    
+    private var cancellables = Set<AnyCancellable>()
     
     lazy var refreshControl = UIRefreshControl()
 
@@ -79,6 +70,7 @@ class GeoWeatherDetailViewController: UIViewController {
         let needForceUpdate = navigationBarConfiguration != .detail
         viewModel.updateWeather(forcedUpdate: needForceUpdate)
         
+        configureBindings()
         configureViews(with: viewModel.geoWeather)
     }
     
@@ -142,6 +134,26 @@ class GeoWeatherDetailViewController: UIViewController {
         
         self.navigationController?.navigationBar.standardAppearance = navBarAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = nil
+    }
+    
+    func configureBindings() {
+        viewModel.geoWeatherPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] geoWeather in
+                self?.handleRefreshControlEnd()
+                self?.configureViews(with: geoWeather)
+            }
+            .store(in: &cancellables)
+
+
+        viewModel.networkErrorPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.handleRefreshControlEnd()
+                guard self?.viewModel.geoWeather.weather == nil else { return }
+                self?.showNetworkErrorView()
+            }
+            .store(in: &cancellables)
     }
 
     private func configureViews(with geoWeather: GeoWeather) {
