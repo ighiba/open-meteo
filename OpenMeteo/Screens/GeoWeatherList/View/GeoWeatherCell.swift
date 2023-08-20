@@ -16,9 +16,7 @@ class GeoWeatherCell: UICollectionViewCell {
     static let height: CGFloat = 100
 
     private let horizontalOffset: CGFloat = 20
-    private var cornerRadius: CGFloat {
-        return Self.height / 5
-    }
+    private var cornerRadius: CGFloat { Self.height / 5 }
     
     var longTapEndedCallback: (() -> Void)?
     var deleteButtonTappedHandler: (() -> Void)?
@@ -42,18 +40,18 @@ class GeoWeatherCell: UICollectionViewCell {
     // MARK: - Layout
 
     func setViews() {
-        self.layer.cornerRadius = cornerRadius
+        layer.cornerRadius = cornerRadius
         backgroundGradientView.layer.cornerRadius = cornerRadius
         backgroundGradientView.layer.masksToBounds = true
         
         setBackgroundPlaceholder()
         
-        self.backgroundView = backgroundGradientView
+        backgroundView = backgroundGradientView
         backgroundGradientView.addSubview(geoNameLabel)
         backgroundGradientView.addSubview(weatherCodeDescriptionLabel)
         backgroundGradientView.addSubview(currentTemperatureLabel)
         backgroundGradientView.addSubview(todayMinMaxTemeperatureRangeContainer)
-        self.insertSubview(deleteItemButton, at: 0)
+        insertSubview(deleteItemButton, at: 0)
 
         backgroundGradientView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -125,11 +123,11 @@ class GeoWeatherCell: UICollectionViewCell {
     
     private func addGestureRecognizers() {
         longPress.minimumPressDuration = 0.1
-        self.addGestureRecognizer(longPress)
+        addGestureRecognizer(longPress)
     }
     
     private func removeGestureRecognizers() {
-        self.removeGestureRecognizer(longPress)
+        removeGestureRecognizer(longPress)
     }
     
     func startEditing(animated: Bool = true, completion: (() -> Void)? = nil) {
@@ -305,7 +303,6 @@ extension GeoWeatherCell {
     }
     
     @objc func deleteButtonTapped(_ sender: UIButton) {
-
         animateIsEditingEnd(duration: 0.1) { [weak self] in
             self?.isEditing = false
             self?.deleteButtonTappedHandler?()

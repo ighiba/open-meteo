@@ -10,14 +10,14 @@ import SnapKit
 
 final class PrecipitationSumContainer: ContainerView {
     
-    override var containerName: String {
-        return NSLocalizedString("Precipitation", comment: "")
-    }
+    override var containerName: String { NSLocalizedString("Precipitation", comment: "") }
+    
+    // MARK: - Methods
 
     override func setViews() {
         super.setViews()
-        self.addSubview(precipitationLabel)
-        self.addSubview(descriptionLabel)
+        addSubview(precipitationLabel)
+        addSubview(descriptionLabel)
 
         precipitationLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -61,6 +61,8 @@ final class PrecipitationSumContainer: ContainerView {
         
         return formatter.string(from: measurement)
     }
+    
+    // MARK: - Views
     
     private let precipitationLabel: UILabel = {
         let label = UILabel()

@@ -27,18 +27,16 @@ class BlurredButtonContainer: UIView {
     }
     
     func setViews() {
-        self.addSubview(blurEffectView)
-        self.addSubview(button)
+        addSubview(blurEffectView)
+        addSubview(button)
     }
     
     // MARK: - Views
     
     lazy var blurEffectView: UIVisualEffectView = {
         let blurEffectView = UIVisualEffectView.obtainBlur(style: .systemChromeMaterialDark, withAlpha: maxAlpha)
-        
         blurEffectView.frame = button.bounds
         blurEffectView.layer.cornerRadius = blurEffectView.bounds.width / 2
-        
         return blurEffectView
     }()
     

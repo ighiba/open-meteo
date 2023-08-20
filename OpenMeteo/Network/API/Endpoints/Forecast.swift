@@ -32,7 +32,7 @@ extension API {
     enum Forecast: Endpoint {
         case standart(geocoding: Geocoding)
         
-        var baseUrl: URL { return URL(string: "https://api.open-meteo.com/")! }
+        var baseUrl: URL { URL(string: "https://api.open-meteo.com")! }
         
         var path: String {
             var path = "/v1"

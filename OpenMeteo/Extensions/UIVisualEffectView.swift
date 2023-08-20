@@ -16,10 +16,10 @@ extension UIVisualEffectView {
         return blurEffectView
     }
     
-    func updateBlur(style: UIBlurEffect.Style, withAlpha alpha: CGFloat = 1.0) {
+    func updateBlur(style: UIBlurEffect.Style, withAlpha newAlpha: CGFloat = 1.0) {
         let blurEffect = UIBlurEffect(style: style)
-        self.effect = blurEffect
-        self.layer.masksToBounds = true
-        self.alpha = alpha
+        effect = blurEffect
+        layer.masksToBounds = true
+        alpha = newAlpha
     }
 }

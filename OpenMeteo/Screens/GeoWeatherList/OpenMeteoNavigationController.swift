@@ -8,7 +8,5 @@
 import UIKit
 
 class OpenMeteoNavigationController: UINavigationController {
-    override var childForStatusBarStyle: UIViewController? {
-        return topViewController
-    }
+    override var childForStatusBarStyle: UIViewController? { topViewController }
 }

@@ -11,6 +11,6 @@ extension GradientView {
     func setColors(weatherColorSet: WeatherColorSet) {
         let topColor = weatherColorSet.topColor
         let bottomColor = weatherColorSet.bottomColor
-        self.setColors(start: topColor, end: bottomColor)
+        setColors(start: topColor, end: bottomColor)
     }
 }

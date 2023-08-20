@@ -10,9 +10,7 @@ import SnapKit
 
 class ContainerView: UIView, StyledContainer {
     
-    var containerName: String {
-        return ""
-    }
+    var containerName: String { "" }
 
     private var blurEffectView = UIVisualEffectView.obtainBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
 
@@ -32,10 +30,10 @@ class ContainerView: UIView, StyledContainer {
     }
     
     func setViews() {
-        self.addSubview(blurEffectView)
-        self.addSubview(containerNameLabel)
+        addSubview(blurEffectView)
+        addSubview(containerNameLabel)
         
-        self.backgroundColor = .clear
+        backgroundColor = .clear
 
         blurEffectView.snp.makeConstraints { make in
             make.leading.equalToSuperview()
@@ -60,10 +58,8 @@ class ContainerView: UIView, StyledContainer {
 
     private let containerNameLabel: UILabel = {
         let label = UILabel()
-        
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         label.textColor = .white.withAlphaComponent(0.7)
-        
         return label
     }()
 }

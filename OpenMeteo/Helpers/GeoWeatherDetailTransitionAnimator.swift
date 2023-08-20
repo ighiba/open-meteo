@@ -142,7 +142,6 @@ class GeoWeatherDetailPopTransitionAnimator: TransitionAnimator {
               let toViewController = transitionContext.viewController(forKey: .to),
               let fromView = transitionContext.view(forKey: .from),
               let toView = transitionContext.view(forKey: .to)
-              
         else {
             transitionContext.completeTransition(false)
             return

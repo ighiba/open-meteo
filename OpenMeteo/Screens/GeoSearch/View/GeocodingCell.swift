@@ -24,7 +24,7 @@ final class GeocodingCell: UITableViewCell {
         let titleText = "\(geocoding.name)\(adminLocation)"
         let detailText = "\(geocoding.country)"
         
-        self.textLabel?.text = titleText
-        self.detailTextLabel?.text = detailText
+        textLabel?.text = titleText
+        detailTextLabel?.text = detailText
     }
 }

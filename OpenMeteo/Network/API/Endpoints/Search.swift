@@ -11,7 +11,7 @@ extension API {
     enum Search: Endpoint {
         case geocoding(serchText: String)
         
-        var baseUrl: URL { return URL(string: "https://geocoding-api.open-meteo.com")! }
+        var baseUrl: URL { URL(string: "https://geocoding-api.open-meteo.com")! }
         
         var path: String {
             var path = "/v1"

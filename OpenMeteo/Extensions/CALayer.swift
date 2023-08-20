@@ -49,8 +49,8 @@ extension CALayer {
             completion?(flag)
         })
         
-        self.opacity = Float(toValue)
-        self.add(opacityAnimation, forKey: "opacityAnimation")
+        opacity = Float(toValue)
+        add(opacityAnimation, forKey: "opacityAnimation")
     }
     
     func animateRotation(
@@ -61,7 +61,7 @@ extension CALayer {
         timingFunctionName: CAMediaTimingFunctionName = .easeInEaseOut,
         completion: ((Bool) -> Void)? = nil
     ) {
-        self.removeAnimation(forKey: "transform.rotation")
+        removeAnimation(forKey: "transform.rotation")
         let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
         
         rotationAnimation.fromValue = fromValue
@@ -73,6 +73,6 @@ extension CALayer {
             completion?(flag)
         })
         
-        self.add(rotationAnimation, forKey: "rotationAnimation")
+        add(rotationAnimation, forKey: "rotationAnimation")
     }
 }

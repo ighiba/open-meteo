@@ -40,9 +40,7 @@ class GeoWeatherDetailViewController: UIViewController {
         return self.view.convert(navigationBarRect, to: self.view).origin.y
     }()
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return statusBarStyle
-    }
+    override var preferredStatusBarStyle: UIStatusBarStyle { statusBarStyle }
     
     var statusBarStyle: UIStatusBarStyle = .darkContent {
         didSet {
@@ -53,8 +51,8 @@ class GeoWeatherDetailViewController: UIViewController {
     // MARK: - Layout
 
     override func loadView() {
-        self.view = backgroundView
-        self.view.addSubview(geoWeatherDetailScrollView)
+        view = backgroundView
+        view.addSubview(geoWeatherDetailScrollView)
         makeConstraintsForMainView(geoWeatherDetailScrollView)
     }
 
@@ -118,22 +116,22 @@ class GeoWeatherDetailViewController: UIViewController {
             rightBarButtonItem = UIBarButtonItem(customView: addButtonContainer!)
         }
         
-        self.navigationItem.leftBarButtonItem = leftBarButtonItem
-        self.navigationItem.rightBarButtonItem = rightBarButtonItem
-        self.navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.hidesBackButton = true
     }
     
     private func updateNavigationBarAppearance() {
-        self.navigationItem.largeTitleDisplayMode = .never
+        navigationItem.largeTitleDisplayMode = .never
     
-        self.navigationController?.navigationBar.backgroundColor = .clear
-        self.navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .white
         
         let navBarAppearance = UINavigationBarAppearance.configureTransparentBackgroundAppearance()
         navBarAppearance.backgroundColor = .white.withAlphaComponent(0.0)
         
-        self.navigationController?.navigationBar.standardAppearance = navBarAppearance
-        self.navigationController?.navigationBar.scrollEdgeAppearance = nil
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = nil
     }
     
     func configureBindings() {
@@ -194,7 +192,7 @@ class GeoWeatherDetailViewController: UIViewController {
         let transitionDuration = 0.3
         
         let errorView = GeoWeatherDetailNetworkErrorView.configureDefault()
-        self.view.addSubview(errorView)
+        view.addSubview(errorView)
         makeConstraintsForMainView(errorView)
         
         geoWeatherDetailScrollView.alpha = 1.0
@@ -229,15 +227,15 @@ extension GeoWeatherDetailViewController {
     @objc func closeButtonTapped(_ sender: UIButton) {
         switch navigationBarConfiguration {
         case .detail:
-            self.navigationController?.popViewController(animated: true)
+            navigationController?.popViewController(animated: true)
         case .add(_):
-            self.dismiss(animated: true)
+            dismiss(animated: true)
         }
     }
     
     @objc func addButtonTapped(_ sender: UIBarButtonItem) {
         geoWeatherDidAdd?(viewModel.geoWeather)
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
 }
 

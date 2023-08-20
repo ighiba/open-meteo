@@ -49,10 +49,10 @@ class TemperatureLabelSymboled: UIView {
     // MARK: - Layout
     
     func setViews() {
-        self.addSubview(symbolView)
-        self.addSubview(temperatureLabel)
+        addSubview(symbolView)
+        addSubview(temperatureLabel)
         
-        self.temperatureLabel.textAlignment = .left
+        temperatureLabel.textAlignment = .left
     }
     
     func makeConstraints(superview: UIView, toLeading: Bool) {

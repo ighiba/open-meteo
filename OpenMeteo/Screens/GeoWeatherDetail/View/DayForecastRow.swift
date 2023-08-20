@@ -37,10 +37,10 @@ class DayForecastRow: UIView {
     // MARK: - Layout
     
     private func setViews() {
-        self.addSubview(dateLabel)
-        self.addSubview(precipitationProbabilityLabel)
-        self.addSubview(weatherIconView)
-        self.addSubview(minMaxTemeperatureRangeContainer)
+        addSubview(dateLabel)
+        addSubview(precipitationProbabilityLabel)
+        addSubview(weatherIconView)
+        addSubview(minMaxTemeperatureRangeContainer)
         
         dateLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(verticalOffset)
@@ -94,11 +94,12 @@ class DayForecastRow: UIView {
 
     func configureDateLabel() -> UILabel {
         let label = UILabel()
+        
         label.text = "01.01.2000"
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = .white
         label.sizeToFit()
+        
         return label
     }
 }
-

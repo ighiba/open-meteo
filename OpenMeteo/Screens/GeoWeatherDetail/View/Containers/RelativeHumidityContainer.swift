@@ -10,13 +10,13 @@ import SnapKit
 
 final class RelativeHumidityContainer: ContainerView {
     
-    override var containerName: String {
-        return NSLocalizedString("Relative humidity", comment: "")
-    }
+    override var containerName: String { NSLocalizedString("Relative humidity", comment: "") }
+    
+    // MARK: - Methods
 
     override func setViews() {
         super.setViews()
-        self.addSubview(relativeHumidityLabel)
+        addSubview(relativeHumidityLabel)
 
         relativeHumidityLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -28,6 +28,8 @@ final class RelativeHumidityContainer: ContainerView {
         let relativeHumidityText = String(format: "%i", relativeHumidity) + "%"
         relativeHumidityLabel.setAttributedTextWithShadow(relativeHumidityText)
     }
+    
+    // MARK: - Views
     
     private let relativeHumidityLabel: UILabel = {
         let label = UILabel()

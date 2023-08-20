@@ -9,7 +9,7 @@ import Foundation
 
 extension URL {
     func appending(params: [String: String]) -> URL? {
-        var urlString = self.absoluteString
+        var urlString = absoluteString
         var isNotStartedAppending = true
         for (key, value) in params {
             let leadingSymbol = isNotStartedAppending ? "?" : "&"

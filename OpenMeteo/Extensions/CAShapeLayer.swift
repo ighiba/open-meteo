@@ -21,7 +21,7 @@ extension CAShapeLayer {
         timingFunctionName: CAMediaTimingFunctionName = .easeInEaseOut,
         completion: ((Bool) -> Void)? = nil
     ) {
-        self.removeAnimation(forKey: "path")
+        removeAnimation(forKey: "path")
         let pathAnimation = CABasicAnimation(keyPath: "path")
         
         pathAnimation.fromValue = fromValue
@@ -33,7 +33,7 @@ extension CAShapeLayer {
             completion?(flag)
         })
         
-        self.path = toValue
-        self.add(pathAnimation, forKey: "pathAnimation")
+        path = toValue
+        add(pathAnimation, forKey: "pathAnimation")
     }
 }

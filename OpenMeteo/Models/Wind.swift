@@ -10,6 +10,15 @@ import Foundation
 struct Wind {
     var speed: Float
     var direction: Int16
+    
+    init() {
+        self.init(speed: 0, direction: 0)
+    }
+    
+    init(speed: Float, direction: Int16) {
+        self.speed = speed
+        self.direction = direction
+    }
 }
 
 enum WindDirection {

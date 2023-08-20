@@ -22,6 +22,6 @@ class WeatherIconView: UIImageView {
     }
 
     func setIcon(for weatherType: WeatherType, isDay: Bool = true) {
-        self.image = WeatherIcon.obtainIcon(for: weatherType, isDay: isDay).image
+        image = WeatherIcon.obtainIcon(for: weatherType, isDay: isDay).image
     }
 }

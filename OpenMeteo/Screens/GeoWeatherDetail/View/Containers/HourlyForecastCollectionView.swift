@@ -13,7 +13,7 @@ class HourlyForecastCollectionView: UICollectionView, StyledContainer {
 
     var hourForecastList: [HourForecast] = [] {
         didSet {
-            self.reloadData()
+            reloadData()
         }
     }
     
@@ -26,8 +26,8 @@ class HourlyForecastCollectionView: UICollectionView, StyledContainer {
         layout.sectionInset = UIEdgeInsets(top: 0, left: verticalSectionInset, bottom: 0, right: verticalSectionInset)
         super.init(frame: .zero, collectionViewLayout: layout)
         
-        self.register(HourForecastCell.self, forCellWithReuseIdentifier: HourForecastCell.reuseIdentifier)
-        self.dataSource = self
+        register(HourForecastCell.self, forCellWithReuseIdentifier: HourForecastCell.reuseIdentifier)
+        dataSource = self
         setViews()
     }
 
@@ -40,19 +40,19 @@ class HourlyForecastCollectionView: UICollectionView, StyledContainer {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.layer.cornerRadius = 16
+        layer.cornerRadius = 16
         
         hideHorizontalScrollIndicator()
         hideVerticalScrollIndicator()
     }
 
     func setViews() {
-        self.backgroundColor = .clear
-        self.backgroundView = UIVisualEffectView.obtainBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
+        backgroundColor = .clear
+        backgroundView = UIVisualEffectView.obtainBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
     }
     
     func updateContainerStyle(with style: ContainerStyle) {
-        self.backgroundView = UIVisualEffectView.obtainBlur(style: style.blurStyle, withAlpha: style.alpha)
+        backgroundView = UIVisualEffectView.obtainBlur(style: style.blurStyle, withAlpha: style.alpha)
     }
     
     func configure(with hourForecastList: [HourForecast]) {
@@ -60,8 +60,8 @@ class HourlyForecastCollectionView: UICollectionView, StyledContainer {
     }
     
     func hideHorizontalScrollIndicator() {
-        guard self.showsHorizontalScrollIndicator else { return }
-        self.showsHorizontalScrollIndicator = false
+        guard showsHorizontalScrollIndicator else { return }
+        showsHorizontalScrollIndicator = false
         for subview in subviews {
             if let scrollView = subview as? UIScrollView {
                 scrollView.showsHorizontalScrollIndicator = false
@@ -70,8 +70,8 @@ class HourlyForecastCollectionView: UICollectionView, StyledContainer {
     }
     
     func hideVerticalScrollIndicator() {
-        guard self.showsVerticalScrollIndicator else { return }
-        self.showsVerticalScrollIndicator = false
+        guard showsVerticalScrollIndicator else { return }
+        showsVerticalScrollIndicator = false
         for subview in subviews {
             if let scrollView = subview as? UIScrollView {
                 scrollView.showsVerticalScrollIndicator = false

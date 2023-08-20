@@ -10,23 +10,21 @@ import SnapKit
 
 final class WindContainer: ContainerView {
     
-    override var containerName: String {
-        return NSLocalizedString("Wind", comment: "")
-    }
+    override var containerName: String { NSLocalizedString("Wind", comment: "") }
 
     override func setViews() {
         super.setViews()
-        self.addSubview(windSpeedLabel)
-        self.addSubview(windDirectionLabel)
+        addSubview(windSpeedLabel)
+        addSubview(windDirectionLabel)
 
         windSpeedLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(self.snp.centerY).offset(5)
+            make.bottom.equalTo(snp.centerY).offset(5)
         }
         
         windDirectionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(self.snp.centerY).offset(5)
+            make.top.equalTo(snp.centerY).offset(5)
         }
     }
     

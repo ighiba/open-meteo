@@ -20,10 +20,12 @@ class GeoWeatherDetailNetworkErrorView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Methods
+    
     func setViews() {
-        self.addSubview(noWifiIcon)
-        self.addSubview(errorTitleLabel)
-        self.addSubview(errorMessageLabel)
+        addSubview(noWifiIcon)
+        addSubview(errorTitleLabel)
+        addSubview(errorMessageLabel)
         
         noWifiIcon.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

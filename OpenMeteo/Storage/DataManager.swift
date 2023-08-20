@@ -31,10 +31,8 @@ class DataManagerImpl: DataManager {
 
     func save(_ geoModelList: [GeoModel]) {
         try? realm.write {
-            
             let model = GeoListModel()
             model.geoList.append(objectsIn: geoModelList)
-            
             realm.add(model, update: .modified)
         }
     }

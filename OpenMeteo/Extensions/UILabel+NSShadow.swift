@@ -16,20 +16,20 @@ extension UILabel {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = self.textAlignment
             
-        let attributedText = NSAttributedString(string: text,
+        let attributedString = NSAttributedString(string: text,
                                                attributes: [
-                                                    .font: self.font ?? UIFont.systemFont(ofSize: 18),
-                                                    .foregroundColor: self.textColor ?? .black,
+                                                    .font: font ?? UIFont.systemFont(ofSize: 18),
+                                                    .foregroundColor: textColor ?? .black,
                                                     .shadow: shadow,
                                                     .paragraphStyle: paragraphStyle
                                                ])
         
-        self.attributedText = attributedText
-        self.sizeToFit()
+        attributedText = attributedString
+        sizeToFit()
     }
     
     func attributedStringSetMultilineText() {
-        guard let attrText = self.attributedText else { return }
+        guard let attrText = attributedText else { return }
         let attributedString = NSMutableAttributedString(attributedString: attrText)
 
         let paragraphStyle = NSMutableParagraphStyle()
@@ -37,9 +37,9 @@ extension UILabel {
         let range = NSRange(location: 0, length: attributedString.length)
         attributedString.addAttributes([.paragraphStyle: paragraphStyle], range: range)
         
-        self.numberOfLines = 0
+        numberOfLines = 0
 
-        self.attributedText = attributedString
-        self.sizeToFit()
+        attributedText = attributedString
+        sizeToFit()
     }
 }

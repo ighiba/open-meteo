@@ -28,7 +28,7 @@ class HourForecastCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
+    // MARK: - Methods
     
     func setViews() {
         self.addSubview(hourLabel)
@@ -50,7 +50,7 @@ class HourForecastCell: UICollectionViewCell {
             make.width.equalTo(Self.width)
             make.height.equalTo(Self.width)
             make.centerX.equalToSuperview()
-            make.top.equalTo(self.snp.centerY).offset(-horizontalOffset)
+            make.top.equalTo(snp.centerY).offset(-horizontalOffset)
         }
         
         temperatureLabel.snp.makeConstraints { make in
@@ -104,5 +104,4 @@ class HourForecastCell: UICollectionViewCell {
     }()
     
     lazy var weatherIconView: WeatherIconView = WeatherIconView(weatherIcon: .sun)
-    
 }

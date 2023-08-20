@@ -23,18 +23,20 @@ class DailyForecastContainer: UIStackView, StyledContainer {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.layer.cornerRadius = 16
-        blurEffectView.layer.cornerRadius = self.layer.cornerRadius
+        layer.cornerRadius = 16
+        blurEffectView.layer.cornerRadius = layer.cornerRadius
     }
     
+    // MARK: - Methods
+    
     func setViews() {
-        self.axis = .vertical
-        self.distribution = .fillProportionally
-        self.alignment = .center
+        axis = .vertical
+        distribution = .fillProportionally
+        alignment = .center
         
-        self.backgroundColor = .clear
+        backgroundColor = .clear
         
-        self.insertSubview(blurEffectView, at: 0)
+        insertSubview(blurEffectView, at: 0)
         blurEffectView.snp.makeConstraints { make in
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
@@ -50,7 +52,7 @@ class DailyForecastContainer: UIStackView, StyledContainer {
     }
     
     func configure(with dayForecastList: [DayForecast]) {
-        self.arrangedSubviews.forEach { subview in
+        arrangedSubviews.forEach { subview in
             subview.removeFromSuperview()
         }
         addArrangedSubviews(with: dayForecastList)
@@ -59,7 +61,7 @@ class DailyForecastContainer: UIStackView, StyledContainer {
     private func addArrangedSubviews(with dayForecastList: [DayForecast]) {
         let forecastRows = obtainForecastContainerRows(dayForecastList)
         forecastRows.forEach { row in
-            self.addArrangedSubview(row)
+            addArrangedSubview(row)
             row.snp.makeConstraints { make in
                 make.width.equalToSuperview()
                 make.height.equalTo(DayForecastRow.height)
@@ -83,7 +85,7 @@ class DailyForecastContainer: UIStackView, StyledContainer {
     private func addSeparator() {
         let separator = UIView()
         separator.backgroundColor = .separator
-        self.addArrangedSubview(separator)
+        addArrangedSubview(separator)
         separator.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.9)
             make.height.equalTo(1)
@@ -101,7 +103,7 @@ class DailyForecastContainer: UIStackView, StyledContainer {
         let placeholderRowsRange = 0 ..< 7
         placeholderRowsRange.forEach { i in
             let row = UIView()
-            self.addArrangedSubview(row)
+            addArrangedSubview(row)
             makeConstraintsForRow(row)
             if i != placeholderRowsRange.last {
                 addSeparator()

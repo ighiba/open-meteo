@@ -26,7 +26,7 @@ class GeoSearchViewController: UISearchController {
     var geoWeatherListViewControllerDelegate: GeoWeatherListViewControllerDelegate?
     var searchBarDelegate: SearchBarDelegate! {
         didSet {
-            self.searchBar.delegate = searchBarDelegate
+            searchBar.delegate = searchBarDelegate
         }
     }
     
@@ -49,10 +49,10 @@ class GeoSearchViewController: UISearchController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.delegate = self
-        self.searchBar.placeholder = NSLocalizedString("Search", comment: "")
-        self.searchBar.searchBarStyle = .prominent
-        self.obscuresBackgroundDuringPresentation = false
+        delegate = self
+        searchBar.placeholder = NSLocalizedString("Search", comment: "")
+        searchBar.searchBarStyle = .prominent
+        obscuresBackgroundDuringPresentation = false
         
         resultsTableViewController.tableView.delegate = self
         resultsTableViewController.tableView.dataSource = dataSource
@@ -101,7 +101,7 @@ class GeoSearchViewController: UISearchController {
             self?.dismiss(animated: true)
         }
         
-        self.present(navigationController, animated: true)
+        present(navigationController, animated: true)
     }
     
     func geocoding(withIndexPath indexPath: IndexPath) -> Geocoding? {

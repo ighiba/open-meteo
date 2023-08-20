@@ -10,6 +10,8 @@ import SnapKit
 
 final class ApparentTemperatureContainer: ContainerView {
     
+    // MARK: - Properties
+    
     enum ApparentTemperatureType {
         case equal
         case warmer(Float)
@@ -38,14 +40,14 @@ final class ApparentTemperatureContainer: ContainerView {
         }
     }
     
-    override var containerName: String {
-        return NSLocalizedString("Feels like", comment: "")
-    }
+    override var containerName: String { NSLocalizedString("Feels like", comment: "") }
+    
+    // MARK: - Methods
 
     override func setViews() {
         super.setViews()
-        self.addSubview(temperatureLabel)
-        self.addSubview(descriptionLabel)
+        addSubview(temperatureLabel)
+        addSubview(descriptionLabel)
 
         temperatureLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -68,6 +70,8 @@ final class ApparentTemperatureContainer: ContainerView {
         temperatureLabel.setTemperature(apparentTemperature)
         descriptionLabel.setAttributedTextWithShadow(descriptionText)
     }
+    
+    // MARK: - Views
     
     private let temperatureLabel: TemperatureLabel = {
         let label = TemperatureLabel()
