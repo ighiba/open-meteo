@@ -224,7 +224,7 @@ class GeoWeatherListViewController: UICollectionViewController {
 
 extension GeoWeatherListViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard isEditing else { return }
+        guard !isEditing else { return }
         openDetail(for: indexPath)
     }
 
