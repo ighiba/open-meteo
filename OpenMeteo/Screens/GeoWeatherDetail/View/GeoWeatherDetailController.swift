@@ -44,7 +44,7 @@ class GeoWeatherDetailViewController: UIViewController {
     
     var statusBarStyle: UIStatusBarStyle = .darkContent {
         didSet {
-            self.setNeedsStatusBarAppearanceUpdate()
+            setNeedsStatusBarAppearanceUpdate()
         }
     }
     

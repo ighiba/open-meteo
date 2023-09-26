@@ -12,9 +12,7 @@ class TemperatureRangeContainer: UIView {
     var minTemperatureLabel: TemperatureLabelSymboled
     var maxTemperatureLabel: TemperatureLabelSymboled
     
-    var preferredWidth: CGFloat {
-        return minTemperatureLabel.prefferedWidth + maxTemperatureLabel.prefferedWidth
-    }
+    var preferredWidth: CGFloat { minTemperatureLabel.prefferedWidth + maxTemperatureLabel.prefferedWidth }
     
     init(withFontSize fontSize: CGFloat = 20) {
         self.minTemperatureLabel = TemperatureLabelSymboled(symbolName: "arrow.down", temperatureFontSize: fontSize)

@@ -45,10 +45,10 @@ class GradientView: UIView {
     }
     
     func setColors(start startColor: UIColor? = nil, end endColor: UIColor? = nil) {
-        if let startColor = startColor {
+        if let startColor {
             self.startColor = startColor
         }
-        if let endColor = endColor {
+        if let endColor {
             self.endColor = endColor
         }
     }

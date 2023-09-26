@@ -31,10 +31,10 @@ class HourForecastCell: UICollectionViewCell {
     // MARK: - Methods
     
     func setViews() {
-        self.addSubview(hourLabel)
-        self.addSubview(precipitationProbabilityLabel)
-        self.addSubview(temperatureLabel)
-        self.addSubview(weatherIconView)
+        addSubview(hourLabel)
+        addSubview(precipitationProbabilityLabel)
+        addSubview(temperatureLabel)
+        addSubview(weatherIconView)
         
         hourLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(horizontalOffset)

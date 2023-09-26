@@ -35,7 +35,7 @@ class GeoWeatherDetailView: UIScrollView {
     }
 
     private func setViews() {
-        self.addSubview(contentContainer)
+        addSubview(contentContainer)
 
         contentContainer.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -83,7 +83,7 @@ class GeoWeatherDetailView: UIScrollView {
             make.height.equalToSuperview()
         }
 
-        self.contentLayoutGuide.snp.makeConstraints { make in
+        contentLayoutGuide.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.bottom.equalTo(contentContainer.snp.bottom).offset(spacing)
             make.leading.equalToSuperview()

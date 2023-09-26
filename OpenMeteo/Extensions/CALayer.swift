@@ -37,7 +37,7 @@ extension CALayer {
         timingFunctionName: CAMediaTimingFunctionName = .easeInEaseOut,
         completion: ((Bool) -> Void)? = nil
     ) {
-        self.removeAnimation(forKey: "opacity")
+        removeAnimation(forKey: "opacity")
         let opacityAnimation = CABasicAnimation(keyPath: "opacity")
         
         opacityAnimation.fromValue = fromValue
