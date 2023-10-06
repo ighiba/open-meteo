@@ -17,7 +17,7 @@ extension CAShapeLayer {
         from fromValue: CGPath,
         to toValue: CGPath,
         duration: TimeInterval,
-        isRemovedOnCompletion: Bool = false,
+        removeOnCompletion: Bool = false,
         timingFunctionName: CAMediaTimingFunctionName = .easeInEaseOut,
         completion: ((Bool) -> Void)? = nil
     ) {
@@ -27,13 +27,11 @@ extension CAShapeLayer {
         pathAnimation.fromValue = fromValue
         pathAnimation.toValue = toValue
         pathAnimation.duration = duration
-        pathAnimation.isRemovedOnCompletion = isRemovedOnCompletion
+        pathAnimation.isRemovedOnCompletion = removeOnCompletion
         pathAnimation.timingFunction = CAMediaTimingFunction(name: timingFunctionName)
-        pathAnimation.delegate = CALayerAnimationDelegate(animation: pathAnimation, completion: { flag in
-            completion?(flag)
-        })
+        pathAnimation.delegate = CALayerAnimationDelegate(animation: pathAnimation, completion: completion)
         
         path = toValue
-        add(pathAnimation, forKey: "pathAnimation")
+        add(pathAnimation, forKey: "path")
     }
 }
