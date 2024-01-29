@@ -68,11 +68,11 @@ class GeoSearchViewController: UISearchController {
             self?.viewModel.searchButtonDidClick(with: searchText)
         })
         
-        configureBindings()
+        setupBindings()
         updateSnapshot()
     }
     
-    private func configureBindings() {
+    private func setupBindings() {
         viewModel.geocodingListPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -106,6 +106,7 @@ class GeoSearchViewController: UISearchController {
     
     func geocoding(withIndexPath indexPath: IndexPath) -> Geocoding? {
         guard indexPath.row <= viewModel.geocodingList.count else { return nil }
+        
         return viewModel.geocodingList[indexPath.row]
     }
 }

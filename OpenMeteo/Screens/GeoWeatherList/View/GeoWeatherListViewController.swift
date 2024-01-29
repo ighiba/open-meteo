@@ -47,20 +47,20 @@ class GeoWeatherListViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setNavigationBar()
+        setupNavigationBar()
         updateNavigationBarAppearance()
         
         collectionView.delegate = self
         navigationController?.delegate = self
         collectionView.refreshControl = UIRefreshControl()
-        collectionView.collectionViewLayout = createLayout()
+        collectionView.collectionViewLayout = configureLayout()
         collectionView.register(GeoWeatherCell.self, forCellWithReuseIdentifier: GeoWeatherCell.identifier)
         
         dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
             return self.configureCell(collectionView: collectionView, itemIdentifier: itemIdentifier, for: indexPath)
         }
 
-        configureBindings()
+        setupBindings()
         updateSnapshot()
         viewModel.loadInitialData()
         viewModel.updateAllWeather()
@@ -68,15 +68,17 @@ class GeoWeatherListViewController: UICollectionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         setNeedsStatusBarAppearanceUpdate()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         updateNavigationBarAppearance()
     }
     
-    private func setNavigationBar() {
+    private func setupNavigationBar() {
         let searchController = GeoSearchModuleAssembly.configureModule() as? GeoSearchViewController
         searchController?.geoWeatherListViewControllerDelegate = self
         navigationItem.searchController = searchController
@@ -101,7 +103,7 @@ class GeoWeatherListViewController: UICollectionViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
     }
     
-    private func createLayout() -> UICollectionViewLayout {
+    private func configureLayout() -> UICollectionViewLayout {
         let horizontalSpacing: CGFloat = 20
         let verticalSpacing: CGFloat = 15
         
@@ -129,7 +131,7 @@ class GeoWeatherListViewController: UICollectionViewController {
         return UICollectionViewCompositionalLayout(section: section)
     }
     
-    private func configureBindings() {
+    private func setupBindings() {
         viewModel.geoWeatherListPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -149,8 +151,10 @@ class GeoWeatherListViewController: UICollectionViewController {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        
         navigationItem.searchController?.searchBar.isUserInteractionEnabled = !editing
         isAnimatingEditing = true
+        
         if editing {
             beginListEditing()
         } else {
@@ -183,7 +187,8 @@ class GeoWeatherListViewController: UICollectionViewController {
 
     func openDetail(for indexPath: IndexPath) {
         guard let geoWeather = geoWeather(withIndexPath: indexPath),
-              let detailViewController = GeoWeatherDetailModuleAssembly.configureModule(with: geoWeather) as? GeoWeatherDetailViewController else {
+              let detailViewController = GeoWeatherDetailModuleAssembly.configureModule(with: geoWeather) as? GeoWeatherDetailViewController 
+        else {
             return
         }
 
@@ -197,14 +202,15 @@ class GeoWeatherListViewController: UICollectionViewController {
             self?.updateSnapshot(reloading: [geoWeather.id])
         }
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
         
-        self.navigationController?.pushViewController(detailViewController, animated: true)
+        navigationController?.pushViewController(detailViewController, animated: true)
     }
     
     func geoWeather(withIndexPath indexPath: IndexPath) -> GeoWeather? {
         guard viewModel.geoWeatherList.indices.contains(indexPath.row) else { return nil }
+        
         return viewModel.geoWeatherList[indexPath.row]
     }
 
@@ -216,6 +222,7 @@ class GeoWeatherListViewController: UICollectionViewController {
     
     func handleRefreshControlEnd() {
         guard isCollectionViewRefreshing else { return }
+        
         collectionView.refreshControl?.endRefreshing()
     }
 }
@@ -225,6 +232,7 @@ class GeoWeatherListViewController: UICollectionViewController {
 extension GeoWeatherListViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard !isEditing else { return }
+        
         openDetail(for: indexPath)
     }
 
@@ -250,13 +258,16 @@ extension GeoWeatherListViewController: GeoWeatherListViewControllerDelegate {
     
     func showDimmedView() {
         guard dimmedView == nil else { return }
+        
         dimmedView = UIView()
         dimmedView?.backgroundColor = .clear
         
         view.addSubview(dimmedView!)
         collectionView.isUserInteractionEnabled = false
+        
         guard let navigationController = navigationController else { return }
         navigationController.navigationBar.backgroundColor = .white
+        
         dimmedView?.snp.makeConstraints { make in
             make.top.equalTo(navigationController.navigationBar)
             make.bottom.equalToSuperview()
@@ -283,11 +294,13 @@ extension GeoWeatherListViewController: GeoWeatherListViewControllerDelegate {
 extension GeoWeatherListViewController: UINavigationControllerDelegate  {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         guard let initialPath = initialPathForAnimator else { return nil }
+        
         if operation == .push && isValidPushDestionation(from: fromVC, to: toVC) {
             return GeoWeatherDetailPushTransitionAnimator(initialPath: initialPath)
         } else if operation == .pop && isValidPopDestionation(from: fromVC, to: toVC) {
             return GeoWeatherDetailPopTransitionAnimator(finalPath: initialPath)
         }
+        
         return nil
     }
     

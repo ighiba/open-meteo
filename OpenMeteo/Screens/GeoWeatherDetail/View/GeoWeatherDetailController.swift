@@ -68,12 +68,13 @@ class GeoWeatherDetailViewController: UIViewController {
         let needForceUpdate = navigationBarConfiguration != .detail
         viewModel.updateWeather(forcedUpdate: needForceUpdate)
         
-        configureBindings()
+        setupBindings()
         configureViews(with: viewModel.geoWeather)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.statusBarStyle = .lightContent
         }
@@ -81,6 +82,7 @@ class GeoWeatherDetailViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         updateHandler?()
     }
     
@@ -95,6 +97,7 @@ class GeoWeatherDetailViewController: UIViewController {
     
     private func configureRefreshControl() {
         guard navigationBarConfiguration == .detail else { return }
+        
         geoWeatherDetailScrollView.refreshControl = refreshControl
         refreshControl.tintColor = .white
     }
@@ -134,7 +137,7 @@ class GeoWeatherDetailViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = nil
     }
     
-    func configureBindings() {
+    private func setupBindings() {
         viewModel.geoWeatherPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] geoWeather in
@@ -217,6 +220,7 @@ class GeoWeatherDetailViewController: UIViewController {
     
     private func handleRefreshControlEnd() {
         guard refreshControl.isRefreshing else { return }
+        
         refreshControl.endRefreshing()
     }
 }
