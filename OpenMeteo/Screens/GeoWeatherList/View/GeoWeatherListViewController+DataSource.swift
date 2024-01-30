@@ -39,11 +39,11 @@ extension GeoWeatherListViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GeoWeatherCell.identifier, for: indexPath)
         guard let weatherCell = cell as? GeoWeatherCell, let geoWeather = geoWeather(withId: itemIdentifier) else { return cell }
         
-        weatherCell.configure(with: geoWeather)
-        weatherCell.longTapEndedCallback = { [weak self] in 
+        weatherCell.setup(with: geoWeather)
+        weatherCell.longPressDidEndHandler = { [weak self] in 
             self?.openDetail(for: indexPath)
         }
-        weatherCell.deleteButtonTappedHandler = { [weak self] in
+        weatherCell.deleteButtonDidTapHandler = { [weak self] in
             let id = geoWeather.id
             self?.removeItem(withId: id)
         }

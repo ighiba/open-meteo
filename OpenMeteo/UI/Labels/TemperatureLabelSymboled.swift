@@ -53,6 +53,7 @@ class TemperatureLabelSymboled: UIView {
         addSubview(temperatureLabel)
         
         temperatureLabel.textAlignment = .left
+        temperatureLabel.font = UIFont.systemFont(ofSize: temperatureFontSize, weight: .light)
     }
     
     func makeConstraints(superview: UIView, toLeading: Bool) {

@@ -106,7 +106,7 @@ struct Weather {
         return []
     }
     
-    func obtainSkyType() -> SkyType {
+    func obtainCurrentSkyType() -> SkyType {
         let dayPhase = obtainCurrentDayPhase()
         switch currentWeatherType {
         case .clearSky:
