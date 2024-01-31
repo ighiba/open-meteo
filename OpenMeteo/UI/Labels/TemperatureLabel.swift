@@ -27,8 +27,11 @@ class TemperatureLabel: UILabel {
     
     func setTemperature(_ temperature: Float) {
         let temperatureUnit = showTemperatureUnit ? "C" : ""
-        let newText = String(format: "%.0f", temperature) + "°\(temperatureUnit)"
-        setAttributedTextWithShadow(newText)
+
+        let roundedTemperature = temperature.rounded(.toNearestOrEven)
+        let formattedTemperature = String(format: "%.0f", roundedTemperature).replacingOccurrences(of: "-0", with: "0")
+        let text = formattedTemperature + "°\(temperatureUnit)"
+        setAttributedTextWithShadow(text)
     }
     
     func setPlaceholder() {
