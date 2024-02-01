@@ -60,6 +60,7 @@
 		C093EF3D2A5835180076C4C3 /* SearchBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C093EF3C2A5835180076C4C3 /* SearchBarDelegate.swift */; };
 		C093EF3F2A5836C00076C4C3 /* UINavigationBarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C093EF3E2A5836C00076C4C3 /* UINavigationBarAppearance.swift */; };
 		C093EF412A58392E0076C4C3 /* DayPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C093EF402A58392E0076C4C3 /* DayPhase.swift */; };
+		C0ADCC8A2B6BE77D00C4A016 /* UIEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ADCC892B6BE77D00C4A016 /* UIEdgeInsets.swift */; };
 		C0E54D172A49A5DE003D00C8 /* DayForecastRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D162A49A5DE003D00C8 /* DayForecastRow.swift */; };
 		C0E54D192A49D993003D00C8 /* DayForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D182A49D993003D00C8 /* DayForecast.swift */; };
 		C0E54D1C2A49EB47003D00C8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E54D1B2A49EB47003D00C8 /* Date.swift */; };
@@ -171,6 +172,7 @@
 		C093EF3C2A5835180076C4C3 /* SearchBarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarDelegate.swift; sourceTree = "<group>"; };
 		C093EF3E2A5836C00076C4C3 /* UINavigationBarAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBarAppearance.swift; sourceTree = "<group>"; };
 		C093EF402A58392E0076C4C3 /* DayPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayPhase.swift; sourceTree = "<group>"; };
+		C0ADCC892B6BE77D00C4A016 /* UIEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEdgeInsets.swift; sourceTree = "<group>"; };
 		C0E54D162A49A5DE003D00C8 /* DayForecastRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayForecastRow.swift; sourceTree = "<group>"; };
 		C0E54D182A49D993003D00C8 /* DayForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayForecast.swift; sourceTree = "<group>"; };
 		C0E54D1B2A49EB47003D00C8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -555,6 +557,7 @@
 				C066C6BB2A4F738A004FDDE8 /* CAShapeLayer+Animations.swift */,
 				C0E54D1B2A49EB47003D00C8 /* Date.swift */,
 				C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */,
+				C0ADCC892B6BE77D00C4A016 /* UIEdgeInsets.swift */,
 				C093EF3E2A5836C00076C4C3 /* UINavigationBarAppearance.swift */,
 				C01D28CA2A5430B700412BCD /* URL.swift */,
 				C0E54D252A4B39B8003D00C8 /* UIVisualEffectView.swift */,
@@ -781,6 +784,7 @@
 				C0E54D392A4C5445003D00C8 /* SkyType.swift in Sources */,
 				C07C43502A73252B00E90193 /* DecodableResult.swift in Sources */,
 				C04E2C572A473FD600A5B1E8 /* GeoWeatherListViewController.swift in Sources */,
+				C0ADCC8A2B6BE77D00C4A016 /* UIEdgeInsets.swift in Sources */,
 				C08D19652A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift in Sources */,
 				C04E2C562A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift in Sources */,
 				C0E54D262A4B39B8003D00C8 /* UIVisualEffectView.swift in Sources */,

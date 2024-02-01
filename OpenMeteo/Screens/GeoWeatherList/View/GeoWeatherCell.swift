@@ -20,6 +20,7 @@ class GeoWeatherCell: UICollectionViewCell {
     private let editingBackgroundViewInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 60)
     
     private(set) var isEditing = false
+    private var isLastTouchInBounds = true
     
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture))
     
@@ -103,7 +104,7 @@ class GeoWeatherCell: UICollectionViewCell {
         geoNameLabel.text = geoWeather.geocoding.name
         
         if let weather = geoWeather.weather {
-            updateBackgroundView(forWeather: weather)
+            updateBackground(forWeather: weather)
             weatherCodeDescriptionLabel.setAttributedTextWithShadow(weather.currentWeatherCode.localizedDescription)
             currentTemperatureLabel.setTemperature(weather.obtainForecastForCurrentHour().temperature)
             todayMinMaxTemeperatureRangeContainer.setTemperature(
@@ -118,7 +119,7 @@ class GeoWeatherCell: UICollectionViewCell {
         }
     }
 
-    func updateBackgroundView(forWeather weather: Weather) {
+    func updateBackground(forWeather weather: Weather) {
         let skyType = weather.obtainCurrentSkyType()
         let colorSet = WeatherColorSet.obtainColorSet(fromSkyType: skyType)
         backgroundGradientView.setColors(weatherColorSet: colorSet)
@@ -132,7 +133,7 @@ class GeoWeatherCell: UICollectionViewCell {
         isEditing = true
         
         if animated {
-            animateIsEditingBegin(completion: completion)
+            animateEditingBegan(completion: completion)
         } else {
             backgroundGradientView.isUserInteractionEnabled = false
             longPressGesture.isEnabled = false
@@ -149,7 +150,7 @@ class GeoWeatherCell: UICollectionViewCell {
     
     func endEditing(animated: Bool = true, completion: (() -> Void)? = nil) {
         if animated {
-            animateIsEditingEnd() { [weak self] in
+            animateEditingEnded() { [weak self] in
                 self?.isEditing = false
                 completion?()
             }
@@ -172,7 +173,7 @@ class GeoWeatherCell: UICollectionViewCell {
     
     // MARK: - Animations
     
-    private func animateIsEditingBegin(duration: TimeInterval = 0.2, completion: (() -> Void)? = nil) {
+    private func animateEditingBegan(duration: TimeInterval = 0.2, completion: (() -> Void)? = nil) {
         backgroundGradientView.isUserInteractionEnabled = false
         longPressGesture.isEnabled = false
         deleteItemButton.isHidden = false
@@ -196,7 +197,7 @@ class GeoWeatherCell: UICollectionViewCell {
         deleteItemButton.layer.animateRotation(from: -CGFloat.pi * 0.5, to: 0, duration: duration)
     }
     
-    private func animateIsEditingEnd(duration: TimeInterval = 0.2, completion: (() -> Void)? = nil) {
+    private func animateEditingEnded(duration: TimeInterval = 0.2, completion: (() -> Void)? = nil) {
         sendSubviewToBack(deleteItemButton)
         
         var endInsets = editingBackgroundViewInsets
@@ -231,13 +232,13 @@ class GeoWeatherCell: UICollectionViewCell {
         }
     }
     
-    private func amimateLongPressEnded(duration: TimeInterval = 0.05) {
+    private func amimateLongPressEnded(duration: TimeInterval = 0.05, completion: (() -> Void)? = nil) {
         let options: UIView.AnimationOptions = [.curveEaseIn, .beginFromCurrentState]
         
         UIView.animate(withDuration: duration, delay: 0, options: options, animations: { [weak self] in
             self?.transform = .identity
-        }) { [weak self] _ in
-            self?.longPressDidEndHandler?()
+        }) { _ in
+            completion?()
         }
     }
     
@@ -290,7 +291,7 @@ class GeoWeatherCell: UICollectionViewCell {
         let symbolConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30))
         let image = UIImage(systemName: "minus.circle.fill", withConfiguration: symbolConfiguration)
         button.setImage(image, for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: -20, left: -20, bottom: -20, right: -20)
+        button.imageEdgeInsets = UIEdgeInsets(-20)
         button.tintColor = .red
         button.isHidden = true
         
@@ -306,15 +307,36 @@ extension GeoWeatherCell {
     @objc func handleLongPressGesture(_ sender: UILongPressGestureRecognizer) {
         guard !isEditing else { return }
         
+        let blindSpotInsetValue: CGFloat = 5
+        let blindSpotInsets = isLastTouchInBounds ? UIEdgeInsets(blindSpotInsetValue * -1) : UIEdgeInsets(blindSpotInsetValue)
+        
+        let touchLocation = sender.location(in: self)
+        let isTouchInBounds = bounds.inset(by: blindSpotInsets).contains(touchLocation)
+        
         if sender.state == .began {
             animateLongPressBegan()
         } else if sender.state == .ended {
-            amimateLongPressEnded()
+            amimateLongPressEnded { [weak self] in
+                if isTouchInBounds {
+                    self?.longPressDidEndHandler?()
+                }
+            }
+        } else if sender.state == .changed {
+            let touchMovedInside = isTouchInBounds && !isLastTouchInBounds
+            let touchMovedOutside = !isTouchInBounds && isLastTouchInBounds
+            
+            if touchMovedInside {
+                animateLongPressBegan()
+            } else if touchMovedOutside {
+                amimateLongPressEnded()
+            }
         }
+        
+        isLastTouchInBounds = isTouchInBounds
     }
     
     @objc func deleteButtonDidTap(_ sender: UIButton) {
-        animateIsEditingEnd(duration: 0.1) { [weak self] in
+        animateEditingEnded(duration: 0.1) { [weak self] in
             self?.isEditing = false
             self?.deleteButtonDidTapHandler?()
         }
