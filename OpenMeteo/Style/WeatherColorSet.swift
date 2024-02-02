@@ -9,14 +9,6 @@ import UIKit
 
 struct WeatherColorSet {
     
-    var topColor: UIColor
-    var bottomColor: UIColor
-    
-    private init(top topColor: WeatherColor, bottom bottomColor: WeatherColor) {
-        self.topColor = topColor.uiColor
-        self.bottomColor = bottomColor.uiColor
-    }
-    
     static let clearSky = WeatherColorSet(top: .clearSkyTop, bottom: .clearSkyBottom)
     static let sunriseSky = WeatherColorSet(top: .sunriseTop, bottom: .sunriseBottom)
     static let sunsetSky = WeatherColorSet(top: .sunsetTop, bottom: .sunsetBottom)
@@ -25,4 +17,12 @@ struct WeatherColorSet {
     static let partiallyCloudyDaySky = WeatherColorSet(top: .partiallyCloudyDayTop, bottom: .partiallyCloudyDayBottom)
     static let partiallyCloudyNightSky = WeatherColorSet(top: .partiallyCloudyNightTop, bottom: .partiallyCloudyNightBottom)
     static let midnightSky = WeatherColorSet(top: .midnightTop, bottom: .midnightBottom)
+    
+    var topColor: UIColor
+    var bottomColor: UIColor
+    
+    private init(top topColor: WeatherColor, bottom bottomColor: WeatherColor) {
+        self.topColor = topColor.uiColor
+        self.bottomColor = bottomColor.uiColor
+    }
 }

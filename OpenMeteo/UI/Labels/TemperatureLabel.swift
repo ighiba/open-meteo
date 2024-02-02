@@ -11,19 +11,23 @@ class TemperatureLabel: UILabel {
     
     private var showTemperatureUnit: Bool
     
-    init(_ temperature: Float? = nil, withTemperatureUnit: Bool = false) {
-        self.showTemperatureUnit = withTemperatureUnit
+    // MARK: - Init
+    
+    init(_ temperature: Float? = nil, showTemperatureUnit: Bool = false) {
+        self.showTemperatureUnit = showTemperatureUnit
         super.init(frame: .zero)
         if let temperature = temperature {
-            setTemperature(temperature)
+            self.setTemperature(temperature)
         } else {
-            setPlaceholder()
+            self.setPlaceholder()
         }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Methods
     
     func setTemperature(_ temperature: Float) {
         let temperatureUnit = showTemperatureUnit ? "C" : ""

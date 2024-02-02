@@ -9,8 +9,6 @@ import UIKit
 
 struct WeatherIcon {
     
-    var image: UIImage
-    
     static let sun = WeatherIcon(UIImage(named: "sun")!)
     static let moon = WeatherIcon(UIImage(named: "moon")!)
 
@@ -29,6 +27,8 @@ struct WeatherIcon {
     static let snow = WeatherIcon(UIImage(named: "snow")!)
     
     static let thunderstorm = WeatherIcon(UIImage(named: "thunder")!)
+    
+    var image: UIImage
     
     private init(_ image: UIImage) {
         self.image = image

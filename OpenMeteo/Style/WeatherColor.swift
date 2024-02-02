@@ -9,12 +9,6 @@ import UIKit
 
 struct WeatherColor {
     
-    let uiColor: UIColor
-    
-    private init(_ color: UIColor) {
-        self.uiColor = color
-    }
-    
     static let clearSkyTop               = WeatherColor(UIColor(named: "ClearSky-top")!)
     static let clearSkyBottom            = WeatherColor(UIColor(named: "ClearSky-bottom")!)
     
@@ -38,4 +32,10 @@ struct WeatherColor {
     
     static let midnightTop               = WeatherColor(UIColor(named: "Midnight-top")!)
     static let midnightBottom            = WeatherColor(UIColor(named: "Midnight-bottom")!)
+    
+    let uiColor: UIColor
+    
+    private init(_ color: UIColor) {
+        self.uiColor = color
+    }
 }
