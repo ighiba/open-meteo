@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchBarDelegate: NSObject, UISearchBarDelegate {
+final class SearchBarDelegate: NSObject, UISearchBarDelegate {
     
     var textDidChangeHandler: ((String) -> Void)?
     var searchDidClickHandler: ((String) -> Void)?
@@ -19,6 +19,7 @@ class SearchBarDelegate: NSObject, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+        
         searchDidClickHandler?(searchText)
     }
     
@@ -26,4 +27,3 @@ class SearchBarDelegate: NSObject, UISearchBarDelegate {
         textDidChangeHandler?(searchText)
     }
 }
-

@@ -7,9 +7,10 @@
 
 import QuartzCore
 
-class CALayerAnimationDelegate: NSObject, CAAnimationDelegate {
+final class CALayerAnimationDelegate: NSObject, CAAnimationDelegate {
     
     private let keyPath: String?
+    
     var completion: ((Bool) -> Void)?
     
     init(animation: CAAnimation, completion: ((Bool) -> Void)?) {
@@ -25,7 +26,7 @@ class CALayerAnimationDelegate: NSObject, CAAnimationDelegate {
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if let anim = anim as? CABasicAnimation {
-            guard anim.keyPath == self.keyPath else { return }
+            guard anim.keyPath == keyPath else { return }
         }
         
         if let completion = self.completion {

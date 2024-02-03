@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-class LocationManager: NSObject, CLLocationManagerDelegate {
+final class LocationManager: NSObject, CLLocationManagerDelegate {
     
     let manager = CLLocationManager()
     
@@ -17,7 +17,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     init(locationUpdateHandler: ((Float, Float) -> Void)? = nil) {
         self.locationUpdateHandler = locationUpdateHandler
         super.init()
-        manager.delegate = self
+        self.manager.delegate = self
     }
     
     func requestWhenInUseAuthorization() {
