@@ -32,7 +32,7 @@
 		C04E2C6C2A47773B00A5B1E8 /* GeocodingJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */; };
 		C04E2C6E2A477B0B00A5B1E8 /* GeocodingJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C6D2A477B0B00A5B1E8 /* GeocodingJSONTests.swift */; };
 		C066C6B82A4F66D3004FDDE8 /* CALayerAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6B72A4F66D3004FDDE8 /* CALayerAnimationDelegate.swift */; };
-		C066C6BA2A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6B92A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift */; };
+		C066C6BA2A4F6FE6004FDDE8 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6B92A4F6FE6004FDDE8 /* TransitionAnimator.swift */; };
 		C066C6BC2A4F738A004FDDE8 /* CAShapeLayer+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6BB2A4F738A004FDDE8 /* CAShapeLayer+Animations.swift */; };
 		C066C6C32A50961D004FDDE8 /* BlurredButtonContaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6C22A50961D004FDDE8 /* BlurredButtonContaner.swift */; };
 		C066C6C52A50CD45004FDDE8 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6C42A50CD45004FDDE8 /* ContainerView.swift */; };
@@ -143,7 +143,7 @@
 		C04E2C6B2A47773B00A5B1E8 /* GeocodingJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingJSON.swift; sourceTree = "<group>"; };
 		C04E2C6D2A477B0B00A5B1E8 /* GeocodingJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingJSONTests.swift; sourceTree = "<group>"; };
 		C066C6B72A4F66D3004FDDE8 /* CALayerAnimationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayerAnimationDelegate.swift; sourceTree = "<group>"; };
-		C066C6B92A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherDetailTransitionAnimator.swift; sourceTree = "<group>"; };
+		C066C6B92A4F6FE6004FDDE8 /* TransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
 		C066C6BB2A4F738A004FDDE8 /* CAShapeLayer+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAShapeLayer+Animations.swift"; sourceTree = "<group>"; };
 		C066C6C12A5039D3004FDDE8 /* OpenMeteo.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = OpenMeteo.xctestplan; path = OpenMeteo/OpenMeteo.xctestplan; sourceTree = "<group>"; };
 		C066C6C22A50961D004FDDE8 /* BlurredButtonContaner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurredButtonContaner.swift; sourceTree = "<group>"; };
@@ -360,7 +360,7 @@
 				C066C6B72A4F66D3004FDDE8 /* CALayerAnimationDelegate.swift */,
 				C0E6CA392A56D6EF00D6695B /* LocationManager.swift */,
 				C093EF3C2A5835180076C4C3 /* SearchBarDelegate.swift */,
-				C066C6B92A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift */,
+				C066C6B92A4F6FE6004FDDE8 /* TransitionAnimator.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -776,7 +776,7 @@
 				C01D28C92A53738E00412BCD /* NetworkManager.swift in Sources */,
 				C0EC33A42A4DF9D500EAC0D6 /* StyledContainer.swift in Sources */,
 				C04E2C6C2A47773B00A5B1E8 /* GeocodingJSON.swift in Sources */,
-				C066C6BA2A4F6FE6004FDDE8 /* GeoWeatherDetailTransitionAnimator.swift in Sources */,
+				C066C6BA2A4F6FE6004FDDE8 /* TransitionAnimator.swift in Sources */,
 				C093EF3F2A5836C00076C4C3 /* UINavigationBarAppearance.swift in Sources */,
 				C066C6E22A523381004FDDE8 /* GeoSearchViewModel.swift in Sources */,
 				C066C6CA2A50E01E004FDDE8 /* WindContainer.swift in Sources */,
