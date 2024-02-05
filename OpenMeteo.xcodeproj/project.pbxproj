@@ -13,6 +13,8 @@
 		C01D28CB2A5430B700412BCD /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D28CA2A5430B700412BCD /* URL.swift */; };
 		C01D28CD2A5434C600412BCD /* FetchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D28CC2A5434C600412BCD /* FetchError.swift */; };
 		C02DE7042A65678300D38A31 /* Array+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02DE7032A65678300D38A31 /* Array+Identifiable.swift */; };
+		C03E36972B713A5400635AEC /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E36962B713A5400635AEC /* DateFormatter.swift */; };
+		C03E36992B713A6900635AEC /* ISO8601DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E36982B713A6900635AEC /* ISO8601DateFormatter.swift */; };
 		C04E2C0A2A473EAA00A5B1E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C092A473EAA00A5B1E8 /* AppDelegate.swift */; };
 		C04E2C0C2A473EAA00A5B1E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C0B2A473EAA00A5B1E8 /* SceneDelegate.swift */; };
 		C04E2C162A473EAA00A5B1E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C04E2C152A473EAA00A5B1E8 /* Assets.xcassets */; };
@@ -120,6 +122,8 @@
 		C01D28CA2A5430B700412BCD /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		C01D28CC2A5434C600412BCD /* FetchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchError.swift; sourceTree = "<group>"; };
 		C02DE7032A65678300D38A31 /* Array+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Identifiable.swift"; sourceTree = "<group>"; };
+		C03E36962B713A5400635AEC /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		C03E36982B713A6900635AEC /* ISO8601DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO8601DateFormatter.swift; sourceTree = "<group>"; };
 		C04E2C062A473EAA00A5B1E8 /* OpenMeteo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenMeteo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C04E2C092A473EAA00A5B1E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C04E2C0B2A473EAA00A5B1E8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -556,6 +560,8 @@
 				C0E6CA372A55FEAA00D6695B /* CALayer+Animations.swift */,
 				C066C6BB2A4F738A004FDDE8 /* CAShapeLayer+Animations.swift */,
 				C0E54D1B2A49EB47003D00C8 /* Date.swift */,
+				C03E36962B713A5400635AEC /* DateFormatter.swift */,
+				C03E36982B713A6900635AEC /* ISO8601DateFormatter.swift */,
 				C0E54D4B2A4DD497003D00C8 /* UILabel+NSShadow.swift */,
 				C0ADCC892B6BE77D00C4A016 /* UIEdgeInsets.swift */,
 				C093EF3E2A5836C00076C4C3 /* UINavigationBarAppearance.swift */,
@@ -797,6 +803,7 @@
 				C07C434E2A72AE2400E90193 /* Search.swift in Sources */,
 				C0E6CA3A2A56D6EF00D6695B /* LocationManager.swift in Sources */,
 				C0E6CA362A55A22500D6695B /* DataManager.swift in Sources */,
+				C03E36972B713A5400635AEC /* DateFormatter.swift in Sources */,
 				C066C6DF2A523381004FDDE8 /* GeoSearchModuleAssembly.swift in Sources */,
 				C08D19732A48F05B00834A21 /* TemperatureLabel.swift in Sources */,
 				C0E6CA3C2A56DCAB00D6695B /* GeoListModel.swift in Sources */,
@@ -830,6 +837,7 @@
 				C0E54D352A4B8792003D00C8 /* GradientView+WeatherColorSet.swift in Sources */,
 				C08D196C2A48BAF300834A21 /* GeoWeatherDetailController.swift in Sources */,
 				C066C6C72A50CD90004FDDE8 /* Wind.swift in Sources */,
+				C03E36992B713A6900635AEC /* ISO8601DateFormatter.swift in Sources */,
 				C0E54D332A4B8768003D00C8 /* GradientView.swift in Sources */,
 				C066C6B82A4F66D3004FDDE8 /* CALayerAnimationDelegate.swift in Sources */,
 				C08D196B2A48BAF300834A21 /* GeoWeatherDetailModuleAssembly.swift in Sources */,
