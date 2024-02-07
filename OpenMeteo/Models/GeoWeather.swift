@@ -7,7 +7,7 @@
 
 import Foundation
 
-class GeoWeather: Identifiable {
+final class GeoWeather: Identifiable {
     var id: Int
     var geocoding: Geocoding
     var weather: Weather?

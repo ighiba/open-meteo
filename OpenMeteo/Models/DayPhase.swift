@@ -15,10 +15,14 @@ enum DayPhase {
     
     func obtainClearSkyType() -> SkyType {
         switch self {
-        case .day:     return .day
-        case .night:   return .night
-        case .sunrise: return .sunrise
-        case .sunset:  return .sunset
+        case .day:
+            return .day
+        case .night:
+            return .night
+        case .sunrise:
+            return .sunrise
+        case .sunset:
+            return .sunset
         }
     }
 }

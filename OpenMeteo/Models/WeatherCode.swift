@@ -103,7 +103,8 @@ enum WeatherCode: Int16 {
 extension WeatherCode {
     func obtainWeatherType() -> WeatherType {
         switch self {
-        case .clearSky, .mainlyClear:
+        case .clearSky,
+             .mainlyClear:
             return .clearSky
             
         case .partlyCloudy:
@@ -112,7 +113,8 @@ extension WeatherCode {
         case .overcast:
             return .overcast
             
-        case .fog, .depositingRimeFog:
+        case .fog,
+             .depositingRimeFog:
             return .fog
             
         case .drizzleLight,
