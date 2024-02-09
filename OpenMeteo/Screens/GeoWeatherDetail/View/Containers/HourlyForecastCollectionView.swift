@@ -48,11 +48,11 @@ class HourlyForecastCollectionView: UICollectionView, StyledContainer {
 
     func setViews() {
         backgroundColor = .clear
-        backgroundView = UIVisualEffectView.obtainBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
+        backgroundView = UIVisualEffectView.configureBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
     }
     
     func updateContainerStyle(with style: ContainerStyle) {
-        backgroundView = UIVisualEffectView.obtainBlur(style: style.blurStyle, withAlpha: style.alpha)
+        backgroundView = UIVisualEffectView.configureBlur(style: style.blurStyle, withAlpha: style.alpha)
     }
     
     func configure(with hourForecastList: [HourForecast]) {

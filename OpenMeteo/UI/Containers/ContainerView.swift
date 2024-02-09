@@ -12,7 +12,7 @@ class ContainerView: UIView, StyledContainer {
     
     var containerName: String { "" }
 
-    private var blurEffectView = UIVisualEffectView.obtainBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
+    private var blurEffectView = UIVisualEffectView.configureBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
 
     init() {
         super.init(frame: .zero)

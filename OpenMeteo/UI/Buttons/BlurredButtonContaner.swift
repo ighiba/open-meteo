@@ -34,7 +34,7 @@ class BlurredButtonContainer: UIView {
     // MARK: - Views
     
     lazy var blurEffectView: UIVisualEffectView = {
-        let blurEffectView = UIVisualEffectView.obtainBlur(style: .systemChromeMaterialDark, withAlpha: maxAlpha)
+        let blurEffectView = UIVisualEffectView.configureBlur(style: .systemChromeMaterialDark, withAlpha: maxAlpha)
         blurEffectView.frame = button.bounds
         blurEffectView.layer.cornerRadius = blurEffectView.bounds.width / 2
         return blurEffectView
