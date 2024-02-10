@@ -110,7 +110,7 @@ class GeoWeatherDetailViewController: UIViewController {
         
         switch navigationBarConfiguration {
         case .detail:
-            closeButtonContainer?.setBlurAlpha(0.0)
+            closeButtonContainer?.setBlurAlpha(0)
             rightBarButtonItem = UIBarButtonItem(customView: closeButtonContainer!)
         case .add(let isAlreadyAdded):
             leftBarButtonItem = UIBarButtonItem(customView: closeButtonContainer!)
@@ -248,12 +248,14 @@ extension GeoWeatherDetailViewController {
 extension GeoWeatherDetailViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y + navigationBarOffset
-        if offsetY < 0 {
-            closeButtonContainer?.animateHideButtonBackground()
-            addButtonContainer?.animateHideButtonBackground()
+        let shouldHideButtonsBackground = offsetY < 0
+        
+        if shouldHideButtonsBackground {
+            closeButtonContainer?.transitionToHiddenBackground()
+            addButtonContainer?.transitionToHiddenBackground()
         } else {
-            closeButtonContainer?.animateShowButtonBackground()
-            addButtonContainer?.animateShowButtonBackground()
+            closeButtonContainer?.transitionToRevealedBackground()
+            addButtonContainer?.transitionToRevealedBackground()
         }
     }
     
