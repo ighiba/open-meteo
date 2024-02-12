@@ -40,12 +40,12 @@ final class ApparentTemperatureContainer: ContainerView {
         }
     }
     
-    override var containerName: String { NSLocalizedString("Feels like", comment: "") }
+    override var title: String { NSLocalizedString("Feels like", comment: "") }
     
     // MARK: - Methods
 
-    override func setViews() {
-        super.setViews()
+    override func setupViews() {
+        super.setupViews()
         addSubview(temperatureLabel)
         addSubview(descriptionLabel)
 

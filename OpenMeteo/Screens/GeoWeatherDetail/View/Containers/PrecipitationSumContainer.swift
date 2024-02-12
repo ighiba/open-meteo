@@ -10,12 +10,12 @@ import SnapKit
 
 final class PrecipitationSumContainer: ContainerView {
     
-    override var containerName: String { NSLocalizedString("Precipitation", comment: "") }
+    override var title: String { NSLocalizedString("Precipitation", comment: "") }
     
     // MARK: - Methods
 
-    override func setViews() {
-        super.setViews()
+    override func setupViews() {
+        super.setupViews()
         addSubview(precipitationLabel)
         addSubview(descriptionLabel)
 

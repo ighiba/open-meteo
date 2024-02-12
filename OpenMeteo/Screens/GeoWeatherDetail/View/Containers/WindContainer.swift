@@ -10,10 +10,10 @@ import SnapKit
 
 final class WindContainer: ContainerView {
     
-    override var containerName: String { NSLocalizedString("Wind", comment: "") }
+    override var title: String { NSLocalizedString("Wind", comment: "") }
 
-    override func setViews() {
-        super.setViews()
+    override func setupViews() {
+        super.setupViews()
         addSubview(windSpeedLabel)
         addSubview(windDirectionLabel)
 

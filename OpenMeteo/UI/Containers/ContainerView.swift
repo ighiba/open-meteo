@@ -10,26 +10,31 @@ import SnapKit
 
 class ContainerView: UIView, StyledContainer {
     
-    var containerName: String { "" }
+    var title: String { "" }
 
-    private var blurEffectView = UIVisualEffectView.configureBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
+    private let blurEffectView = UIVisualEffectView.configureBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
+    
+    // MARK: - Init
 
     init() {
         super.init(frame: .zero)
-        setViews()
-        setContainerName(containerName)
+        self.setupViews()
+        self.setContainerTitle(title)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Methods
+    
     override func layoutSubviews() {
         super.layoutSubviews()
+        
         blurEffectView.layer.cornerRadius = 15
     }
     
-    func setViews() {
+    func setupViews() {
         addSubview(blurEffectView)
         addSubview(containerNameLabel)
         
@@ -47,19 +52,23 @@ class ContainerView: UIView, StyledContainer {
             make.centerY.equalToSuperview().multipliedBy(0.2)
         }
     }
+    
+    private func setContainerTitle(_ text: String) {
+        containerNameLabel.setAttributedTextWithShadow(text.uppercased())
+    }
 
     func updateContainerStyle(with style: ContainerStyle) {
         blurEffectView.updateBlur(style: style.blurStyle, withAlpha: style.alpha)
     }
     
-    private func setContainerName(_ text: String) {
-        containerNameLabel.setAttributedTextWithShadow(text.uppercased())
-    }
+    // MARK: - Views
 
     private let containerNameLabel: UILabel = {
         let label = UILabel()
+        
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         label.textColor = .white.withAlphaComponent(0.7)
+        
         return label
     }()
 }
