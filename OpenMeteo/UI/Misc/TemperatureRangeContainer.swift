@@ -7,26 +7,30 @@
 
 import UIKit
 
-class TemperatureRangeContainer: UIView {
+final class TemperatureRangeContainer: UIView {
     
-    var minTemperatureLabel: TemperatureLabelSymboled
-    var maxTemperatureLabel: TemperatureLabelSymboled
+    let minTemperatureLabel: TemperatureLabelSymboled
+    let maxTemperatureLabel: TemperatureLabelSymboled
     
     var preferredWidth: CGFloat { minTemperatureLabel.prefferedWidth + maxTemperatureLabel.prefferedWidth }
+    
+    // MARK: - Init
     
     init(withFontSize fontSize: CGFloat = 20) {
         self.minTemperatureLabel = TemperatureLabelSymboled(symbolName: "arrow.down", temperatureFontSize: fontSize)
         self.maxTemperatureLabel = TemperatureLabelSymboled(symbolName: "arrow.up", temperatureFontSize: fontSize)
         super.init(frame: .zero)
-        setTemperature(min: 0, max: 0)
-        setViews()
+        self.setupViews()
+        self.setPlaceholders()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Methods
 
-    func setViews() {
+    func setupViews() {
         addSubview(minTemperatureLabel)
         addSubview(maxTemperatureLabel)
 
