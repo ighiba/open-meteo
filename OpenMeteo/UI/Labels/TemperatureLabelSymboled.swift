@@ -8,25 +8,20 @@
 import UIKit
 import SnapKit
 
-class TemperatureLabelSymboled: UIView {
+final class TemperatureLabelSymboled: UIView {
     
     // MARK: - Properties
     
-    private var symbolName: String = ""
-    private var temperatureFontSize: CGFloat = 20
+    private var symbolName: String
+    private var temperatureFontSize: CGFloat
 
     private let symbolInset: CGFloat = 3
-    private var symbolWidth: CGFloat {
-        return temperatureFontSize * 0.58
-    }
+    private var symbolWidth: CGFloat { temperatureFontSize * 0.58 }
+    private var symbolHeight: CGFloat { symbolWidth * 2 }
     
-    private var temperatureLabelWidth: CGFloat {
-        return temperatureFontSize * 2.1
-    }
+    private var temperatureLabelWidth: CGFloat { temperatureFontSize * 2.1 }
     
-    var prefferedWidth: CGFloat {
-        return symbolWidth + temperatureLabelWidth + (symbolInset * 2) + (symbolWidth / 2)
-    }
+    var prefferedWidth: CGFloat { symbolWidth + temperatureLabelWidth + (symbolInset * 2) + (symbolWidth / 2) }
     
     // MARK: - Init
     
@@ -34,29 +29,21 @@ class TemperatureLabelSymboled: UIView {
         self.symbolName = symbolName
         self.temperatureFontSize = temperatureFontSize
         super.init(frame: .zero)
-        setViews()
+        self.setupViews()
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setViews()
-    }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Layout
     
-    func setViews() {
+    private func setupViews() {
         addSubview(symbolView)
         addSubview(temperatureLabel)
-        
-        temperatureLabel.textAlignment = .left
-        temperatureLabel.font = UIFont.systemFont(ofSize: temperatureFontSize, weight: .light)
     }
     
-    func makeConstraints(superview: UIView, toLeading: Bool) {
+    func setupConstraints(superview: UIView, toLeading: Bool) {
         symbolView.snp.makeConstraints { make in
             if toLeading {
                 make.trailing.equalTo(temperatureLabel.snp.leading).inset(-symbolInset)
@@ -65,7 +52,7 @@ class TemperatureLabelSymboled: UIView {
             }
             make.centerY.equalToSuperview()
             make.width.equalTo(symbolWidth)
-            make.height.equalTo(symbolWidth * 2)
+            make.height.equalTo(symbolHeight)
         }
         
         temperatureLabel.snp.makeConstraints { make in
@@ -89,7 +76,7 @@ class TemperatureLabelSymboled: UIView {
         }
     }
     
-    func setColors(_ color: UIColor) {
+    func setColor(_ color: UIColor) {
         temperatureLabel.textColor = color
         symbolView.tintColor = color
     }
@@ -101,16 +88,21 @@ class TemperatureLabelSymboled: UIView {
     // MARK: - Views
     
     lazy var symbolView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: symbolName)
+        let image = UIImage(systemName: symbolName)
+        let imageView = UIImageView(image: image)
+        
         imageView.tintColor = .label
+        
         return imageView
     }()
 
     lazy var temperatureLabel: TemperatureLabel = {
         let label = TemperatureLabel()
+        
         label.text = "0"
-        label.font = UIFont.systemFont(ofSize: temperatureFontSize)
+        label.textAlignment = .left
+        label.font = .systemFont(ofSize: temperatureFontSize, weight: .light)
+        
         return label
     }()
 }

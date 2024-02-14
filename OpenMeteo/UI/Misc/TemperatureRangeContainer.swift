@@ -34,13 +34,13 @@ final class TemperatureRangeContainer: UIView {
         addSubview(minTemperatureLabel)
         addSubview(maxTemperatureLabel)
 
-        minTemperatureLabel.makeConstraints(superview: self, toLeading: true)
-        maxTemperatureLabel.makeConstraints(superview: self, toLeading: false)
+        minTemperatureLabel.setupConstraints(superview: self, toLeading: true)
+        maxTemperatureLabel.setupConstraints(superview: self, toLeading: false)
     }
     
     func setColors(_ color: UIColor) {
-        minTemperatureLabel.setColors(color)
-        maxTemperatureLabel.setColors(color)
+        minTemperatureLabel.setColor(color)
+        maxTemperatureLabel.setColor(color)
     }
     
     func setTemperature(min: Float, max: Float) {
