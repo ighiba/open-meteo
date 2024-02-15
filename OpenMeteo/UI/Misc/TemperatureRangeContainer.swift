@@ -30,7 +30,7 @@ final class TemperatureRangeContainer: UIView {
     
     // MARK: - Methods
 
-    func setupViews() {
+    private func setupViews() {
         addSubview(minTemperatureLabel)
         addSubview(maxTemperatureLabel)
 

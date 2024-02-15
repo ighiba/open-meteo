@@ -7,14 +7,10 @@
 
 import UIKit
 
-class WeatherIconView: UIImageView {
+final class WeatherIconView: UIImageView {
     
-    convenience init(weatherIcon: WeatherIcon) {
-        self.init(image: weatherIcon.image)
-    }
-    
-    override init(image: UIImage?) {
-        super.init(image: image)
+    init(weatherIcon: WeatherIcon) {
+        super.init(image: weatherIcon.image)
     }
     
     required init?(coder: NSCoder) {
