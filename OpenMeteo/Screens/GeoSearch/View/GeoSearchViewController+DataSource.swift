@@ -27,7 +27,7 @@ extension GeoSearchViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: GeocodingCell.identifier, for: indexPath)
         guard let geocodingCell = cell as? GeocodingCell, let geocoding = geocoding(withId: itemIdentifier) else { return cell }
         
-        geocodingCell.configure(with: geocoding)
+        geocodingCell.setupCell(geocoding: geocoding)
         
         return geocodingCell
     }
