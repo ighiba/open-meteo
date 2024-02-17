@@ -13,9 +13,12 @@ extension GeoSearchViewController {
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Geocoding.ID>
     
     func updateSnapshot() {
+        let items = viewModel.geocodingList.map { $0.id }
+        
         var snapshot = Snapshot()
         snapshot.appendSections([0])
-        snapshot.appendItems(viewModel.geocodingList.map { $0.id })
+        snapshot.appendItems(items)
+        
         dataSource.apply(snapshot, animatingDifferences: false)
     }
     
@@ -25,21 +28,23 @@ extension GeoSearchViewController {
         for indexPath: IndexPath
     ) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GeocodingCell.identifier, for: indexPath)
-        guard let geocodingCell = cell as? GeocodingCell, let geocoding = geocoding(withId: itemIdentifier) else { return cell }
+        guard let geocodingCell = cell as? GeocodingCell, let geocoding = geocoding(withId: itemIdentifier) else {
+            return cell
+        }
         
         geocodingCell.setupCell(geocoding: geocoding)
         
         return geocodingCell
     }
     
-    func geocoding(withId id: Geocoding.ID) -> Geocoding? {
+    private func geocoding(withId id: Geocoding.ID) -> Geocoding? {
         if let index = indexOfGeoWeather(for: id) {
             return viewModel.geocodingList[index]
         }
         return nil
     }
     
-    func indexOfGeoWeather(for id: Geocoding.ID) -> Int? {
+    private func indexOfGeoWeather(for id: Geocoding.ID) -> Int? {
         return viewModel.geocodingList.firstIndex { $0.id == id }
     }
 }

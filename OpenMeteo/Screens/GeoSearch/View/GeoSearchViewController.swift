@@ -15,7 +15,7 @@ protocol GeoWeatherListViewControllerDelegate {
     func hideDimmedView()
 }
 
-class GeoSearchViewController: UISearchController {
+final class GeoSearchViewController: UISearchController {
     
     // MARK: - Properties
 
@@ -24,13 +24,9 @@ class GeoSearchViewController: UISearchController {
     var dataSource: DataSource!
     
     var geoWeatherListViewControllerDelegate: GeoWeatherListViewControllerDelegate?
-    var searchBarDelegate: SearchBarDelegate! {
-        didSet {
-            searchBar.delegate = searchBarDelegate
-        }
-    }
+    private var searchBarDelegate: SearchBarDelegate?
     
-    var resultsTableViewController = UITableViewController(style: .plain)
+    private let resultsTableViewController = UITableViewController(style: .plain)
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -50,8 +46,6 @@ class GeoSearchViewController: UISearchController {
         super.viewDidLoad()
         
         delegate = self
-        searchBar.placeholder = NSLocalizedString("Search", comment: "")
-        searchBar.searchBarStyle = .prominent
         obscuresBackgroundDuringPresentation = false
         
         resultsTableViewController.tableView.delegate = self
@@ -62,14 +56,20 @@ class GeoSearchViewController: UISearchController {
             return self.configureCell(tableView: tableView, itemIdentifier: itemIdentifier, for: indexPath)
         }
         
-        searchBarDelegate = SearchBarDelegate(textDidChangeHandler: { [weak self] searchText in
-            self?.viewModel.searchTextDidChange(searchText)
-        }, searchDidClickHandler: { [weak self] searchText in
-            self?.viewModel.searchButtonDidClick(with: searchText)
-        })
-        
+        setupSearchBar()
         setupBindings()
+        
         updateSnapshot()
+    }
+    
+    // MARK: - Methods
+    
+    private func setupSearchBar() {
+        searchBarDelegate = SearchBarDelegate(textDidChangeHandler: viewModel.searchTextDidChange, searchDidClickHandler: viewModel.searchButtonDidClick)
+        
+        searchBar.delegate = searchBarDelegate
+        searchBar.placeholder = NSLocalizedString("Search", comment: "")
+        searchBar.searchBarStyle = .prominent
     }
     
     private func setupBindings() {
@@ -81,16 +81,13 @@ class GeoSearchViewController: UISearchController {
             .store(in: &cancellables)
     }
     
-    // MARK: - Methods
-    
-    func openDetailAdd(for indexPath: IndexPath) {
+    private func openDetailAdd(for indexPath: IndexPath) {
         guard let geocoding = geocoding(withIndexPath: indexPath),
-              let detailViewController = GeoWeatherDetailModuleAssembly.configureModule(with: geocoding) as? GeoWeatherDetailViewController else {
+              let detailViewController = GeoWeatherDetailModuleAssembly.configureModule(with: geocoding) as? GeoWeatherDetailViewController
+        else {
             return
         }
-
-        let navigationController = UINavigationController(rootViewController: detailViewController)
-
+        
         let isAlreadyAdded = geoWeatherListViewControllerDelegate?.isGeoAlreadyAdded(withId: geocoding.id) ?? false
         detailViewController.navigationBarConfiguration = .add(isAlreadyAdded: isAlreadyAdded)
         detailViewController.geoWeatherDidAdd = { [weak self] geoWeather in
@@ -101,10 +98,11 @@ class GeoSearchViewController: UISearchController {
             self?.dismiss(animated: true)
         }
         
+        let navigationController = UINavigationController(rootViewController: detailViewController)
         present(navigationController, animated: true)
     }
     
-    func geocoding(withIndexPath indexPath: IndexPath) -> Geocoding? {
+    private func geocoding(withIndexPath indexPath: IndexPath) -> Geocoding? {
         guard indexPath.row <= viewModel.geocodingList.count else { return nil }
         
         return viewModel.geocodingList[indexPath.row]
