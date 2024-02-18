@@ -16,13 +16,18 @@ protocol GeoSearchViewModelDelegate: AnyObject {
     func searchButtonDidClick(with searchText: String)
 }
 
-class GeoSearchViewModel: GeoSearchViewModelDelegate {
+final class GeoSearchViewModel: GeoSearchViewModelDelegate {
+    
+    // MARK: - Properties
 
     @Published var geocodingList: [Geocoding] = []
     var geocodingListPublisher: Published<[Geocoding]>.Publisher { $geocodingList }
     
     var networkManager: NetworkManager!
+    
     private var searchCancellable: AnyCancellable?
+    
+    // MARK: - Methods
     
     func clearGeocodingList() {
         geocodingList = []
