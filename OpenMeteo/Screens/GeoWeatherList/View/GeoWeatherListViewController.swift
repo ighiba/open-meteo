@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class GeoWeatherListViewController: UICollectionViewController {
+final class GeoWeatherListViewController: UICollectionViewController {
     
     // MARK: - Properties
 
@@ -16,21 +16,21 @@ class GeoWeatherListViewController: UICollectionViewController {
 
     var dataSource: DataSource!
     
-    private var cancellables = Set<AnyCancellable>()
-
     private var initialPathForAnimator: CGPath?
     
     private var dimmedView: UIView?
     
     override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
     
-    private var isCollectionViewRefreshing: Bool { collectionView.refreshControl?.isRefreshing ?? false }
+    private var isRefreshing: Bool { collectionView.refreshControl?.isRefreshing ?? false }
     private(set) var isAnimatingEditing = false {
         didSet {
             navigationController?.navigationBar.isUserInteractionEnabled = !isAnimatingEditing
             view.isUserInteractionEnabled = !isAnimatingEditing
         }
     }
+    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     
@@ -50,8 +50,9 @@ class GeoWeatherListViewController: UICollectionViewController {
         setupNavigationBar()
         updateNavigationBarAppearance()
         
-        collectionView.delegate = self
         navigationController?.delegate = self
+        
+        collectionView.delegate = self
         collectionView.refreshControl = UIRefreshControl()
         collectionView.collectionViewLayout = configureLayout()
         collectionView.register(GeoWeatherCell.self, forCellWithReuseIdentifier: GeoWeatherCell.identifier)
@@ -61,7 +62,6 @@ class GeoWeatherListViewController: UICollectionViewController {
         }
 
         setupBindings()
-        updateSnapshot()
         viewModel.loadInitialData()
         viewModel.updateAllWeather()
     }
@@ -221,7 +221,7 @@ class GeoWeatherListViewController: UICollectionViewController {
     }
     
     func handleRefreshControlEnd() {
-        guard isCollectionViewRefreshing else { return }
+        guard isRefreshing else { return }
         
         collectionView.refreshControl?.endRefreshing()
     }
@@ -237,7 +237,7 @@ extension GeoWeatherListViewController {
     }
 
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if isCollectionViewRefreshing {
+        if isRefreshing {
             handleRefreshControlBegin()
         }
     }
@@ -266,6 +266,7 @@ extension GeoWeatherListViewController: GeoWeatherListViewControllerDelegate {
         collectionView.isUserInteractionEnabled = false
         
         guard let navigationController = navigationController else { return }
+        
         navigationController.navigationBar.backgroundColor = .white
         
         dimmedView?.snp.makeConstraints { make in

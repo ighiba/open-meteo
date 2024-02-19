@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class GeoWeatherCell: UICollectionViewCell {
+final class GeoWeatherCell: UICollectionViewCell {
     
     // MARK: - Properties
     
