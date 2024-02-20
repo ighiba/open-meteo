@@ -20,7 +20,7 @@ protocol GeoWeatherListViewModelDelegate: AnyObject {
     func deleteGeoWeather(withId id: GeoWeather.ID)
 }
 
-class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
+final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     
     // MARK: - Properties
 
@@ -38,7 +38,7 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     
     func loadInitialData() {
         #if DEBUG
-        //configureAndSaveDataInStore(GeoWeather.sampleData)
+        //saveGeoWeatherList(GeoWeather.sampleData)
         #endif
         
         locationManager.locationUpdateHandler = { [weak self] latitude, longitude in
@@ -48,7 +48,7 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         
-        geoWeatherList = obtainAndConfigureDataFromStore()
+        geoWeatherList = loadGeoWeatherList()
     }
     
     private func addCurrentLocation(latitude: Float, longitude: Float) {
@@ -84,8 +84,9 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     func addGeoWeather(_ geoWeather: GeoWeather) {
         let ids = geoWeatherList.map { $0.id }
         guard !ids.contains(geoWeather.id) else { return }
+        
         geoWeatherList = geoWeatherList + [geoWeather]
-        configureAndSaveDataInStore(geoWeatherList)
+        saveGeoWeatherList(geoWeatherList)
         updateGeoWeatherList([geoWeather])
     }
     
@@ -99,39 +100,42 @@ class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         } else {
             geoWeatherList.insert(geoWeather, at: index)
         }
-        configureAndSaveDataInStore(geoWeatherList)
+        
+        saveGeoWeatherList(geoWeatherList)
         updateGeoWeatherList(geoWeatherList)
     }
     
     func deleteGeoWeather(withId id: GeoWeather.ID) {
         guard let index = geoWeatherList.index(for: id) else { return }
+        
         let deletedGeoWeather = geoWeatherList.remove(at: index)
         dataManager.delete(geoModelWithId: deletedGeoWeather.geocoding.id)
     }
     
-    private func configureAndSaveDataInStore(_ geoWeatherList: [GeoWeather]) {
-        let geoModelList = geoWeatherList.map({ $0.geocoding }).map({ GeoModel(geocoding: $0)})
-        dataManager.save(geoModelList)
-    }
-    
-    private func obtainAndConfigureDataFromStore() -> [GeoWeather] {
+    private func loadGeoWeatherList() -> [GeoWeather] {
         let geoModelList = dataManager.obtainGeoModelList()
         let geoWeatherList = geoModelList.map({ Geocoding(geoModel: $0) }).map({ GeoWeather(geocoding: $0) })
+        
         return geoWeatherList
+    }
+    
+    private func saveGeoWeatherList(_ geoWeatherList: [GeoWeather]) {
+        let geoModelList = geoWeatherList.map({ $0.geocoding }).map({ GeoModel(geocoding: $0) })
+        dataManager.save(geoModelList)
     }
     
     private func updateGeoWeatherList(_ geoWeatherList: [GeoWeather]) {
         updateWeatherForGeoWeatherList(geoWeatherList: geoWeatherList)
-            .sink { completion in
+            .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
                     break
                 case .failure(let error):
                     print("Weather update error:", error)
                 }
-            } receiveValue: { _ in
+            }, receiveValue: { _ in
                 
-            }
+            })
             .store(in: &cancellables)
     }
     
