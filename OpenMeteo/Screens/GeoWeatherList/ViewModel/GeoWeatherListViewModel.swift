@@ -85,13 +85,13 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         let ids = geoWeatherList.map { $0.id }
         guard !ids.contains(geoWeather.id) else { return }
         
-        geoWeatherList = geoWeatherList + [geoWeather]
+        geoWeatherList += [geoWeather]
         saveGeoWeatherList(geoWeatherList)
         updateGeoWeatherList([geoWeather])
     }
     
     func insertGeoWeather(_ geoWeather: GeoWeather, at index: Int) {
-        if let existingIndex = geoWeatherList.index(for: geoWeather.id) {
+        if let existingIndex = geoWeatherList.index(withItemId: geoWeather.id) {
             if existingIndex != index {
                 geoWeatherList.move(fromOffsets: IndexSet(integer: existingIndex), toOffset: index)
             } else {
@@ -106,7 +106,7 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     }
     
     func deleteGeoWeather(withId id: GeoWeather.ID) {
-        guard let index = geoWeatherList.index(for: id) else { return }
+        guard let index = geoWeatherList.index(withItemId: id) else { return }
         
         let deletedGeoWeather = geoWeatherList.remove(at: index)
         dataManager.delete(geoModelWithId: deletedGeoWeather.geocoding.id)
