@@ -10,6 +10,8 @@ import UIKit
 final class HourlyForecastCollectionView: UICollectionView, StyledContainer {
     
     private let verticalSectionInset: CGFloat = 10
+    
+    private let blurEffectView = UIVisualEffectView.configureBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
 
     private var hourForecastList: [HourForecast] = [] {
         didSet {
@@ -47,13 +49,13 @@ final class HourlyForecastCollectionView: UICollectionView, StyledContainer {
         layer.cornerRadius = 16
         
         backgroundColor = .clear
-        backgroundView = UIVisualEffectView.configureBlur(style: .systemChromeMaterialDark, withAlpha: 0.2)
+        backgroundView = blurEffectView
         
         hideScrollIndicators()
     }
     
-    func updateContainerStyle(with style: ContainerStyle) {
-        backgroundView = UIVisualEffectView.configureBlur(style: style.blurStyle, withAlpha: style.alpha)
+    func updateContainerStyle(with containerStyle: ContainerStyle) {
+        blurEffectView.updateBlur(style: containerStyle.blurStyle, withAlpha: containerStyle.alpha)
     }
     
     func setup(with hourForecastList: [HourForecast]) {
