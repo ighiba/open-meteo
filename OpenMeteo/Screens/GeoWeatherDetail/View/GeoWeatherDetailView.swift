@@ -122,7 +122,7 @@ class GeoWeatherDetailView: UIScrollView {
         todayMinMaxTemeperatureRangeContainer.setTemperature(min: currentMinTemperature, max: currentMaxTemperature)
         weatherCodeDescriptionLabel.setAttributedTextWithShadow(weatherCodeDescription)
         hourlyForecastCollectionView.setup(with: hourlyForecastFor24Hours)
-        dailyForecastContainer.configure(with: dailyForecastForWeek)
+        dailyForecastContainer.setup(with: dailyForecastForWeek)
         apparentTemperatureContainer.configure(withApparent: apparentTemperature, current: currentTemperature)
         windContainer.configure(with: wind)
         relativeHumidityContainer.configure(relativeHumidity: relativeHumidity)
