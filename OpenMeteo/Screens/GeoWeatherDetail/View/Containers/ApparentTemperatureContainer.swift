@@ -46,6 +46,7 @@ final class ApparentTemperatureContainer: ContainerView {
 
     override func setupViews() {
         super.setupViews()
+        
         addSubview(temperatureLabel)
         addSubview(descriptionLabel)
 
@@ -62,9 +63,11 @@ final class ApparentTemperatureContainer: ContainerView {
         }
     }
 
-    func configure(withApparent apparentTemperature: Float, current currentTemperature: Float) {
-        let apparentTemperatureType = ApparentTemperatureType.compareTemperatures(apparent: apparentTemperature,
-                                                                               current: currentTemperature)
+    func setup(withApparent apparentTemperature: Float, current currentTemperature: Float) {
+        let apparentTemperatureType = ApparentTemperatureType.compareTemperatures(
+            apparent: apparentTemperature,
+            current: currentTemperature
+        )
         let descriptionText = apparentTemperatureType.localizedDescription
 
         temperatureLabel.setTemperature(apparentTemperature)

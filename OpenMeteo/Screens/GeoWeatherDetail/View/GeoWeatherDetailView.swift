@@ -123,7 +123,7 @@ class GeoWeatherDetailView: UIScrollView {
         weatherCodeDescriptionLabel.setAttributedTextWithShadow(weatherCodeDescription)
         hourlyForecastCollectionView.setup(with: hourlyForecastFor24Hours)
         dailyForecastContainer.setup(with: dailyForecastForWeek)
-        apparentTemperatureContainer.configure(withApparent: apparentTemperature, current: currentTemperature)
+        apparentTemperatureContainer.setup(withApparent: apparentTemperature, current: currentTemperature)
         windContainer.configure(with: wind)
         relativeHumidityContainer.configure(relativeHumidity: relativeHumidity)
         precipitationSumContainer.configure(with: precipitationSum, tomorrowPrecipitation: tomorrowPrecipitationSum)
