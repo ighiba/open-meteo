@@ -21,18 +21,20 @@ final class WeatherJSON: DecodableResult {
     enum RootCodingKeys: String, CodingKey {
         case latitude
         case longitude
-        case currentWeather = "current_weather"
+        case current
         case hourly
         case daily
     }
     
     enum CurrentWeatherCodingKeys: String, CodingKey {
-        case temperature
-        case windSpeed = "windspeed"
-        case windDirection = "winddirection"
-        case weathercode
-        case isDay = "is_day"
         case time
+        case isDay = "is_day"
+        case temperature = "temperature_2m"
+        case apparentTemperature = "apparent_temperature"
+        case relativeHumidity = "relative_humidity_2m"
+        case windSpeed = "wind_speed_10m"
+        case windDirection = "wind_direction_10m"
+        case weathercode = "weather_code"
     }
     
     enum HourlyCodingKeys: String, CodingKey {
@@ -64,14 +66,9 @@ final class WeatherJSON: DecodableResult {
     init(from decoder: Decoder) throws {
         let rootContainer = try decoder.container(keyedBy: RootCodingKeys.self)
         
-        var currentWeather = decodeCurrentWeather(inRoot: rootContainer)
+        let currentWeather = decodeCurrentWeather(inRoot: rootContainer)
         let hourlyForecastList = decodeHourlyForecast(inRoot: rootContainer)
         let dailyForecastList = decodeDailyForecast(inRoot: rootContainer)
-        
-        // because api doesn't provide this values for current
-        let currentHour = hourlyForecastList.first { $0.date == currentWeather.date }
-        currentWeather.relativeHumidity = currentHour?.relativeHumidity ?? 0
-        currentWeather.apparentTemperature = currentHour?.apparentTemperature ?? 0
 
         self.result = Weather(current: currentWeather, hourly: hourlyForecastList, daily: dailyForecastList)
     }
@@ -79,28 +76,36 @@ final class WeatherJSON: DecodableResult {
     // MARK: - Methods
     
     private func decodeCurrentWeather(inRoot rootContainer: KeyedDecodingContainer<WeatherJSON.RootCodingKeys>) -> HourForecast {
-        let currentWeatherContainer = try? rootContainer.nestedContainer(keyedBy: CurrentWeatherCodingKeys.self, forKey: .currentWeather)
+        let currentWeatherContainer = try? rootContainer.nestedContainer(keyedBy: CurrentWeatherCodingKeys.self, forKey: .current)
+        
         let dateTime: Date = {
             guard let dateTimeString = try? currentWeatherContainer?.decode(String.self, forKey: .time) else { return Date() }
             return convertDateTimeStringIntoDate(dateTimeString) ?? Date()
         }()
-        let isDay = try? currentWeatherContainer?.decode(Int.self, forKey: .isDay)
+        let isDayRaw = try? currentWeatherContainer?.decode(Int.self, forKey: .isDay)
+        let isDay = isDayRaw != 0
+        
         let temperature = try? currentWeatherContainer?.decode(Float.self, forKey: .temperature)
-        let weatherCodeRaw = try? currentWeatherContainer?.decode(Int16.self, forKey: .weathercode)
-        let weatherCode = WeatherCode(rawValue: weatherCodeRaw ?? 0) ?? .clearSky
+        let apparentTemperature = try? currentWeatherContainer?.decode(Float.self, forKey: .apparentTemperature)
+        
+        let relativeHumidity = try? currentWeatherContainer?.decode(Int16.self, forKey: .relativeHumidity)
+
         let windSpeed = try? currentWeatherContainer?.decode(Float.self, forKey: .windSpeed)
         let windDirection = try? currentWeatherContainer?.decode(Int16.self, forKey: .windDirection)
         let wind = Wind(speed: windSpeed ?? 0, direction: windDirection ?? 0)
+        
+        let weatherCodeRaw = try? currentWeatherContainer?.decode(Int16.self, forKey: .weathercode)
+        let weatherCode = WeatherCode(rawValue: weatherCodeRaw ?? 0) ?? .clearSky
 
         return HourForecast(
             date: dateTime,
-            isDay: isDay != 0,
-            relativeHumidity: 0,
+            isDay: isDay,
+            relativeHumidity: relativeHumidity ?? 0,
             precipitationProbability: 0,
             weatherCode: weatherCode,
             wind: wind,
             temperature: temperature ?? 0,
-            apparentTemperature: 0
+            apparentTemperature: apparentTemperature ?? 0
         )
     }
     

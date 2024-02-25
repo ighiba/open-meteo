@@ -7,6 +7,16 @@
 
 import Foundation
 
+private let currentWeatherQuery = [
+    "is_day",
+    "temperature_2m",
+    "apparent_temperature",
+    "relative_humidity_2m",
+    "wind_speed_10m",
+    "wind_direction_10m",
+    "weather_code"
+]
+
 private let hourlyQuery = [
     "temperature_2m",
     "relativehumidity_2m",
@@ -49,10 +59,10 @@ extension API {
                 return [
                     URLQueryItem(name: "latitude", value: "\(geocoding.latitude)"),
                     URLQueryItem(name: "longitude", value: "\(geocoding.longitude)"),
+                    URLQueryItem(name: "current", value: currentWeatherQuery.joined(separator: ",")),
                     URLQueryItem(name: "hourly", value: hourlyQuery.joined(separator: ",")),
                     URLQueryItem(name: "daily", value: dailyQuery.joined(separator: ",")),
                     URLQueryItem(name: "forecast_days", value: "\(10)"),
-                    URLQueryItem(name: "current_weather", value: "true"),
                     URLQueryItem(name: "timezone", value: "GMT"),
                 ]
             }
