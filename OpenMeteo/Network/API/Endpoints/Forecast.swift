@@ -18,24 +18,24 @@ private let currentWeatherQuery = [
 ]
 
 private let hourlyQuery = [
+    "is_day",
     "temperature_2m",
-    "relativehumidity_2m",
     "apparent_temperature",
+    "relativehumidity_2m",
     "precipitation_probability",
-    "weathercode",
     "windspeed_10m",
     "winddirection_10m",
-    "is_day"
+    "weathercode",
 ]
 
 private let dailyQuery = [
-    "weathercode",
-    "temperature_2m_max",
-    "temperature_2m_min",
     "sunrise",
     "sunset",
+    "temperature_2m_min",
+    "temperature_2m_max",
     "precipitation_sum",
-    "precipitation_probability_max"
+    "precipitation_probability_max",
+    "weathercode"
 ]
 
 extension API {

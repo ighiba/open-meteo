@@ -39,26 +39,25 @@ final class WeatherJSON: DecodableResult {
     
     enum HourlyCodingKeys: String, CodingKey {
         case time
+        case isDay = "is_day"
         case temperature = "temperature_2m"
         case apparentTemperature = "apparent_temperature"
         case relativeHumidity = "relativehumidity_2m"
         case precipitationProbability = "precipitation_probability"
-        case weathercode
         case windSpeed = "windspeed_10m"
         case windDirection = "winddirection_10m"
-        case isDay = "is_day"
+        case weathercode
     }
     
     enum DailyCodingKeys: String, CodingKey {
         case time
-        case temperature = "temperature_2m"
-        case weathercode
-        case temperatureMax = "temperature_2m_max"
-        case temperatureMin = "temperature_2m_min"
         case sunrise
         case sunset
+        case temperatureMin = "temperature_2m_min"
+        case temperatureMax = "temperature_2m_max"
         case precipitationSum = "precipitation_sum"
         case precipitationProbabilityMax = "precipitation_probability_max"
+        case weathercode
     }
     
     // MARK: - Init
@@ -66,22 +65,23 @@ final class WeatherJSON: DecodableResult {
     init(from decoder: Decoder) throws {
         let rootContainer = try decoder.container(keyedBy: RootCodingKeys.self)
         
-        let currentWeather = decodeCurrentWeather(inRoot: rootContainer)
-        let hourlyForecastList = decodeHourlyForecast(inRoot: rootContainer)
-        let dailyForecastList = decodeDailyForecast(inRoot: rootContainer)
+        let currentWeather = self.decodeCurrentWeather(fromRoot: rootContainer)
+        let hourlyForecastList = self.decodeHourlyForecast(fromRoot: rootContainer)
+        let dailyForecastList = self.decodeDailyForecast(fromRoot: rootContainer)
 
         self.result = Weather(current: currentWeather, hourly: hourlyForecastList, daily: dailyForecastList)
     }
     
     // MARK: - Methods
     
-    private func decodeCurrentWeather(inRoot rootContainer: KeyedDecodingContainer<WeatherJSON.RootCodingKeys>) -> HourForecast {
+    private func decodeCurrentWeather(fromRoot rootContainer: KeyedDecodingContainer<WeatherJSON.RootCodingKeys>) -> HourForecast {
         let currentWeatherContainer = try? rootContainer.nestedContainer(keyedBy: CurrentWeatherCodingKeys.self, forKey: .current)
         
         let dateTime: Date = {
             guard let dateTimeString = try? currentWeatherContainer?.decode(String.self, forKey: .time) else { return Date() }
             return convertDateTimeStringIntoDate(dateTimeString) ?? Date()
         }()
+        
         let isDayRaw = try? currentWeatherContainer?.decode(Int.self, forKey: .isDay)
         let isDay = isDayRaw != 0
         
@@ -109,7 +109,7 @@ final class WeatherJSON: DecodableResult {
         )
     }
     
-    private func decodeHourlyForecast(inRoot rootContainer: KeyedDecodingContainer<WeatherJSON.RootCodingKeys>) -> [HourForecast] {
+    private func decodeHourlyForecast(fromRoot rootContainer: KeyedDecodingContainer<WeatherJSON.RootCodingKeys>) -> [HourForecast] {
         let hourlyContainer = try? rootContainer.nestedContainer(keyedBy: HourlyCodingKeys.self, forKey: .hourly)
         
         var dateTimeList: [Date] = []
@@ -118,13 +118,17 @@ final class WeatherJSON: DecodableResult {
         }
 
         let isDayList = try? hourlyContainer?.decode([Int].self, forKey: .isDay)
+        
         let temperatureList = try? hourlyContainer?.decode([Float].self, forKey: .temperature)
+        let apparentTemperatureList = try? hourlyContainer?.decode([Float].self, forKey: .apparentTemperature)
+        
         let relativeHumidityList = try? hourlyContainer?.decode([Int16].self, forKey: .relativeHumidity)
         let precipitationProbabilityList = try? hourlyContainer?.decode([Int16].self, forKey: .precipitationProbability)
-        let weatherCodeList = try? hourlyContainer?.decode([Int16].self, forKey: .weathercode)
+        
         let windSpeedList = try? hourlyContainer?.decode([Float].self, forKey: .windSpeed)
         let windDirectionList = try? hourlyContainer?.decode([Int16].self, forKey: .windDirection)
-        let apparentTemperatureList = try? hourlyContainer?.decode([Float].self, forKey: .apparentTemperature)
+
+        let weatherCodeList = try? hourlyContainer?.decode([Int16].self, forKey: .weathercode)
         
         var hourlyForecastList: [HourForecast] = []
         for index in 0 ..< dateTimeList.count {
@@ -156,32 +160,34 @@ final class WeatherJSON: DecodableResult {
         return hourlyForecastList
     }
     
-    private func decodeDailyForecast(inRoot rootContainer: KeyedDecodingContainer<WeatherJSON.RootCodingKeys>) -> [DayForecast] {
+    private func decodeDailyForecast(fromRoot rootContainer: KeyedDecodingContainer<WeatherJSON.RootCodingKeys>) -> [DayForecast] {
         let dailyContainer = try? rootContainer.nestedContainer(keyedBy: DailyCodingKeys.self, forKey: .daily)
         
         var dateList: [Date] = []
         if let dateStrings = try? dailyContainer?.decode([String].self, forKey: .time) {
             dateList = dateStrings.map { convertDateStringIntoDate($0) ?? Date(timeIntervalSinceReferenceDate: 0) }
         }
+        
+        let dailySunriseListString = try? dailyContainer?.decode([String].self, forKey: .sunrise)
+        let dailySunsetListString = try? dailyContainer?.decode([String].self, forKey: .sunset)
 
         let dailyTemperatureMinList = try? dailyContainer?.decode([Float].self, forKey: .temperatureMin)
         let dailyTemperatureMaxList = try? dailyContainer?.decode([Float].self, forKey: .temperatureMax)
-        let dailyWeatherCodeList = try? dailyContainer?.decode([Int16].self, forKey: .weathercode)
-        let dailySunriseListString = try? dailyContainer?.decode([String].self, forKey: .sunrise)
-        let dailySunsetListString = try? dailyContainer?.decode([String].self, forKey: .sunset)
+        
         let dailyPrecipitationSumList = try? dailyContainer?.decode([Float].self, forKey: .precipitationSum)
         let dailyPrecipitationProbabilityMaxList = try? dailyContainer?.decode([Int16].self, forKey: .precipitationProbabilityMax)
 
         let sunriseDateTimeList = dailySunriseListString?.compactMap { convertDateTimeStringIntoDate($0) }
         let sunsetDateTimeList = dailySunsetListString?.compactMap { convertDateTimeStringIntoDate($0) }
         
+        let dailyWeatherCodeRawList = try? dailyContainer?.decode([Int16].self, forKey: .weathercode)
+        
         var dailyForecastList: [DayForecast] = []
-
         for index in 0 ..< dateList.count {
             let date = dateList[index]
             let sunriseTime = sunriseDateTimeList?[index] ?? Date(timeIntervalSinceReferenceDate: 0)
             let sunsetTime = sunsetDateTimeList?[index] ?? Date(timeIntervalSinceReferenceDate: 0)
-            let weatherCodeRaw = dailyWeatherCodeList?[index] ?? 0
+            let weatherCodeRaw = dailyWeatherCodeRawList?[index] ?? 0
             let weatherCode = WeatherCode(rawValue: weatherCodeRaw) ?? .clearSky
             let minTemperature = dailyTemperatureMinList?[index] ?? 0
             let maxTemperature = dailyTemperatureMaxList?[index] ?? 0
