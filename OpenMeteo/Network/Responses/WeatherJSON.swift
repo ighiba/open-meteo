@@ -195,6 +195,7 @@ final class WeatherJSON: DecodableResult {
 
             let minTemperature = dailyTemperatureMinList?[index] ?? 0
             let maxTemperature = dailyTemperatureMaxList?[index] ?? 0
+            let temperature = DayTemperature(min: minTemperature, max: maxTemperature)
             
             let precipitationSum = dailyPrecipitationSumList?[index] ?? 0
             let precipitationProbabilityMax = dailyPrecipitationProbabilityMaxList?[index] ?? 0
@@ -206,8 +207,7 @@ final class WeatherJSON: DecodableResult {
                 date: date,
                 sunriseTime: sunriseTime,
                 sunsetTime: sunsetTime,
-                minTemperature: minTemperature,
-                maxTemperature: maxTemperature,
+                temperature: temperature,
                 precipitationSum: precipitationSum,
                 precipitationProbabilityMax: precipitationProbabilityMax,
                 weatherCode: weatherCode

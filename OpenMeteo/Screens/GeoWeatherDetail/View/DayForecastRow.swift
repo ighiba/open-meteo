@@ -77,7 +77,7 @@ class DayForecastRow: UIView {
         
         dateLabel.setAttributedTextWithShadow(dateText)
         precipitationProbabilityLabel.setPrecipitationProbability(precipitationMax)
-        minMaxTemeperatureRangeContainer.setTemperature(min: forecast.minTemperature, max: forecast.maxTemperature)
+        minMaxTemeperatureRangeContainer.setTemperature(min: forecast.temperature.min, max: forecast.temperature.max)
         weatherIconView.setIcon(for: weatherType)
     }
 
