@@ -85,8 +85,9 @@ final class WeatherJSON: DecodableResult {
         let isDayRaw = try? currentWeatherContainer?.decode(Int.self, forKey: .isDay)
         let isDay = isDayRaw != 0
         
-        let temperature = try? currentWeatherContainer?.decode(Float.self, forKey: .temperature)
+        let realTemperature = try? currentWeatherContainer?.decode(Float.self, forKey: .temperature)
         let apparentTemperature = try? currentWeatherContainer?.decode(Float.self, forKey: .apparentTemperature)
+        let temperature = HourTemperature(real: realTemperature ?? 0, apparent: apparentTemperature ?? 0)
         
         let relativeHumidity = try? currentWeatherContainer?.decode(Int16.self, forKey: .relativeHumidity)
 
@@ -96,16 +97,15 @@ final class WeatherJSON: DecodableResult {
         
         let weatherCodeRaw = try? currentWeatherContainer?.decode(Int16.self, forKey: .weathercode)
         let weatherCode = WeatherCode(rawValue: weatherCodeRaw ?? 0) ?? .clearSky
-
+        
         return HourForecast(
             date: dateTime,
             isDay: isDay,
+            temperature: temperature,
             relativeHumidity: relativeHumidity ?? 0,
             precipitationProbability: 0,
-            weatherCode: weatherCode,
             wind: wind,
-            temperature: temperature ?? 0,
-            apparentTemperature: apparentTemperature ?? 0
+            weatherCode: weatherCode
         )
     }
     
@@ -119,7 +119,7 @@ final class WeatherJSON: DecodableResult {
 
         let isDayList = try? hourlyContainer?.decode([Int].self, forKey: .isDay)
         
-        let temperatureList = try? hourlyContainer?.decode([Float].self, forKey: .temperature)
+        let realTemperatureList = try? hourlyContainer?.decode([Float].self, forKey: .temperature)
         let apparentTemperatureList = try? hourlyContainer?.decode([Float].self, forKey: .apparentTemperature)
         
         let relativeHumidityList = try? hourlyContainer?.decode([Int16].self, forKey: .relativeHumidity)
@@ -133,26 +133,31 @@ final class WeatherJSON: DecodableResult {
         var hourlyForecastList: [HourForecast] = []
         for index in 0 ..< dateTimeList.count {
             let dateTime = dateTimeList[index]
+            
             let isDay = isDayList?[index]
-            let temperature = temperatureList?[index] ?? 0
+            
+            let realTemperature = realTemperatureList?[index] ?? 0
+            let apparentTemperature = apparentTemperatureList?[index] ?? realTemperature
+            let temperature = HourTemperature(real: realTemperature, apparent: apparentTemperature)
+            
             let relativeHumidity = relativeHumidityList?[index] ?? 0
             let precipitationProbability = precipitationProbabilityList?[index] ?? 0
-            let weatherCodeRaw = weatherCodeList?[index] ?? 0
-            let weatherCode = WeatherCode(rawValue: weatherCodeRaw) ?? .clearSky
+
             let windSpeed = windSpeedList?[index] ?? 0
             let windDirection = windDirectionList?[index] ?? 0
             let wind = Wind(speed: windSpeed, direction: windDirection)
-            let apparentTemperature = apparentTemperatureList?[index] ?? temperature
             
+            let weatherCodeRaw = weatherCodeList?[index] ?? 0
+            let weatherCode = WeatherCode(rawValue: weatherCodeRaw) ?? .clearSky
+
             let hourlyForecast = HourForecast(
                 date: dateTime,
                 isDay: isDay != 0,
+                temperature: temperature,
                 relativeHumidity: relativeHumidity,
                 precipitationProbability: precipitationProbability,
-                weatherCode: weatherCode,
                 wind: wind,
-                temperature: temperature,
-                apparentTemperature: apparentTemperature
+                weatherCode: weatherCode
             )
             hourlyForecastList.append(hourlyForecast)
         }
