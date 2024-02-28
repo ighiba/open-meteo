@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class DayForecastRow: UIView {
+final class DayForecastRow: UIView {
     
     static let height: CGFloat = 44
     
@@ -20,27 +20,28 @@ class DayForecastRow: UIView {
     lazy var dateLabel = configureDateLabel()
     lazy var precipitationProbabilityLabel = configurePrecipitationProbabilityLabel()
     private let weatherIconView = WeatherIconView(weatherIcon: .sun)
-    private let minMaxTemeperatureRangeContainer = TemperatureRangeContainer()
+    private let temperatureRangeContainer = TemperatureRangeContainer()
     
     // MARK: - Init
     
-    init() {
+    init(dayForecast: DayForecast) {
         super.init(frame: .zero)
-        minMaxTemeperatureRangeContainer.setColors(.white)
-        setViews()
+        self.temperatureRangeContainer.setColors(.white)
+        self.setupViews()
+        self.setup(withDayForecast: dayForecast)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Layout
+    // MARK: - Methods
     
-    private func setViews() {
+    private func setupViews() {
         addSubview(dateLabel)
         addSubview(precipitationProbabilityLabel)
         addSubview(weatherIconView)
-        addSubview(minMaxTemeperatureRangeContainer)
+        addSubview(temperatureRangeContainer)
         
         dateLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(verticalOffset)
@@ -57,31 +58,32 @@ class DayForecastRow: UIView {
         weatherIconView.snp.makeConstraints { make in
             make.width.equalTo(iconWidthHeight)
             make.height.equalTo(iconWidthHeight)
-            make.trailing.equalTo(minMaxTemeperatureRangeContainer.snp.leading)
+            make.trailing.equalTo(temperatureRangeContainer.snp.leading)
             make.centerY.equalToSuperview()
         }
         
-        minMaxTemeperatureRangeContainer.snp.makeConstraints { make in
+        temperatureRangeContainer.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(verticalOffset / 4)
-            make.width.equalTo(minMaxTemeperatureRangeContainer.preferredWidth)
+            make.width.equalTo(temperatureRangeContainer.preferredWidth)
             make.centerY.equalToSuperview()
             make.top.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }
     
-    func configure(with forecast: DayForecast) {
-        let dateText = forecast.date.string(withFormat: "dd MMMM")
-        let precipitationMax = forecast.precipitationProbabilityMax
-        let weatherType = forecast.weatherCode.obtainWeatherType()
+    private func setup(withDayForecast dayForecast: DayForecast) {
+        let dateText = dayForecast.date.string(withFormat: "dd MMMM")
+        let precipitationProbabilityMax = dayForecast.precipitationProbabilityMax
+        let dayTemperature = dayForecast.temperature
+        let weatherType = dayForecast.weatherCode.obtainWeatherType()
         
         dateLabel.setAttributedTextWithShadow(dateText)
-        precipitationProbabilityLabel.setPrecipitationProbability(precipitationMax)
-        minMaxTemeperatureRangeContainer.setTemperature(min: forecast.temperature.min, max: forecast.temperature.max)
+        precipitationProbabilityLabel.setPrecipitationProbability(precipitationProbabilityMax)
+        temperatureRangeContainer.setTemperature(min: dayTemperature.min, max: dayTemperature.max)
         weatherIconView.setIcon(for: weatherType)
     }
 
-    func configurePrecipitationProbabilityLabel() -> PrecipitationProbabilityLabel {
+    private func configurePrecipitationProbabilityLabel() -> PrecipitationProbabilityLabel {
         let label = PrecipitationProbabilityLabel()
         
         label.text = "0%"
@@ -92,7 +94,7 @@ class DayForecastRow: UIView {
         return label
     }
 
-    func configureDateLabel() -> UILabel {
+    private func configureDateLabel() -> UILabel {
         let label = UILabel()
         
         label.text = "01.01.2000"

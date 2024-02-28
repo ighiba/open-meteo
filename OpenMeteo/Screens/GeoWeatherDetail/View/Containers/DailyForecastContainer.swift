@@ -69,11 +69,7 @@ final class DailyForecastContainer: UIStackView, StyledContainer {
     }
     
     private func configureForecastContainerRows(dayForecastList: [DayForecast]) -> [DayForecastRow] {
-        return dayForecastList.map { forecast in
-            let forecastRow = DayForecastRow()
-            forecastRow.configure(with: forecast)
-            return forecastRow
-        }
+        return dayForecastList.map { DayForecastRow(dayForecast: $0) }
     }
     
     private func makeConstraintsForRow(_ row: UIView) {
