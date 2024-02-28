@@ -175,39 +175,42 @@ final class WeatherJSON: DecodableResult {
         
         let dailySunriseListString = try? dailyContainer?.decode([String].self, forKey: .sunrise)
         let dailySunsetListString = try? dailyContainer?.decode([String].self, forKey: .sunset)
+        let sunriseDateTimeList = dailySunriseListString?.compactMap { convertDateTimeStringIntoDate($0) }
+        let sunsetDateTimeList = dailySunsetListString?.compactMap { convertDateTimeStringIntoDate($0) }
 
         let dailyTemperatureMinList = try? dailyContainer?.decode([Float].self, forKey: .temperatureMin)
         let dailyTemperatureMaxList = try? dailyContainer?.decode([Float].self, forKey: .temperatureMax)
         
         let dailyPrecipitationSumList = try? dailyContainer?.decode([Float].self, forKey: .precipitationSum)
         let dailyPrecipitationProbabilityMaxList = try? dailyContainer?.decode([Int16].self, forKey: .precipitationProbabilityMax)
-
-        let sunriseDateTimeList = dailySunriseListString?.compactMap { convertDateTimeStringIntoDate($0) }
-        let sunsetDateTimeList = dailySunsetListString?.compactMap { convertDateTimeStringIntoDate($0) }
         
         let dailyWeatherCodeRawList = try? dailyContainer?.decode([Int16].self, forKey: .weathercode)
         
         var dailyForecastList: [DayForecast] = []
         for index in 0 ..< dateList.count {
             let date = dateList[index]
+            
             let sunriseTime = sunriseDateTimeList?[index] ?? Date(timeIntervalSinceReferenceDate: 0)
             let sunsetTime = sunsetDateTimeList?[index] ?? Date(timeIntervalSinceReferenceDate: 0)
-            let weatherCodeRaw = dailyWeatherCodeRawList?[index] ?? 0
-            let weatherCode = WeatherCode(rawValue: weatherCodeRaw) ?? .clearSky
+
             let minTemperature = dailyTemperatureMinList?[index] ?? 0
             let maxTemperature = dailyTemperatureMaxList?[index] ?? 0
+            
             let precipitationSum = dailyPrecipitationSumList?[index] ?? 0
             let precipitationProbabilityMax = dailyPrecipitationProbabilityMaxList?[index] ?? 0
+            
+            let weatherCodeRaw = dailyWeatherCodeRawList?[index] ?? 0
+            let weatherCode = WeatherCode(rawValue: weatherCodeRaw) ?? .clearSky
 
             let dailyForecast = DayForecast(
                 date: date,
                 sunriseTime: sunriseTime,
                 sunsetTime: sunsetTime,
-                weatherCode: weatherCode,
                 minTemperature: minTemperature,
                 maxTemperature: maxTemperature,
                 precipitationSum: precipitationSum,
-                precipitationProbabilityMax: precipitationProbabilityMax
+                precipitationProbabilityMax: precipitationProbabilityMax,
+                weatherCode: weatherCode
             )
             dailyForecastList.append(dailyForecast)
         }
