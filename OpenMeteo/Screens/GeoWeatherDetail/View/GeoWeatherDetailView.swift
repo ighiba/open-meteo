@@ -106,24 +106,24 @@ class GeoWeatherDetailView: UIScrollView {
     
     private func configureWeatherViews(_ weather: Weather) {
         let forecastForCurrentHour = weather.obtainForecastForCurrentHour()
-        let currentTemperature = forecastForCurrentHour.temperature
+        
+        let currentHourTemperature = forecastForCurrentHour.temperature
         let currentMinTemperature = weather.currentDayMinTemperature
         let currentMaxTemperature = weather.currentDayMaxTemperature
         let weatherCodeDescription = weather.currentWeatherCode.localizedDescription
         let hourlyForecastFor24Hours = weather.obtainHourlyForecastFor(nextHours: 24)
         let dailyForecastForWeek =  weather.obtainDailyForecastFor(nextDays: 7)
-        let apparentTemperature = forecastForCurrentHour.apparentTemperature
         let wind = forecastForCurrentHour.wind
         let relativeHumidity = forecastForCurrentHour.relativeHumidity
         let precipitationSum = weather.obtainCurrentDayForecast()?.precipitationSum ?? 0
         let tomorrowPrecipitationSum = weather.obtainDailyForecastFor(nextDays: 1).last?.precipitationSum
         
-        currentTemperatureLabel.setTemperature(currentTemperature)
+        currentTemperatureLabel.setTemperature(currentHourTemperature.real)
         todayMinMaxTemeperatureRangeContainer.setTemperature(min: currentMinTemperature, max: currentMaxTemperature)
         weatherCodeDescriptionLabel.setAttributedTextWithShadow(weatherCodeDescription)
         hourlyForecastCollectionView.setup(with: hourlyForecastFor24Hours)
         dailyForecastContainer.setup(with: dailyForecastForWeek)
-        apparentTemperatureContainer.setup(withApparent: apparentTemperature, current: currentTemperature)
+        apparentTemperatureContainer.setup(withHourTemperature: currentHourTemperature)
         windContainer.configure(with: wind)
         relativeHumidityContainer.configure(relativeHumidity: relativeHumidity)
         precipitationSumContainer.configure(with: precipitationSum, tomorrowPrecipitation: tomorrowPrecipitationSum)

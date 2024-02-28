@@ -10,36 +10,6 @@ import SnapKit
 
 final class ApparentTemperatureContainer: ContainerView {
     
-    // MARK: - Properties
-    
-    enum ApparentTemperatureType {
-        case equal
-        case warmer(Float)
-        case colder(Float)
-        
-        var localizedDescription: String {
-            switch self {
-            case .equal:
-                return NSLocalizedString("No difference", comment: "")
-            case .warmer(let difference):
-                return String(format: NSLocalizedString("Warmer by %.0f°", comment: ""), difference)
-            case .colder(let difference):
-                return String(format: NSLocalizedString("Colder by %.0f°", comment: ""), difference)
-            }
-        }
-
-        static func compareTemperatures(apparent apparentTemperature: Float, current currentTemperature: Float) -> Self {
-            let difference = currentTemperature.rounded(.toNearestOrEven) - apparentTemperature.rounded(.toNearestOrEven)
-            if difference == 0 {
-                return .equal
-            } else if difference < 0 {
-                return .warmer(abs(difference))
-            } else {
-                return .colder(difference)
-            }
-        }
-    }
-    
     override var title: String { NSLocalizedString("Feels like", comment: "") }
     
     // MARK: - Methods
@@ -63,12 +33,9 @@ final class ApparentTemperatureContainer: ContainerView {
         }
     }
 
-    func setup(withApparent apparentTemperature: Float, current currentTemperature: Float) {
-        let apparentTemperatureType = ApparentTemperatureType.compareTemperatures(
-            apparent: apparentTemperature,
-            current: currentTemperature
-        )
-        let descriptionText = apparentTemperatureType.localizedDescription
+    func setup(withHourTemperature hourTemperature: HourTemperature) {
+        let apparentTemperature = hourTemperature.apparent
+        let descriptionText = hourTemperature.perception.localizedDescription
 
         temperatureLabel.setTemperature(apparentTemperature)
         descriptionLabel.setAttributedTextWithShadow(descriptionText)

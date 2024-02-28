@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		30720A06BFBA96D2A2BA6B2B /* Pods_OpenMeteo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D9983A7EC377E34541D0904 /* Pods_OpenMeteo.framework */; };
+		C00EAFC52B8F2D93005F3F62 /* TemperaturePerception.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00EAFC42B8F2D93005F3F62 /* TemperaturePerception.swift */; };
 		C01D28C62A5330C900412BCD /* OpenMeteoNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D28C52A5330C900412BCD /* OpenMeteoNavigationController.swift */; };
 		C01D28C92A53738E00412BCD /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D28C82A53738E00412BCD /* NetworkManager.swift */; };
 		C01D28CB2A5430B700412BCD /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D28CA2A5430B700412BCD /* URL.swift */; };
@@ -117,6 +118,7 @@
 		1D9983A7EC377E34541D0904 /* Pods_OpenMeteo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenMeteo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DFDD54B38659B70F701CCFB /* Pods-OpenMeteo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenMeteo.release.xcconfig"; path = "Target Support Files/Pods-OpenMeteo/Pods-OpenMeteo.release.xcconfig"; sourceTree = "<group>"; };
 		9B82575E5454D329C2ED10A8 /* Pods-OpenMeteo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenMeteo.debug.xcconfig"; path = "Target Support Files/Pods-OpenMeteo/Pods-OpenMeteo.debug.xcconfig"; sourceTree = "<group>"; };
+		C00EAFC42B8F2D93005F3F62 /* TemperaturePerception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperaturePerception.swift; sourceTree = "<group>"; };
 		C01D28C52A5330C900412BCD /* OpenMeteoNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMeteoNavigationController.swift; sourceTree = "<group>"; };
 		C01D28C82A53738E00412BCD /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		C01D28CA2A5430B700412BCD /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
@@ -345,8 +347,9 @@
 		C04E2C5E2A47424600A5B1E8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C093EF402A58392E0076C4C3 /* DayPhase.swift */,
+				C00EAFC42B8F2D93005F3F62 /* TemperaturePerception.swift */,
 				C0E54D232A4B0F06003D00C8 /* DatedForecast.swift */,
+				C093EF402A58392E0076C4C3 /* DayPhase.swift */,
 				C0E54D182A49D993003D00C8 /* DayForecast.swift */,
 				C04E2C652A475E1A00A5B1E8 /* HourForecast.swift */,
 				C04E2C672A476D0200A5B1E8 /* Geocoding.swift */,
@@ -796,6 +799,7 @@
 				C0E54D262A4B39B8003D00C8 /* UIVisualEffectView.swift in Sources */,
 				C066C6D02A50F36A004FDDE8 /* PrecipitationSumContainer.swift in Sources */,
 				C07C43472A72AD5200E90193 /* Endpoint.swift in Sources */,
+				C00EAFC52B8F2D93005F3F62 /* TemperaturePerception.swift in Sources */,
 				C04E2C0A2A473EAA00A5B1E8 /* AppDelegate.swift in Sources */,
 				C0E54D202A4A292C003D00C8 /* HourForecastCell.swift in Sources */,
 				C08D196D2A48BAF300834A21 /* GeoWeatherDetailView.swift in Sources */,

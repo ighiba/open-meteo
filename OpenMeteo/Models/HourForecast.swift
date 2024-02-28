@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct HourTemperature {
+    var real: Float
+    var apparent: Float
+    var perception: TemperaturePerception { TemperaturePerception.compareTemperatures(real: real, apparent: apparent) }
+}
+
 struct HourForecast: DatedForecast {
     var date: Date
     var isDay: Bool
@@ -14,8 +20,7 @@ struct HourForecast: DatedForecast {
     var precipitationProbability: Int16
     var weatherCode: WeatherCode
     var wind: Wind
-    var temperature: Float
-    var apparentTemperature: Float
+    var temperature: HourTemperature
     
     init() {
         self.init(date: Date(), isDay: true, relativeHumidity: 0, precipitationProbability: 0, weatherCode: .clearSky, wind: Wind(), temperature: 0, apparentTemperature: 0)
@@ -28,7 +33,6 @@ struct HourForecast: DatedForecast {
         self.precipitationProbability = precipitationProbability
         self.weatherCode = weatherCode
         self.wind = wind
-        self.temperature = temperature
-        self.apparentTemperature = apparentTemperature
+        self.temperature = HourTemperature(real: temperature, apparent: apparentTemperature)
     }
 }

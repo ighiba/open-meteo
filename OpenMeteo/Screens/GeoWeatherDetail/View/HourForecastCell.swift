@@ -65,7 +65,7 @@ class HourForecastCell: UICollectionViewCell {
         let weatherType =  hourForecast.weatherCode.obtainWeatherType()
         
         hourLabel.setAttributedTextWithShadow(hourLabelText)
-        temperatureLabel.setTemperature(hourForecast.temperature)
+        temperatureLabel.setTemperature(hourForecast.temperature.real)
         precipitationProbabilityLabel.setPrecipitationProbability(hourForecast.precipitationProbability)
         weatherIconView.setIcon(for: weatherType, isDay: hourForecast.isDay)
     }
