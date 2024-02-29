@@ -40,11 +40,11 @@ struct Weather {
     }
     
     var currentDayMinTemperature: Float {
-        return obtainCurrentDayForecast()?.temperature.min ?? 0
+        return obtainCurrentDayForecast()?.temperatureRange.min ?? 0
     }
     
     var currentDayMaxTemperature: Float {
-        return obtainCurrentDayForecast()?.temperature.max ?? 0
+        return obtainCurrentDayForecast()?.temperatureRange.max ?? 0
     }
     
     // MARK: - Init

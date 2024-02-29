@@ -43,9 +43,11 @@ final class TemperatureRangeContainer: UIView {
         maxTemperatureLabel.setColor(color)
     }
     
-    func setTemperature(min: Float, max: Float) {
-        minTemperatureLabel.setTemperature(min)
-        maxTemperatureLabel.setTemperature(max)
+    func setTemperature(range temperatureRange: TemperatureRange?) {
+        guard let temperatureRange else { return }
+        
+        minTemperatureLabel.setTemperature(temperatureRange.min)
+        maxTemperatureLabel.setTemperature(temperatureRange.max)
     }
     
     func setPlaceholders() {

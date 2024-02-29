@@ -26,7 +26,6 @@ final class DayForecastRow: UIView {
     
     init(dayForecast: DayForecast) {
         super.init(frame: .zero)
-        self.temperatureRangeContainer.setColors(.white)
         self.setupViews()
         self.setup(withDayForecast: dayForecast)
     }
@@ -38,6 +37,8 @@ final class DayForecastRow: UIView {
     // MARK: - Methods
     
     private func setupViews() {
+        temperatureRangeContainer.setColors(.white)
+        
         addSubview(dateLabel)
         addSubview(precipitationProbabilityLabel)
         addSubview(weatherIconView)
@@ -74,12 +75,12 @@ final class DayForecastRow: UIView {
     private func setup(withDayForecast dayForecast: DayForecast) {
         let dateText = dayForecast.date.string(withFormat: "dd MMMM")
         let precipitationProbabilityMax = dayForecast.precipitationProbabilityMax
-        let dayTemperature = dayForecast.temperature
+        let temperatureRange = dayForecast.temperatureRange
         let weatherType = dayForecast.weatherCode.obtainWeatherType()
         
         dateLabel.setAttributedTextWithShadow(dateText)
         precipitationProbabilityLabel.setPrecipitationProbability(precipitationProbabilityMax)
-        temperatureRangeContainer.setTemperature(min: dayTemperature.min, max: dayTemperature.max)
+        temperatureRangeContainer.setTemperature(range: temperatureRange)
         weatherIconView.setIcon(for: weatherType)
     }
 

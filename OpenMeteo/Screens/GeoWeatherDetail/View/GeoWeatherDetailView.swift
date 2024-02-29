@@ -105,21 +105,21 @@ class GeoWeatherDetailView: UIScrollView {
     }
     
     private func configureWeatherViews(_ weather: Weather) {
-        let forecastForCurrentHour = weather.obtainForecastForCurrentHour()
+        let currentHourForecast = weather.obtainForecastForCurrentHour()
+        let currentDayForecast = weather.obtainCurrentDayForecast()
         
-        let currentHourTemperature = forecastForCurrentHour.temperature
-        let currentMinTemperature = weather.currentDayMinTemperature
-        let currentMaxTemperature = weather.currentDayMaxTemperature
+        let currentHourTemperature = currentHourForecast.temperature
+        let currentDayTemperatureRange = currentDayForecast?.temperatureRange
         let weatherCodeDescription = weather.currentWeatherCode.localizedDescription
         let hourlyForecastFor24Hours = weather.obtainHourlyForecastFor(nextHours: 24)
         let dailyForecastForWeek =  weather.obtainDailyForecastFor(nextDays: 7)
-        let wind = forecastForCurrentHour.wind
-        let relativeHumidity = forecastForCurrentHour.relativeHumidity
-        let precipitationSum = weather.obtainCurrentDayForecast()?.precipitationSum ?? 0
+        let wind = currentHourForecast.wind
+        let relativeHumidity = currentHourForecast.relativeHumidity
+        let precipitationSum = currentDayForecast?.precipitationSum ?? 0
         let tomorrowPrecipitationSum = weather.obtainDailyForecastFor(nextDays: 1).last?.precipitationSum
         
         currentTemperatureLabel.setTemperature(currentHourTemperature.real)
-        todayMinMaxTemeperatureRangeContainer.setTemperature(min: currentMinTemperature, max: currentMaxTemperature)
+        todayMinMaxTemeperatureRangeContainer.setTemperature(range: currentDayTemperatureRange)
         weatherCodeDescriptionLabel.setAttributedTextWithShadow(weatherCodeDescription)
         hourlyForecastCollectionView.setup(with: hourlyForecastFor24Hours)
         dailyForecastContainer.setup(with: dailyForecastForWeek)

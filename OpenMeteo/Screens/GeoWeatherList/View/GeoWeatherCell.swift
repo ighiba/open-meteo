@@ -105,13 +105,12 @@ final class GeoWeatherCell: UICollectionViewCell {
         
         if let weather = geoWeather.weather {
             let currentHourForecast = weather.obtainForecastForCurrentHour()
+            let currentDayForecast = weather.obtainCurrentDayForecast()
+            
             updateBackground(forWeather: weather)
             weatherCodeDescriptionLabel.setAttributedTextWithShadow(currentHourForecast.weatherCode.localizedDescription)
             currentTemperatureLabel.setTemperature(currentHourForecast.temperature.real)
-            todayMinMaxTemeperatureRangeContainer.setTemperature(
-                min: weather.currentDayMinTemperature,
-                max: weather.currentDayMaxTemperature
-            )
+            todayMinMaxTemeperatureRangeContainer.setTemperature(range: currentDayForecast?.temperatureRange)
         } else {
             setDefaultBackground()
             weatherCodeDescriptionLabel.setAttributedTextWithShadow("..")
