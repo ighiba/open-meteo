@@ -16,6 +16,7 @@ final class RelativeHumidityContainer: ContainerView {
 
     override func setupViews() {
         super.setupViews()
+        
         addSubview(relativeHumidityLabel)
 
         relativeHumidityLabel.snp.makeConstraints { make in
@@ -24,7 +25,7 @@ final class RelativeHumidityContainer: ContainerView {
         }
     }
 
-    func configure(relativeHumidity: Int16) {
+    func setup(withRelativeHumidity relativeHumidity: Int16) {
         let relativeHumidityText = String(format: "%i", relativeHumidity) + "%"
         relativeHumidityLabel.setAttributedTextWithShadow(relativeHumidityText)
     }

@@ -125,7 +125,7 @@ class GeoWeatherDetailView: UIScrollView {
         dailyForecastContainer.setup(with: dailyForecastForWeek)
         apparentTemperatureContainer.setup(withHourTemperature: currentHourTemperature)
         windContainer.setup(withWind: wind)
-        relativeHumidityContainer.configure(relativeHumidity: relativeHumidity)
+        relativeHumidityContainer.setup(withRelativeHumidity: relativeHumidity)
         precipitationSumContainer.configure(with: precipitationSum, tomorrowPrecipitation: tomorrowPrecipitationSum)
     }
     
