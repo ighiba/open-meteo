@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class HourForecastCell: UICollectionViewCell {
+final class HourForecastCell: UICollectionViewCell {
     
     static let reuseIdentifier = "hourForecastCell"
     
@@ -21,7 +21,7 @@ class HourForecastCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setViews()
+        self.setupViews()
     }
     
     required init?(coder: NSCoder) {
@@ -30,11 +30,11 @@ class HourForecastCell: UICollectionViewCell {
     
     // MARK: - Methods
     
-    func setViews() {
+    private func setupViews() {
         addSubview(hourLabel)
         addSubview(precipitationProbabilityLabel)
-        addSubview(temperatureLabel)
         addSubview(weatherIconView)
+        addSubview(temperatureLabel)
         
         hourLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(horizontalOffset)
@@ -59,23 +59,30 @@ class HourForecastCell: UICollectionViewCell {
         }
     }
     
-    func configure(with hourForecast: HourForecast, for indexPath: IndexPath) {
-        let nowString = NSLocalizedString("Now", comment: "")
-        let hourLabelText = indexPath.row == 0 ? nowString : hourForecast.date.string(withFormat: "HH")
-        let weatherType =  hourForecast.weatherCode.obtainWeatherType()
+    func update(withHourForecast hourForecast: HourForecast, isNow: Bool) {
+        let hourText = configureHourText(date: hourForecast.date, isNow: isNow)
+        let weatherType = hourForecast.weatherCode.obtainWeatherType()
         
-        hourLabel.setAttributedTextWithShadow(hourLabelText)
+        hourLabel.setAttributedTextWithShadow(hourText)
         temperatureLabel.setTemperature(hourForecast.temperature.real)
         precipitationProbabilityLabel.setPrecipitationProbability(hourForecast.precipitationProbability)
         weatherIconView.setIcon(for: weatherType, isDay: hourForecast.isDay)
     }
     
+    private func configureHourText(date: Date, isNow: Bool) -> String {
+        if isNow {
+            return NSLocalizedString("Now", comment: "")
+        } else {
+            return date.string(withFormat: "HH")
+        }
+    }
+    
     // MARK: - Views
     
-    lazy var hourLabel: UILabel = {
+    private let hourLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "12"
+        label.text = "00"
         label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = .white
         label.sizeToFit()
@@ -83,7 +90,7 @@ class HourForecastCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var precipitationProbabilityLabel: PrecipitationProbabilityLabel = {
+    private let precipitationProbabilityLabel: PrecipitationProbabilityLabel = {
         let label = PrecipitationProbabilityLabel()
         
         label.text = "0%"
@@ -93,7 +100,7 @@ class HourForecastCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var temperatureLabel: TemperatureLabel = {
+    private let temperatureLabel: TemperatureLabel = {
         let label = TemperatureLabel()
         
         label.font = UIFont.systemFont(ofSize: 20)
@@ -103,5 +110,5 @@ class HourForecastCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var weatherIconView: WeatherIconView = WeatherIconView(weatherIcon: .sun)
+    private let weatherIconView: WeatherIconView = WeatherIconView(weatherIcon: .sun)
 }

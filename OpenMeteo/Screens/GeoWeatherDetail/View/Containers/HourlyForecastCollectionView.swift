@@ -106,7 +106,8 @@ extension HourlyForecastCollectionView: UICollectionViewDataSource {
         guard let hourForecastCell = cell as? HourForecastCell else { return cell }
         
         let hourForecast = hourForecastList[indexPath.row]
-        hourForecastCell.configure(with: hourForecast, for: indexPath)
+        let isNow = indexPath.row == 0
+        hourForecastCell.update(withHourForecast: hourForecast, isNow: isNow)
         
         return hourForecastCell
     }
