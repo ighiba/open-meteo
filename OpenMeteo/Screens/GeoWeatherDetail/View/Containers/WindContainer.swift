@@ -10,33 +10,38 @@ import SnapKit
 
 final class WindContainer: ContainerView {
     
+    private let verticalSpacing: CGFloat = 5
+    
     override var title: String { NSLocalizedString("Wind", comment: "") }
+    
+    // MARK: - Methods
 
     override func setupViews() {
         super.setupViews()
+        
         addSubview(windSpeedLabel)
         addSubview(windDirectionLabel)
 
         windSpeedLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(snp.centerY).offset(5)
+            make.bottom.equalTo(snp.centerY).offset(verticalSpacing)
         }
         
         windDirectionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(snp.centerY).offset(5)
+            make.top.equalTo(snp.centerY).offset(verticalSpacing)
         }
     }
     
-    func configure(with wind: Wind) {
+    func setup(withWind wind: Wind) {
         let windDirectionDescriptionShort = WindDirection.obtain(by: wind.direction)?.localizedDescriptionShort ?? "--"
-        let windSpeedText = transfromIntoLocalizedText(wind.speed)
+        let windSpeedText = transfromIntoLocalizedText(windSpeed: wind.speed)
         
         windSpeedLabel.setAttributedTextWithShadow(windSpeedText)
         windDirectionLabel.setAttributedTextWithShadow(windDirectionDescriptionShort)
     }
     
-    private func transfromIntoLocalizedText(_ windSpeed: Float) -> String {
+    private func transfromIntoLocalizedText(windSpeed: Float) -> String {
         var measurement = Measurement(value: Double(windSpeed), unit: UnitSpeed.kilometersPerHour).converted(to: .metersPerSecond)
         let formatter = MeasurementFormatter()
         formatter.unitStyle = .short
@@ -45,6 +50,8 @@ final class WindContainer: ContainerView {
         
         return formatter.string(from: measurement)
     }
+    
+    // MARK: - Views
     
     private let windSpeedLabel: UILabel = {
         let label = UILabel()
