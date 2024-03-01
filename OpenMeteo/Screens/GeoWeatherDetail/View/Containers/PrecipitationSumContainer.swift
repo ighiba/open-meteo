@@ -10,48 +10,60 @@ import SnapKit
 
 final class PrecipitationSumContainer: ContainerView {
     
+    private let verticalOffset: CGFloat = 5
+    private let tomorrowPrecipitationLabelWidthMultiplier: CGFloat = 0.85
+    
+    private let noPrecipitationExpectedFormat = NSLocalizedString("No precipitation is expected tomorrow", comment: "")
+    private let precipitationExpectedFormat = NSLocalizedString("Tomorrow, %@ of precipitation is expected", comment: "")
+    
     override var title: String { NSLocalizedString("Precipitation", comment: "") }
     
     // MARK: - Methods
 
     override func setupViews() {
         super.setupViews()
-        addSubview(precipitationLabel)
-        addSubview(descriptionLabel)
+        
+        addSubview(todayPrecipitationLabel)
+        addSubview(tomorrowPrecipitationLabel)
 
-        precipitationLabel.snp.makeConstraints { make in
+        todayPrecipitationLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-10)
+            make.centerY.equalToSuperview().offset(-verticalOffset * 2)
         }
         
-        descriptionLabel.snp.makeConstraints { make in
-            make.width.equalToSuperview().multipliedBy(0.85)
-            make.bottom.equalToSuperview().offset(-5)
+        tomorrowPrecipitationLabel.snp.makeConstraints { make in
+            make.width.equalToSuperview().multipliedBy(tomorrowPrecipitationLabelWidthMultiplier)
+            make.bottom.equalToSuperview().offset(-verticalOffset)
             make.centerX.equalToSuperview()
-            make.top.equalTo(precipitationLabel.snp.bottom)
+            make.top.equalTo(todayPrecipitationLabel.snp.bottom)
         }
     }
 
-    func configure(with precipitationSum: Float, tomorrowPrecipitation: Float?) {
-        let precipitationSumText = transfromIntoLocalizedText(precipitationSum)
-        precipitationLabel.setAttributedTextWithShadow(precipitationSumText)
-
-        guard let tomorrowPrecipitation = tomorrowPrecipitation else { return }
-        let tomorrowPrecipitationText = transfromIntoLocalizedText(tomorrowPrecipitation)
-        
-        let localizedDescription: String
-        if tomorrowPrecipitation.rounded() == 0 {
-            localizedDescription = NSLocalizedString("No precipitation is expected tomorrow", comment: "")
-        } else {
-            localizedDescription = NSLocalizedString("Tomorrow, %@ of precipitation is expected", comment: "")
-        }
-        
-        let descriptionText = String(format: localizedDescription, tomorrowPrecipitationText)
-        descriptionLabel.setAttributedTextWithShadow(descriptionText)
-        descriptionLabel.attributedStringSetMultilineText() 
+    func setup(withTodaySum todayPrecipitationSum: Float, tomorrowSum tomorrowPrecipitationSum: Float) {
+        setupTodayPrecipitationLabel(todayPrecipitationSum: todayPrecipitationSum)
+        setupTomorrowPrecipitationLabel(tomorrowPrecipitationSum: tomorrowPrecipitationSum)
     }
     
-    private func transfromIntoLocalizedText(_ precipitationSum: Float) -> String {
+    private func setupTodayPrecipitationLabel(todayPrecipitationSum: Float) {
+        let todayPrecipitationText = transfromIntoLocalizedText(precipitationSum: todayPrecipitationSum)
+        todayPrecipitationLabel.setAttributedTextWithShadow(todayPrecipitationText)
+    }
+    
+    private func setupTomorrowPrecipitationLabel(tomorrowPrecipitationSum: Float) {
+        let tomorrowPrecipitationText = configureTomorrowPrecipitationText(tomorrowPrecipitationSum: tomorrowPrecipitationSum)
+        tomorrowPrecipitationLabel.setAttributedTextWithShadow(tomorrowPrecipitationText)
+        tomorrowPrecipitationLabel.attributedStringSetMultilineText()
+    }
+    
+    private func configureTomorrowPrecipitationText(tomorrowPrecipitationSum: Float) -> String {
+        let tomorrowPrecipitationText = transfromIntoLocalizedText(precipitationSum: tomorrowPrecipitationSum)
+        let isPrecipitationExpected = tomorrowPrecipitationSum.rounded() != 0
+        let format = isPrecipitationExpected ? precipitationExpectedFormat : noPrecipitationExpectedFormat
+        
+        return String(format: format, tomorrowPrecipitationText)
+    }
+    
+    private func transfromIntoLocalizedText(precipitationSum: Float) -> String {
         var measurement = Measurement(value: Double(precipitationSum), unit: UnitLength.millimeters)
         measurement.value = measurement.value.rounded()
 
@@ -64,7 +76,7 @@ final class PrecipitationSumContainer: ContainerView {
     
     // MARK: - Views
     
-    private let precipitationLabel: UILabel = {
+    private let todayPrecipitationLabel: UILabel = {
         let label = UILabel()
         
         label.font = UIFont.systemFont(ofSize: 40)
@@ -74,7 +86,7 @@ final class PrecipitationSumContainer: ContainerView {
         return label
     }()
     
-    private let descriptionLabel: UILabel = {
+    private let tomorrowPrecipitationLabel: UILabel = {
         let label = UILabel()
         
         label.font = UIFont.systemFont(ofSize: 15)

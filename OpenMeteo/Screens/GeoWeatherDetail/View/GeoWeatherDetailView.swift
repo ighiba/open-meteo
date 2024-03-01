@@ -115,8 +115,8 @@ class GeoWeatherDetailView: UIScrollView {
         let dailyForecastForWeek =  weather.obtainDailyForecastFor(nextDays: 7)
         let wind = currentHourForecast.wind
         let relativeHumidity = currentHourForecast.relativeHumidity
-        let precipitationSum = currentDayForecast?.precipitationSum ?? 0
-        let tomorrowPrecipitationSum = weather.obtainDailyForecastFor(nextDays: 1).last?.precipitationSum
+        let todayPrecipitationSum = currentDayForecast?.precipitationSum ?? 0
+        let tomorrowPrecipitationSum = weather.obtainDailyForecastFor(nextDays: 1).last?.precipitationSum ?? 0
         
         currentTemperatureLabel.setTemperature(currentHourTemperature.real)
         todayMinMaxTemeperatureRangeContainer.setTemperature(range: currentDayTemperatureRange)
@@ -126,7 +126,7 @@ class GeoWeatherDetailView: UIScrollView {
         apparentTemperatureContainer.setup(withHourTemperature: currentHourTemperature)
         windContainer.setup(withWind: wind)
         relativeHumidityContainer.setup(withRelativeHumidity: relativeHumidity)
-        precipitationSumContainer.configure(with: precipitationSum, tomorrowPrecipitation: tomorrowPrecipitationSum)
+        precipitationSumContainer.setup(withTodaySum: todayPrecipitationSum, tomorrowSum: tomorrowPrecipitationSum)
     }
     
     func updateViewsStyle(with style: ContainerStyle) {
