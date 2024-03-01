@@ -10,7 +10,7 @@ import SnapKit
 
 final class WindContainer: ContainerView {
     
-    private let verticalSpacing: CGFloat = 5
+    private let verticalOffset: CGFloat = 5
     
     override var title: String { NSLocalizedString("Wind", comment: "") }
     
@@ -24,12 +24,12 @@ final class WindContainer: ContainerView {
 
         windSpeedLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(snp.centerY).offset(verticalSpacing)
+            make.bottom.equalTo(snp.centerY).offset(verticalOffset)
         }
         
         windDirectionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(snp.centerY).offset(verticalSpacing)
+            make.top.equalTo(snp.centerY).offset(verticalOffset)
         }
     }
     

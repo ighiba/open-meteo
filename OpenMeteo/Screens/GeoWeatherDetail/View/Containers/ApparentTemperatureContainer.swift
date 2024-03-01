@@ -10,6 +10,9 @@ import SnapKit
 
 final class ApparentTemperatureContainer: ContainerView {
     
+    private let verticalOffset: CGFloat = -5
+    private let descriptionLabelWidthMultiplier: CGFloat = 0.85
+    
     override var title: String { NSLocalizedString("Feels like", comment: "") }
     
     // MARK: - Methods
@@ -22,12 +25,12 @@ final class ApparentTemperatureContainer: ContainerView {
 
         temperatureLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-5)
+            make.centerY.equalToSuperview().offset(verticalOffset)
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.width.equalToSuperview().multipliedBy(0.85)
-            make.bottom.equalToSuperview().offset(-5)
+            make.width.equalToSuperview().multipliedBy(descriptionLabelWidthMultiplier)
+            make.bottom.equalToSuperview().offset(verticalOffset)
             make.centerX.equalToSuperview()
             make.top.equalTo(temperatureLabel.snp.bottom)
         }

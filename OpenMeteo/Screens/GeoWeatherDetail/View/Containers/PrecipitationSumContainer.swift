@@ -10,7 +10,7 @@ import SnapKit
 
 final class PrecipitationSumContainer: ContainerView {
     
-    private let verticalOffset: CGFloat = 5
+    private let verticalOffset: CGFloat = -5
     private let tomorrowPrecipitationLabelWidthMultiplier: CGFloat = 0.85
     
     private let noPrecipitationExpectedFormat = NSLocalizedString("No precipitation is expected tomorrow", comment: "")
@@ -28,12 +28,12 @@ final class PrecipitationSumContainer: ContainerView {
 
         todayPrecipitationLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-verticalOffset * 2)
+            make.centerY.equalToSuperview().offset(verticalOffset * 2)
         }
         
         tomorrowPrecipitationLabel.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(tomorrowPrecipitationLabelWidthMultiplier)
-            make.bottom.equalToSuperview().offset(-verticalOffset)
+            make.bottom.equalToSuperview().offset(verticalOffset)
             make.centerX.equalToSuperview()
             make.top.equalTo(todayPrecipitationLabel.snp.bottom)
         }
