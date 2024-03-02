@@ -58,7 +58,7 @@ final class HourlyForecastCollectionView: UICollectionView, StyledContainer {
         blurEffectView.updateBlur(style: containerStyle.blurStyle, withAlpha: containerStyle.alpha)
     }
     
-    func setup(with hourForecastList: [HourForecast]) {
+    func update(with hourForecastList: [HourForecast]) {
         self.hourForecastList = hourForecastList
     }
     
@@ -105,10 +105,16 @@ extension HourlyForecastCollectionView: UICollectionViewDataSource {
         let cell = dequeueReusableCell(withReuseIdentifier: HourForecastCell.reuseIdentifier, for: indexPath)
         guard let hourForecastCell = cell as? HourForecastCell else { return cell }
         
+        updateHourForecastCell(hourForecastCell, forIndexPath: indexPath)
+        
+        return hourForecastCell
+    }
+    
+    private func updateHourForecastCell(_ hourForecastCell: HourForecastCell, forIndexPath indexPath: IndexPath) {
+        guard hourForecastList.indices.contains(indexPath.row) else { return }
+        
         let hourForecast = hourForecastList[indexPath.row]
         let isNow = indexPath.row == 0
         hourForecastCell.update(withHourForecast: hourForecast, isNow: isNow)
-        
-        return hourForecastCell
     }
 }
