@@ -194,7 +194,7 @@ class GeoWeatherDetailViewController: UIViewController {
     private func showNetworkErrorView() {
         let transitionDuration = 0.3
         
-        let errorView = GeoWeatherDetailNetworkErrorView.configureDefault()
+        let errorView = GeoWeatherDetailNetworkErrorView()
         view.addSubview(errorView)
         makeConstraintsForMainView(errorView)
         

@@ -6,14 +6,22 @@
 //
 
 import UIKit
+import SnapKit
 
-class GeoWeatherDetailNetworkErrorView: UIView {
+final class GeoWeatherDetailNetworkErrorView: UIView {
     
     private let horizontalOffset: CGFloat = 10
+    private let errorMessageWidthMultiplier: CGFloat = 0.9
+    
+    private let errorTitle = NSLocalizedString("Network error", comment: "")
+    private let errorMessage = NSLocalizedString("We couldn't fetch the weather details due to a network problem.\nPlease make sure you have a stable internet connection and try again.", comment: "")
+    
+    // MARK: - Init
     
     init() {
         super.init(frame: .zero)
-        setViews()
+        self.setupViews()
+        self.setup()
     }
     
     required init?(coder: NSCoder) {
@@ -22,12 +30,12 @@ class GeoWeatherDetailNetworkErrorView: UIView {
     
     // MARK: - Methods
     
-    func setViews() {
-        addSubview(noWifiIcon)
+    private func setupViews() {
+        addSubview(noWiFiIcon)
         addSubview(errorTitleLabel)
         addSubview(errorMessageLabel)
         
-        noWifiIcon.snp.makeConstraints { make in
+        noWiFiIcon.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(errorTitleLabel.snp.top).offset(-horizontalOffset * 2)
         }
@@ -40,27 +48,21 @@ class GeoWeatherDetailNetworkErrorView: UIView {
         errorMessageLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(errorTitleLabel.snp.bottom).offset(horizontalOffset)
-            make.width.equalToSuperview().multipliedBy(0.9)
+            make.width.equalToSuperview().multipliedBy(errorMessageWidthMultiplier)
         }
     }
     
-    func configure() {
-        errorTitleLabel.text = NSLocalizedString("Network error", comment: "")
-        errorMessageLabel.text = NSLocalizedString("We couldn't fetch the weather details due to a network problem.\nPlease make sure you have a stable internet connection and try again.", comment: "")
+    private func setup() {
+        errorTitleLabel.text = errorTitle
+        errorMessageLabel.text = errorMessage
         
         errorTitleLabel.sizeToFit()
         errorMessageLabel.sizeToFit()
     }
     
-    class func configureDefault() -> GeoWeatherDetailNetworkErrorView {
-        let view = GeoWeatherDetailNetworkErrorView()
-        view.configure()
-        return view
-    }
-    
     // MARK: - Views
     
-    private let noWifiIcon: UIImageView = {
+    private let noWiFiIcon: UIImageView = {
         let symbolConfig = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 60))
         let image = UIImage(systemName: "wifi.slash", withConfiguration: symbolConfig)
         let imageView = UIImageView(image: image)
