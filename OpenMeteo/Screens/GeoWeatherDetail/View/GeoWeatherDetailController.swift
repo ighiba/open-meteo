@@ -158,7 +158,7 @@ class GeoWeatherDetailViewController: UIViewController {
     }
 
     private func configureViews(with geoWeather: GeoWeather) {
-        geoWeatherDetailScrollView.configure(geocoding: geoWeather.geocoding, weather: geoWeather.weather)
+        geoWeatherDetailScrollView.update(withGeocoding: geoWeather.geocoding, weather: geoWeather.weather)
         
         if let weather = geoWeather.weather {
             let skyType = weather.obtainCurrentSkyType()
