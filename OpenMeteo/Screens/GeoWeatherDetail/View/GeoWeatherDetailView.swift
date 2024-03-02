@@ -26,7 +26,7 @@ final class GeoWeatherDetailView: UIScrollView {
     lazy var todayTemeperatureRangeContainer = configureTodayTemperatureRangeContainer()
     lazy var weatherCodeDescriptionLabel = configureWeatherCodeDescriptionLabel()
     
-    private let hourlyForecastCollectionView = HourlyForecastCollectionView()
+    private let hourlyForecastContainer = HourlyForecastContainer()
     private let dailyForecastContainer = DailyForecastContainer()
     
     lazy var apparentTemperatureAndWindHorizontalStack = configureHorizontalContainerCouple(apparentTemperatureContainer, windContainer)
@@ -44,12 +44,12 @@ final class GeoWeatherDetailView: UIScrollView {
     }
     
     // MARK: - Init
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupViews()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -77,7 +77,7 @@ final class GeoWeatherDetailView: UIScrollView {
             make.height.equalTo(todayTemperatureRangeContainerHeight)
         }
 
-        hourlyForecastCollectionView.snp.makeConstraints { make in
+        hourlyForecastContainer.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalTo(HourForecastCell.height)
         }
@@ -114,7 +114,7 @@ final class GeoWeatherDetailView: UIScrollView {
     }
     
     private func updateViewsStyle(with style: ContainerStyle) {
-        hourlyForecastCollectionView.updateContainerStyle(with: style)
+        hourlyForecastContainer.updateContainerStyle(with: style)
         dailyForecastContainer.updateContainerStyle(with: style)
         apparentTemperatureContainer.updateContainerStyle(with: style)
         windContainer.updateContainerStyle(with: style)
@@ -161,7 +161,7 @@ final class GeoWeatherDetailView: UIScrollView {
     
     private func updateHourlyForecastContainer(weather: Weather) {
         let hourlyForecastFor24Hours = weather.obtainHourlyForecastFor(nextHours: 24)
-        hourlyForecastCollectionView.update(with: hourlyForecastFor24Hours)
+        hourlyForecastContainer.update(with: hourlyForecastFor24Hours)
     }
     
     private func updateDailyForecastContainer(weather: Weather) {
@@ -195,7 +195,7 @@ final class GeoWeatherDetailView: UIScrollView {
     private func configureContentContainer() -> UIStackView {
         let container = UIStackView(arrangedSubviews: [
             mainInfoContainer,
-            hourlyForecastCollectionView,
+            hourlyForecastContainer,
             dailyForecastContainer,
             apparentTemperatureAndWindHorizontalStack,
             relativeHumidityAndPrecipitationStack
@@ -222,7 +222,7 @@ final class GeoWeatherDetailView: UIScrollView {
         
         return container
     }
-
+    
     private func configureGeoNameLabel() -> UILabel {
         let label = UILabel()
         
@@ -233,7 +233,7 @@ final class GeoWeatherDetailView: UIScrollView {
         
         return label
     }
-
+    
     private func configureCurrentTemperatureLabel() -> TemperatureLabel {
         let label = TemperatureLabel()
 
@@ -242,7 +242,7 @@ final class GeoWeatherDetailView: UIScrollView {
 
         return label
     }
-
+    
     private func configureTodayTemperatureRangeContainer() -> TemperatureRangeContainer {
         let container = TemperatureRangeContainer()
         

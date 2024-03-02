@@ -1,5 +1,5 @@
 //
-//  HourlyForecastCollectionView.swift
+//  HourlyForecastContainer.swift
 //  OpenMeteo
 //
 //  Created by Ivan Ghiba on 26.06.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HourlyForecastCollectionView: UICollectionView, StyledContainer {
+final class HourlyForecastContainer: UICollectionView, StyledContainer {
     
     private let verticalSectionInset: CGFloat = 10
     
@@ -92,7 +92,7 @@ final class HourlyForecastCollectionView: UICollectionView, StyledContainer {
 
 // MARK: - DataSource
 
-extension HourlyForecastCollectionView: UICollectionViewDataSource {
+extension HourlyForecastContainer: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
