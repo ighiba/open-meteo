@@ -171,7 +171,7 @@ final class GeoWeatherDetailView: UIScrollView {
     
     private func updateApparentTemperatureContainer(currentHourForecast: HourForecast) {
         let currentHourTemperature = currentHourForecast.temperature
-        apparentTemperatureContainer.setup(withHourTemperature: currentHourTemperature)
+        apparentTemperatureContainer.update(withHourTemperature: currentHourTemperature)
     }
     
     private func updateWindContainer(currentHourForecast: HourForecast) {

@@ -36,7 +36,7 @@ final class ApparentTemperatureContainer: ContainerView {
         }
     }
 
-    func setup(withHourTemperature hourTemperature: HourTemperature) {
+    func update(withHourTemperature hourTemperature: HourTemperature) {
         let apparentTemperature = hourTemperature.apparent
         let descriptionText = hourTemperature.perception.localizedDescription
 
