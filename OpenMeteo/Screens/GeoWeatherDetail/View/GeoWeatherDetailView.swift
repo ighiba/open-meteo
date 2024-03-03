@@ -176,7 +176,7 @@ final class GeoWeatherDetailView: UIScrollView {
     
     private func updateWindContainer(currentHourForecast: HourForecast) {
         let wind = currentHourForecast.wind
-        windContainer.setup(withWind: wind)
+        windContainer.update(withWind: wind)
     }
     
     private func updateRelativeHumidityContainer(currentHourForecast: HourForecast) {

@@ -33,7 +33,7 @@ final class WindContainer: ContainerView {
         }
     }
     
-    func setup(withWind wind: Wind) {
+    func update(withWind wind: Wind) {
         let windDirectionDescriptionShort = WindDirection.obtain(by: wind.direction)?.localizedDescriptionShort ?? "--"
         let windSpeedText = transfromIntoLocalizedText(windSpeed: wind.speed)
         
