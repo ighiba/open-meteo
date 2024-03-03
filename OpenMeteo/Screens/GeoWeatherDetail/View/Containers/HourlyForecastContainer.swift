@@ -58,7 +58,7 @@ final class HourlyForecastContainer: UICollectionView, StyledContainer {
         blurEffectView.updateBlur(style: containerStyle.blurStyle, withAlpha: containerStyle.alpha)
     }
     
-    func update(with hourForecastList: [HourForecast]) {
+    func update(withHourlyForecastList hourForecastList: [HourForecast]) {
         self.hourForecastList = hourForecastList
     }
     

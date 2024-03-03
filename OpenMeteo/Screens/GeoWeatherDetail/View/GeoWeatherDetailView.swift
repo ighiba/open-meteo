@@ -161,7 +161,7 @@ final class GeoWeatherDetailView: UIScrollView {
     
     private func updateHourlyForecastContainer(weather: Weather) {
         let hourlyForecastFor24Hours = weather.obtainHourlyForecastFor(nextHours: 24)
-        hourlyForecastContainer.update(with: hourlyForecastFor24Hours)
+        hourlyForecastContainer.update(withHourlyForecastList: hourlyForecastFor24Hours)
     }
     
     private func updateDailyForecastContainer(weather: Weather) {
