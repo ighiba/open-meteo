@@ -166,7 +166,7 @@ final class GeoWeatherDetailView: UIScrollView {
     
     private func updateDailyForecastContainer(weather: Weather) {
         let dailyForecastForWeek = weather.obtainDailyForecastFor(nextDays: 7)
-        dailyForecastContainer.setup(with: dailyForecastForWeek)
+        dailyForecastContainer.update(withDailyForecastList: dailyForecastForWeek)
     }
     
     private func updateApparentTemperatureContainer(currentHourForecast: HourForecast) {

@@ -51,7 +51,7 @@ final class DailyForecastContainer: UIStackView, StyledContainer {
         blurEffectView.updateBlur(style: containerStyle.blurStyle, withAlpha: containerStyle.alpha)
     }
     
-    func setup(with dayForecastList: [DayForecast]) {
+    func update(withDailyForecastList dayForecastList: [DayForecast]) {
         arrangedSubviews.forEach { $0.removeFromSuperview() }
         addArrangedSubviews(dayForecastList: dayForecastList)
     }
