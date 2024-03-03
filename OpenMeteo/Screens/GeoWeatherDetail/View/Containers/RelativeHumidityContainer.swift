@@ -25,7 +25,7 @@ final class RelativeHumidityContainer: ContainerView {
         }
     }
 
-    func setup(withRelativeHumidity relativeHumidity: Int16) {
+    func update(withRelativeHumidity relativeHumidity: Int16) {
         let relativeHumidityText = String(format: "%i", relativeHumidity) + "%"
         relativeHumidityLabel.setAttributedTextWithShadow(relativeHumidityText)
     }

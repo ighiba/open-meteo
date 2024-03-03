@@ -181,7 +181,7 @@ final class GeoWeatherDetailView: UIScrollView {
     
     private func updateRelativeHumidityContainer(currentHourForecast: HourForecast) {
         let relativeHumidity = currentHourForecast.relativeHumidity
-        relativeHumidityContainer.setup(withRelativeHumidity: relativeHumidity)
+        relativeHumidityContainer.update(withRelativeHumidity: relativeHumidity)
     }
     
     private func updatePrecipitationSumContainer(currentDayForecast: DayForecast?, nextDayForecast: DayForecast?) {
