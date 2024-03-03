@@ -39,17 +39,17 @@ final class PrecipitationSumContainer: ContainerView {
         }
     }
 
-    func setup(withTodaySum todayPrecipitationSum: Float, tomorrowSum tomorrowPrecipitationSum: Float) {
-        setupTodayPrecipitationLabel(todayPrecipitationSum: todayPrecipitationSum)
-        setupTomorrowPrecipitationLabel(tomorrowPrecipitationSum: tomorrowPrecipitationSum)
+    func update(withTodaySum todayPrecipitationSum: Float, tomorrowSum tomorrowPrecipitationSum: Float) {
+        updateTodayPrecipitationLabel(todayPrecipitationSum: todayPrecipitationSum)
+        updateTomorrowPrecipitationLabel(tomorrowPrecipitationSum: tomorrowPrecipitationSum)
     }
     
-    private func setupTodayPrecipitationLabel(todayPrecipitationSum: Float) {
+    private func updateTodayPrecipitationLabel(todayPrecipitationSum: Float) {
         let todayPrecipitationText = transfromIntoLocalizedText(precipitationSum: todayPrecipitationSum)
         todayPrecipitationLabel.setAttributedTextWithShadow(todayPrecipitationText)
     }
     
-    private func setupTomorrowPrecipitationLabel(tomorrowPrecipitationSum: Float) {
+    private func updateTomorrowPrecipitationLabel(tomorrowPrecipitationSum: Float) {
         let tomorrowPrecipitationText = configureTomorrowPrecipitationText(tomorrowPrecipitationSum: tomorrowPrecipitationSum)
         tomorrowPrecipitationLabel.setAttributedTextWithShadow(tomorrowPrecipitationText)
         tomorrowPrecipitationLabel.attributedStringSetMultilineText()

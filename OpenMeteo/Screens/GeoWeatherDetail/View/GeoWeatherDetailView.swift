@@ -187,7 +187,7 @@ final class GeoWeatherDetailView: UIScrollView {
     private func updatePrecipitationSumContainer(currentDayForecast: DayForecast?, nextDayForecast: DayForecast?) {
         let todayPrecipitationSum = currentDayForecast?.precipitationSum ?? 0
         let tomorrowPrecipitationSum = nextDayForecast?.precipitationSum ?? 0
-        precipitationSumContainer.setup(withTodaySum: todayPrecipitationSum, tomorrowSum: tomorrowPrecipitationSum)
+        precipitationSumContainer.update(withTodaySum: todayPrecipitationSum, tomorrowSum: tomorrowPrecipitationSum)
     }
     
     // MARK: - Views
