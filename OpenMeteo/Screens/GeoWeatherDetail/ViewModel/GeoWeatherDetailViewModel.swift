@@ -15,7 +15,7 @@ protocol GeoWeatherDetailViewModelDelegate: AnyObject {
     func updateWeather(forcedUpdate: Bool)
 }
 
-class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
+final class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     
     // MARK: - Properties
     
@@ -34,7 +34,7 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     // MARK: - Methods
     
     func updateWeather(forcedUpdate: Bool) {
-        guard needUpdate(for: geoWeather.weather) || forcedUpdate else { return }
+        guard isUpdateNeeded(for: geoWeather.weather) || forcedUpdate else { return }
         
         cancellables.forEach { $0.cancel() }
         cancellables.removeAll()
@@ -56,9 +56,8 @@ class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
             .store(in: &cancellables)
     }
     
-    private func needUpdate(for weather: Weather?) -> Bool {
-        guard let weather = weather else { return true }
-        return weather.isNeededUpdate()
+    private func isUpdateNeeded(for weather: Weather?) -> Bool {
+        return weather?.isUpdateNeeded() ?? true
     }
     
     private func fetchWeatherPublisher(geocoding: Geocoding) -> AnyPublisher<Weather, FetchError> {

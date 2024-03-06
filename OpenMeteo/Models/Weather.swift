@@ -62,7 +62,7 @@ struct Weather {
     
     // MARK: - Methods
     
-    func isNeededUpdate() -> Bool {
+    func isUpdateNeeded() -> Bool {
         return lastUpdateTimestamp.timeIntervalSinceNow <= -900 || current.date.timeIntervalSinceNow <= -oneHour
     }
     
