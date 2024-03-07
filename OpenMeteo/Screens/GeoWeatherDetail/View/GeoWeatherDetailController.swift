@@ -33,7 +33,7 @@ final class GeoWeatherDetailViewController: UIViewController {
     var navigationBarConfiguration: NavigationBarConfiguration = .standart
     
     var geoWeatherDidAdd: ((GeoWeather) -> Void)?
-    var updateHandler: (() -> Void)?
+    var updateHandler: ((GeoWeather) -> Void)?
     
     lazy var navigationBarOffset: CGFloat = calculateNavigationBarOffset()
     
@@ -70,12 +70,6 @@ final class GeoWeatherDetailViewController: UIViewController {
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.statusBarStyle = .lightContent
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        updateHandler?()
     }
     
     // MARK: - Methods
@@ -148,6 +142,7 @@ final class GeoWeatherDetailViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] geoWeather in
                 self?.handleRefreshControlEnd()
+                self?.updateHandler?(geoWeather)
                 self?.update(withGeoWeather: geoWeather)
             }
             .store(in: &cancellables)

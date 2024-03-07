@@ -8,25 +8,38 @@
 import Foundation
 import Combine
 
-private let currentLocationId: Int = -1
+enum UpdateRule {
+    case updateAll
+    case reload(ids: [GeoWeather.ID])
+}
 
 protocol GeoWeatherListViewModelDelegate: AnyObject {
     var geoWeatherList: [GeoWeather] { get }
-    var geoWeatherListPublisher: Published<[GeoWeather]>.Publisher { get }
-    var idsThatChanged: PassthroughSubject<[GeoWeather.ID], Never> { get }
+    var geoWeatherListUpdatePublisher: AnyPublisher<UpdateRule, Never> { get }
     func loadInitialData()
     func updateAllWeather()
+    func updateGeoWeather(withId id: GeoWeather.ID, weather: Weather?)
     func addGeoWeather(_ geoWeather: GeoWeather)
+    func insertGeoWeather(_ geoWeather: GeoWeather, at index: Int)
     func deleteGeoWeather(withId id: GeoWeather.ID)
 }
 
 final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     
     // MARK: - Properties
+    
+    private let currentLocationId: Int = -1
 
-    @Published var geoWeatherList: [GeoWeather] = []
-    var geoWeatherListPublisher: Published<[GeoWeather]>.Publisher { $geoWeatherList }
-    var idsThatChanged: PassthroughSubject<[GeoWeather.ID], Never> = PassthroughSubject()
+    var geoWeatherList: [GeoWeather] = [] {
+        didSet {
+            if geoWeatherList.count != oldValue.count {
+                geoWeatherListUpdateSubject.send(.updateAll)
+            }
+        }
+    }
+
+    private let geoWeatherListUpdateSubject: PassthroughSubject<UpdateRule, Never> = PassthroughSubject()
+    var geoWeatherListUpdatePublisher: AnyPublisher<UpdateRule, Never> { geoWeatherListUpdateSubject.eraseToAnyPublisher() }
     
     var networkManager: NetworkManager!
     var dataManager: DataManager!
@@ -63,31 +76,35 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         )
         
         let geoWeatherForUpdate: GeoWeather
-        
         if let currentLocationGeoWeather = geoWeatherList.item(withId: currentLocationId) {
-            currentLocationGeoWeather.geocoding = currentLocationGeocoding
-            geoWeatherForUpdate = currentLocationGeoWeather
+            geoWeatherForUpdate = GeoWeather(geocoding: currentLocationGeocoding, weather: currentLocationGeoWeather.weather)
         } else {
-            let newCurrentLocation = GeoWeather(geocoding: currentLocationGeocoding)
-            geoWeatherForUpdate = newCurrentLocation
+            geoWeatherForUpdate = GeoWeather(geocoding: currentLocationGeocoding)
         }
         
         insertGeoWeather(geoWeatherForUpdate, at: 0)
+        updateWeather(forGeoWeather: geoWeatherForUpdate)
     }
     
     func updateAllWeather() {
         cancellables.forEach { $0.cancel() }
         cancellables.removeAll()
-        updateGeoWeatherList(geoWeatherList)
+        updateWeather(forGeoWeatherList: geoWeatherList)
+    }
+    
+    func updateGeoWeather(withId id: GeoWeather.ID, weather: Weather?) {
+        guard let index = geoWeatherList.index(withItemId: id) else { return }
+        
+        geoWeatherList[index].weather = weather
+        geoWeatherListUpdateSubject.send(.reload(ids: [id]))
     }
     
     func addGeoWeather(_ geoWeather: GeoWeather) {
         let ids = geoWeatherList.map { $0.id }
         guard !ids.contains(geoWeather.id) else { return }
         
-        geoWeatherList += [geoWeather]
+        geoWeatherList.append(geoWeather)
         saveGeoWeatherList(geoWeatherList)
-        updateGeoWeatherList([geoWeather])
     }
     
     func insertGeoWeather(_ geoWeather: GeoWeather, at index: Int) {
@@ -102,7 +119,6 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         }
         
         saveGeoWeatherList(geoWeatherList)
-        updateGeoWeatherList(geoWeatherList)
     }
     
     func deleteGeoWeather(withId id: GeoWeather.ID) {
@@ -111,6 +127,8 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         let deletedGeoWeather = geoWeatherList.remove(at: index)
         dataManager.delete(geoModelWithId: deletedGeoWeather.geocoding.id)
     }
+    
+    // MARK: - DB
     
     private func loadGeoWeatherList() -> [GeoWeather] {
         let geoModelList = dataManager.obtainGeoModelList()
@@ -124,8 +142,14 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         dataManager.save(geoModelList)
     }
     
-    private func updateGeoWeatherList(_ geoWeatherList: [GeoWeather]) {
-        updateWeatherForGeoWeatherList(geoWeatherList: geoWeatherList)
+    // MARK: - Network
+    
+    private func updateWeather(forGeoWeather geoWeather: GeoWeather) {
+        updateWeather(forGeoWeatherList: [geoWeather])
+    }
+    
+    private func updateWeather(forGeoWeatherList geoWeatherList: [GeoWeather]) {
+        fetchWeatherPublishers(forGeoWeatherList: geoWeatherList)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
@@ -139,12 +163,11 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
             .store(in: &cancellables)
     }
     
-    private func updateWeatherForGeoWeatherList(geoWeatherList: [GeoWeather]) -> AnyPublisher<Void, FetchError> {
+    private func fetchWeatherPublishers(forGeoWeatherList geoWeatherList: [GeoWeather]) -> AnyPublisher<Void, FetchError> {
         let fetchWeatherPublishers = geoWeatherList.map { geoWeather in
             fetchWeatherPublisher(geocoding: geoWeather.geocoding)
                 .map { [weak self] weather in
-                    geoWeather.weather = weather
-                    self?.idsThatChanged.send([geoWeather.id])
+                    self?.updateGeoWeather(withId: geoWeather.id, weather: weather)
                 }
                 .eraseToAnyPublisher()
         }

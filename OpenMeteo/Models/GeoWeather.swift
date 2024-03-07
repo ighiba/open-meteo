@@ -7,18 +7,12 @@
 
 import Foundation
 
-final class GeoWeather: Identifiable {
-    var id: Int
+struct GeoWeather: Identifiable {
+    let id: Int
     var geocoding: Geocoding
     var weather: Weather?
     
-    init(geocoding: Geocoding) {
-        self.id = geocoding.id
-        self.geocoding = geocoding
-        self.weather = nil
-    }
-    
-    init(geocoding: Geocoding, weather: Weather) {
+    init(geocoding: Geocoding, weather: Weather? = nil) {
         self.id = geocoding.id
         self.geocoding = geocoding
         self.weather = weather

@@ -132,17 +132,15 @@ final class GeoWeatherListViewController: UICollectionViewController {
     }
     
     private func setupBindings() {
-        viewModel.geoWeatherListPublisher
+        viewModel.geoWeatherListUpdatePublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.updateSnapshot()
-            }
-            .store(in: &cancellables)
-        
-        viewModel.idsThatChanged
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] ids in
-                self?.updateSnapshot(reloading: ids)
+            .sink { [weak self] updateRule in
+                switch updateRule {
+                case .updateAll:
+                    self?.updateSnapshot()
+                case .reload(let ids):
+                    self?.updateSnapshot(reloading: ids)
+                }
             }
             .store(in: &cancellables)
     }
@@ -198,8 +196,10 @@ final class GeoWeatherListViewController: UICollectionViewController {
 
         initialPathForAnimator = UIBezierPath(roundedRect: cellOnRootViewRect, cornerRadius: cell.layer.cornerRadius).cgPath
         detailViewController.modalPresentationStyle = .fullScreen
-        detailViewController.updateHandler = { [weak self] in
-            self?.updateSnapshot(reloading: [geoWeather.id])
+        detailViewController.updateHandler = { [weak self] updatedGeoWeather in
+            let id = updatedGeoWeather.id
+            let weather = updatedGeoWeather.weather
+            self?.viewModel.updateGeoWeather(withId: id, weather: weather)
         }
         
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
