@@ -100,7 +100,7 @@ final class GeoWeatherCell: UICollectionViewCell {
         addGestureRecognizer(longPressGesture)
     }
     
-    func setup(with geoWeather: GeoWeather) {
+    func update(with geoWeather: GeoWeather) {
         geoNameLabel.text = geoWeather.geocoding.name
         
         if let weather = geoWeather.weather {

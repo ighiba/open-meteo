@@ -1,5 +1,5 @@
 //
-//  GeoWeatherListView+DataSource.swift
+//  GeoWeatherListViewController+DataSource.swift
 //  OpenMeteo
 //
 //  Created by Ivan Ghiba on 25.06.2023.
@@ -15,12 +15,15 @@ extension GeoWeatherListViewController {
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, GeoWeather.ID>
     
     func updateSnapshot(reloading idsThatChanged: [GeoWeather.ID] = []) {
-        let ids = idsThatChanged.filter { id in viewModel.geoWeatherList.contains(where: { $0.id == id }) }
+        let itemsToReload = idsThatChanged.filter { id in viewModel.geoWeatherList.contains(where: { $0.id == id }) }
+        let items = viewModel.geoWeatherList.map { $0.id }
+        
         var snapshot = Snapshot()
         snapshot.appendSections([0])
-        snapshot.appendItems(viewModel.geoWeatherList.map { $0.id } )
-        if !ids.isEmpty {
-            snapshot.reloadItems(ids)
+        snapshot.appendItems(items)
+        
+        if !itemsToReload.isEmpty {
+            snapshot.reloadItems(itemsToReload)
             dataSource.apply(snapshot, animatingDifferences: true) { [weak self] in
                 self?.handleRefreshControlEnd()
             }
@@ -37,31 +40,31 @@ extension GeoWeatherListViewController {
         for indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GeoWeatherCell.identifier, for: indexPath)
-        guard let weatherCell = cell as? GeoWeatherCell, let geoWeather = geoWeather(withId: itemIdentifier) else { return cell }
+        guard let geoWeatherCell = cell as? GeoWeatherCell,
+              let geoWeather = viewModel.geoWeatherList.item(withId: itemIdentifier)
+        else {
+            return cell
+        }
         
-        weatherCell.setup(with: geoWeather)
-        weatherCell.longPressDidEndHandler = { [weak self] in 
+        geoWeatherCell.update(with: geoWeather)
+        geoWeatherCell.longPressDidEndHandler = { [weak self] in 
             self?.openDetail(for: indexPath)
         }
-        weatherCell.deleteButtonDidTapHandler = { [weak self] in
+        geoWeatherCell.deleteButtonDidTapHandler = { [weak self] in
             let id = geoWeather.id
             self?.removeItem(withId: id)
         }
         
         if isEditing && !isAnimatingEditing {
-            weatherCell.startEditing(animated: false)
-        } else if !isEditing && weatherCell.isEditing {
-            weatherCell.endEditing(animated: false)
+            geoWeatherCell.startEditing(animated: false)
+        } else if !isEditing && geoWeatherCell.isEditing {
+            geoWeatherCell.endEditing(animated: false)
         }
         
-        return weatherCell
+        return geoWeatherCell
     }
     
     func removeItem(withId id: GeoWeather.ID) {
         viewModel.deleteGeoWeather(withId: id)
-    }
-    
-    func geoWeather(withId id: GeoWeather.ID) -> GeoWeather? {
-        return viewModel.geoWeatherList.item(withId: id)
     }
 }
