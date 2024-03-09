@@ -1,5 +1,5 @@
 //
-//  GeoSearchView+DataSource.swift
+//  GeoSearchViewController+DataSource.swift
 //  OpenMeteo
 //
 //  Created by Ivan Ghiba on 06.07.2023.
@@ -28,23 +28,14 @@ extension GeoSearchViewController {
         for indexPath: IndexPath
     ) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GeocodingCell.identifier, for: indexPath)
-        guard let geocodingCell = cell as? GeocodingCell, let geocoding = geocoding(withId: itemIdentifier) else {
+        guard let geocodingCell = cell as? GeocodingCell,
+              let geocoding = viewModel.geocodingList.item(withId: itemIdentifier)
+        else {
             return cell
         }
         
         geocodingCell.setupCell(geocoding: geocoding)
         
         return geocodingCell
-    }
-    
-    private func geocoding(withId id: Geocoding.ID) -> Geocoding? {
-        if let index = indexOfGeoWeather(for: id) {
-            return viewModel.geocodingList[index]
-        }
-        return nil
-    }
-    
-    private func indexOfGeoWeather(for id: Geocoding.ID) -> Int? {
-        return viewModel.geocodingList.firstIndex { $0.id == id }
     }
 }
