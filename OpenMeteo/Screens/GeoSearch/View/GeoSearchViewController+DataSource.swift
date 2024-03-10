@@ -34,7 +34,7 @@ extension GeoSearchViewController {
             return cell
         }
         
-        geocodingCell.setupCell(geocoding: geocoding)
+        geocodingCell.update(with: geocoding)
         
         return geocodingCell
     }

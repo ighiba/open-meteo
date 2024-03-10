@@ -19,7 +19,7 @@ final class GeocodingCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(geocoding: Geocoding) {
+    func update(with geocoding: Geocoding) {
         let adminLocation = geocoding.adminLocation.isEmpty ? "" : ", \(geocoding.adminLocation)"
         let titleText = "\(geocoding.name)\(adminLocation)"
         let detailText = "\(geocoding.country)"
