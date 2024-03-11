@@ -1,5 +1,5 @@
 //
-//  GeoSearchController.swift
+//  GeoSearchViewController.swift
 //  OpenMeteo
 //
 //  Created by Ivan Ghiba on 03.07.2023.

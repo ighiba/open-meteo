@@ -54,10 +54,6 @@ final class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
             .store(in: &cancellables)
     }
     
-    private func isUpdateNeeded(for weather: Weather?) -> Bool {
-        return weather?.isUpdateNeeded() ?? true
-    }
-    
     private func fetchWeatherPublisher(geocoding: Geocoding) -> AnyPublisher<Weather, FetchError> {
         return Future<Weather, FetchError> { [weak self] promise in
             self?.networkManager.fetchWeather(endpoint: .standart(geocoding: geocoding)) { result in
@@ -70,5 +66,9 @@ final class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
             }
         }
         .eraseToAnyPublisher()
+    }
+    
+    private func isUpdateNeeded(for weather: Weather?) -> Bool {
+        return weather?.isUpdateNeeded() ?? true
     }
 }

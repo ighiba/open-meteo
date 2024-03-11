@@ -1,5 +1,5 @@
 //
-//  GeoWeatherDetailController.swift
+//  GeoWeatherDetailViewController.swift
 //  OpenMeteo
 //
 //  Created by Ivan Ghiba on 25.06.2023.
