@@ -52,7 +52,7 @@ final class GeoWeatherCell: UICollectionViewCell {
         backgroundGradientView.addSubview(geoNameLabel)
         backgroundGradientView.addSubview(weatherCodeDescriptionLabel)
         backgroundGradientView.addSubview(currentTemperatureLabel)
-        backgroundGradientView.addSubview(todayMinMaxTemeperatureRangeContainer)
+        backgroundGradientView.addSubview(todayTemeperatureRangeContainer)
         insertSubview(deleteItemButton, at: 0)
 
         backgroundGradientView.snp.makeConstraints { make in
@@ -64,13 +64,13 @@ final class GeoWeatherCell: UICollectionViewCell {
         
         geoNameLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(horizontalOffset)
-            make.trailing.equalTo(todayMinMaxTemeperatureRangeContainer.snp.leading)
+            make.trailing.equalTo(todayTemeperatureRangeContainer.snp.leading)
             make.top.equalTo(currentTemperatureLabel).offset(10)
         }
         
         weatherCodeDescriptionLabel.snp.makeConstraints { make in
             make.leading.equalTo(geoNameLabel)
-            make.centerY.equalTo(todayMinMaxTemeperatureRangeContainer)
+            make.centerY.equalTo(todayTemeperatureRangeContainer)
         }
 
         currentTemperatureLabel.snp.makeConstraints { make in
@@ -78,10 +78,10 @@ final class GeoWeatherCell: UICollectionViewCell {
             make.centerY.equalToSuperview().offset(-horizontalOffset / 2)
         }
         
-        todayMinMaxTemeperatureRangeContainer.snp.makeConstraints { make in
+        todayTemeperatureRangeContainer.snp.makeConstraints { make in
             make.top.equalTo(currentTemperatureLabel.snp.bottom)
             make.centerX.equalTo(currentTemperatureLabel)
-            make.width.equalTo(todayMinMaxTemeperatureRangeContainer.preferredWidth)
+            make.width.equalTo(todayTemeperatureRangeContainer.preferredWidth)
             make.height.equalTo(20)
         }
         
@@ -110,12 +110,12 @@ final class GeoWeatherCell: UICollectionViewCell {
             updateBackground(forWeather: weather)
             weatherCodeDescriptionLabel.setAttributedTextWithShadow(currentHourForecast.weatherCode.localizedDescription)
             currentTemperatureLabel.setTemperature(currentHourForecast.temperature.real)
-            todayMinMaxTemeperatureRangeContainer.setTemperature(range: currentDayForecast?.temperatureRange)
+            todayTemeperatureRangeContainer.setTemperature(range: currentDayForecast?.temperatureRange)
         } else {
             setDefaultBackground()
             weatherCodeDescriptionLabel.setAttributedTextWithShadow("..")
             currentTemperatureLabel.setPlaceholder()
-            todayMinMaxTemeperatureRangeContainer.setPlaceholders()
+            todayTemeperatureRangeContainer.setPlaceholders()
         }
     }
 
@@ -144,7 +144,7 @@ final class GeoWeatherCell: UICollectionViewCell {
             let mask = CAShapeLayer(with: finalPath)
             backgroundGradientView.layer.mask = mask
             currentTemperatureLabel.layer.opacity = 0.0
-            todayMinMaxTemeperatureRangeContainer.layer.opacity = 0.0
+            todayTemeperatureRangeContainer.layer.opacity = 0.0
         }
     }
     
@@ -158,7 +158,7 @@ final class GeoWeatherCell: UICollectionViewCell {
             removeAllAnimations()
             longPressGesture.isEnabled = true
             currentTemperatureLabel.layer.opacity = 1.0
-            todayMinMaxTemeperatureRangeContainer.layer.opacity = 1.0
+            todayTemeperatureRangeContainer.layer.opacity = 1.0
             backgroundGradientView.layer.mask = nil
             backgroundGradientView.isUserInteractionEnabled = true
             deleteItemButton.isHidden = true
@@ -167,7 +167,7 @@ final class GeoWeatherCell: UICollectionViewCell {
     
     private func removeAllAnimations() {
         currentTemperatureLabel.layer.removeAllAnimations()
-        todayMinMaxTemeperatureRangeContainer.layer.removeAllAnimations()
+        todayTemeperatureRangeContainer.layer.removeAllAnimations()
         deleteItemButton.layer.removeAllAnimations()
     }
     
@@ -192,7 +192,7 @@ final class GeoWeatherCell: UICollectionViewCell {
         )
         
         currentTemperatureLabel.layer.animateOpacity(from: 1.0, to: 0.0, duration: duration / 2)
-        todayMinMaxTemeperatureRangeContainer.layer.animateOpacity(from: 1.0, to: 0.0, duration: duration / 2)
+        todayTemeperatureRangeContainer.layer.animateOpacity(from: 1.0, to: 0.0, duration: duration / 2)
 
         deleteItemButton.layer.animateRotation(from: -CGFloat.pi * 0.5, to: 0, duration: duration)
     }
@@ -219,7 +219,7 @@ final class GeoWeatherCell: UICollectionViewCell {
         )
         
         currentTemperatureLabel.layer.animateOpacity(from: 0.0, to: 1.0, duration: duration / 2)
-        todayMinMaxTemeperatureRangeContainer.layer.animateOpacity(from: 0.0, to: 1.0, duration: duration / 2)
+        todayTemeperatureRangeContainer.layer.animateOpacity(from: 0.0, to: 1.0, duration: duration / 2)
 
         deleteItemButton.layer.animateRotation(from: 0.0, to: -CGFloat.pi * 0.5, duration: duration)
     }
@@ -277,7 +277,7 @@ final class GeoWeatherCell: UICollectionViewCell {
         return label
     }()
     
-    private let todayMinMaxTemeperatureRangeContainer: TemperatureRangeContainer = {
+    private let todayTemeperatureRangeContainer: TemperatureRangeContainer = {
         let container = TemperatureRangeContainer(withFontSize: 15)
         
         container.setColors(.white)
