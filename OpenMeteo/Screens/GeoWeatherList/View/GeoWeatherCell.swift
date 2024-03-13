@@ -17,6 +17,9 @@ final class GeoWeatherCell: UICollectionViewCell {
     
     private var cornerRadius: CGFloat { Self.height / 5 }
     private let horizontalOffset: CGFloat = 20
+    private let verticalOffset: CGFloat = 10
+    private let temperatureRangeContainerHeight: CGFloat = 20
+    private let deleteItemButtonWidth: CGFloat = 40
     private let editingBackgroundViewInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 60)
     
     private(set) var isEditing = false
@@ -65,7 +68,7 @@ final class GeoWeatherCell: UICollectionViewCell {
         geoNameLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(horizontalOffset)
             make.trailing.equalTo(todayTemeperatureRangeContainer.snp.leading)
-            make.top.equalTo(currentTemperatureLabel).offset(10)
+            make.top.equalTo(currentTemperatureLabel).offset(verticalOffset)
         }
         
         weatherCodeDescriptionLabel.snp.makeConstraints { make in
@@ -82,14 +85,14 @@ final class GeoWeatherCell: UICollectionViewCell {
             make.top.equalTo(currentTemperatureLabel.snp.bottom)
             make.centerX.equalTo(currentTemperatureLabel)
             make.width.equalTo(todayTemeperatureRangeContainer.preferredWidth)
-            make.height.equalTo(20)
+            make.height.equalTo(temperatureRangeContainerHeight)
         }
         
         deleteItemButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
             make.centerY.equalToSuperview()
-            make.width.equalTo(40)
-            make.height.equalTo(40)
+            make.width.equalTo(deleteItemButtonWidth)
+            make.height.equalTo(deleteItemButtonWidth)
         }
     }
     
@@ -308,7 +311,7 @@ extension GeoWeatherCell {
         guard !isEditing else { return }
         
         let blindSpotInsetValue: CGFloat = 5
-        let blindSpotInsets = isLastTouchInBounds ? UIEdgeInsets(blindSpotInsetValue * -1) : UIEdgeInsets(blindSpotInsetValue)
+        let blindSpotInsets = isLastTouchInBounds ? UIEdgeInsets(-blindSpotInsetValue) : UIEdgeInsets(blindSpotInsetValue)
         
         let touchLocation = sender.location(in: self)
         let isTouchInBounds = bounds.inset(by: blindSpotInsets).contains(touchLocation)
