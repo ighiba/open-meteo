@@ -13,7 +13,7 @@
 		C01D28C92A53738E00412BCD /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D28C82A53738E00412BCD /* NetworkManager.swift */; };
 		C01D28CB2A5430B700412BCD /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D28CA2A5430B700412BCD /* URL.swift */; };
 		C01D28CD2A5434C600412BCD /* FetchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D28CC2A5434C600412BCD /* FetchError.swift */; };
-		C02DE7042A65678300D38A31 /* Array+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02DE7032A65678300D38A31 /* Array+Identifiable.swift */; };
+		C02DE7042A65678300D38A31 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02DE7032A65678300D38A31 /* Array.swift */; };
 		C03E36972B713A5400635AEC /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E36962B713A5400635AEC /* DateFormatter.swift */; };
 		C03E36992B713A6900635AEC /* ISO8601DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E36982B713A6900635AEC /* ISO8601DateFormatter.swift */; };
 		C04E2C0A2A473EAA00A5B1E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C092A473EAA00A5B1E8 /* AppDelegate.swift */; };
@@ -123,7 +123,7 @@
 		C01D28C82A53738E00412BCD /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		C01D28CA2A5430B700412BCD /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		C01D28CC2A5434C600412BCD /* FetchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchError.swift; sourceTree = "<group>"; };
-		C02DE7032A65678300D38A31 /* Array+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Identifiable.swift"; sourceTree = "<group>"; };
+		C02DE7032A65678300D38A31 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		C03E36962B713A5400635AEC /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		C03E36982B713A6900635AEC /* ISO8601DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO8601DateFormatter.swift; sourceTree = "<group>"; };
 		C04E2C062A473EAA00A5B1E8 /* OpenMeteo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenMeteo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -559,7 +559,7 @@
 		C0E54D1A2A49EB3D003D00C8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C02DE7032A65678300D38A31 /* Array+Identifiable.swift */,
+				C02DE7032A65678300D38A31 /* Array.swift */,
 				C0E6CA372A55FEAA00D6695B /* CALayer+Animations.swift */,
 				C066C6BB2A4F738A004FDDE8 /* CAShapeLayer+Animations.swift */,
 				C0E54D1B2A49EB47003D00C8 /* Date.swift */,
@@ -815,7 +815,7 @@
 				C0E54D172A49A5DE003D00C8 /* DayForecastRow.swift in Sources */,
 				C07C434A2A72AD8900E90193 /* Forecast.swift in Sources */,
 				C08D196E2A48BAF300834A21 /* GeoWeatherDetailViewModel.swift in Sources */,
-				C02DE7042A65678300D38A31 /* Array+Identifiable.swift in Sources */,
+				C02DE7042A65678300D38A31 /* Array.swift in Sources */,
 				C066C6E02A523381004FDDE8 /* GeoSearchViewController.swift in Sources */,
 				C066C6E42A523CD8004FDDE8 /* GeocodingCell.swift in Sources */,
 				C066C6BC2A4F738A004FDDE8 /* CAShapeLayer+Animations.swift in Sources */,

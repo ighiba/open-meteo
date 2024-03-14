@@ -82,7 +82,7 @@ final class GeoSearchViewController: UISearchController {
     }
     
     private func openDetailAdd(for indexPath: IndexPath) {
-        guard let geocoding = geocoding(withIndexPath: indexPath),
+        guard let geocoding = geocoding(atIndexPath: indexPath),
               let detailViewController = GeoWeatherDetailModuleAssembly.configureModule(with: geocoding) as? GeoWeatherDetailViewController
         else {
             return
@@ -103,10 +103,8 @@ final class GeoSearchViewController: UISearchController {
         present(navigationController, animated: true)
     }
     
-    private func geocoding(withIndexPath indexPath: IndexPath) -> Geocoding? {
-        guard indexPath.row <= viewModel.geocodingList.count else { return nil }
-        
-        return viewModel.geocodingList[indexPath.row]
+    private func geocoding(atIndexPath indexPath: IndexPath) -> Geocoding? {
+        return viewModel.geocodingList.item(atIndex: indexPath.row)
     }
 }
 

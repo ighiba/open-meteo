@@ -184,7 +184,7 @@ final class GeoWeatherListViewController: UICollectionViewController {
     }
 
     func openDetail(for indexPath: IndexPath) {
-        guard let geoWeather = geoWeather(withIndexPath: indexPath),
+        guard let geoWeather = geoWeather(atIndexPath: indexPath),
               let detailViewController = GeoWeatherDetailModuleAssembly.configureModule(with: geoWeather) as? GeoWeatherDetailViewController 
         else {
             return
@@ -208,10 +208,8 @@ final class GeoWeatherListViewController: UICollectionViewController {
         navigationController?.pushViewController(detailViewController, animated: true)
     }
     
-    func geoWeather(withIndexPath indexPath: IndexPath) -> GeoWeather? {
-        guard viewModel.geoWeatherList.indices.contains(indexPath.row) else { return nil }
-        
-        return viewModel.geoWeatherList[indexPath.row]
+    func geoWeather(atIndexPath indexPath: IndexPath) -> GeoWeather? {
+        return viewModel.geoWeatherList.item(atIndex: indexPath.row)
     }
 
     func handleRefreshControlBegin() {
