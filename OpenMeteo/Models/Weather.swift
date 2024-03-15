@@ -7,6 +7,9 @@
 
 import Foundation
 
+private let oneHour: TimeInterval = 3600
+private let fifteenMinutes: TimeInterval = 900
+
 enum WeatherType {
     case clearSky
     case partiallyCloudy
@@ -20,12 +23,11 @@ enum WeatherType {
     case thunderstorm
 }
 
-private let oneHour: TimeInterval = 3600
-
 struct Weather {
     
     // MARK: - Properties
-    var lastUpdateTimestamp: Date
+    
+    let lastUpdateTimestamp: Date
     
     private var current: HourForecast
     private var hourlyForecast: [HourForecast]
@@ -63,7 +65,7 @@ struct Weather {
     // MARK: - Methods
     
     func isUpdateNeeded() -> Bool {
-        return lastUpdateTimestamp.timeIntervalSinceNow <= -900 || current.date.timeIntervalSinceNow <= -oneHour
+        return lastUpdateTimestamp.timeIntervalSinceNow <= -fifteenMinutes || current.date.timeIntervalSinceNow <= -oneHour
     }
     
     func obtainForecastForCurrentHour() -> HourForecast {

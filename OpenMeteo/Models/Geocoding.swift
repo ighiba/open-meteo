@@ -8,7 +8,7 @@
 import Foundation
 
 struct Geocoding: Identifiable, Codable {
-    var id: Int
+    let id: Int
     var name: String
     var latitude: Float
     var longitude: Float

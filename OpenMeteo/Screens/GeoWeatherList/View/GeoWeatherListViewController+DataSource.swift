@@ -7,8 +7,6 @@
 
 import UIKit
 
-// MARK: - DataSource
-
 extension GeoWeatherListViewController {
     
     typealias DataSource = UICollectionViewDiffableDataSource<Int, GeoWeather.ID>
