@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TemperatureLabel: UILabel {
+final class TemperatureLabel: UILabel {
     
     private var showTemperatureUnit: Bool
     
@@ -16,11 +16,7 @@ class TemperatureLabel: UILabel {
     init(_ temperature: Float? = nil, showTemperatureUnit: Bool = false) {
         self.showTemperatureUnit = showTemperatureUnit
         super.init(frame: .zero)
-        if let temperature = temperature {
-            self.setTemperature(temperature)
-        } else {
-            self.setPlaceholder()
-        }
+        self.setup(temperature: temperature)
     }
     
     required init?(coder: NSCoder) {
@@ -28,6 +24,14 @@ class TemperatureLabel: UILabel {
     }
     
     // MARK: - Methods
+    
+    private func setup(temperature: Float?) {
+        if let temperature {
+            setTemperature(temperature)
+        } else {
+            setPlaceholder()
+        }
+    }
     
     func setTemperature(_ temperature: Float) {
         let temperatureUnit = showTemperatureUnit ? "C" : ""
