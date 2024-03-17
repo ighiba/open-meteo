@@ -12,12 +12,13 @@ final class TemperatureLabelSymboled: UIView {
     
     // MARK: - Properties
     
-    private var symbolName: String
-    private var temperatureFontSize: CGFloat
+    private let symbolName: String
+    private let temperatureFontSize: CGFloat
 
     private let symbolInset: CGFloat = 3
     private var symbolWidth: CGFloat { temperatureFontSize * 0.58 }
     private var symbolHeight: CGFloat { symbolWidth * 2 }
+    private let widthMultiplier: CGFloat = 0.5
     
     private var temperatureLabelWidth: CGFloat { temperatureFontSize * 2.1 }
     
@@ -72,7 +73,7 @@ final class TemperatureLabelSymboled: UIView {
             make.centerY.equalTo(superview)
             make.top.equalTo(superview)
             make.bottom.equalTo(superview)
-            make.width.equalTo(superview).multipliedBy(0.5)
+            make.width.equalTo(superview).multipliedBy(widthMultiplier)
         }
     }
     

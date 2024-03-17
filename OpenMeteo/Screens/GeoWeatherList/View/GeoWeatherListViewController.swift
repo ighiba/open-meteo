@@ -42,26 +42,15 @@ final class GeoWeatherListViewController: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
+    // MARK: - View lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavigationBar()
-        updateNavigationBarAppearance()
-        
-        navigationController?.delegate = self
-        
-        collectionView.delegate = self
-        collectionView.refreshControl = UIRefreshControl()
-        collectionView.collectionViewLayout = configureLayout()
-        collectionView.register(GeoWeatherCell.self, forCellWithReuseIdentifier: GeoWeatherCell.identifier)
-        
-        dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
-            return self.configureCell(collectionView: collectionView, itemIdentifier: itemIdentifier, for: indexPath)
-        }
-
+        setupCollectionView()
         setupBindings()
+        
         viewModel.loadInitialData()
         viewModel.updateAllWeather()
     }
@@ -78,6 +67,8 @@ final class GeoWeatherListViewController: UICollectionViewController {
         updateNavigationBarAppearance()
     }
     
+    // MARK: - Methods
+    
     private func setupNavigationBar() {
         let searchController = GeoSearchModuleAssembly.configureModule() as? GeoSearchViewController
         searchController?.geoWeatherListViewControllerDelegate = self
@@ -86,6 +77,7 @@ final class GeoWeatherListViewController: UICollectionViewController {
         
         title = NSLocalizedString("Weather", comment: "")
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.delegate = self
 
         navigationItem.rightBarButtonItem = editButtonItem
     }
@@ -101,6 +93,17 @@ final class GeoWeatherListViewController: UICollectionViewController {
         
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
+    }
+    
+    private func setupCollectionView() {
+        collectionView.delegate = self
+        collectionView.refreshControl = UIRefreshControl()
+        collectionView.collectionViewLayout = configureLayout()
+        collectionView.register(GeoWeatherCell.self, forCellWithReuseIdentifier: GeoWeatherCell.identifier)
+        
+        dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
+            return self.configureCell(collectionView: collectionView, itemIdentifier: itemIdentifier, for: indexPath)
+        }
     }
     
     private func configureLayout() -> UICollectionViewLayout {
@@ -144,8 +147,6 @@ final class GeoWeatherListViewController: UICollectionViewController {
             }
             .store(in: &cancellables)
     }
-    
-    // MARK: - Methods
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
