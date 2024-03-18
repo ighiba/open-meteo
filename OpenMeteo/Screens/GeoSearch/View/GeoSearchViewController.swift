@@ -45,24 +45,27 @@ final class GeoSearchViewController: UISearchController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setup()
+        setupResultsTableView()
+        setupSearchBar()
+        setupBindings()
+    }
+    
+    // MARK: - Methods
+    
+    private func setup() {
         delegate = self
         obscuresBackgroundDuringPresentation = false
-        
+    }
+    
+    private func setupResultsTableView() {
         resultsTableViewController.tableView.delegate = self
-        resultsTableViewController.tableView.dataSource = dataSource
         resultsTableViewController.tableView.register(GeocodingCell.self, forCellReuseIdentifier: GeocodingCell.identifier)
         
         dataSource = DataSource(tableView: resultsTableViewController.tableView) { tableView, indexPath, itemIdentifier in
             return self.configureCell(tableView: tableView, itemIdentifier: itemIdentifier, for: indexPath)
         }
-        
-        setupSearchBar()
-        setupBindings()
-        
-        updateSnapshot()
     }
-    
-    // MARK: - Methods
     
     private func setupSearchBar() {
         searchBarDelegate = SearchBarDelegate(textDidChangeHandler: viewModel.searchTextDidChange, searchDidClickHandler: viewModel.searchButtonDidClick)
