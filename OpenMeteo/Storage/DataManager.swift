@@ -14,9 +14,11 @@ protocol DataManager: AnyObject {
     func delete(geoModelWithId id: Int)
 }
 
-class DataManagerImpl: DataManager {
+final class DataManagerImpl: DataManager {
     
-    let config = Realm.Configuration(
+    // MARK: - Properties
+    
+    private let config = Realm.Configuration(
         schemaVersion: 2,
         migrationBlock: { migration, oldSchemaVersion in
             if oldSchemaVersion < 2 {
@@ -28,6 +30,8 @@ class DataManagerImpl: DataManager {
     )
     
     lazy var realm = try! Realm(configuration: config)
+    
+    // MARK: - Methods
 
     func save(_ geoModelList: [GeoModel]) {
         try? realm.write {
@@ -35,11 +39,6 @@ class DataManagerImpl: DataManager {
             model.geoList.append(objectsIn: geoModelList)
             realm.add(model, update: .modified)
         }
-    }
-    
-    func obtainGeoModelList() -> [GeoModel] {
-        guard let model = realm.object(ofType: GeoListModel.self, forPrimaryKey: 0) else { return [] }
-        return Array(model.geoList)
     }
     
     func delete(geoModelWithId id: Int) {
@@ -52,5 +51,10 @@ class DataManagerImpl: DataManager {
         try? realm.write {
             model.geoList.remove(at: index)
         }
+    }
+    
+    func obtainGeoModelList() -> [GeoModel] {
+        guard let model = realm.object(ofType: GeoListModel.self, forPrimaryKey: 0) else { return [] }
+        return Array(model.geoList)
     }
 }
