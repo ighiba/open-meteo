@@ -70,7 +70,7 @@ final class GeoWeatherListViewController: UICollectionViewController {
     // MARK: - Methods
     
     private func setupNavigationBar() {
-        let searchController = GeoSearchModuleAssembly.configureModule() as? GeoSearchViewController
+        let searchController = GeoSearchScreenAssembly.configureScreen() as? GeoSearchViewController
         searchController?.geoWeatherListViewControllerDelegate = self
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false

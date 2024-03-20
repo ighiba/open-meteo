@@ -1,5 +1,5 @@
 //
-//  GeoSearchModuleAssembly.swift
+//  GeoSearchScreenAssembly.swift
 //  OpenMeteo
 //
 //  Created by Ivan Ghiba on 03.07.2023.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class GeoSearchModuleAssembly {
-    class func configureModule() -> UIViewController {
+class GeoSearchScreenAssembly {
+    class func configureScreen() -> UIViewController {
         let networkManager = NetworkManagerImpl()
         let viewModel = GeoSearchViewModel(networkManager: networkManager)
         

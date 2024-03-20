@@ -44,7 +44,7 @@
 		C066C6CC2A50E04A004FDDE8 /* ApparentTemperatureContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6CB2A50E04A004FDDE8 /* ApparentTemperatureContainer.swift */; };
 		C066C6CE2A50F145004FDDE8 /* RelativeHumidityContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6CD2A50F145004FDDE8 /* RelativeHumidityContainer.swift */; };
 		C066C6D02A50F36A004FDDE8 /* PrecipitationSumContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6CF2A50F36A004FDDE8 /* PrecipitationSumContainer.swift */; };
-		C066C6DF2A523381004FDDE8 /* GeoSearchModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6DB2A523381004FDDE8 /* GeoSearchModuleAssembly.swift */; };
+		C066C6DF2A523381004FDDE8 /* GeoSearchScreenAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6DB2A523381004FDDE8 /* GeoSearchScreenAssembly.swift */; };
 		C066C6E02A523381004FDDE8 /* GeoSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6DC2A523381004FDDE8 /* GeoSearchViewController.swift */; };
 		C066C6E22A523381004FDDE8 /* GeoSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6DE2A523381004FDDE8 /* GeoSearchViewModel.swift */; };
 		C066C6E42A523CD8004FDDE8 /* GeocodingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C066C6E32A523CD8004FDDE8 /* GeocodingCell.swift */; };
@@ -159,7 +159,7 @@
 		C066C6CB2A50E04A004FDDE8 /* ApparentTemperatureContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApparentTemperatureContainer.swift; sourceTree = "<group>"; };
 		C066C6CD2A50F145004FDDE8 /* RelativeHumidityContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeHumidityContainer.swift; sourceTree = "<group>"; };
 		C066C6CF2A50F36A004FDDE8 /* PrecipitationSumContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationSumContainer.swift; sourceTree = "<group>"; };
-		C066C6DB2A523381004FDDE8 /* GeoSearchModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoSearchModuleAssembly.swift; sourceTree = "<group>"; };
+		C066C6DB2A523381004FDDE8 /* GeoSearchScreenAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoSearchScreenAssembly.swift; sourceTree = "<group>"; };
 		C066C6DC2A523381004FDDE8 /* GeoSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoSearchViewController.swift; sourceTree = "<group>"; };
 		C066C6DE2A523381004FDDE8 /* GeoSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoSearchViewModel.swift; sourceTree = "<group>"; };
 		C066C6E32A523CD8004FDDE8 /* GeocodingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingCell.swift; sourceTree = "<group>"; };
@@ -390,7 +390,7 @@
 			children = (
 				C07C42F92A6E85C500E90193 /* View */,
 				C07C42FA2A6E85CD00E90193 /* ViewModel */,
-				C066C6DB2A523381004FDDE8 /* GeoSearchModuleAssembly.swift */,
+				C066C6DB2A523381004FDDE8 /* GeoSearchScreenAssembly.swift */,
 			);
 			path = GeoSearch;
 			sourceTree = "<group>";
@@ -808,7 +808,7 @@
 				C0E6CA3A2A56D6EF00D6695B /* LocationManager.swift in Sources */,
 				C0E6CA362A55A22500D6695B /* DataManager.swift in Sources */,
 				C03E36972B713A5400635AEC /* DateFormatter.swift in Sources */,
-				C066C6DF2A523381004FDDE8 /* GeoSearchModuleAssembly.swift in Sources */,
+				C066C6DF2A523381004FDDE8 /* GeoSearchScreenAssembly.swift in Sources */,
 				C08D19732A48F05B00834A21 /* TemperatureLabel.swift in Sources */,
 				C0E6CA3C2A56DCAB00D6695B /* GeoListModel.swift in Sources */,
 				C01D28CB2A5430B700412BCD /* URL.swift in Sources */,
