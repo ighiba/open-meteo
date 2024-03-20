@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 @objcMembers
-class GeoModel: Object {
+final class GeoModel: Object {
     @Persisted var id: Int = 0
     @Persisted var name: String = ""
     @Persisted var latitude: Float = 0

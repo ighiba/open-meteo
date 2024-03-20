@@ -19,12 +19,15 @@ final class DataManagerImpl: DataManager {
     // MARK: - Properties
     
     private let config = Realm.Configuration(
-        schemaVersion: 2,
+        schemaVersion: 3,
         migrationBlock: { migration, oldSchemaVersion in
             if oldSchemaVersion < 2 {
                 migration.enumerateObjects(ofType: GeoModel.className()) { oldObject, newObject in
                     newObject?[#keyPath(GeoModel.adminLocation)] = ""
                 }
+            }
+            if oldSchemaVersion < 3 {
+                migration.renameProperty(onType: GeoListModel.className(), from: "geoList", to: "list")
             }
         }
     )
@@ -35,26 +38,26 @@ final class DataManagerImpl: DataManager {
 
     func save(_ geoModelList: [GeoModel]) {
         try? realm.write {
-            let model = GeoListModel()
-            model.geoList.append(objectsIn: geoModelList)
-            realm.add(model, update: .modified)
+            let geoListModel = GeoListModel()
+            geoListModel.list.append(objectsIn: geoModelList)
+            realm.add(geoListModel, update: .modified)
         }
     }
     
     func delete(geoModelWithId id: Int) {
-        guard let model = realm.object(ofType: GeoListModel.self, forPrimaryKey: 0),
-              let index = model.geoList.firstIndex(where: { $0.id == id })
+        guard let geoListModel = realm.object(ofType: GeoListModel.self, forPrimaryKey: 0),
+              let index = geoListModel.list.firstIndex(where: { $0.id == id })
         else {
             return
         }
 
         try? realm.write {
-            model.geoList.remove(at: index)
+            geoListModel.list.remove(at: index)
         }
     }
     
     func obtainGeoModelList() -> [GeoModel] {
-        guard let model = realm.object(ofType: GeoListModel.self, forPrimaryKey: 0) else { return [] }
-        return Array(model.geoList)
+        guard let geoListModel = realm.object(ofType: GeoListModel.self, forPrimaryKey: 0) else { return [] }
+        return Array(geoListModel.list)
     }
 }

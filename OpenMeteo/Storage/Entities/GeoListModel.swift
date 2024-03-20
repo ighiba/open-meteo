@@ -11,7 +11,7 @@ import RealmSwift
 @objcMembers
 class GeoListModel: Object {
     @Persisted var id: Int = 0
-    @Persisted var geoList: List<GeoModel> = List()
+    @Persisted var list: List<GeoModel> = List()
     
     override init() {
         super.init()
