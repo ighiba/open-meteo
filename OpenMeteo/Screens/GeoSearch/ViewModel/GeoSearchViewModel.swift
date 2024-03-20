@@ -23,9 +23,15 @@ final class GeoSearchViewModel: GeoSearchViewModelDelegate {
     @Published var geocodingList: [Geocoding] = []
     var geocodingListPublisher: Published<[Geocoding]>.Publisher { $geocodingList }
     
-    var networkManager: NetworkManager!
-    
     private var searchCancellable: AnyCancellable?
+    
+    private let networkManager: NetworkManager
+    
+    // MARK: - Init
+    
+    init(networkManager: NetworkManager) {
+        self.networkManager = networkManager
+    }
     
     // MARK: - Methods
     

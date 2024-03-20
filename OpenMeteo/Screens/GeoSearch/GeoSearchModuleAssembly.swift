@@ -10,10 +10,11 @@ import UIKit
 class GeoSearchModuleAssembly {
     class func configureModule() -> UIViewController {
         let view = GeoSearchViewController()
-        let viewModel = GeoSearchViewModel()
+        
+        let networkManager = NetworkManagerImpl()
+        let viewModel = GeoSearchViewModel(networkManager: networkManager)
 
         view.viewModel = viewModel
-        viewModel.networkManager = NetworkManagerImpl()
 
         return view
     }
