@@ -18,8 +18,6 @@ protocol GeoWeatherListViewControllerDelegate {
 final class GeoSearchViewController: UISearchController {
     
     // MARK: - Properties
-
-    var viewModel: GeoSearchViewModelDelegate!
     
     var dataSource: DataSource!
     
@@ -30,9 +28,12 @@ final class GeoSearchViewController: UISearchController {
     
     private var cancellables = Set<AnyCancellable>()
     
+    let viewModel: GeoSearchViewModelDelegate
+    
     // MARK: - Init
     
-    init() {
+    init(viewModel: GeoSearchViewModelDelegate) {
+        self.viewModel = viewModel
         super.init(searchResultsController: resultsTableViewController)
     }
     
