@@ -23,7 +23,7 @@
 		C04E2C242A473EAB00A5B1E8 /* WeatherJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C232A473EAB00A5B1E8 /* WeatherJSONTests.swift */; };
 		C04E2C2E2A473EAB00A5B1E8 /* OpenMeteoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C2D2A473EAB00A5B1E8 /* OpenMeteoUITests.swift */; };
 		C04E2C302A473EAB00A5B1E8 /* OpenMeteoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C2F2A473EAB00A5B1E8 /* OpenMeteoUITestsLaunchTests.swift */; };
-		C04E2C562A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C522A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift */; };
+		C04E2C562A473FD600A5B1E8 /* GeoWeatherListScreenAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C522A473FD600A5B1E8 /* GeoWeatherListScreenAssembly.swift */; };
 		C04E2C572A473FD600A5B1E8 /* GeoWeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C532A473FD600A5B1E8 /* GeoWeatherListViewController.swift */; };
 		C04E2C592A473FD600A5B1E8 /* GeoWeatherListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C552A473FD600A5B1E8 /* GeoWeatherListViewModel.swift */; };
 		C04E2C602A47425600A5B1E8 /* WeatherJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */; };
@@ -137,7 +137,7 @@
 		C04E2C292A473EAB00A5B1E8 /* OpenMeteoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenMeteoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C04E2C2D2A473EAB00A5B1E8 /* OpenMeteoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMeteoUITests.swift; sourceTree = "<group>"; };
 		C04E2C2F2A473EAB00A5B1E8 /* OpenMeteoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMeteoUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		C04E2C522A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherListModuleAssembly.swift; sourceTree = "<group>"; };
+		C04E2C522A473FD600A5B1E8 /* GeoWeatherListScreenAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherListScreenAssembly.swift; sourceTree = "<group>"; };
 		C04E2C532A473FD600A5B1E8 /* GeoWeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherListViewController.swift; sourceTree = "<group>"; };
 		C04E2C552A473FD600A5B1E8 /* GeoWeatherListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoWeatherListViewModel.swift; sourceTree = "<group>"; };
 		C04E2C5F2A47425600A5B1E8 /* WeatherJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherJSON.swift; sourceTree = "<group>"; };
@@ -339,7 +339,7 @@
 				C07C42F72A6E846900E90193 /* View */,
 				C07C42F82A6E846F00E90193 /* ViewModel */,
 				C01D28C52A5330C900412BCD /* OpenMeteoNavigationController.swift */,
-				C04E2C522A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift */,
+				C04E2C522A473FD600A5B1E8 /* GeoWeatherListScreenAssembly.swift */,
 			);
 			path = GeoWeatherList;
 			sourceTree = "<group>";
@@ -795,7 +795,7 @@
 				C04E2C572A473FD600A5B1E8 /* GeoWeatherListViewController.swift in Sources */,
 				C0ADCC8A2B6BE77D00C4A016 /* UIEdgeInsets.swift in Sources */,
 				C08D19652A48AC8300834A21 /* GeoWeatherListViewController+DataSource.swift in Sources */,
-				C04E2C562A473FD600A5B1E8 /* GeoWeatherListModuleAssembly.swift in Sources */,
+				C04E2C562A473FD600A5B1E8 /* GeoWeatherListScreenAssembly.swift in Sources */,
 				C0E54D262A4B39B8003D00C8 /* UIVisualEffectView.swift in Sources */,
 				C066C6D02A50F36A004FDDE8 /* PrecipitationSumContainer.swift in Sources */,
 				C07C43472A72AD5200E90193 /* Endpoint.swift in Sources */,
