@@ -187,7 +187,7 @@ final class GeoWeatherListViewController: UICollectionViewController {
 
     func openDetail(for indexPath: IndexPath) {
         guard let geoWeather = geoWeather(atIndexPath: indexPath),
-              let detailViewController = GeoWeatherDetailModuleAssembly.configureModule(with: geoWeather) as? GeoWeatherDetailViewController 
+              let detailViewController = GeoWeatherDetailScreenAssembly.configureScreen(with: geoWeather) as? GeoWeatherDetailViewController 
         else {
             return
         }

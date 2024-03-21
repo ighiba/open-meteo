@@ -1,5 +1,5 @@
 //
-//  GeoWeatherDetailModuleAssembly.swift
+//  GeoWeatherDetailScreenAssembly.swift
 //  OpenMeteo
 //
 //  Created by Ivan Ghiba on 25.06.2023.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class GeoWeatherDetailModuleAssembly {
-    class func configureModule(with geoWeather: GeoWeather) -> UIViewController {
+class GeoWeatherDetailScreenAssembly {
+    class func configureScreen(with geoWeather: GeoWeather) -> UIViewController {
         let networkManager = NetworkManagerImpl()
         
         let viewModel = GeoWeatherDetailViewModel(geoWeather: geoWeather, networkManager: networkManager)
@@ -16,7 +16,7 @@ class GeoWeatherDetailModuleAssembly {
         return GeoWeatherDetailViewController(viewModel: viewModel)
     }
     
-    class func configureModule(with geocoding: Geocoding) -> UIViewController {
+    class func configureScreen(with geocoding: Geocoding) -> UIViewController {
         let geoWeather = GeoWeather(geocoding: geocoding)
         let networkManager = NetworkManagerImpl()
         

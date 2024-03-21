@@ -19,6 +19,8 @@ final class GeoSearchViewController: UISearchController {
     
     // MARK: - Properties
     
+    let viewModel: GeoSearchViewModelDelegate
+    
     var dataSource: DataSource!
     
     var geoWeatherListViewControllerDelegate: GeoWeatherListViewControllerDelegate?
@@ -27,8 +29,6 @@ final class GeoSearchViewController: UISearchController {
     private let resultsTableViewController = UITableViewController(style: .plain)
     
     private var cancellables = Set<AnyCancellable>()
-    
-    let viewModel: GeoSearchViewModelDelegate
     
     // MARK: - Init
     
@@ -87,7 +87,7 @@ final class GeoSearchViewController: UISearchController {
     
     private func openDetailAdd(for indexPath: IndexPath) {
         guard let geocoding = geocoding(atIndexPath: indexPath),
-              let detailViewController = GeoWeatherDetailModuleAssembly.configureModule(with: geocoding) as? GeoWeatherDetailViewController
+              let detailViewController = GeoWeatherDetailScreenAssembly.configureScreen(with: geocoding) as? GeoWeatherDetailViewController
         else {
             return
         }
