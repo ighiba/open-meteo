@@ -9,13 +9,13 @@ import UIKit
 
 class GeoWeatherListModuleAssembly {
     class func configureModule() -> UIViewController {
+        let networkManager = NetworkManagerImpl()
+        let dataManager = DataManagerImpl()
+        let locationManager = LocationManager()
+        let viewModel = GeoWeatherListViewModel(networkManager: networkManager, dataManager: dataManager, locationManager: locationManager)
+        
         let view = GeoWeatherListViewController()
-        let viewModel = GeoWeatherListViewModel()
-
         view.viewModel = viewModel
-        viewModel.networkManager = NetworkManagerImpl()
-        viewModel.dataManager = DataManagerImpl()
-        viewModel.locationManager = LocationManager()
 
         let navigationController = OpenMeteoNavigationController()
         navigationController.viewControllers = [view]

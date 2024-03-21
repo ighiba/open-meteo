@@ -41,11 +41,19 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     private let geoWeatherListUpdateSubject: PassthroughSubject<UpdateRule, Never> = PassthroughSubject()
     var geoWeatherListUpdatePublisher: AnyPublisher<UpdateRule, Never> { geoWeatherListUpdateSubject.eraseToAnyPublisher() }
     
-    var networkManager: NetworkManager!
-    var dataManager: DataManager!
-    var locationManager: LocationManager!
-    
     private var cancellables = Set<AnyCancellable>()
+    
+    private let networkManager: NetworkManager
+    private let dataManager: DataManager
+    private let locationManager: LocationManager
+    
+    // MARK: - Init
+    
+    init(networkManager: NetworkManager, dataManager: DataManager, locationManager: LocationManager) {
+        self.networkManager = networkManager
+        self.dataManager = dataManager
+        self.locationManager = locationManager
+    }
 
     // MARK: - Methods
     
