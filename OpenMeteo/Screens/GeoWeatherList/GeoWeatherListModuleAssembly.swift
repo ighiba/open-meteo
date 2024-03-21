@@ -14,12 +14,8 @@ class GeoWeatherListModuleAssembly {
         let locationManager = LocationManager()
         let viewModel = GeoWeatherListViewModel(networkManager: networkManager, dataManager: dataManager, locationManager: locationManager)
         
-        let view = GeoWeatherListViewController()
-        view.viewModel = viewModel
+        let view = GeoWeatherListViewController(viewModel: viewModel)
 
-        let navigationController = OpenMeteoNavigationController()
-        navigationController.viewControllers = [view]
-
-        return navigationController
+        return OpenMeteoNavigationController(rootViewController: view)
     }
 }

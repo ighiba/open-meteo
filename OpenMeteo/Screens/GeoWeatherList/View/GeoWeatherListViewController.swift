@@ -12,8 +12,6 @@ final class GeoWeatherListViewController: UICollectionViewController {
     
     // MARK: - Properties
 
-    var viewModel: GeoWeatherListViewModelDelegate!
-
     var dataSource: DataSource!
     
     private var initialPathForAnimator: CGPath?
@@ -32,9 +30,12 @@ final class GeoWeatherListViewController: UICollectionViewController {
     
     private var cancellables = Set<AnyCancellable>()
     
+    let viewModel: GeoWeatherListViewModelDelegate
+    
     // MARK: - Init
     
-    init() {
+    init(viewModel: GeoWeatherListViewModelDelegate) {
+        self.viewModel = viewModel
         super.init(collectionViewLayout: UICollectionViewLayout())
     }
     
