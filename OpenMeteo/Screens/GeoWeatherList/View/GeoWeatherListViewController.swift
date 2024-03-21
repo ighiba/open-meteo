@@ -11,6 +11,8 @@ import Combine
 final class GeoWeatherListViewController: UICollectionViewController {
     
     // MARK: - Properties
+    
+    let viewModel: GeoWeatherListViewModelDelegate
 
     var dataSource: DataSource!
     
@@ -29,9 +31,7 @@ final class GeoWeatherListViewController: UICollectionViewController {
     }
     
     private var cancellables = Set<AnyCancellable>()
-    
-    let viewModel: GeoWeatherListViewModelDelegate
-    
+
     // MARK: - Init
     
     init(viewModel: GeoWeatherListViewModelDelegate) {
