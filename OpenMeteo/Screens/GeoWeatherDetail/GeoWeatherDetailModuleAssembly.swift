@@ -13,10 +13,7 @@ class GeoWeatherDetailModuleAssembly {
         
         let viewModel = GeoWeatherDetailViewModel(geoWeather: geoWeather, networkManager: networkManager)
         
-        let view = GeoWeatherDetailViewController()
-        view.viewModel = viewModel
-
-        return view
+        return GeoWeatherDetailViewController(viewModel: viewModel)
     }
     
     class func configureModule(with geocoding: Geocoding) -> UIViewController {
@@ -24,10 +21,7 @@ class GeoWeatherDetailModuleAssembly {
         let networkManager = NetworkManagerImpl()
         
         let viewModel = GeoWeatherDetailViewModel(geoWeather: geoWeather, networkManager: networkManager)
-
-        let view = GeoWeatherDetailViewController()
-        view.viewModel = viewModel
-
-        return view
+        
+        return GeoWeatherDetailViewController(viewModel: viewModel)
     }
 }

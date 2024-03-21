@@ -18,7 +18,7 @@ final class GeoWeatherDetailViewController: UIViewController {
     
     // MARK: - Properties
 
-    var viewModel: GeoWeatherDetailViewModelDelegate!
+    let viewModel: GeoWeatherDetailViewModelDelegate
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -43,6 +43,17 @@ final class GeoWeatherDetailViewController: UIViewController {
         didSet {
             setNeedsStatusBarAppearanceUpdate()
         }
+    }
+    
+    // MARK: - Init
+    
+    init(viewModel: GeoWeatherDetailViewModelDelegate) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - View lifecycle
