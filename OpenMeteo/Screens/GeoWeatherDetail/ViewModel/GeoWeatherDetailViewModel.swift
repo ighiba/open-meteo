@@ -23,12 +23,15 @@ final class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     var geoWeatherPublisher: Published<GeoWeather>.Publisher { $geoWeather }
     var networkErrorPublisher: PassthroughSubject<FetchError, Never> = PassthroughSubject()
     
-    var networkManager: NetworkManager!
-    
     private var cancellables = Set<AnyCancellable>()
     
-    init(geoWeather: GeoWeather) {
+    private let networkManager: NetworkManager
+    
+    // MARK: - Init
+    
+    init(geoWeather: GeoWeather, networkManager: NetworkManager) {
         self.geoWeather = geoWeather
+        self.networkManager = networkManager
     }
 
     // MARK: - Methods

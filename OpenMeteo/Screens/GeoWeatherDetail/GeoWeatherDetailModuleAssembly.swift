@@ -9,21 +9,23 @@ import UIKit
 
 class GeoWeatherDetailModuleAssembly {
     class func configureModule(with geoWeather: GeoWeather) -> UIViewController {
+        let networkManager = NetworkManagerImpl()
+        
+        let viewModel = GeoWeatherDetailViewModel(geoWeather: geoWeather, networkManager: networkManager)
+        
         let view = GeoWeatherDetailViewController()
-        let viewModel = GeoWeatherDetailViewModel(geoWeather: geoWeather)
-
-        viewModel.geoWeather = geoWeather
-        viewModel.networkManager = NetworkManagerImpl()
         view.viewModel = viewModel
 
         return view
     }
     
     class func configureModule(with geocoding: Geocoding) -> UIViewController {
-        let view = GeoWeatherDetailViewController()
-        let viewModel = GeoWeatherDetailViewModel(geoWeather: GeoWeather(geocoding: geocoding))
+        let geoWeather = GeoWeather(geocoding: geocoding)
+        let networkManager = NetworkManagerImpl()
+        
+        let viewModel = GeoWeatherDetailViewModel(geoWeather: geoWeather, networkManager: networkManager)
 
-        viewModel.networkManager = NetworkManagerImpl()
+        let view = GeoWeatherDetailViewController()
         view.viewModel = viewModel
 
         return view
