@@ -61,12 +61,12 @@ final class HourForecastCell: UICollectionViewCell {
     
     func update(withHourForecast hourForecast: HourForecast, isNow: Bool) {
         let hourText = configureHourText(date: hourForecast.date, isNow: isNow)
-        let weatherType = hourForecast.weatherCode.obtainWeatherType()
+        let weatherCondition = hourForecast.weatherCode.obtainWeatherCondition()
         
         hourLabel.setAttributedTextWithShadow(hourText)
         temperatureLabel.setTemperature(hourForecast.temperature.real)
         precipitationProbabilityLabel.setPrecipitationProbability(hourForecast.precipitationProbability)
-        weatherIconView.setIcon(for: weatherType, isDay: hourForecast.isDay)
+        weatherIconView.setIcon(for: weatherCondition, isDay: hourForecast.isDay)
     }
     
     private func configureHourText(date: Date, isNow: Bool) -> String {

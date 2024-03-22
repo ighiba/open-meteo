@@ -122,31 +122,26 @@ final class GeoWeatherDetailView: UIScrollView {
         precipitationSumContainer.updateContainerStyle(with: style)
     }
     
-    func update(withGeocoding geocoding: Geocoding, weather: Weather?) {
-        updateGeocodingViews(with: geocoding)
-        
-        guard let weather else { return }
-        
-        updateWeatherViews(with: weather)
-    }
-    
-    private func updateGeocodingViews(with geocoding: Geocoding) {
-        let locationName = geocoding.name
-        geoNameLabel.setAttributedTextWithShadow(locationName)
-    }
-    
-    private func updateWeatherViews(with weather: Weather) {
-        let currentHourForecast = weather.obtainForecastForCurrentHour()
-        let currentDayForecast = weather.obtainCurrentDayForecast()
-        let nextDayForecast = weather.obtainDailyForecastFor(nextDays: 1).last
-
+    func update(
+        withLocationName locationName: String,
+        currentHourForecast: HourForecast,
+        currentDayForecast: DayForecast?,
+        nextDayForecast: DayForecast?,
+        hourlyForecastFor24Hours: [HourForecast],
+        dailyForecastForWeek: [DayForecast]
+    ) {
+        updateGeoNameLabel(locationName: locationName)
         updateMainInfoContainer(currentHourForecast: currentHourForecast, currentDayForecast: currentDayForecast)
-        updateHourlyForecastContainer(weather: weather)
-        updateDailyForecastContainer(weather: weather)
+        updateHourlyForecastContainer(hourlyForecastFor24Hours: hourlyForecastFor24Hours)
+        updateDailyForecastContainer(dailyForecastForWeek: dailyForecastForWeek)
         updateApparentTemperatureContainer(currentHourForecast: currentHourForecast)
         updateWindContainer(currentHourForecast: currentHourForecast)
         updateRelativeHumidityContainer(currentHourForecast: currentHourForecast)
         updatePrecipitationSumContainer(currentDayForecast: currentDayForecast, nextDayForecast: nextDayForecast)
+    }
+
+    private func updateGeoNameLabel(locationName: String) {
+        geoNameLabel.setAttributedTextWithShadow(locationName)
     }
     
     private func updateMainInfoContainer(currentHourForecast: HourForecast, currentDayForecast: DayForecast?) {
@@ -159,13 +154,11 @@ final class GeoWeatherDetailView: UIScrollView {
         weatherCodeDescriptionLabel.setAttributedTextWithShadow(currentWeatherCodeDescription)
     }
     
-    private func updateHourlyForecastContainer(weather: Weather) {
-        let hourlyForecastFor24Hours = weather.obtainHourlyForecastFor(nextHours: 24)
+    private func updateHourlyForecastContainer(hourlyForecastFor24Hours: [HourForecast]) {
         hourlyForecastContainer.update(withHourlyForecastList: hourlyForecastFor24Hours)
     }
-    
-    private func updateDailyForecastContainer(weather: Weather) {
-        let dailyForecastForWeek = weather.obtainDailyForecastFor(nextDays: 7)
+
+    private func updateDailyForecastContainer(dailyForecastForWeek: [DayForecast]) {
         dailyForecastContainer.update(withDailyForecastList: dailyForecastForWeek)
     }
     

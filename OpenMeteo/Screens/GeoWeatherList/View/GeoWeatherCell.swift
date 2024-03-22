@@ -36,6 +36,7 @@ final class GeoWeatherCell: UICollectionViewCell {
         super.init(frame: frame)
         self.setupViews()
         self.setupGestures()
+        self.setPlaceholders()
     }
     
     required init?(coder: NSCoder) {
@@ -103,27 +104,23 @@ final class GeoWeatherCell: UICollectionViewCell {
         addGestureRecognizer(longPressGesture)
     }
     
-    func update(with geoWeather: GeoWeather) {
-        geoNameLabel.text = geoWeather.geocoding.name
-        
-        if let weather = geoWeather.weather {
-            let currentHourForecast = weather.obtainForecastForCurrentHour()
-            let currentDayForecast = weather.obtainCurrentDayForecast()
-            
-            updateBackground(forWeather: weather)
-            weatherCodeDescriptionLabel.setAttributedTextWithShadow(currentHourForecast.weatherCode.localizedDescription)
-            currentTemperatureLabel.setTemperature(currentHourForecast.temperature.real)
-            todayTemeperatureRangeContainer.setTemperature(range: currentDayForecast?.temperatureRange)
-        } else {
-            setDefaultBackground()
-            weatherCodeDescriptionLabel.setAttributedTextWithShadow("..")
-            currentTemperatureLabel.setPlaceholder()
-            todayTemeperatureRangeContainer.setPlaceholders()
-        }
+    private func setPlaceholders() {
+        geoNameLabel.text = "..."
+        weatherCodeDescriptionLabel.setAttributedTextWithShadow("...")
+        currentTemperatureLabel.setPlaceholder()
+        todayTemeperatureRangeContainer.setPlaceholders()
+        setDefaultBackground()
+    }
+    
+    func update(withGeoName geoName: String, temperature: Float, temperatureRange: TemperatureRange, weatherCode: Weather.Code, skyType: SkyType) {
+        geoNameLabel.text = geoName
+        currentTemperatureLabel.setTemperature(temperature)
+        todayTemeperatureRangeContainer.setTemperature(range: temperatureRange)
+        weatherCodeDescriptionLabel.setAttributedTextWithShadow(weatherCode.localizedDescription)
+        updateBackground(forSkyType: skyType)
     }
 
-    func updateBackground(forWeather weather: Weather) {
-        let skyType = weather.obtainCurrentSkyType()
+    func updateBackground(forSkyType skyType: SkyType) {
         let colorSet = WeatherColorSet.obtainColorSet(fromSkyType: skyType)
         backgroundGradientView.setColors(weatherColorSet: colorSet)
     }

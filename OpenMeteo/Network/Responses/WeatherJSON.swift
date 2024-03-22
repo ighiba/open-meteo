@@ -96,7 +96,7 @@ final class WeatherJSON: DecodableResult {
         let wind = Wind(speed: windSpeed ?? 0, direction: windDirection ?? 0)
         
         let weatherCodeRaw = try? currentWeatherContainer?.decode(Int16.self, forKey: .weathercode)
-        let weatherCode = WeatherCode(rawValue: weatherCodeRaw ?? 0) ?? .clearSky
+        let weatherCode = Weather.Code(rawValue: weatherCodeRaw ?? 0) ?? .clearSky
         
         return HourForecast(
             date: dateTime,
@@ -148,7 +148,7 @@ final class WeatherJSON: DecodableResult {
             let wind = Wind(speed: windSpeed, direction: windDirection)
             
             let weatherCodeRaw = weatherCodeList?[index] ?? 0
-            let weatherCode = WeatherCode(rawValue: weatherCodeRaw) ?? .clearSky
+            let weatherCode = Weather.Code(rawValue: weatherCodeRaw) ?? .clearSky
 
             let hourlyForecast = HourForecast(
                 date: dateTime,
@@ -201,7 +201,7 @@ final class WeatherJSON: DecodableResult {
             let precipitationProbabilityMax = dailyPrecipitationProbabilityMaxList?[index] ?? 0
             
             let weatherCodeRaw = dailyWeatherCodeRawList?[index] ?? 0
-            let weatherCode = WeatherCode(rawValue: weatherCodeRaw) ?? .clearSky
+            let weatherCode = Weather.Code(rawValue: weatherCodeRaw) ?? .clearSky
 
             let dailyForecast = DayForecast(
                 date: date,

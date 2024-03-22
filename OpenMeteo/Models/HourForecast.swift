@@ -20,13 +20,13 @@ struct HourForecast: DatedForecast {
     var relativeHumidity: Int16
     var precipitationProbability: Int16
     var wind: Wind
-    var weatherCode: WeatherCode
+    var weatherCode: Weather.Code
     
     init() {
         self.init(date: Date(), isDay: true, temperature: HourTemperature(real: 0, apparent: 0), relativeHumidity: 0, precipitationProbability: 0, wind: Wind(), weatherCode: .clearSky)
     }
     
-    init(date: Date, isDay: Bool, temperature: HourTemperature, relativeHumidity: Int16, precipitationProbability: Int16, wind: Wind, weatherCode: WeatherCode) {
+    init(date: Date, isDay: Bool, temperature: HourTemperature, relativeHumidity: Int16, precipitationProbability: Int16, wind: Wind, weatherCode: Weather.Code) {
         self.date = date
         self.isDay = isDay
         self.temperature = temperature

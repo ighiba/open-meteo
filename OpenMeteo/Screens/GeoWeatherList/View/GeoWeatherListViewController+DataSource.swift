@@ -44,8 +44,17 @@ extension GeoWeatherListViewController {
             return cell
         }
         
-        geoWeatherCell.update(with: geoWeather)
-        geoWeatherCell.longPressDidEndHandler = { [weak self] in 
+        let weatherService = viewModel.weatherService(forWeather: geoWeather.weather)
+        
+        let geoName = geoWeather.geocoding.name
+        let temperature = weatherService.currentHourForecast.temperature.real
+        let temperatureRange = weatherService.currentDayTemperatureRange
+        let weatherCode = weatherService.currentWeatherCode
+        let skyType = weatherService.currentSkyType
+        
+        geoWeatherCell.update(withGeoName: geoName, temperature: temperature, temperatureRange: temperatureRange, weatherCode: weatherCode, skyType: skyType)
+        
+        geoWeatherCell.longPressDidEndHandler = { [weak self] in
             self?.openDetail(for: indexPath)
         }
         geoWeatherCell.deleteButtonDidTapHandler = { [weak self] in

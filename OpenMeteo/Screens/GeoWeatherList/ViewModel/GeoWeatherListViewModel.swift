@@ -18,10 +18,11 @@ protocol GeoWeatherListViewModelDelegate: AnyObject {
     var geoWeatherListUpdatePublisher: AnyPublisher<UpdateRule, Never> { get }
     func loadInitialData()
     func updateAllWeather()
-    func updateGeoWeather(withId id: GeoWeather.ID, weather: Weather?)
+    func updateGeoWeather(withId id: GeoWeather.ID, weather: Weather)
     func addGeoWeather(_ geoWeather: GeoWeather)
     func insertGeoWeather(_ geoWeather: GeoWeather, at index: Int)
     func deleteGeoWeather(withId id: GeoWeather.ID)
+    func weatherService(forWeather weather: Weather) -> WeatherService
 }
 
 final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
@@ -46,13 +47,15 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     private let networkManager: NetworkManager
     private let dataManager: DataManager
     private let locationManager: LocationManager
+    private let weatherServiceType: WeatherService.Type
     
     // MARK: - Init
     
-    init(networkManager: NetworkManager, dataManager: DataManager, locationManager: LocationManager) {
+    init(networkManager: NetworkManager, dataManager: DataManager, locationManager: LocationManager, weatherServiceType: WeatherService.Type) {
         self.networkManager = networkManager
         self.dataManager = dataManager
         self.locationManager = locationManager
+        self.weatherServiceType = weatherServiceType
     }
 
     // MARK: - Methods
@@ -100,7 +103,7 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         updateWeather(forGeoWeatherList: geoWeatherList)
     }
     
-    func updateGeoWeather(withId id: GeoWeather.ID, weather: Weather?) {
+    func updateGeoWeather(withId id: GeoWeather.ID, weather: Weather) {
         guard let index = geoWeatherList.index(withItemId: id) else { return }
         
         geoWeatherList[index].weather = weather
@@ -134,6 +137,10 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         
         let deletedGeoWeather = geoWeatherList.remove(at: index)
         dataManager.delete(geoModelWithId: deletedGeoWeather.geocoding.id)
+    }
+    
+    func weatherService(forWeather weather: Weather) -> WeatherService {
+        return weatherServiceType.init(weather: weather)
     }
     
     // MARK: - DB

@@ -19,5 +19,5 @@ struct DayForecast: DatedForecast {
     var temperatureRange: TemperatureRange
     var precipitationSum: Float
     var precipitationProbabilityMax: Int16
-    var weatherCode: WeatherCode
+    var weatherCode: Weather.Code
 }

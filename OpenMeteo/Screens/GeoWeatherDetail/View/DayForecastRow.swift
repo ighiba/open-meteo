@@ -76,12 +76,12 @@ final class DayForecastRow: UIView {
         let dateText = dayForecast.date.string(withFormat: "dd MMMM")
         let precipitationProbabilityMax = dayForecast.precipitationProbabilityMax
         let temperatureRange = dayForecast.temperatureRange
-        let weatherType = dayForecast.weatherCode.obtainWeatherType()
+        let weatherCondition = dayForecast.weatherCode.obtainWeatherCondition()
         
         dateLabel.setAttributedTextWithShadow(dateText)
         precipitationProbabilityLabel.setPrecipitationProbability(precipitationProbabilityMax)
         temperatureRangeContainer.setTemperature(range: temperatureRange)
-        weatherIconView.setIcon(for: weatherType)
+        weatherIconView.setIcon(for: weatherCondition)
     }
 
     private func configurePrecipitationProbabilityLabel() -> PrecipitationProbabilityLabel {

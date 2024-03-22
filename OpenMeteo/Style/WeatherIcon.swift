@@ -34,8 +34,8 @@ struct WeatherIcon {
         self.image = image
     }
     
-    static func obtainIcon(for weatherType: WeatherType, isDay: Bool) -> WeatherIcon {
-        switch weatherType {
+    static func obtainIcon(for weatherCondition: Weather.Condition, isDay: Bool) -> WeatherIcon {
+        switch weatherCondition {
         case .clearSky:
             return isDay ? .sun : .moon
         case .partiallyCloudy:

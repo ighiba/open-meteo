@@ -17,7 +17,7 @@ final class WeatherIconView: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setIcon(for weatherType: WeatherType, isDay: Bool = true) {
-        image = WeatherIcon.obtainIcon(for: weatherType, isDay: isDay).image
+    func setIcon(for weatherCondition: Weather.Condition, isDay: Bool = true) {
+        image = WeatherIcon.obtainIcon(for: weatherCondition, isDay: isDay).image
     }
 }

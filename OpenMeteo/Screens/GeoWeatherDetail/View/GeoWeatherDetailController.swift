@@ -169,9 +169,24 @@ final class GeoWeatherDetailViewController: UIViewController {
     }
 
     private func update(withGeoWeather geoWeather: GeoWeather) {
-        geoWeatherDetailScrollView.update(withGeocoding: geoWeather.geocoding, weather: geoWeather.weather)
+        let locationName = geoWeather.geocoding.name
+        let weatherService = viewModel.weatherService
+        let currentHourForecast = weatherService.currentHourForecast
+        let currentDayForecast = weatherService.currentDayForecast
+        let nextDayForecast = weatherService.obtainDailyForecast(forNextDays: 1).last
+        let hourlyForecastFor24Hours = weatherService.obtainHourlyForecast(forNextHours: 24)
+        let dailyForecastForWeek = weatherService.obtainDailyForecast(forNextDays: 7)
         
-        let skyType = geoWeather.weather?.obtainCurrentSkyType() ?? .day
+        geoWeatherDetailScrollView.update(
+            withLocationName: locationName,
+            currentHourForecast: currentHourForecast,
+            currentDayForecast: currentDayForecast,
+            nextDayForecast: nextDayForecast,
+            hourlyForecastFor24Hours: hourlyForecastFor24Hours,
+            dailyForecastForWeek: dailyForecastForWeek
+        )
+        
+        let skyType = weatherService.currentSkyType
         updateViewsStyle(forSkyType: skyType)
     }
     

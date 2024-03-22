@@ -10,6 +10,7 @@ import Combine
 
 protocol GeoWeatherDetailViewModelDelegate: AnyObject {
     var geoWeather: GeoWeather { get }
+    var weatherService: WeatherService { get }
     var geoWeatherPublisher: Published<GeoWeather>.Publisher { get }
     var networkErrorPublisher: PassthroughSubject<FetchError, Never> { get }
     func updateWeather(forcedUpdate: Bool)
@@ -23,15 +24,18 @@ final class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     var geoWeatherPublisher: Published<GeoWeather>.Publisher { $geoWeather }
     var networkErrorPublisher: PassthroughSubject<FetchError, Never> = PassthroughSubject()
     
+    var weatherService: WeatherService
+    
     private var cancellables = Set<AnyCancellable>()
     
     private let networkManager: NetworkManager
     
     // MARK: - Init
     
-    init(geoWeather: GeoWeather, networkManager: NetworkManager) {
+    init(geoWeather: GeoWeather, networkManager: NetworkManager, weatherService: WeatherService) {
         self.geoWeather = geoWeather
         self.networkManager = networkManager
+        self.weatherService = weatherService
     }
 
     // MARK: - Methods
@@ -72,6 +76,6 @@ final class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     }
     
     private func isUpdateNeeded(for weather: Weather?) -> Bool {
-        return weather?.isUpdateNeeded() ?? true
+        return weatherService.isNeededWeatherUpdate()
     }
 }

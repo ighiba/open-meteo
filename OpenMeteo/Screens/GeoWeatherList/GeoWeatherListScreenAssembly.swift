@@ -12,7 +12,12 @@ class GeoWeatherListScreenAssembly {
         let networkManager = NetworkManagerImpl()
         let dataManager = DataManagerImpl()
         let locationManager = LocationManager()
-        let viewModel = GeoWeatherListViewModel(networkManager: networkManager, dataManager: dataManager, locationManager: locationManager)
+        let viewModel = GeoWeatherListViewModel(
+            networkManager: networkManager,
+            dataManager: dataManager,
+            locationManager: locationManager,
+            weatherServiceType: WeatherServiceImpl.self
+        )
         
         let view = GeoWeatherListViewController(viewModel: viewModel)
 

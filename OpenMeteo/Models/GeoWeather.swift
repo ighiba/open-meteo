@@ -10,9 +10,9 @@ import Foundation
 struct GeoWeather: Identifiable {
     let id: Int
     var geocoding: Geocoding
-    var weather: Weather?
+    var weather: Weather
     
-    init(geocoding: Geocoding, weather: Weather? = nil) {
+    init(geocoding: Geocoding, weather: Weather = Weather()) {
         self.id = geocoding.id
         self.geocoding = geocoding
         self.weather = weather
