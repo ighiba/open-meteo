@@ -75,7 +75,7 @@ final class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
         .eraseToAnyPublisher()
     }
     
-    private func isUpdateNeeded(for weather: Weather?) -> Bool {
+    private func isUpdateNeeded(for weather: Weather) -> Bool {
         return weatherService.isNeededWeatherUpdate()
     }
 }

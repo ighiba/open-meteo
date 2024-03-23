@@ -580,12 +580,12 @@
 		C0E54D2D2A4B8711003D00C8 /* Style */ = {
 			isa = PBXGroup;
 			children = (
+				C0E54D382A4C5445003D00C8 /* SkyType.swift */,
+				C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */,
 				C0E54D2E2A4B8724003D00C8 /* WeatherColorSet.swift */,
 				C0E54D362A4B8D52003D00C8 /* WeatherColorSet+SkyType.swift */,
 				C0E54D302A4B8742003D00C8 /* WeatherColor.swift */,
 				C0E54D452A4CC29A003D00C8 /* WeatherIcon.swift */,
-				C0E54D382A4C5445003D00C8 /* SkyType.swift */,
-				C0EC33A32A4DF9D500EAC0D6 /* StyledContainer.swift */,
 			);
 			path = Style;
 			sourceTree = "<group>";
