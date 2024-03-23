@@ -170,7 +170,7 @@ final class GeoWeatherDetailViewController: UIViewController {
 
     private func update(withGeoWeather geoWeather: GeoWeather) {
         let locationName = geoWeather.geocoding.name
-        let weatherService = viewModel.weatherService
+        let weatherService = viewModel.weatherService(forWeather: geoWeather.weather)
         let currentHourForecast = weatherService.currentHourForecast
         let currentDayForecast = weatherService.currentDayForecast
         let nextDayForecast = weatherService.obtainDailyForecast(forNextDays: 1).last
