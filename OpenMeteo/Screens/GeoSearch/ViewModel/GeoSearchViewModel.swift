@@ -23,7 +23,7 @@ final class GeoSearchViewModel: GeoSearchViewModelDelegate {
     @Published var geocodingList: [Geocoding] = []
     var geocodingListPublisher: Published<[Geocoding]>.Publisher { $geocodingList }
     
-    private var searchCancellable: AnyCancellable?
+    private var cancellables = Set<AnyCancellable>()
     
     private let networkManager: NetworkManager
     
@@ -48,27 +48,33 @@ final class GeoSearchViewModel: GeoSearchViewModelDelegate {
     }
 
     private func performSearch(with searchString: String, withDebounce: Bool) {
-        searchCancellable?.cancel()
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll()
 
         guard searchString.count > 2 else { return }
         
         let searchPublisher = PassthroughSubject<String, Never>()
         let debounceInterval: TimeInterval = withDebounce ? 0.5 : 0.0
         
-        searchCancellable = searchPublisher
+        searchPublisher
             .debounce(for: .seconds(debounceInterval), scheduler: DispatchQueue.main)
             .sink { [weak self] searchText in
-                print("\(Date())  performing search for: \(searchText)")
-                self?.networkManager.fetchSearchResults(endpoint: .geocoding(serchText: searchText)) { [weak self] result in
-                    switch result {
-                    case .success(let geocodingList):
-                        self?.geocodingList = geocodingList
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
+                self?.fetchSearchResults(forText: searchText)
             }
+            .store(in: &cancellables)
         
         searchPublisher.send(searchString)
+    }
+    
+    private func fetchSearchResults(forText searchText: String) {
+        networkManager.fetchSearchResults(endpoint: .geocoding(serchText: searchText))
+            .sink { completion in
+                if case .failure(let error) = completion {
+                    print("Search fetch error: \(error)")
+                }
+            } receiveValue: { [weak self] geocodingList in
+                self?.geocodingList = geocodingList
+            }
+            .store(in: &cancellables)
     }
 }

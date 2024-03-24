@@ -166,11 +166,8 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     private func updateWeather(forGeoWeatherList geoWeatherList: [GeoWeather]) {
         fetchWeatherPublishers(forGeoWeatherList: geoWeatherList)
             .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("Weather update error:", error)
+                if case .failure(let error) = completion {
+                    print("Weather update error: \(error)")
                 }
             }, receiveValue: { _ in
                 
@@ -180,7 +177,7 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     
     private func fetchWeatherPublishers(forGeoWeatherList geoWeatherList: [GeoWeather]) -> AnyPublisher<Void, FetchError> {
         let fetchWeatherPublishers = geoWeatherList.map { geoWeather in
-            fetchWeatherPublisher(geocoding: geoWeather.geocoding)
+            networkManager.fetchWeather(endpoint: .standart(geocoding: geoWeather.geocoding))
                 .map { [weak self] weather in
                     self?.updateGeoWeather(withId: geoWeather.id, weather: weather)
                 }
@@ -190,19 +187,5 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         return Publishers.MergeMany(fetchWeatherPublishers)
             .map { _ in () }
             .eraseToAnyPublisher()
-    }
-    
-    private func fetchWeatherPublisher(geocoding: Geocoding) -> AnyPublisher<Weather, FetchError> {
-        return Future<Weather, FetchError> { [weak self] promise in
-            self?.networkManager.fetchWeather(endpoint: .standart(geocoding: geocoding)) { result in
-                switch result {
-                case .success(let weather):
-                    promise(.success(weather))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
-            }
-        }
-        .eraseToAnyPublisher()
     }
 }

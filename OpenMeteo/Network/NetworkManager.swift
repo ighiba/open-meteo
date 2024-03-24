@@ -6,28 +6,39 @@
 //
 
 import Foundation
-
-typealias FetchSearchResult = Result<[Geocoding], FetchError>
-typealias FetchWeatherResult = Result<Weather, FetchError>
+import Combine
 
 protocol NetworkManager: AnyObject {
-    func fetchWeather(endpoint: API.Forecast, completion: @escaping (FetchWeatherResult) -> Void)
-    func fetchSearchResults(endpoint: API.Search, completion: @escaping (FetchSearchResult) -> Void)
+    func fetchWeather(endpoint: API.Forecast) -> Future<Weather, FetchError>
+    func fetchSearchResults(endpoint: API.Search) -> Future<[Geocoding], FetchError>
 }
 
-class NetworkManagerImpl: NetworkManager {
+final class NetworkManagerImpl: NetworkManager {
     
     private let session = URLSession.shared
     private let decoder = JSONDecoder()
     
     private let validCodes = 200...299
     
-    func fetchWeather(endpoint: API.Forecast, completion: @escaping (FetchWeatherResult) -> Void) {
-        fetch(endpoint: endpoint, decodingType: WeatherJSON.self, completion: completion)
+    func fetchWeather(endpoint: API.Forecast) -> Future<Weather, FetchError> {
+        return fetch(endpoint: endpoint, decodingType: WeatherJSON.self)
     }
     
-    func fetchSearchResults(endpoint: API.Search, completion: @escaping (FetchSearchResult) -> Void) {
-        fetch(endpoint: endpoint, decodingType: GeocodingJSON.self, completion: completion)
+    func fetchSearchResults(endpoint: API.Search) -> Future<[Geocoding], FetchError> {
+        return fetch(endpoint: endpoint, decodingType: GeocodingJSON.self)
+    }
+    
+    private func fetch<T>(endpoint: Endpoint, decodingType: any DecodableResult<T>.Type) -> Future<T, FetchError> {
+        return Future { [weak self] promise in
+            self?.fetch(endpoint: endpoint, decodingType: decodingType, completion: { result in
+                switch result {
+                case .success(let resultData):
+                    promise(.success(resultData))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            })
+        }
     }
     
     private func fetch<T>(endpoint: Endpoint, decodingType: any DecodableResult<T>.Type, completion: @escaping (Result<T, FetchError>) -> Void) {

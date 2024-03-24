@@ -27,6 +27,7 @@ final class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
     private var cancellables = Set<AnyCancellable>()
     
     private let networkManager: NetworkManager
+    private let weatherServiceType: WeatherService.Type
     
     // MARK: - Init
     
@@ -44,13 +45,10 @@ final class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
         cancellables.forEach { $0.cancel() }
         cancellables.removeAll()
         
-        fetchWeatherPublisher(geocoding: geoWeather.geocoding)
+        networkManager.fetchWeather(endpoint: .standart(geocoding: geoWeather.geocoding))
             .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print(error)
+                if case .failure(let error) = completion {
+                    print("Weather update error: \(error)")
                     self?.networkErrorPublisher.send(error)
                 }
             } receiveValue: { [weak self] weather in
@@ -59,25 +57,11 @@ final class GeoWeatherDetailViewModel: GeoWeatherDetailViewModelDelegate {
             .store(in: &cancellables)
     }
     
-    private func fetchWeatherPublisher(geocoding: Geocoding) -> AnyPublisher<Weather, FetchError> {
-        return Future<Weather, FetchError> { [weak self] promise in
-            self?.networkManager.fetchWeather(endpoint: .standart(geocoding: geocoding)) { result in
-                switch result {
-                case .success(let weather):
-                    promise(.success(weather))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
-            }
-        }
-        .eraseToAnyPublisher()
+    func weatherService(forWeather weather: Weather) -> WeatherService {
+        return weatherServiceType.init(weather: weather)
     }
     
     private func isUpdateNeeded(for weather: Weather) -> Bool {
         return weatherService(forWeather: weather).isNeededWeatherUpdate()
-    }
-    
-    func weatherService(forWeather weather: Weather) -> WeatherService {
-        return weatherServiceType.init(weather: weather)
     }
 }
