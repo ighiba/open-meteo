@@ -60,7 +60,7 @@ final class HourForecastCell: UICollectionViewCell {
     }
     
     func update(withHourForecast hourForecast: HourForecast, isNow: Bool) {
-        let hourText = configureHourText(date: hourForecast.date, isNow: isNow)
+        let hourText = transformIntoHourText(date: hourForecast.date, isNow: isNow)
         let weatherCondition = hourForecast.weatherCode.obtainWeatherCondition()
         
         hourLabel.setAttributedTextWithShadow(hourText)
@@ -69,7 +69,7 @@ final class HourForecastCell: UICollectionViewCell {
         weatherIconView.setIcon(for: weatherCondition, isDay: hourForecast.isDay)
     }
     
-    private func configureHourText(date: Date, isNow: Bool) -> String {
+    private func transformIntoHourText(date: Date, isNow: Bool) -> String {
         if isNow {
             return NSLocalizedString("Now", comment: "")
         } else {

@@ -45,27 +45,23 @@ final class PrecipitationSumContainer: ContainerView {
     }
     
     private func updateTodayPrecipitationLabel(todayPrecipitationSum: Float) {
-        let todayPrecipitationText = transfromIntoLocalizedText(precipitationSum: todayPrecipitationSum)
+        let todayPrecipitationText = transformIntoLocalizedText(precipitationSum: todayPrecipitationSum)
         todayPrecipitationLabel.setAttributedTextWithShadow(todayPrecipitationText)
     }
     
     private func updateTomorrowPrecipitationLabel(tomorrowPrecipitationSum: Float) {
-        let tomorrowPrecipitationText = configureTomorrowPrecipitationText(tomorrowPrecipitationSum: tomorrowPrecipitationSum)
+        let isPrecipitationExpected = tomorrowPrecipitationSum.rounded() != 0
+        let format = isPrecipitationExpected ? precipitationExpectedFormat : noPrecipitationExpectedFormat
+        let localizedText = transformIntoLocalizedText(precipitationSum: tomorrowPrecipitationSum)
+        let tomorrowPrecipitationText = String(format: format, localizedText)
+        
         tomorrowPrecipitationLabel.setAttributedTextWithShadow(tomorrowPrecipitationText)
         tomorrowPrecipitationLabel.attributedStringSetMultilineText()
     }
     
-    private func configureTomorrowPrecipitationText(tomorrowPrecipitationSum: Float) -> String {
-        let tomorrowPrecipitationText = transfromIntoLocalizedText(precipitationSum: tomorrowPrecipitationSum)
-        let isPrecipitationExpected = tomorrowPrecipitationSum.rounded() != 0
-        let format = isPrecipitationExpected ? precipitationExpectedFormat : noPrecipitationExpectedFormat
-        
-        return String(format: format, tomorrowPrecipitationText)
-    }
-    
-    private func transfromIntoLocalizedText(precipitationSum: Float) -> String {
-        var measurement = Measurement(value: Double(precipitationSum), unit: UnitLength.millimeters)
-        measurement.value = measurement.value.rounded()
+    private func transformIntoLocalizedText(precipitationSum: Float) -> String {
+        let value = Double(precipitationSum).rounded()
+        let measurement = Measurement(value: value, unit: UnitLength.millimeters)
 
         let formatter = MeasurementFormatter()
         formatter.unitStyle = .short
