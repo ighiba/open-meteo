@@ -42,11 +42,13 @@ final class WindContainer: ContainerView {
     }
     
     private func transfromIntoLocalizedText(windSpeed: Float) -> String {
-        var measurement = Measurement(value: Double(windSpeed), unit: UnitSpeed.kilometersPerHour).converted(to: .metersPerSecond)
+        let value = Double(windSpeed)
+        var measurement = Measurement(value: value, unit: UnitSpeed.kilometersPerHour).converted(to: .metersPerSecond)
+        measurement.value.round()
+        
         let formatter = MeasurementFormatter()
         formatter.unitStyle = .short
         formatter.unitOptions = .providedUnit
-        measurement.value = measurement.value.rounded()
         
         return formatter.string(from: measurement)
     }
