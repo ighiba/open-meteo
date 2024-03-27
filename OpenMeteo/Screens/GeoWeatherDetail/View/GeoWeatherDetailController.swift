@@ -20,7 +20,12 @@ final class GeoWeatherDetailViewController: UIViewController {
 
     let viewModel: GeoWeatherDetailViewModelDelegate
     
-    private var cancellables = Set<AnyCancellable>()
+    var geoWeatherDidAdd: ((GeoWeather) -> Void)?
+    var updateHandler: ((GeoWeather) -> Void)?
+    
+    var navigationBarConfiguration: NavigationBarConfiguration = .standart
+    
+    lazy var navigationBarOffset: CGFloat = calculateNavigationBarOffset()
     
     private let refreshControl = UIRefreshControl()
 
@@ -30,13 +35,6 @@ final class GeoWeatherDetailViewController: UIViewController {
     private var closeButtonContainer: BlurredButtonContainer?
     private var addButtonContainer: BlurredButtonContainer?
     
-    var navigationBarConfiguration: NavigationBarConfiguration = .standart
-    
-    var geoWeatherDidAdd: ((GeoWeather) -> Void)?
-    var updateHandler: ((GeoWeather) -> Void)?
-    
-    lazy var navigationBarOffset: CGFloat = calculateNavigationBarOffset()
-    
     override var preferredStatusBarStyle: UIStatusBarStyle { statusBarStyle }
     
     var statusBarStyle: UIStatusBarStyle = .darkContent {
@@ -44,6 +42,8 @@ final class GeoWeatherDetailViewController: UIViewController {
             setNeedsStatusBarAppearanceUpdate()
         }
     }
+    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     

@@ -10,10 +10,10 @@ import SnapKit
 
 final class ApparentTemperatureContainer: ContainerView {
     
+    override var title: String { NSLocalizedString("Feels like", comment: "") }
+    
     private let verticalOffset: CGFloat = -5
     private let descriptionLabelWidthMultiplier: CGFloat = 0.85
-    
-    override var title: String { NSLocalizedString("Feels like", comment: "") }
     
     // MARK: - Methods
 

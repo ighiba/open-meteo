@@ -15,6 +15,11 @@ final class GeoWeatherCell: UICollectionViewCell {
     static let identifier = "geoWeatherCell"
     static let height: CGFloat = 100
     
+    var longPressDidEndHandler: (() -> Void)?
+    var deleteButtonDidTapHandler: (() -> Void)?
+    
+    lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture))
+    
     private var cornerRadius: CGFloat { Self.height / 5 }
     private let horizontalOffset: CGFloat = 20
     private let verticalOffset: CGFloat = 10
@@ -24,11 +29,6 @@ final class GeoWeatherCell: UICollectionViewCell {
     
     private(set) var isEditing = false
     private var isLastTouchInBounds = true
-    
-    lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture))
-    
-    var longPressDidEndHandler: (() -> Void)?
-    var deleteButtonDidTapHandler: (() -> Void)?
     
     // MARK: - Init
     

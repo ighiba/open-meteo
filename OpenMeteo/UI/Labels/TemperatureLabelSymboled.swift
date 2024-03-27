@@ -12,6 +12,8 @@ final class TemperatureLabelSymboled: UIView {
     
     // MARK: - Properties
     
+    var prefferedWidth: CGFloat { symbolWidth + temperatureLabelWidth + (symbolInset * 2) + (symbolWidth / 2) }
+    
     private let symbolName: String
     private let temperatureFontSize: CGFloat
 
@@ -21,8 +23,6 @@ final class TemperatureLabelSymboled: UIView {
     private let widthMultiplier: CGFloat = 0.5
     
     private var temperatureLabelWidth: CGFloat { temperatureFontSize * 2.1 }
-    
-    var prefferedWidth: CGFloat { symbolWidth + temperatureLabelWidth + (symbolInset * 2) + (symbolWidth / 2) }
     
     // MARK: - Init
     

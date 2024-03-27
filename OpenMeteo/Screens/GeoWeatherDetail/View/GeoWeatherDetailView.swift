@@ -18,6 +18,8 @@ final class GeoWeatherDetailView: UIScrollView {
     private let contentContainerWidthMultiplier: CGFloat = 0.9
     private let todayTemperatureRangeContainerHeight: CGFloat = 25
     
+    // MARK: - Views
+    
     lazy var contentContainer = configureContentContainer()
     
     lazy var mainInfoContainer = configureMainInfoContainer()
@@ -183,7 +185,7 @@ final class GeoWeatherDetailView: UIScrollView {
         precipitationSumContainer.update(withTodaySum: todayPrecipitationSum, tomorrowSum: tomorrowPrecipitationSum)
     }
     
-    // MARK: - Views
+    // MARK: - Views Methods
     
     private func configureContentContainer() -> UIStackView {
         let container = UIStackView(arrangedSubviews: [

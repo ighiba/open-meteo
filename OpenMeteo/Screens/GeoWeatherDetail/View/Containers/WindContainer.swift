@@ -10,9 +10,9 @@ import SnapKit
 
 final class WindContainer: ContainerView {
     
-    private let verticalOffset: CGFloat = 5
-    
     override var title: String { NSLocalizedString("Wind", comment: "") }
+    
+    private let verticalOffset: CGFloat = 5
     
     // MARK: - Methods
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PrecipitationProbabilityLabel: UILabel {
+final class PrecipitationProbabilityLabel: UILabel {
     
     private let minProbabilityToShow: Int16
     

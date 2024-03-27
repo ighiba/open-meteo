@@ -29,8 +29,6 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     
     // MARK: - Properties
     
-    private let currentLocationId: Int = -1
-
     var geoWeatherList: [GeoWeather] = [] {
         didSet {
             if geoWeatherList.count != oldValue.count {
@@ -38,16 +36,18 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
             }
         }
     }
-
-    private let geoWeatherListUpdateSubject: PassthroughSubject<UpdateRule, Never> = PassthroughSubject()
-    var geoWeatherListUpdatePublisher: AnyPublisher<UpdateRule, Never> { geoWeatherListUpdateSubject.eraseToAnyPublisher() }
     
-    private var cancellables = Set<AnyCancellable>()
+    var geoWeatherListUpdatePublisher: AnyPublisher<UpdateRule, Never> { geoWeatherListUpdateSubject.eraseToAnyPublisher() }
+    private let geoWeatherListUpdateSubject: PassthroughSubject<UpdateRule, Never> = PassthroughSubject()
+    
+    private let currentLocationId: Int = -1
     
     private let networkManager: NetworkManager
     private let dataManager: DataManager
     private let locationManager: LocationManager
     private let weatherServiceType: WeatherService.Type
+    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     
@@ -66,7 +66,7 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         #endif
         
         locationManager.locationUpdateHandler = { [weak self] latitude, longitude in
-            self?.addCurrentLocation(latitude: latitude, longitude: longitude)
+            self?.addCurrentLocationGeoWeather(fromLatitude: latitude, longitude: longitude)
         }
         
         locationManager.requestWhenInUseAuthorization()
@@ -75,7 +75,7 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         geoWeatherList = loadGeoWeatherList()
     }
     
-    private func addCurrentLocation(latitude: Float, longitude: Float) {
+    private func addCurrentLocationGeoWeather(fromLatitude latitude: Float, longitude: Float) {
         let currentLocationLocalized = NSLocalizedString("Your location", comment: "")
         let currentLocationGeocoding = Geocoding(
             id: currentLocationId,

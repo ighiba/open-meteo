@@ -18,6 +18,8 @@ final class DataManagerImpl: DataManager {
     
     // MARK: - Properties
     
+    lazy var realm = try! Realm(configuration: config)
+    
     private let config = Realm.Configuration(
         schemaVersion: 3,
         migrationBlock: { migration, oldSchemaVersion in
@@ -31,8 +33,6 @@ final class DataManagerImpl: DataManager {
             }
         }
     )
-    
-    lazy var realm = try! Realm(configuration: config)
     
     // MARK: - Methods
 

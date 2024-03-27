@@ -23,9 +23,9 @@ final class GeoSearchViewModel: GeoSearchViewModelDelegate {
     @Published var geocodingList: [Geocoding] = []
     var geocodingListPublisher: Published<[Geocoding]>.Publisher { $geocodingList }
     
-    private var cancellables = Set<AnyCancellable>()
-    
     private let networkManager: NetworkManager
+    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     

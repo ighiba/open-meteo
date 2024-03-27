@@ -10,13 +10,13 @@ import SnapKit
 
 final class PrecipitationSumContainer: ContainerView {
     
+    override var title: String { NSLocalizedString("Precipitation", comment: "") }
+    
     private let verticalOffset: CGFloat = -5
     private let tomorrowPrecipitationLabelWidthMultiplier: CGFloat = 0.85
     
     private let noPrecipitationExpectedFormat = NSLocalizedString("No precipitation is expected tomorrow", comment: "")
     private let precipitationExpectedFormat = NSLocalizedString("Tomorrow, %@ of precipitation is expected", comment: "")
-    
-    override var title: String { NSLocalizedString("Precipitation", comment: "") }
     
     // MARK: - Methods
 
