@@ -40,8 +40,6 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     var geoWeatherListUpdatePublisher: AnyPublisher<UpdateRule, Never> { geoWeatherListUpdateSubject.eraseToAnyPublisher() }
     private let geoWeatherListUpdateSubject: PassthroughSubject<UpdateRule, Never> = PassthroughSubject()
     
-    private let currentLocationId: Int = -1
-    
     private let networkManager: NetworkManager
     private let dataManager: DataManager
     private let locationManager: LocationManager
@@ -76,18 +74,10 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     }
     
     private func addCurrentLocationGeoWeather(fromLatitude latitude: Float, longitude: Float) {
-        let currentLocationLocalized = NSLocalizedString("Your location", comment: "")
-        let currentLocationGeocoding = Geocoding(
-            id: currentLocationId,
-            name: currentLocationLocalized,
-            latitude: latitude,
-            longitude: longitude,
-            country: "",
-            adminLocation: ""
-        )
+        let currentLocationGeocoding = Geocoding.currentLocation(fromLatitude: latitude, longitude: longitude)
         
         let geoWeatherForUpdate: GeoWeather
-        if let currentLocationGeoWeather = geoWeatherList.item(withId: currentLocationId) {
+        if let currentLocationGeoWeather = geoWeatherList.item(withId: currentLocationGeocoding.id) {
             geoWeatherForUpdate = GeoWeather(geocoding: currentLocationGeocoding, weather: currentLocationGeoWeather.weather)
         } else {
             geoWeatherForUpdate = GeoWeather(geocoding: currentLocationGeocoding)

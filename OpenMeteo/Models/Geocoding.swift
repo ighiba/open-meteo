@@ -54,3 +54,10 @@ extension Geocoding {
         self.adminLocation = geoModel.adminLocation
     }
 }
+
+extension Geocoding {
+    static func currentLocation(fromLatitude latitude: Float, longitude: Float) -> Self {
+        let localizedName = NSLocalizedString("Your location", comment: "")
+        return Geocoding(id: -1, name: localizedName, latitude: latitude, longitude: longitude, country: "", adminLocation: "")
+    }
+}
