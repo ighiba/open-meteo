@@ -159,8 +159,6 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
                 if case .failure(let error) = completion {
                     print("Weather update error: \(error)")
                 }
-            }, receiveValue: { _ in
-                
             })
             .store(in: &cancellables)
     }
