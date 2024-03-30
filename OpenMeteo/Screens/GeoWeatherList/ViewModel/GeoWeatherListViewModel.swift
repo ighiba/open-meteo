@@ -64,27 +64,16 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
         #endif
         
         locationManager.locationUpdateHandler = { [weak self] latitude, longitude in
-            self?.addCurrentLocationGeoWeather(fromLatitude: latitude, longitude: longitude)
+            guard let currentLocationGeoWeather = self?.obtainCurrentLocationGeoWeather(fromLatitude: latitude, longitude: longitude) else { return }
+            
+            self?.insertGeoWeather(currentLocationGeoWeather, at: 0)
+            self?.updateWeather(forGeoWeather: currentLocationGeoWeather)
         }
         
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         
         geoWeatherList = loadGeoWeatherList()
-    }
-    
-    private func addCurrentLocationGeoWeather(fromLatitude latitude: Float, longitude: Float) {
-        let currentLocationGeocoding = Geocoding.currentLocation(fromLatitude: latitude, longitude: longitude)
-        
-        let geoWeatherForUpdate: GeoWeather
-        if let currentLocationGeoWeather = geoWeatherList.item(withId: currentLocationGeocoding.id) {
-            geoWeatherForUpdate = GeoWeather(geocoding: currentLocationGeocoding, weather: currentLocationGeoWeather.weather)
-        } else {
-            geoWeatherForUpdate = GeoWeather(geocoding: currentLocationGeocoding)
-        }
-        
-        insertGeoWeather(geoWeatherForUpdate, at: 0)
-        updateWeather(forGeoWeather: geoWeatherForUpdate)
     }
     
     func updateAllWeather() {
@@ -131,6 +120,16 @@ final class GeoWeatherListViewModel: GeoWeatherListViewModelDelegate {
     
     func weatherService(forWeather weather: Weather) -> WeatherService {
         return weatherServiceType.init(weather: weather)
+    }
+    
+    private func obtainCurrentLocationGeoWeather(fromLatitude latitude: Float, longitude: Float) -> GeoWeather {
+        let currentLocationGeocoding = Geocoding.currentLocation(fromLatitude: latitude, longitude: longitude)
+        
+        if let currentLocationGeoWeather = geoWeatherList.item(withId: currentLocationGeocoding.id) {
+            return GeoWeather(geocoding: currentLocationGeocoding, weather: currentLocationGeoWeather.weather)
+        } else {
+            return GeoWeather(geocoding: currentLocationGeocoding)
+        }
     }
     
     // MARK: - DB
