@@ -43,8 +43,57 @@ final class GeoWeatherCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
-
+    // MARK: - Methods
+    
+    func update(withGeoName geoName: String, temperature: Float, temperatureRange: TemperatureRange, weatherCode: Weather.Code, skyType: SkyType) {
+        geoNameLabel.text = geoName
+        currentTemperatureLabel.setTemperature(temperature)
+        todayTemeperatureRangeContainer.setTemperature(range: temperatureRange)
+        weatherCodeDescriptionLabel.setAttributedTextWithShadow(weatherCode.localizedDescription)
+        updateBackground(forSkyType: skyType)
+    }
+    
+    func startEditing(animated: Bool = true, completion: (() -> Void)? = nil) {
+        isEditing = true
+        
+        if animated {
+            animateEditingBegan(completion: completion)
+        } else {
+            backgroundGradientView.isUserInteractionEnabled = false
+            longPressGesture.isEnabled = false
+            deleteItemButton.isHidden = false
+            
+            let rect = backgroundGradientView.bounds.inset(by: editingBackgroundViewInsets)
+            let finalPath = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius).cgPath
+            let mask = CAShapeLayer(with: finalPath)
+            backgroundGradientView.layer.mask = mask
+            currentTemperatureLabel.layer.opacity = 0.0
+            todayTemeperatureRangeContainer.layer.opacity = 0.0
+        }
+    }
+    
+    func endEditing(animated: Bool = true, completion: (() -> Void)? = nil) {
+        if animated {
+            animateEditingEnded() { [weak self] in
+                self?.isEditing = false
+                completion?()
+            }
+        } else {
+            removeAllAnimations()
+            longPressGesture.isEnabled = true
+            currentTemperatureLabel.layer.opacity = 1.0
+            todayTemeperatureRangeContainer.layer.opacity = 1.0
+            backgroundGradientView.layer.mask = nil
+            backgroundGradientView.isUserInteractionEnabled = true
+            deleteItemButton.isHidden = true
+        }
+    }
+    
+    private func updateBackground(forSkyType skyType: SkyType) {
+        let colorSet = WeatherColorSet.obtainColorSet(fromSkyType: skyType)
+        backgroundGradientView.setColors(weatherColorSet: colorSet)
+    }
+    
     private func setupViews() {
         layer.cornerRadius = cornerRadius
         backgroundGradientView.layer.cornerRadius = cornerRadius
@@ -97,8 +146,6 @@ final class GeoWeatherCell: UICollectionViewCell {
         }
     }
     
-    // MARK: - Methods
-    
     private func setupGestures() {
         longPressGesture.minimumPressDuration = 0.1
         addGestureRecognizer(longPressGesture)
@@ -112,57 +159,8 @@ final class GeoWeatherCell: UICollectionViewCell {
         setDefaultBackground()
     }
     
-    func update(withGeoName geoName: String, temperature: Float, temperatureRange: TemperatureRange, weatherCode: Weather.Code, skyType: SkyType) {
-        geoNameLabel.text = geoName
-        currentTemperatureLabel.setTemperature(temperature)
-        todayTemeperatureRangeContainer.setTemperature(range: temperatureRange)
-        weatherCodeDescriptionLabel.setAttributedTextWithShadow(weatherCode.localizedDescription)
-        updateBackground(forSkyType: skyType)
-    }
-
-    func updateBackground(forSkyType skyType: SkyType) {
-        let colorSet = WeatherColorSet.obtainColorSet(fromSkyType: skyType)
-        backgroundGradientView.setColors(weatherColorSet: colorSet)
-    }
-    
     private func setDefaultBackground() {
         backgroundGradientView.setColors(weatherColorSet: .clearSky)
-    }
-    
-    func startEditing(animated: Bool = true, completion: (() -> Void)? = nil) {
-        isEditing = true
-        
-        if animated {
-            animateEditingBegan(completion: completion)
-        } else {
-            backgroundGradientView.isUserInteractionEnabled = false
-            longPressGesture.isEnabled = false
-            deleteItemButton.isHidden = false
-            
-            let rect = backgroundGradientView.bounds.inset(by: editingBackgroundViewInsets)
-            let finalPath = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius).cgPath
-            let mask = CAShapeLayer(with: finalPath)
-            backgroundGradientView.layer.mask = mask
-            currentTemperatureLabel.layer.opacity = 0.0
-            todayTemeperatureRangeContainer.layer.opacity = 0.0
-        }
-    }
-    
-    func endEditing(animated: Bool = true, completion: (() -> Void)? = nil) {
-        if animated {
-            animateEditingEnded() { [weak self] in
-                self?.isEditing = false
-                completion?()
-            }
-        } else {
-            removeAllAnimations()
-            longPressGesture.isEnabled = true
-            currentTemperatureLabel.layer.opacity = 1.0
-            todayTemeperatureRangeContainer.layer.opacity = 1.0
-            backgroundGradientView.layer.mask = nil
-            backgroundGradientView.isUserInteractionEnabled = true
-            deleteItemButton.isHidden = true
-        }
     }
     
     private func removeAllAnimations() {
