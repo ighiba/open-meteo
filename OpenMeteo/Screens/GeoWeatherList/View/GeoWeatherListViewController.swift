@@ -70,6 +70,47 @@ final class GeoWeatherListViewController: UICollectionViewController {
     
     // MARK: - Methods
     
+    func openDetail(for indexPath: IndexPath) {
+        guard let geoWeather = geoWeather(atIndexPath: indexPath),
+              let detailViewController = GeoWeatherDetailScreenAssembly.configureScreen(with: geoWeather) as? GeoWeatherDetailViewController
+        else {
+            return
+        }
+
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        
+        let cellOnRootViewRect = cell.convert(cell.bounds, to: self.view)
+
+        initialPathForAnimator = UIBezierPath(roundedRect: cellOnRootViewRect, cornerRadius: cell.layer.cornerRadius).cgPath
+        detailViewController.modalPresentationStyle = .fullScreen
+        detailViewController.updateHandler = { [weak self] updatedGeoWeather in
+            let id = updatedGeoWeather.id
+            let weather = updatedGeoWeather.weather
+            self?.viewModel.updateGeoWeather(withId: id, weather: weather)
+        }
+        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        
+        navigationController?.pushViewController(detailViewController, animated: true)
+    }
+    
+    func geoWeather(atIndexPath indexPath: IndexPath) -> GeoWeather? {
+        return viewModel.geoWeatherList.item(atIndex: indexPath.row)
+    }
+
+    func handleRefreshControlBegin() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.viewModel.updateAllWeather()
+        }
+    }
+    
+    func handleRefreshControlEnd() {
+        guard isRefreshing else { return }
+        
+        collectionView.refreshControl?.endRefreshing()
+    }
+    
     private func setupNavigationBar() {
         let searchController = GeoSearchScreenAssembly.configureScreen() as? GeoSearchViewController
         searchController?.geoWeatherListViewControllerDelegate = self
@@ -183,47 +224,6 @@ final class GeoWeatherListViewController: UICollectionViewController {
             let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? GeoWeatherCell
             body(cell)
         }
-    }
-
-    func openDetail(for indexPath: IndexPath) {
-        guard let geoWeather = geoWeather(atIndexPath: indexPath),
-              let detailViewController = GeoWeatherDetailScreenAssembly.configureScreen(with: geoWeather) as? GeoWeatherDetailViewController 
-        else {
-            return
-        }
-
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-        
-        let cellOnRootViewRect = cell.convert(cell.bounds, to: self.view)
-
-        initialPathForAnimator = UIBezierPath(roundedRect: cellOnRootViewRect, cornerRadius: cell.layer.cornerRadius).cgPath
-        detailViewController.modalPresentationStyle = .fullScreen
-        detailViewController.updateHandler = { [weak self] updatedGeoWeather in
-            let id = updatedGeoWeather.id
-            let weather = updatedGeoWeather.weather
-            self?.viewModel.updateGeoWeather(withId: id, weather: weather)
-        }
-        
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        
-        navigationController?.pushViewController(detailViewController, animated: true)
-    }
-    
-    func geoWeather(atIndexPath indexPath: IndexPath) -> GeoWeather? {
-        return viewModel.geoWeatherList.item(atIndex: indexPath.row)
-    }
-
-    func handleRefreshControlBegin() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            self?.viewModel.updateAllWeather()
-        }
-    }
-    
-    func handleRefreshControlEnd() {
-        guard isRefreshing else { return }
-        
-        collectionView.refreshControl?.endRefreshing()
     }
 }
 
