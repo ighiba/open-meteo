@@ -58,6 +58,24 @@ final class GeoWeatherDetailView: UIScrollView {
     
     // MARK: - Methods
     
+    func update(
+        withLocationName locationName: String,
+        currentHourForecast: HourForecast,
+        currentDayForecast: DayForecast?,
+        nextDayForecast: DayForecast?,
+        hourlyForecastFor24Hours: [HourForecast],
+        dailyForecastForWeek: [DayForecast]
+    ) {
+        updateGeoNameLabel(locationName: locationName)
+        updateMainInfoContainer(currentHourForecast: currentHourForecast, currentDayForecast: currentDayForecast)
+        updateHourlyForecastContainer(hourlyForecastFor24Hours: hourlyForecastFor24Hours)
+        updateDailyForecastContainer(dailyForecastForWeek: dailyForecastForWeek)
+        updateApparentTemperatureContainer(currentHourForecast: currentHourForecast)
+        updateWindContainer(currentHourForecast: currentHourForecast)
+        updateRelativeHumidityContainer(currentHourForecast: currentHourForecast)
+        updatePrecipitationSumContainer(currentDayForecast: currentDayForecast, nextDayForecast: nextDayForecast)
+    }
+    
     private func setupViews() {
         addSubview(contentContainer)
         
@@ -122,24 +140,6 @@ final class GeoWeatherDetailView: UIScrollView {
         windContainer.updateContainerStyle(with: style)
         relativeHumidityContainer.updateContainerStyle(with: style)
         precipitationSumContainer.updateContainerStyle(with: style)
-    }
-    
-    func update(
-        withLocationName locationName: String,
-        currentHourForecast: HourForecast,
-        currentDayForecast: DayForecast?,
-        nextDayForecast: DayForecast?,
-        hourlyForecastFor24Hours: [HourForecast],
-        dailyForecastForWeek: [DayForecast]
-    ) {
-        updateGeoNameLabel(locationName: locationName)
-        updateMainInfoContainer(currentHourForecast: currentHourForecast, currentDayForecast: currentDayForecast)
-        updateHourlyForecastContainer(hourlyForecastFor24Hours: hourlyForecastFor24Hours)
-        updateDailyForecastContainer(dailyForecastForWeek: dailyForecastForWeek)
-        updateApparentTemperatureContainer(currentHourForecast: currentHourForecast)
-        updateWindContainer(currentHourForecast: currentHourForecast)
-        updateRelativeHumidityContainer(currentHourForecast: currentHourForecast)
-        updatePrecipitationSumContainer(currentDayForecast: currentDayForecast, nextDayForecast: nextDayForecast)
     }
 
     private func updateGeoNameLabel(locationName: String) {
