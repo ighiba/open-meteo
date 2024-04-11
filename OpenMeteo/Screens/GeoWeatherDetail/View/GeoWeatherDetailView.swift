@@ -12,6 +12,12 @@ final class GeoWeatherDetailView: UIScrollView {
     
     // MARK: - Properties
     
+    var preferredContainersStyle: ContainerStyle = .light {
+        didSet {
+            updateViewsStyle(with: preferredContainersStyle)
+        }
+    }
+    
     private let contentSpacing: CGFloat = 25
     private var containerCoupleInset: CGFloat { contentSpacing / 4 }
     private let containerCoupleHeightMultiplier: CGFloat = 0.5
@@ -20,30 +26,24 @@ final class GeoWeatherDetailView: UIScrollView {
     
     // MARK: - Views
     
-    lazy var contentContainer = configureContentContainer()
+    private lazy var contentContainer = configureContentContainer()
     
-    lazy var mainInfoContainer = configureMainInfoContainer()
-    lazy var geoNameLabel = configureGeoNameLabel()
-    lazy var currentTemperatureLabel = configureCurrentTemperatureLabel()
-    lazy var todayTemeperatureRangeContainer = configureTodayTemperatureRangeContainer()
-    lazy var weatherCodeDescriptionLabel = configureWeatherCodeDescriptionLabel()
+    private lazy var mainInfoContainer = configureMainInfoContainer()
+    private lazy var geoNameLabel = configureGeoNameLabel()
+    private lazy var currentTemperatureLabel = configureCurrentTemperatureLabel()
+    private lazy var todayTemeperatureRangeContainer = configureTodayTemperatureRangeContainer()
+    private lazy var weatherCodeDescriptionLabel = configureWeatherCodeDescriptionLabel()
     
     private let hourlyForecastContainer = HourlyForecastContainer()
     private let dailyForecastContainer = DailyForecastContainer()
     
-    lazy var apparentTemperatureAndWindHorizontalStack = configureHorizontalContainerCouple(apparentTemperatureContainer, windContainer)
+    private lazy var apparentTemperatureAndWindHorizontalStack = configureHorizontalContainerCouple(apparentTemperatureContainer, windContainer)
     private let apparentTemperatureContainer = ApparentTemperatureContainer()
     private let windContainer = WindContainer()
     
-    lazy var relativeHumidityAndPrecipitationStack = configureHorizontalContainerCouple(relativeHumidityContainer, precipitationSumContainer)
+    private lazy var relativeHumidityAndPrecipitationStack = configureHorizontalContainerCouple(relativeHumidityContainer, precipitationSumContainer)
     private let relativeHumidityContainer = RelativeHumidityContainer()
     private let precipitationSumContainer = PrecipitationSumContainer()
-    
-    var preferredContainersStyle: ContainerStyle = .light {
-        didSet {
-            updateViewsStyle(with: preferredContainersStyle)
-        }
-    }
     
     // MARK: - Init
     
